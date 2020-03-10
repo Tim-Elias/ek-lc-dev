@@ -14,13 +14,14 @@
 const initialState = {
     data: [],
     date_from: date,
-    date_to: date
-    
+    date_to: date,
+    active_row: -1
   
   }
   
   export default function dispatch (state = initialState, action) {
     switch (action.type) {
+      case 'set_my_disp_active_row': return { ...state, active_row: action.payload }
       case 'set_my_disp_date_from': return { ...state, date_from: action.payload }
       case 'set_my_disp_date_to': return { ...state, date_to: action.payload }
       case 'set_my_disp_data': return { ...state, data: action.payload }

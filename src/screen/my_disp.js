@@ -8,6 +8,10 @@ import { Header, Modal, Table } from 'semantic-ui-react'
 
 class Screen extends React.Component {
 
+  constructor(props) {
+    super(props)
+  }
+
   get_my_disp_data = () => {
     
     this.props.set_active_window("wait");
@@ -52,10 +56,62 @@ class Screen extends React.Component {
 
   };
 
+  tr_click = async (index) => {
+    this.props.set_my_disp_active_row(index)
+  }
+
+  click_up = () => {
+    //console.log("click_up")
+    if(this.props.store.my_disp.active_row > 0){
+      this.props.set_my_disp_active_row(this.props.store.my_disp.active_row - 1)
+    }
+    
+  }
+
+  click_down = () => {
+    const max_index = this.props.store.my_disp.data.length -1
+    if(this.props.store.my_disp.active_row < max_index){
+      this.props.set_my_disp_active_row(this.props.store.my_disp.active_row + 1)
+    }
+    
+  }
+
+  click_enter = () => {
+    const disp = this.props.store.my_disp.data.filter((el,index)=>index==this.props.store.my_disp.active_row)[0]
+    //console.log(disp)
+    if (disp) { this.tr_double_click(disp)}
+  }
+
+
 
   render() {
 
-      
+    const click_up = () => {this.click_up()}
+    const click_down = () => {this.click_down()}
+    const click_enter = () => {this.click_enter()}
+
+    document.onkeydown = function (event) {
+      try {
+        if (event.keyCode === 38) {
+          event.preventDefault();
+          //console.log("Вверх")
+          click_up()
+          
+        }
+        if (event.keyCode === 40) {
+          event.preventDefault();
+          //console.log("Вниз")
+          click_down()
+        }
+        if (event.keyCode === 13) {
+          click_enter()
+          //console.log("Enter")
+         
+        }
+
+      } catch (e) { }
+    };
+
     return (
       
       <div>
@@ -100,8 +156,21 @@ class Screen extends React.Component {
           </Table.Header>
           <Table.Body>
           {this.props.store.my_disp.data.map((el,index)=>
-            
-              <Table.Row key={index} onDoubleClick={this.tr_double_click.bind(this, el)}>
+            {
+              let row_className = ''
+              
+              if (index === this.props.store.my_disp.active_row){
+                row_className = 'active'
+              } 
+
+              //console.log(row_className)
+              return (
+              <Table.Row 
+                className={row_className} 
+                key={index} 
+                onClick={this.tr_click.bind(this,index)}  
+                onDoubleClick={this.tr_double_click.bind(this, el)}
+              >
                 <Table.Cell><div className='small_table_data'>{el.Date}</div></Table.Cell>
                 <Table.Cell><div className='small_table_data'>{el.Num}</div></Table.Cell>
                 <Table.Cell><div className='small_table_data'>{el.SendCity}</div></Table.Cell>
@@ -118,7 +187,7 @@ class Screen extends React.Component {
                 <Table.Cell><div className='small_table_data'>{el.Status}</div></Table.Cell>
                 <Table.Cell><div className='small_table_data'>{el.Recient}</div></Table.Cell>
                 <Table.Cell><div className='small_table_data'>{el.RecDate}</div></Table.Cell>
-              </Table.Row>
+              </Table.Row>)}
           )}
           </Table.Body>
             </Table>
@@ -141,5 +210,6 @@ export default withCookies(connect(
     set_active_window: (param) => { dispatch({ type: 'set_active_window', payload: param }) },
     set_data_disp: (param) => { dispatch({ type: 'set_data_disp', payload: param }) },
     set_last_window: (param) => { dispatch({ type: 'set_last_window', payload: param }) },
+    set_my_disp_active_row: (param) => { dispatch({ type: 'set_my_disp_active_row', payload: param }) },
   })
 )(Screen));
