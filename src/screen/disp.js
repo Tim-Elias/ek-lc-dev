@@ -87,6 +87,62 @@ class Screen extends React.Component {
         this.props.set_disp_history([])
     }
 
+    remove_disp = () => {
+        this.props.set_disp_show_remove_modal(true)
+        
+    }
+
+    close_remove_modal = () =>{
+        this.props.set_disp_show_remove_modal(false)
+        if (this.props.store.disp.remove_confirm) {
+            if (this.props.store.general.last_window == 'my_disp'){
+                this.props.set_active_window("wait");
+
+                const data = {
+                userkey: this.props.store.login.userkey,
+                date_from: this.props.store.my_disp.date_from,
+                date_to: this.props.store.my_disp.date_to
+                }
+
+                get_data('mydisplist',data).then(
+                (result) => {
+                    this.props.set_active_window("my_disp");
+                    this.props.set_my_disp_data(result); 
+                },
+                (err) => { console.log(err) }
+            );
+            } else {
+                this.back()
+            }
+            
+        }
+       
+
+    }
+
+    confirm_remove_disp = () =>{
+        this.props.set_disp_remove_modal_loading(true)
+        this.props.set_disp_remove_confirm(true)
+        
+        const data = {
+            userkey: this.props.store.login.userkey,
+            Number: this.props.store.disp.data.Number,
+        }
+        get_data('removedisp', data).then(
+            (result) => {
+                console.log(result)
+                if (result == 1){
+                    this.props.set_disp_text_remove_modal("Накладная успешно удалена");
+                } else {
+                    this.props.set_disp_text_remove_modal("Не удалось удалить накладную");
+                }
+                
+                this.props.set_disp_remove_modal_loading(false)
+            },
+            (err) => { console.log(err) }
+        );
+    }
+
     render() {
 
         // const close = () =>  {
@@ -172,6 +228,46 @@ class Screen extends React.Component {
                           </Modal.Description>
                         </Modal.Content>
                       </Modal>
+
+                      {this.props.store.login.edit_disp && this.props.store.disp.data.Status == 'Ожидается от отправителя'? (<Modal closeIcon
+                        trigger={<Button onClick={this.remove_disp.bind(this)}>Удалить</Button>} 
+                        open={this.props.store.disp.show_remove_modal}
+                        onClose={this.close_remove_modal.bind(this)}
+                    >
+                    <Modal.Header>Удаление накладной {this.props.store.disp.data.Number}</Modal.Header>
+                        <Modal.Content>
+                                {this.props.store.disp.remove_confirm ? (
+                                <Modal.Description>
+                                {this.props.store.disp.history_loading ? (
+                                    <div>
+                                        <Dimmer active inverted>
+                                            <Loader inverted content='Loading' />
+                                        </Dimmer>
+                                    </div>
+                                ):(
+                                    <div>
+                                        {this.props.store.disp.text_remove_modal}
+                                    </div>
+                                )}
+                                
+                                </Modal.Description>
+                            ):(<Modal.Description>
+                                Действительно хотите удалить накладную {this.props.store.disp.data.Number} ?
+                            </Modal.Description>)}                         
+                        </Modal.Content>
+                        {this.props.store.disp.remove_confirm ? (null):(
+                            <Modal.Actions>
+                              <Button color='red' onClick={this.close_remove_modal.bind(this)}>
+                              <Icon name='remove' /> Нет
+                            </Button>
+                            <Button color='green' onClick={this.confirm_remove_disp.bind(this)}>
+                              <Icon name='checkmark' /> Да
+                            </Button>
+                            </Modal.Actions>
+                          )}
+                            
+                          
+                      </Modal>):(null)}
 
                 </div>
                     {/* ////////////////////// */}
@@ -323,5 +419,12 @@ export default connect(
         set_disp_history_loading: (param) => { dispatch({ type: 'set_disp_history_loading', payload: param }) },
         set_disp_history: (param) => { dispatch({ type: 'set_disp_history', payload: param }) },
         set_disp_show_history: (param) => { dispatch({ type: 'set_disp_show_history', payload: param }) },
+        set_my_disp_data: (param) => { dispatch({ type: 'set_my_disp_data', payload: param }) },
+        
+        set_disp_remove_modal_loading: (param) => { dispatch({ type: 'set_disp_remove_modal_loading', payload: param }) },
+        set_disp_text_remove_modal: (param) => { dispatch({ type: 'set_disp_text_remove_modal', payload: param }) },
+        set_disp_show_remove_modal: (param) => { dispatch({ type: 'set_disp_show_remove_modal', payload: param }) },
+
+        set_disp_remove_confirm: (param) => { dispatch({ type: 'set_disp_remove_confirm', payload: param }) },
     })
 )(Screen);
