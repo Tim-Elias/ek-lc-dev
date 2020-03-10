@@ -68,24 +68,23 @@ class Screen extends Component {
 
         switch (target){
             case 'create_disp': 
+                this.props.reset_create_disp_data()
                 get_data('citylist').then(
                 (result) => {
                     this.props.SetCityList(result);
                     this.props.set_active_window(target);
+
                 },
                 (err) => { console.log(err) }
             );
             
             case 'my_disp': 
-                get_data('citylist').then(
-                (result) => {
-                    this.props.SetCityList(result);
-                    this.props.set_active_window(target);
-                },
-                (err) => { console.log(err) }
-            );
+                this.props.set_active_window(target);
+                this.props.set_my_disp_data([]);
+               
             case 'upload_manifest': 
-        
+                
+                this.props.reset_upload_manifest_data()
                 const list_data = { userkey: this.props.store.login.userkey }
                 
                 get_data('importtemplatelist',list_data).then(
@@ -144,26 +143,29 @@ class Screen extends Component {
                     <div className='leftmenubuttonicon'><Icon name='list' /></div>
                     </Button>
                     </div>
-                    <div className="leftmenubutton">
+                    {this.props.store.login.create_disp ? (<div className="leftmenubutton">
                     <Button  compact icon onClick={this.button_click.bind(this,"create_disp")}>
                     <div className='leftmenubuttonicon'><Icon name='edit outline' /></div>
                     </Button>
-                    </div>
+                    </div>):(null)}
+                    {this.props.store.login.upload_manifest ? (
                     <div className="leftmenubutton">
-                    <Button  compact icon onClick={this.button_click.bind(this,"upload_manifest")}>
-                    <div className='leftmenubuttonicon'><Icon name='upload' /></div>
-                    </Button> 
-                    </div>
+                        <Button  compact icon onClick={this.button_click.bind(this,"upload_manifest")}>
+                            <div className='leftmenubuttonicon'><Icon name='upload' /></div>
+                        </Button> 
+                    </div>):(null)}
+                    {this.props.store.login.mutual ? (
                     <div className="leftmenubutton">
-                    <Button  compact icon onClick={this.button_click.bind(this,"mutual")}>
-                    <div className='leftmenubuttonicon'><Icon name='money' /></div>
-                    </Button> 
-                    </div>
+                        <Button  compact icon onClick={this.button_click.bind(this,"mutual")}>
+                            <div className='leftmenubuttonicon'><Icon name='money' /></div>
+                        </Button> 
+                    </div>):(null)}
+                    {this.props.store.login.setting ? (
                     <div className="leftmenubutton">
-                    <Button compact icon onClick={this.button_click.bind(this,"setting")}>
-                    <div className='leftmenubuttonicon'><Icon name='setting' /></div>
-                    </Button> 
-                    </div>
+                        <Button compact icon onClick={this.button_click.bind(this,"setting")}>
+                            <div className='leftmenubuttonicon'><Icon name='setting' /></div>
+                        </Button>
+                    </div>):(null)}
                     
                     
              </div>
@@ -175,14 +177,17 @@ class Screen extends Component {
                     </Button>
                     </div>
                     <div onClick={this.button_click.bind(this,"my_disp")} className="leftmenuel"><Icon name='list' /> Мои накладные</div>
-                    <div onClick={this.button_click.bind(this,"create_disp")} className="leftmenuel"><Icon name='edit outline' /> Создать накладную</div>
-                    <div onClick={this.button_click.bind(this,"upload_manifest")} className="leftmenuel"><Icon name='upload' /> Загрузить манифест</div>
-                    {this.props.store.login.agent ? (<div onClick={this.storage.bind(this)} className="leftmenuel">Доставки и Заявки</div>) : ( null)}
+                    {this.props.store.login.create_disp ? (<div onClick={this.button_click.bind(this,"create_disp")} className="leftmenuel"><Icon name='edit outline' /> Создать накладную</div>):(null)}
+                    {this.props.store.login.upload_manifest ? (<div onClick={this.button_click.bind(this,"upload_manifest")} className="leftmenuel"><Icon name='upload' /> Загрузить манифест</div>):(null)}
+                    {/* {this.props.store.login.agent ? (<div onClick={this.storage.bind(this)} className="leftmenuel">Доставки и Заявки</div>) : ( null)}
                     {this.props.store.login.agent ? (<div onClick={this.reciept.bind(this)} className="leftmenuel">Принять от отправителя</div>) : ( null)}
                     {this.props.store.login.agent ? (<div onClick={this.send_manifest.bind(this)} className="leftmenuel">Отправка манифеста</div>) : ( null)}
-                    {this.props.store.login.agent ? (<div onClick={this.get_manifest.bind(this)} className="leftmenuel">Прием манифеста</div>) : ( null)}
-                    <div onClick={this.button_click.bind(this,"mutual")} className="leftmenuel"><Icon name='money' /> Взаиморасчеты</div> 
-                    <div onClick={this.button_click.bind(this,"setting")} className="leftmenuel"><Icon name='setting' /> Настройки</div>
+                    {this.props.store.login.agent ? (<div onClick={this.get_manifest.bind(this)} className="leftmenuel">Прием манифеста</div>) : ( null)} */}
+                    {this.props.store.login.mutual ? (<div onClick={this.button_click.bind(this,"mutual")} className="leftmenuel"><Icon name='money' /> Взаиморасчеты</div>):(null)} 
+                    
+                    {this.props.store.login.setting ? (
+                        <div onClick={this.button_click.bind(this,"setting")} className="leftmenuel"><Icon name='setting' /> Настройки</div>
+                    ):(null)}
             </div>
             )}
             
@@ -211,6 +216,8 @@ export default connect(
         set_disp_template_list: (param) => { dispatch({ type: 'set_disp_template_list', payload: param }) },
         hidemenu: () => { dispatch({ type: 'hidemenu' }) },
         SetCityList: (param) => { dispatch({ type: 'SetCityList', payload: param }) },
-        
+        set_my_disp_data: (param) => { dispatch({ type: 'set_my_disp_data', payload: param }) },
+        reset_create_disp_data: () => { dispatch({ type: 'reset_create_disp_data'}) },
+        reset_upload_manifest_data: () => { dispatch({ type: 'reset_upload_manifest_data'}) },
     })
 )(Screen);

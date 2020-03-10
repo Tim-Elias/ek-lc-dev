@@ -11,7 +11,7 @@ class ComponentToPrint extends React.Component {
 
     
   render() {
-    console.log(this.props.disp)
+    //console.log(this.props.disp)
   let initialValue = 0  
     return (
         <div className='disp_print_list'>

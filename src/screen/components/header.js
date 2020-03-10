@@ -52,7 +52,7 @@ class Screen extends Component {
                 (result) => {
 
                     this.props.login(result);
-
+                    
                     this.get_list(result.userkey);
 
                     this.props.cookies.set('username',this.props.store.login.username)

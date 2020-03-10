@@ -14,7 +14,7 @@ class StikerToPrint extends React.Component {
 
         for( let i=0;i<this.props.disp.data.Total;i++){
             table.push(
-        <div className='sticker'>
+        <div className='sticker' key={i}>
         <div className='sticker_info'>Из: {this.props.disp.data.SebdCity}</div> 
         <div className='sticker_rec_city'> {this.props.disp.data.RecCity}</div> 
         {/* <div style = "font-size: 12pt">{this.props.disp.data.Number}</div>  */}
@@ -34,7 +34,7 @@ class StikerToPrint extends React.Component {
 
 
   render() {
-    console.log(this.props.disp)
+    //console.log(this.props.disp)
   let initialValue = 0  
     return (
         <div className='sticker_list'>

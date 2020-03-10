@@ -19,16 +19,16 @@ class Screen extends Component {
     if(!this.props.store.login.logged){
        const username = this.props.cookies.get('username') 
         if(username!==undefined){
-            console.log('un')
+            //console.log('un')
             const authdata = {
                 username: this.props.cookies.get('username'),
                 pass: this.props.cookies.get('passkey') 
             };
 
-            console.log(authdata)
+            //console.log(authdata)
             get_data('autorization', authdata).then(
                 (result) => {
-    
+                  //console.log(result)
                     this.props.login(result);
                     //this.get_list(result.userkey);
                     this.props.cookies.set('userkey',result.userkey)

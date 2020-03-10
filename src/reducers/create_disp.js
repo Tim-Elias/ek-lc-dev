@@ -43,10 +43,10 @@ const initialState = {
 
   Cargo: [{
 
-    Weight: 0.3,
-    L: 20,
-    W: 30,
-    H: 2,
+    Weight: 0,
+    L: 0,
+    W: 0,
+    H: 0,
 
     Q: 1,
 
@@ -67,6 +67,9 @@ const initialState = {
 
 export default function dispatch (state = initialState, action) {
   switch (action.type) {
+
+    
+    case 'reset_create_disp_data': return  initialState 
     case 'SetDelMethod': return { ...state, DelMethod: action.payload }
 
     case 'SetOpenModalRecTemplate': return { ...state, OpenModalRecTemplate: action.payload }

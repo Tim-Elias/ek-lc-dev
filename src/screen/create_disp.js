@@ -554,7 +554,7 @@ OpenRecTemplateModal = () => {
 
                 <div className="disp_cargo_table">
                 <div className="disp_cargo_table_header">Данные о грузах:</div>
-                    <div className="disp_cargo_info">
+                    {this.props.store.login.total_only ? (<div className="disp_cargo_info">
                     <div className="disp_data_label">Метод внесения информации:</div>
                      <div className="disp_data_el">
                       <Select
@@ -564,7 +564,7 @@ OpenRecTemplateModal = () => {
                           onChange={(values) => this.props.SetCargoInfoType(values)}
                       /> 
                       </div>
-                      </div>
+                      </div>):(null)}
                     {!this.props.store.create_disp.CargoInfoType.value ? (<div>
                     
                     <div className="disp_cargo_table_data">
@@ -572,10 +572,10 @@ OpenRecTemplateModal = () => {
 
                     <Table.Header>
                     <Table.Row>
-                    <Table.HeaderCell>Вес</Table.HeaderCell>
-                    <Table.HeaderCell>Длина</Table.HeaderCell>
-                    <Table.HeaderCell>Ширина</Table.HeaderCell>
-                    <Table.HeaderCell>Высота</Table.HeaderCell>
+                    <Table.HeaderCell>Вес (кг)</Table.HeaderCell>
+                    <Table.HeaderCell>Длина (см)</Table.HeaderCell>
+                    <Table.HeaderCell>Ширина (см)</Table.HeaderCell>
+                    <Table.HeaderCell>Высота (см)</Table.HeaderCell>
                     <Table.HeaderCell>Об. вес</Table.HeaderCell>
                     <Table.HeaderCell>Количество</Table.HeaderCell>
                     <Table.HeaderCell>Итоговый вес</Table.HeaderCell>

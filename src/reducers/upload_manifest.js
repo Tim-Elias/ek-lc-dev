@@ -14,6 +14,7 @@ const initialState = {
 
 export default function dispatch (state = initialState, action) {
   switch (action.type) {
+    case 'reset_upload_manifest_data': return initialState
     case 'set_text_area': return { ...state, text_area: action.payload }
     case 'set_upload_in_one': return { ...state, upload_in_one: action.payload }
     case 'upload_manifest_reset_state': return  initialState 

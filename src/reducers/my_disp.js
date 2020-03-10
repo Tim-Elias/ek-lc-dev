@@ -1,7 +1,20 @@
+
+  const today = new Date
+  let mm = today.getMonth() + 1; // getMonth() is zero-based
+  let dd = today.getDate();
+
+  const y = today.getFullYear()
+
+  if (mm<10) { mm = '0' + mm }
+  if (dd<10) {dd = '0' + dd}
+        
+  const date = y+'-'+mm+'-'+dd
+
+
 const initialState = {
     data: [],
-    date_from: new Date,
-    date_to: new Date
+    date_from: date,
+    date_to: date
     
   
   }

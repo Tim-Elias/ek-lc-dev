@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Table, Button, Icon } from 'semantic-ui-react'
+import { Table, Button, Icon, Modal, Loader, Dimmer} from 'semantic-ui-react'
 import { get_data, get_file } from './../common/common_modules'
 import ReactToPrint from 'react-to-print'
 import Barcode from 'react-barcode'
@@ -70,6 +70,23 @@ class Screen extends React.Component {
 
     }
 
+    open_history = () => {
+        this.props.set_disp_history_loading(true)
+        this.props.set_disp_show_history(true)
+        get_data('history', {Number:this.props.store.disp.data.Number}).then(
+            (result) => {
+                this.props.set_disp_history(result);
+                this.props.set_disp_history_loading(false)
+            },
+            (err) => { console.log(err) }
+        );
+    }
+
+    close_history = () => {
+        this.props.set_disp_show_history(false)
+        this.props.set_disp_history([])
+    }
+
     render() {
 
         // const close = () =>  {
@@ -111,6 +128,50 @@ class Screen extends React.Component {
                     <div style={{ display: "none" }}>
                         <StickerToPrint disp={this.props.store.disp} ref={el => (this.stickerRef = el)} />
                     </div>
+
+                    <Modal 
+                        trigger={<Button onClick={this.open_history.bind(this)}>История</Button>} 
+                        open={this.props.store.disp.show_history}
+                        onClose={this.close_history.bind(this)}
+                    >
+                          <Modal.Header>История накладной {this.props.store.disp.data.Number}</Modal.Header>
+                          <Modal.Content>
+                          <Modal.Description>
+                          <div>
+                          {this.props.store.disp.history_loading ? (
+                            <div>
+                                <Dimmer active inverted>
+                                    <Loader inverted content='Loading' />
+                                </Dimmer>
+                            </div>
+                          ):(
+                              <Table celled compact='very'>
+                              <Table.Header className = "create_disp_template_list_th">
+                                <Table.Row>
+                                  <Table.HeaderCell>Дата</Table.HeaderCell>
+                                  <Table.HeaderCell>Статус</Table.HeaderCell>
+                                  <Table.HeaderCell>Комментарий</Table.HeaderCell>
+                                </Table.Row>
+                              </Table.Header>
+                             
+                              <Table.Body>
+                              {this.props.store.disp.history.map((el,index)=>
+                                
+                                  <Table.Row className = "create_disp_template_list_tr" key={index}>
+                                    <Table.Cell >{el.Date}</Table.Cell>
+                                    <Table.Cell>{el.Status}</Table.Cell>
+                                    <Table.Cell>{el.Comment}</Table.Cell>
+                                  </Table.Row>
+                              )}
+                              </Table.Body>
+                              </Table>
+                          )}
+                          
+                          </div>
+                            
+                          </Modal.Description>
+                        </Modal.Content>
+                      </Modal>
 
                 </div>
                     {/* ////////////////////// */}
@@ -259,5 +320,8 @@ export default connect(
         set_list_storage: (param) => { dispatch({ type: 'set_list_storage', payload: param }) },
         set_active_window: (param) => { dispatch({ type: 'set_active_window', payload: param }) },
         set_search_error: (param) => { dispatch({ type: 'set_search_error', payload: param }) },
+        set_disp_history_loading: (param) => { dispatch({ type: 'set_disp_history_loading', payload: param }) },
+        set_disp_history: (param) => { dispatch({ type: 'set_disp_history', payload: param }) },
+        set_disp_show_history: (param) => { dispatch({ type: 'set_disp_show_history', payload: param }) },
     })
 )(Screen);
