@@ -1,0 +1,84 @@
+.create_disp_data_input{
+    border: none;
+    width: 100%;
+    font-size: 11px;
+   
+  }
+
+  .create_disp_data_dropdown{
+    min-height: 10px
+    
+  }
+
+  .disp_cargo_info{
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 250px 1fr ;
+    margin: 5px;
+  }
+
+  .create_disp_td_input{
+    border: none;
+ 
+    width: 70px;
+    font-size: 11px;
+
+  }
+
+  .ButtonTD{
+    border: none;
+    padding: 2px;
+  }
+
+  .IconButton{
+    height: 22px;
+    width: 30px;
+    border-radius: 5px;
+  }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+.disp_cargo_table_data{
+  margin-bottom: 7px;
+}
+
+
+.create_disp_address_data_header{
+  font-size: 14px;
+  background-color: #F0F0F0;
+  text-align: center;
+  padding: 6px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  border: #c0c0c0 1px solid;
+  border-bottom: none;
+  margin: 5px;
+  margin-bottom: 0px;
+  display: grid;
+  grid-template-columns: 100px 1fr 100px;
+}
+
+.create_disp_template_button{
+  border: none;
+  border-radius: 2px;
+  font-size: 10px;
+  padding: 5px;
+ 
+}
+
+.create_disp_template_button_container{
+text-align: right;
+}
+
+.create_disp_template_list_tr{
+  font-size: 10px;
+}
+
+.create_disp_template_list_th{
+  font-size: 12px;
+}

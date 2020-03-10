@@ -1,0 +1,30 @@
+.mutual_int{
+    display: grid;
+    grid-template-columns: 100px 130px 30px 130px 1fr ;
+    margin: 5px;
+}
+
+.mutual_int_label{
+
+    margin: 5px;
+    font-size: 13px;
+}
+
+.mutual_int_input_area{
+    border-bottom: 1px #e0e0e0 solid;
+    margin: 3px;
+}
+
+.mutual_int_input{
+    border: none;
+    width: 120px;
+}
+
+#get_mutual_button{
+    padding: 3px;
+    margin: 0 4px;
+}
+
+.mutual_table_data{
+    margin: 0 5px;
+}
