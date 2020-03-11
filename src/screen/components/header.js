@@ -4,13 +4,13 @@ import { connect } from 'react-redux';
 import logo from './../../logo.svg';
 import { get_data } from './../../common/common_modules'
 import { withCookies } from 'react-cookie';
-import { Header, Modal } from 'semantic-ui-react'
+import { Header, Modal, Button } from 'semantic-ui-react'
 import md5 from 'md5'
 
 
 class Screen extends Component {
 
-    
+
 
     home = () => {
         this.props.set_active_window("home");
@@ -53,19 +53,19 @@ class Screen extends Component {
                 (result) => {
 
                     this.props.login(result);
-                    
+
                     this.get_list(result.userkey);
 
-                    this.props.cookies.set('username',this.props.store.login.username)
-                    this.props.cookies.set('userkey',result.userkey)
-                    this.props.cookies.set('passkey',md5(this.props.store.login.pass))
+                    this.props.cookies.set('username', this.props.store.login.username)
+                    this.props.cookies.set('userkey', result.userkey)
+                    this.props.cookies.set('passkey', md5(this.props.store.login.pass))
 
                 },
-                (err) => { 
+                (err) => {
                     this.props.set_error_show(true)
                     this.props.set_error_text(err)
 
-                    console.log(err) 
+                    console.log(err)
                 }
             );
         }
@@ -79,35 +79,40 @@ class Screen extends Component {
     }
 
     render() {
+
+        
+
         return (
 
             <div id="pageHeader" className="topnav">
 
-            <Modal closeIcon
-                open={this.props.store.general.error_show}
-                onClose={this.close_error_portal.bind(this)}
-            >
-                <Header>Ошибка</Header>
-                <Modal.Content>
-                    <p>{this.props.store.general.error_text}</p>
-                </Modal.Content>
-            </Modal>
+
 
                 <div>
-                    {this.props.store.general.active_window !== "home" ? (
-                        <div>
-                            <img className="header_logo" src={logo} />
-                        </div>) : (null)}
-                    {/* <div onClick={this.home.bind(this)} className="topnavel">Создать заявку</div>
-                    <div onClick={this.get_disp.bind(this)} className="topnavel">Отследить накладную</div>
-                    <div onClick={this.my_disp.bind(this)} className="topnavel">Рассчитать стоимость</div> */}
-                    {/* <div onClick ={this.props.set_active_window.bind(this,'profile')} className="topnavel">Профиль</div> */}
+                    <Modal closeIcon
+                        open={this.props.store.general.error_show}
+                        onClose={this.close_error_portal.bind(this)}
+                    >
+                        <Header>Ошибка</Header>
+                        <Modal.Content>
+                            <p>{this.props.store.general.error_text}</p>
+                        </Modal.Content>
+                    </Modal>
+                    
+                        <img className="header_logo" src={logo} />
+                    
+                    
+                </div>
+                <div className='mainmenu'>
+                <div className="main_menu_button">Отслеживание</div>
+                <div className="main_menu_button">Расчет стоимости</div>
+                <div className="main_menu_button">Адреса и телефоны</div>
                 </div>
 
 
 
                 {!this.props.store.login.logged ? (<div className="login-container">
-                    <div style={{ float: "left" }}>
+                    <div className="login-pass-input">
                         <input onChange={e => this.props.set_login(e.target.value)} value={this.props.store.login.username} type="text" placeholder="Логин" name="username" />
 
                         <input onChange={e => this.props.set_password(e.target.value)} value={this.props.store.login.pass} type="password" placeholder="Пароль" name="psw" />
@@ -125,7 +130,7 @@ class Screen extends Component {
 }
 
 export default withCookies(connect(
-    (state, ownProps) => ({store: state, cookies: ownProps.cookies}),
+    (state, ownProps) => ({ store: state, cookies: ownProps.cookies }),
     dispatch => ({
         login: (param) => { dispatch({ type: 'LOGIN', payload: param }) },
         logout: () => { dispatch({ type: 'LOGOUT' }) },

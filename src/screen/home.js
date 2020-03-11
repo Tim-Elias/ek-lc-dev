@@ -12,7 +12,7 @@ class Screen extends React.Component {
 
         <div className='logo-block' id='logo'>
           <div>
-            <img className='logo' src={logo} />
+            {/* <img className='logo' src={logo} /> */}
           
           </div>
 
