@@ -47,8 +47,7 @@ class Screen extends Component {
                 username: this.props.store.login.username,
                 pass: md5(this.props.store.login.pass)
             };
-            console.log(this.props.store.login.pass)
-            console.log(authdata)
+            
             get_data('autorization', authdata).then(
                 (result) => {
 

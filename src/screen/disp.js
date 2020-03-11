@@ -131,7 +131,7 @@ class Screen extends React.Component {
         }
         get_data('removedisp', data).then(
             (result) => {
-                console.log(result)
+               
                 if (result == 1) {
                     this.props.set_disp_text_remove_modal("Накладная успешно удалена");
                 } else {
@@ -219,16 +219,16 @@ class Screen extends React.Component {
                     switch (current_disp_data.DelMethod) {
                         case 'Склад-Дверь': 
                             SendTerminal = true
-                            console.log(current_disp_data.DelMethod)
+                           
                             break
                         case 'Склад-Склад': 
                             RecTerminal = true
                             SendTerminal = true
-                            console.log(current_disp_data.DelMethod)
+                           
                             break
                         case 'Дверь-Склад': 
                             RecTerminal = true
-                            console.log(current_disp_data.DelMethod)
+                          
                             break
                         default: break;
                     } 
@@ -262,7 +262,7 @@ class Screen extends React.Component {
 
                     }
 
-                    console.log(copy_disp_data)
+                  
 
 
                     this.props.set_copy_disp_data(copy_disp_data)

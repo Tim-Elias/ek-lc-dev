@@ -86,11 +86,11 @@ class Screen extends Component {
                 
                 this.props.reset_upload_manifest_data()
                 const list_data = { userkey: this.props.store.login.userkey }
-                console.log(this.props.store.login.consolidate_upload_manifest)
+                
                 if(this.props.store.login.consolidate_upload_manifest){
                     const set_upload_in_one = {label:"Загрузка консолидации", value: true}
                     this.props.set_upload_in_one(set_upload_in_one)
-                    console.log(set_upload_in_one)
+                    
                 }
 
                 get_data('importtemplatelist',list_data).then(

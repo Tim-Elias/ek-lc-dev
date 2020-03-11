@@ -28,7 +28,7 @@ class StikerToPrint extends React.Component {
 
 
   render() {
-   console.log(this.props.disp)
+   
   
     return (
         <div>
