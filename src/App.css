@@ -320,13 +320,7 @@ td {
   grid-area: logo;
   }
 
-.footer {
-  
-  background-color: #000;
-  color: #fff;
-  overflow: hidden;
-  border-top: 2px solid #E87B1A;
-}
+
 
 .logo{
   margin: 40px;
@@ -436,6 +430,27 @@ margin: auto;
   
   margin: 15px;
   font-size: 10px;
+}
+
+.footerrightel {
+  text-align: right;
+  margin: 15px;
+  font-size: 10px;
+}
+
+.footercenterel {
+  text-align: center;
+  margin: 15px;
+  font-size: 10px;
+}
+
+.footer {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  background-color: #000;
+  color: #fff;
+  overflow: hidden;
+  border-top: 2px solid #E87B1A;
 }
 
 .small_table_data{

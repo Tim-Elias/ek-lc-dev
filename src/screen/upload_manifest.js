@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Select from 'react-select'
 import { customStyles } from "./../common/common_style";
-import { Header, Modal, Table, Button, Icon } from 'semantic-ui-react'
+import { Header, Modal, Table, Button, Icon, Checkbox } from 'semantic-ui-react'
 import ReactToPrint from 'react-to-print'
 import { get_data } from './../common/common_modules'
 import 'semantic-ui-css/semantic.min.css'
@@ -46,9 +46,91 @@ const translate = {
 class Screen extends React.Component {
 
   convert_data = () => {
-    
+    const it = this.props.store.upload_manifest.import_template
+    const dt = this.props.store.upload_manifest.default_template
+    let consolidate_data = []
     let data = []
-    this.props.store.upload_manifest.data.forEach((el,index)=>{
+    let sourse_data 
+    if (this.props.store.upload_manifest.upload_in_one.value && this.props.store.upload_manifest.consolidate_checkbox_index !== 0) {
+      consolidate_data = this.props.store.upload_manifest.data.filter((el)=>el[this.props.store.upload_manifest.consolidate_checkbox_index])
+      
+      sourse_data = this.props.store.upload_manifest.data.filter((el)=>!el[this.props.store.upload_manifest.consolidate_checkbox_index])
+      
+      const ConsolidateImportTemplate = this.props.store.upload_manifest.import_template.ConsolidateImportTemplate
+      if (ConsolidateImportTemplate !== 0 && consolidate_data.length !== 0) {
+        const consolidate_dt = this.props.store.upload_manifest.default_template_list.find(el=>{return el.Key === this.props.store.upload_manifest.import_template.ConsolidateImportTemplate})
+        console.log(consolidate_dt)
+        
+        
+       
+
+        let SendCity = consolidate_dt.SendCity
+        let SendAdress = consolidate_dt.SendAdress
+        let SendCompany = consolidate_dt.SendCompany
+        let SendPerson = consolidate_dt.SendPerson
+        let SendPhone = consolidate_dt.SendPhone
+        let SendAddInfo = consolidate_dt.SendAddInfo
+        let RecCity = consolidate_dt.RecCity
+        let RecAdress = consolidate_dt.RecAdress
+        let RecCompany = consolidate_dt.RecCompany
+        let RecPerson = consolidate_dt.RecPerson
+        let RecPhone = consolidate_dt.RecPhone
+        let RecAddInfo = consolidate_dt.RecAddInfo
+
+        let ConsolidateInsureValue = 0
+        let ConsolidateTotal = 0
+        let ConsolidateWeight = 0
+        let ConsolidateVolume = 0
+
+        consolidate_data.forEach(el=>{
+          if(it.Volume !== "0")  {ConsolidateVolume = ConsolidateVolume + parseInt(el[it.Volume-1])}
+          if(it.InsureValue !== "0")  {ConsolidateInsureValue = ConsolidateVolume + parseInt(el[it.InsureValue-1])}
+          if(it.Total !== "0")  {ConsolidateTotal = ConsolidateTotal + parseInt(el[it.Total-1])}
+          if(it.Weight !== "0")  {ConsolidateWeight = ConsolidateWeight + parseInt(el[it.Weight-1])}
+        })
+
+        let disp = {Num: "",
+          SendCity: SendCity,
+          SendAdress: SendAdress,
+          SendCompany: SendCompany,
+          SendPerson: SendPerson,
+          SendPhone: SendPhone,
+          SendAddInfo: SendAddInfo, 
+          RecCity: RecCity,
+          RecAdress: RecAdress,
+          RecCompany: RecCompany,
+          RecPerson: RecPerson,
+          RecPhone: RecPhone,
+          RecAddInfo: RecAddInfo,
+          InsureValue: ConsolidateInsureValue,
+          COD: 0,
+          Total: ConsolidateTotal,
+          Weight: ConsolidateWeight,
+          Volume: ConsolidateVolume,
+          Status: 'Не загружено',
+          Comment: 'Консолидация',
+          Key: 0
+        }
+       console.log(disp)
+        data.push(disp)
+
+      }
+      
+    
+    
+    } else {
+      sourse_data = this.props.store.upload_manifest.data
+    }
+    
+    sourse_data.forEach((el,index)=>{
+
+      let CurIndex 
+
+      if (this.props.store.upload_manifest.upload_in_one.value && this.props.store.upload_manifest.consolidate_checkbox_index !== 0 && this.props.store.upload_manifest.import_template.ConsolidateImportTemplate !==0 && consolidate_data.length !== 0){
+        CurIndex = index+1
+      } else {
+        CurIndex = index
+      }
       // console.log(el)
       let Num = ""
       let SendCity = ""
@@ -70,8 +152,7 @@ class Screen extends React.Component {
       let Weight = 0
       let Volume = 0
 
-      const it = this.props.store.upload_manifest.import_template
-      const dt = this.props.store.upload_manifest.default_template
+      
 
 //console.log(dt)
 
@@ -150,13 +231,16 @@ class Screen extends React.Component {
         Weight: Weight,
         Volume: Volume,
         Status: 'Не загружено',
-        Key: index
+        Key: CurIndex,
+        Comment:''
       }
      
       data.push(disp)
 
 
-    })  
+    })
+    
+    
 
     this.props.set_disp_data(data)
 
@@ -166,15 +250,37 @@ class Screen extends React.Component {
     this.props.set_data_upload_manifest()
   }
 
-  create_table = () => {
+  check_checkbox = (cell_index,element_index) => {
+    // console.log(cell_index)
+    // console.log(element_index)
     
-  const ObjVal = Object.values(this.props.store.upload_manifest.import_template)
+    this.props.upload_manifest_check_checkbox({cell_index: cell_index, element_index:element_index})
+  }
+
+  create_table = () => {
+  let upload_in_one_data = 0 
+  let upload_in_one = false
+  
+  if(this.props.store.upload_manifest.upload_in_one.value){
+    upload_in_one = true
+    upload_in_one_data = 1
+
+  } 
+  const { Key, ConsolidateImportTemplate, ...newData } = this.props.store.upload_manifest.import_template; 
+    
+  //console.log(newData)
+  const ObjVal = Object.values(newData)
   
   if (ObjVal.length > 0) {
   
   const Parseint = ObjVal.map((el)=> {return parseInt(el)})
   const filteObj = Parseint.filter((fel)=>fel > 0)
-  const max = filteObj.reduce(function(a, b) {return Math.max(a, b)});
+  const max = filteObj.reduce(function(a, b) {return Math.max(a, b)}) + upload_in_one_data;
+
+
+  if (upload_in_one) {
+    //this.props.set_consolidate_checkbox_index(max)
+  }
   const import_keys = Object.keys(this.props.store.upload_manifest.import_template)
     
     let header = []
@@ -187,6 +293,9 @@ class Screen extends React.Component {
         for(var s=0; s < import_template_length; s++) {
           if(Parseint[s] === toSearch) {results.push(translate[import_keys[s]])}
         }
+        if (upload_in_one) {
+          results.push('Консолидировать')
+        }
       if (results.length > 0) {
         header.push(<Table.HeaderCell key={i}>{results[0]}</Table.HeaderCell>)
       } else {
@@ -198,8 +307,22 @@ class Screen extends React.Component {
     this.props.store.upload_manifest.data.forEach((element,element_index) => {
       
     let children = []
-    
-    element.forEach((cell,cell_index) => {children.push(<Table.Cell key={cell_index}>{cell}</Table.Cell>)})
+    // console.log(this.props.store.upload_manifest.data)
+    // console.log(element)
+    element.forEach((cell,cell_index) => {
+      if (cell === true || cell === false){
+        children.push(<Table.Cell key={cell_index}>
+          <Checkbox
+          onChange={this.check_checkbox.bind(this,cell_index,element_index)}
+          checked={cell}
+          />
+          </Table.Cell>)
+      } else {
+        children.push(<Table.Cell key={cell_index}>{cell}</Table.Cell>)
+      }
+
+      
+    })
     
     body.push(<Table.Row key={element_index}>{children}</Table.Row>)
     
@@ -316,6 +439,8 @@ class Screen extends React.Component {
 
     this.componentRef = []
     this.stickerRef = []
+
+    const complited = this.props.store.upload_manifest.disp_data.filter((el)=>el.Status === 'Загружено')
     return (
       
       <div>
@@ -328,6 +453,24 @@ class Screen extends React.Component {
       <button className="ui button mini" disabled={this.props.store.upload_manifest.data.length==0} onClick={this.convert_data.bind(this)}>Преобразовать</button>
       <button className="ui button mini" disabled={this.props.store.upload_manifest.disp_data.length==0} onClick={this.upload_data.bind(this)}>Загрузить данные</button>
       
+      {complited.length !== 0 ? (<ReactToPrint
+        trigger={() => <button className="ui button mini"><Icon name='print'></Icon> Печать всех накладных</button>}
+        content={() => this.all_disp_print}
+      />):(null)}
+    
+      {complited.length !== 0 ? (<div style={{ display: "none" }} >
+        <ComponentToPrint disp={complited.map((el)=>{return el.print_data})} ref={cur_el => (this.all_disp_print = cur_el)} />
+      </div>):(null)}
+
+      {complited.length !== 0 && this.props.store.login.print_ticket ? (<ReactToPrint
+        trigger={() => <button className="ui button mini"><Icon name='print'></Icon> Печать всех наклеек</button>}
+        content={() => this.all_ticket_print}
+      />):(null)}
+    
+      {complited.length !== 0 && this.props.store.login.print_ticket ? (<div style={{ display: "none" }} >
+        <StickerToPrint disp={complited.map((el)=>{return el.print_data})} ref={cur_el => (this.all_ticket_print = cur_el)} />
+      </div>):(null)}
+
       </div>
       <div className='upload_manifest_control_panel'>
       <div className="disp_data_label">Шаблон импорта:</div>
@@ -497,17 +640,21 @@ class Screen extends React.Component {
         </Modal.Content>
       </Modal>
     </div>
-    <div className="disp_data_label">Тип загрузки:</div>
-                     <div className="disp_data_el">
-                     <Select
-                          options={UploadInOneList}
-                          styles={customStyles}
-                          value={this.props.store.upload_manifest.upload_in_one}
-                          onChange={(values) => this.props.set_upload_in_one(values)}
-                      /> 
+    {this.props.store.login.consolidate_upload_manifest ? (<div className="disp_data_label">Тип загрузки:</div>):(null)}
+    {this.props.store.login.consolidate_upload_manifest ? (
+       <div className="disp_data_el">
+       <Select
+            options={UploadInOneList}
+            styles={customStyles}
+            value={this.props.store.upload_manifest.upload_in_one}
+            onChange={(values) => this.props.set_upload_in_one(values)}
+        /> 
 
-                       
-        </div>
+         
+</div>
+    ):(null)}
+    
+                    
       </div>
       
       <div>
@@ -539,8 +686,14 @@ class Screen extends React.Component {
   <div className="upload_manifest_data_label_header">Состояние загрузки:</div>
   </div>
 
-{this.props.store.upload_manifest.disp_data.map((el,index)=>
-  <div className="upload_manifest_disp_data_body" key={index}>
+{this.props.store.upload_manifest.disp_data.map((el,index)=> { 
+  
+  let RowClassName = 'upload_manifest_disp_data_body'
+  if (el.Comment ==='Консолидация') {
+    RowClassName = 'upload_manifest_disp_data_body consolidate_row'
+  }
+  
+  return (<div className={RowClassName} key={index}>
     <div className="upload_manifest_cargo_data upload_manifest_disp_data_body_item">
       <div className="upload_manifest_data_label">Номер накладной:</div>
       <div className="upload_manifest_data_el">{el.Num}</div>
@@ -586,30 +739,33 @@ class Screen extends React.Component {
       <div className="upload_manifest_data_el">{el.RecAddInfo}</div>
     </div>
     <div></div>
-    <div className="upload_manifest_rec_send_data upload_manifest_disp_data_body_item">
-      <div className="upload_manifest_data_label">Статус:</div>
-      <div className="upload_manifest_data_el">{el.Status}</div>
+    <div className='upload_manifest_disp_data_body_item'>
+      <div className="upload_manifest_data_el">Статус: {el.Status}</div>
+      {el.Comment === "" ? (null):(
+        <div className="upload_manifest_data_el">{el.Comment}</div>
+      )}
+      
       
       {el.Status === 'Загружено' ? (<ReactToPrint
-        trigger={() => <Button><Icon name='print'></Icon> Печать</Button>}
+        trigger={() => <div className='upload_manifest_button_container'><Button size='mini'><Icon name='print'></Icon> Печать</Button></div>}
         content={() => this.componentRef[el.Key]}
       />):(null)}
     
       {el.Status === 'Загружено' ? (<div style={{ display: "none" }} >
-        <ComponentToPrint disp={el.print_data} ref={cur_el => (this.componentRef[el.Key] = cur_el)} />
+        <ComponentToPrint disp={[el.print_data]} ref={cur_el => (this.componentRef[el.Key] = cur_el)} />
       </div>):(null)}
 
       {el.Status === 'Загружено' ? (<ReactToPrint
-        trigger={() => <Button><Icon name='print'></Icon> Печать наклеек</Button>}
+        trigger={() => <div className='upload_manifest_button_container'><Button size='mini'><Icon name='print'></Icon> Печать наклеек</Button></div>}
         content={() => this.stickerRef[el.Key]}
       />):(null)}
     
       {el.Status === 'Загружено' ? (<div style={{ display: "none" }} >
-        <StickerToPrint disp={el.print_data} ref={cur_el => (this.stickerRef[el.Key] = cur_el)} />
+        <StickerToPrint disp={[el.print_data]} ref={cur_el => (this.stickerRef[el.Key] = cur_el)} />
       </div>):(null)}
   
     </div>
-  </div>
+  </div>)}
   
 )}
 </div>
@@ -636,6 +792,8 @@ export default connect(
     set_disp_data: (param) => { dispatch({ type: 'set_disp_data', payload: param }) },
     set_disp_status: (param) => { dispatch({ type: 'set_disp_status', payload: param }) },
     set_upload_in_one: (param) => { dispatch({ type: 'set_upload_in_one', payload: param }) },
+    upload_manifest_check_checkbox: (param) => { dispatch({ type: 'upload_manifest_check_checkbox', payload: param }) },
+    set_consolidate_checkbox_index: (param) => { dispatch({ type: 'set_consolidate_checkbox_index', payload: param }) }, 
     //add_data_upload_manifest: (param) => { dispatch({ type: 'add_data_upload_manifest', payload: param }) },
   })
 )(Screen);

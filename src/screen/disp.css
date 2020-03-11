@@ -1,6 +1,8 @@
 .disp_print{
     margin: 20px;
-    
+    page-break-inside: avoid !important; 
+    min-height: 140mm;
+    max-width: 200mm;
 }
 
 .disp_print_header{
@@ -166,8 +168,9 @@
     .disp_print_list{
         height: 290mm;
         width: 200mm;
-        display: grid;
-        grid-template-rows:  1fr 1fr;
+        /* display: grid; */
+        /* grid-template-rows:  1fr 1fr; */
+        page-break-after: always !important; 
     }
 
     .disp_print_pod_container{

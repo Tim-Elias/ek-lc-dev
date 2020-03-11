@@ -204,10 +204,10 @@ export default function dispatch (state = initialState, action) {
 
       state.Cargo.push({
 
-        Weight: 0.3,
-        L: 20,
-        W: 30,
-        H: 2,
+        Weight: 0,
+        L: 0,
+        W: 0,
+        H: 0,
 
         Q: 1,
 
@@ -233,6 +233,58 @@ export default function dispatch (state = initialState, action) {
     case 'SetCityList': return { ...state, CityList: action.payload }
     case 'SetSendSelectTerminal': return { ...state, SendSelectTerminal: action.payload }
     case 'SetRecSelectTerminal': return { ...state, RecSelectTerminal: action.payload }
+
+    case 'set_copy_disp_data': 
+    
+    const CargoTypeList = [
+      {label:"Сейф-пакет", value: "СейфПакет"},
+      {label:"Коробка", value: "Коробка"},
+      {label:"Контейнер", value: "Контейнер"},
+      {label:"Мешок под пломбой", value: "МешокПодПломбой"},
+      {label:"Прочее", value: "Прочее"}
+    ]
+
+    return { ...state, 
+    
+      
+      SendAdress: action.payload.SendAdress,
+      SendCompany: action.payload.SendCompany,
+      SendPhone: action.payload.SendPhone,
+      SendPerson: action.payload.SendPerson,
+      SendAddInfo: action.payload.SendAddInfo,
+      SendEmail: action.payload.SendEmail,
+      
+      SendTerminal: action.payload.SendTerminal,
+      // SendSelectTerminal: {},
+      
+    
+      
+      RecAdress: action.payload.RecAdress,
+      RecCompany: action.payload.RecCompany,
+      RecPhone: action.payload.RecPhone,
+      RecPerson: action.payload. RecPerson,
+      RecAddInfo: action.payload.RecAddInfo,
+      RecEmail: action.payload.RecEmail,
+      
+      RecTerminal: action.payload.RecTerminal,
+      // RecSelectTerminal: {},
+
+      CargoInfoType: action.payload.CargoInfoType,
+
+      Volume: action.payload.Volume, 
+      Total: action.payload.Total,
+      Weight: action.payload.Weight,
+      
+      Cargo: action.payload.Cargo.map(el=>{return {
+        Weight: el.Weight,
+        L: el.L,
+        W: el.W,
+        H: el.H,
+        Q: el.Q,
+        CargoType: CargoTypeList.find(el=>el.value === el.CargoType),
+        Comment: el.Comment
+      }}),
+    }
 
     default: return state
   }

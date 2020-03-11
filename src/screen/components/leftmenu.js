@@ -86,7 +86,13 @@ class Screen extends Component {
                 
                 this.props.reset_upload_manifest_data()
                 const list_data = { userkey: this.props.store.login.userkey }
-                
+                console.log(this.props.store.login.consolidate_upload_manifest)
+                if(this.props.store.login.consolidate_upload_manifest){
+                    const set_upload_in_one = {label:"Загрузка консолидации", value: true}
+                    this.props.set_upload_in_one(set_upload_in_one)
+                    console.log(set_upload_in_one)
+                }
+
                 get_data('importtemplatelist',list_data).then(
                     (result) => {
                         this.props.set_import_template_list(result); 
@@ -105,7 +111,7 @@ class Screen extends Component {
                     },
                     (err) => { console.log(err) }
                 );
-                this.props.upload_manifest_reset_state()
+                
                 this.props.set_active_window(target);
             
             default: this.props.set_active_window(target);
@@ -219,5 +225,6 @@ export default connect(
         set_my_disp_data: (param) => { dispatch({ type: 'set_my_disp_data', payload: param }) },
         reset_create_disp_data: () => { dispatch({ type: 'reset_create_disp_data'}) },
         reset_upload_manifest_data: () => { dispatch({ type: 'reset_upload_manifest_data'}) },
+        set_upload_in_one: (param) => { dispatch({ type: 'set_upload_in_one', payload: param }) },
     })
 )(Screen);

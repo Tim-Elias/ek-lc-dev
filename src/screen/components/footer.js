@@ -65,7 +65,8 @@ class Screen extends Component {
 
 
                 <div className="footerleftel">© 2006-2019 ООО "Экспресс Кинетика"</div> 
-                 
+                <div className="footercenterel">г. Новосибирск, ул Коммунистическая 7, склад 1</div> 
+                <div className="footerrightel">Разработка сайта: ООО "Экспресс Кинетика"</div>  
             </div>
         );
     }

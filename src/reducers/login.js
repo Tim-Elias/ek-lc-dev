@@ -17,6 +17,11 @@ const initialState = {
   full_list_template: false,
   total_only: false,
   consolidate_upload_manifest: false,
+  print_ticket: false,
+  Q_only: false,
+  default_send: '0',
+  default_rec: '0',
+  default_cargo: '0'
 
 
 }
@@ -56,7 +61,12 @@ export default function login (state = initialState, action) {
       upload_manifest: action.payload.upload_manifest,
       full_list_template: action.payload.full_list_template,
       total_only: action.payload.total_only,
-      consolidate_upload_manifest: action.payload.consolidate_upload_manifest
+      consolidate_upload_manifest: action.payload.consolidate_upload_manifest,
+      print_ticket: action.payload.print_ticket,
+      Q_only: action.payload.Q_only,
+      default_send: action.payload.default_send,
+      default_rec: action.payload.default_rec,
+      default_cargo: action.payload.default_cargo
     }
     case 'LOGOUT': return { ...state, userkey: null, alias: null, logged: false, username: '', pass: '' }
     default: return state

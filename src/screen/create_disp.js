@@ -321,11 +321,13 @@ OpenRecTemplateModal = () => {
 
   render() {
     let disabled = false
-  
+    let total_weight = Math.ceil(this.props.store.create_disp.Cargo.reduce((accumulator, Cargo) => accumulator + Math.ceil(Cargo.Weight * Cargo.Q*1000)/1000, 0)*1000)/1000
+
     if(this.props.store.create_disp.SelectedSendCity===null 
       || this.props.store.create_disp.SelectedRecCity===null 
       || (this.props.store.create_disp.Total==0 && this.props.store.create_disp.CargoInfoType.value)
       || (this.props.store.create_disp.Weight==0 && this.props.store.create_disp.CargoInfoType.value)
+      || (total_weight==0 && ! this.props.store.create_disp.CargoInfoType.value)
       ){
       disabled = true
     }    
@@ -619,7 +621,7 @@ OpenRecTemplateModal = () => {
                     <div className="disp_data_label">Общее количество мест:</div>
                     <div className="disp_data_el">{this.props.store.create_disp.Cargo.reduce((accumulator, Cargo) => accumulator + Number(Cargo.Q), 0)}</div>
                     <div className="disp_data_label">Общий фактический вес (кг):</div>
-                    <div className="disp_data_el">{Math.ceil(this.props.store.create_disp.Cargo.reduce((accumulator, Cargo) => accumulator + Math.ceil(Cargo.Weight * Cargo.Q*1000)/1000, 0)*1000)/1000}</div>
+                    <div className="disp_data_el">{total_weight}</div>
                     <div className="disp_data_label">Общий объемный вес (кг):</div>
                     <div className="disp_data_el">{Math.ceil(this.props.store.create_disp.Cargo.reduce((accumulator, Cargo) => accumulator + Math.ceil(Cargo.L * Cargo.W * Cargo.H * Cargo.Q /5)/1000, 0)*1000)/1000}</div> 
                 </div>
