@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import logo from './../../logo.svg';
 import { get_data } from './../../common/common_modules'
 import { withCookies } from 'react-cookie';
+import { Header, Modal } from 'semantic-ui-react'
 import md5 from 'md5'
 
 
@@ -60,7 +61,12 @@ class Screen extends Component {
                     this.props.cookies.set('passkey',md5(this.props.store.login.pass))
 
                 },
-                (err) => { console.log(err) }
+                (err) => { 
+                    this.props.set_error_show(true)
+                    this.props.set_error_text(err)
+
+                    console.log(err) 
+                }
             );
         }
         else {
@@ -68,15 +74,24 @@ class Screen extends Component {
         }
     };
 
-
-
+    close_error_portal = () => {
+        this.props.set_error_show(false)
+    }
 
     render() {
         return (
 
             <div id="pageHeader" className="topnav">
 
-
+            <Modal closeIcon
+                open={this.props.store.general.error_show}
+                onClose={this.close_error_portal.bind(this)}
+            >
+                <Header>Ошибка</Header>
+                <Modal.Content>
+                    <p>{this.props.store.general.error_text}</p>
+                </Modal.Content>
+            </Modal>
 
                 <div>
                     {this.props.store.general.active_window !== "home" ? (
@@ -118,6 +133,8 @@ export default withCookies(connect(
         set_password: (param) => { dispatch({ type: 'SET_PASS', payload: param }); },
         set_active_window: (param) => { dispatch({ type: 'set_active_window', payload: param }); },
         set_list: (param) => { dispatch({ type: 'SET_DISPATCH_LIST', payload: param }) },
-        set_error: (param) => { dispatch({ type: 'SET_ERROR', payload: param }) }
+        set_error: (param) => { dispatch({ type: 'SET_ERROR', payload: param }) },
+        set_error_show: (param) => { dispatch({ type: 'set_error_show', payload: param }) },
+        set_error_text: (param) => { dispatch({ type: 'set_error_text', payload: param }) },
     })
 )(Screen));
