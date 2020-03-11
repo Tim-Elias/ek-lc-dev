@@ -192,7 +192,7 @@ class Screen extends React.Component {
       }
 
     copy_disp = () =>{
-
+        this.props.set_active_window('wait')
         const current_disp_data = this.props.store.disp.data
         const copy_disp_cargo = this.props.store.disp.cargo
         let CargoInfoType 
