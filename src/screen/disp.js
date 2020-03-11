@@ -208,8 +208,8 @@ class Screen extends React.Component {
                     }
 
 
-                    const SelectedSendCity = this.props.store.create_disp.CityList.filter((el)=>el.value === current_disp_data.SebdCity)[0]
-                    const SelectedRecCity = this.props.store.create_disp.CityList.filter((el)=>el.value === current_disp_data.RecCity)[0]
+                    const SelectedSendCity = result.filter((el)=>el.value === current_disp_data.SebdCity)[0]
+                    const SelectedRecCity = result.filter((el)=>el.value === current_disp_data.RecCity)[0]
                     
                    
 
