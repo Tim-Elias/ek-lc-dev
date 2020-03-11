@@ -78,6 +78,10 @@ class Screen extends Component {
         this.props.set_error_show(false)
     }
 
+    logo_click = () => {
+        this.props.set_active_window("home")
+    }
+
     render() {
 
         
@@ -88,7 +92,7 @@ class Screen extends Component {
 
 
 
-                <div>
+                <div onClick={this.logo_click.bind(this)}>
                     <Modal closeIcon
                         open={this.props.store.general.error_show}
                         onClose={this.close_error_portal.bind(this)}
