@@ -107,9 +107,9 @@ class Screen extends Component {
                     
                 </div>
                 <div className='mainmenu'>
-                <div className="main_menu_button">Отслеживание</div>
+                {/* <div className="main_menu_button">Отслеживание</div>
                 <div className="main_menu_button">Расчет стоимости</div>
-                <div className="main_menu_button">Адреса и телефоны</div>
+                <div className="main_menu_button">Адреса и телефоны</div> */}
                 </div>
 
 
