@@ -275,8 +275,8 @@ class Screen extends React.Component {
   
   const Parseint = ObjVal.map((el)=> {return parseInt(el)})
   const filteObj = Parseint.filter((fel)=>fel > 0)
-  const max = filteObj.reduce(function(a, b) {return Math.max(a, b)}) + upload_in_one_data;
-
+  //const max = filteObj.reduce(function(a, b) {return Math.max(a, b)}) + upload_in_one_data;
+  const max = filteObj.reduce(function(a, b) {return Math.max(a, b)});
 
   if (upload_in_one) {
     //this.props.set_consolidate_checkbox_index(max)
@@ -293,14 +293,15 @@ class Screen extends React.Component {
         for(var s=0; s < import_template_length; s++) {
           if(Parseint[s] === toSearch) {results.push(translate[import_keys[s]])}
         }
-        if (upload_in_one) {
-          results.push('Консолидировать')
-        }
+        
       if (results.length > 0) {
         header.push(<Table.HeaderCell key={i}>{results[0]}</Table.HeaderCell>)
       } else {
         header.push(<Table.HeaderCell  key={i}> </Table.HeaderCell>)
       }
+    } 
+    if (upload_in_one) {
+      header.push(<Table.HeaderCell  key={max}>Консолидировать</Table.HeaderCell>)
     }
     
     let body = []
