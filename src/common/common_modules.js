@@ -4,7 +4,7 @@ import axios from 'axios/index'
 
 const get_data = (url, data) => {
   return new Promise((resolve, reject) => {
-    axios.post(`http://92.53.124.162:25664/http/hs/agent/${url}/post`,
+    axios.post(`http://kinetika-1c.tmweb.ru/http/hs/agent/${url}/post`,
       JSON.stringify(data),
       {
         headers: { 'Content-Type': 'text/plain' }
