@@ -1,8 +1,9 @@
 .disp_print{
-    margin: 20px;
+    padding: 20px;
+    margin: 0;
     page-break-inside: avoid !important; 
-    min-height: 140mm;
-    max-width: 200mm;
+    min-height: 50vh;
+    max-width: 100vh;
 }
 
 .disp_print_header{
