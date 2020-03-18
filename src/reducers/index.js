@@ -12,6 +12,7 @@ import mutual from './mutual'
 import create_disp from './create_disp'
 import upload_manifest from './upload_manifest'
 import my_disp from './my_disp'
+import order from './order'
 
 export default combineReducers({
 
@@ -26,6 +27,7 @@ export default combineReducers({
   mutual,
   create_disp,
   upload_manifest,
-  my_disp
+  my_disp,
+  order
   
 })

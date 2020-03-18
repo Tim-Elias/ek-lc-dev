@@ -133,7 +133,7 @@ RemoveCargo = (index) => {
       );
   }
 
-  SelectRecCity = (value) =>{
+  SelectRecCity = (value) => {
 
     this.props.SetSelectedRecCity(value)
 
@@ -243,6 +243,8 @@ RemoveCargo = (index) => {
       Volume: this.props.store.create_disp.Volume,
       Weight: this.props.store.create_disp.Weight,
 
+      InsureValue: this.props.store.create_disp.InsureValue,
+      COD: this.props.store.create_disp.COD,
       CargoInfoType: this.props.store.create_disp.CargoInfoType.value
 
     }
@@ -633,6 +635,12 @@ OpenRecTemplateModal = () => {
                     <div className="disp_data_label">Общий объемный вес (кг):</div>
                     <div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.props.SetVolume(e.target.value)} value={this.props.store.create_disp.Volume} type="number" placeholder="Итоговый объемный вес" /></div> 
                 </div>)}
+                <div className="disp_cargo_data">
+                <div className="disp_data_label">Страховая стоимость (руб.):</div>
+                <div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.props.SetInsureValue(e.target.value)} value={this.props.store.create_disp.InsureValue} type="number"  /></div>
+                <div className="disp_data_label">Наложенный платеж (руб.):</div>
+                <div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.props.SetCOD(e.target.value)} value={this.props.store.create_disp.COD} type="number"  /></div> 
+                </div>
                 <Button disabled={disabled} onClick={this.sent_disp.bind(this)}>Создать накладную</Button>
                 </div>
                 
@@ -737,6 +745,9 @@ export default connect(
 
     SetFilterModalSendTemplate: (param) => { dispatch({ type: 'SetFilterModalSendTemplate', payload: param }) },
     SetFilterModalRecTemplate: (param) => { dispatch({ type: 'SetFilterModalRecTemplate', payload: param }) },
+
+    SetCOD: (param) => { dispatch({ type: 'SetCOD', payload: param }) },
+    SetInsureValue: (param) => { dispatch({ type: 'SetInsureValue', payload: param }) },
    
   })
 )(Screen);

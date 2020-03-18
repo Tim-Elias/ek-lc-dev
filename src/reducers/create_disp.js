@@ -56,6 +56,9 @@ const initialState = {
   Total: 0,
   Weight: 0,
   Volume: 0,
+  COD: 0,
+  InsureValue: 0,
+
 
   Termo: '',
 
@@ -71,6 +74,9 @@ export default function dispatch (state = initialState, action) {
     
     case 'reset_create_disp_data': return  initialState 
     case 'SetDelMethod': return { ...state, DelMethod: action.payload }
+
+    case 'SetCOD': return { ...state, COD: action.payload }
+    case 'SetInsureValue': return { ...state, InsureValue: action.payload }
 
     case 'SetOpenModalRecTemplate': return { ...state, OpenModalRecTemplate: action.payload }
     case 'SetOpenModalSendTemplate': return { ...state, OpenModalSendTemplate: action.payload }
@@ -243,7 +249,7 @@ export default function dispatch (state = initialState, action) {
       {label:"Мешок под пломбой", value: "МешокПодПломбой"},
       {label:"Прочее", value: "Прочее"}
     ]
-
+    console.log(action.payload.Cargo)
     return { ...state, 
     
       
@@ -275,13 +281,18 @@ export default function dispatch (state = initialState, action) {
       Total: action.payload.Total,
       Weight: action.payload.Weight,
       
-      Cargo: action.payload.Cargo.map(el=>{return {
+      Cargo: action.payload.Cargo.map(el=>{
+        const cargo_type = el.Type
+        const CargoTypeListEl = CargoTypeList.find(el_list => el_list.value === el.Type)
+        console.log(cargo_type)
+        console.log(CargoTypeListEl)
+        return {
         Weight: el.Weight,
         L: el.L,
         W: el.W,
         H: el.H,
         Q: el.Q,
-        CargoType: CargoTypeList.find(el=>el.value === el.CargoType),
+        Type: CargoTypeList.find(el_list => el_list.label === el.Type),
         Comment: el.Comment
       }}),
     }

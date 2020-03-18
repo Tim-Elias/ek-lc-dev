@@ -13,6 +13,7 @@ import Manifest from './manifest'
 import Wait from './wait'
 import UploadMainfest from './upload_manifest'
 import Setting from './setting'
+import Order from './order'
 
 class Screen extends React.Component {
   render () {
@@ -33,6 +34,7 @@ class Screen extends React.Component {
         {this.props.store.general.active_window === 'wait' ? (<Wait />) : (null)}
         {this.props.store.general.active_window === 'upload_manifest' ? (<UploadMainfest />) : (null)}
         {this.props.store.general.active_window === 'setting' ? (<Setting />) : (null)}
+        {this.props.store.general.active_window === 'order' ? (<Order />) : (null)}
 
       </div>
 

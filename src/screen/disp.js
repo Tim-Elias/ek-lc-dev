@@ -17,7 +17,9 @@ class Screen extends React.Component {
     // }
 
     back = () => {
-        this.props.set_active_window(this.props.store.general.last_window);
+        const last_window = this.props.store.general.last_window[this.props.store.general.last_window.length -1]
+        this.props.pop_last_window();
+        this.props.set_active_window(last_window);
     }
 
     sendpod = () => {
@@ -278,12 +280,60 @@ class Screen extends React.Component {
             );
 
 
-        
+            
         
 
 
 
     }
+    SetSendTerminal = (param) => {
+        let DelMethod
+      
+        if (this.props.store.create_disp.RecTerminal){
+          if(param){
+             DelMethod = "Склад - Склад"
+          } else {
+             DelMethod = "Дверь - Склад"
+          }
+        } else {
+          if(param){
+             DelMethod = "Склад - Дверь"
+          } else {
+             DelMethod = "Дверь - Дверь"
+          }
+        }
+    
+        const data = {
+          SendTerminal: param,
+          DelMethod: DelMethod
+        }
+    
+        this.props.SetSendTerminal(data)
+        
+      }
+    
+      SetRecTerminal = (param) => {
+        let DelMethod
+        if (param){
+          if(this.props.store.create_disp.SendTerminal){
+             DelMethod = "Склад - Склад"
+          } else {
+             DelMethod = "Дверь - Склад"
+          }
+        } else {
+          if(this.props.store.create_disp.SendTerminal){
+             DelMethod = "Склад - Дверь"
+          } else {
+             DelMethod = "Дверь - Дверь"
+          }
+        }
+    
+        const data = {
+          RecTerminal: param,
+          DelMethod: DelMethod
+        }
+        this.props.SetRecTerminal(data)
+      }
 
     render() {
 
@@ -505,6 +555,13 @@ class Screen extends React.Component {
                     <div className="disp_data_label">Общий объемный вес:</div>
                     <div className="disp_data_el">{this.props.store.disp.data.Volume}</div>
                 </div>
+                <div className="disp_cargo_data">
+                    <div className="disp_data_label">Страховая стоимость:</div>
+                    <div className="disp_data_el">{this.props.store.disp.data.InsureValue}</div>
+                    <div className="disp_data_label">Наложенный платеж:</div>
+                    <div className="disp_data_el">{this.props.store.disp.data.COD}</div>
+                    
+                </div>
                 {this.props.store.disp.action === "deliver" && this.props.store.disp.data.Type === "Доставка" ? (<div>
                     <div className="pod_header">Внести данные о доставке:</div>
                     <div className="pod_data">
@@ -576,5 +633,6 @@ export default connect(
         SetSendCity: (param) => { dispatch({ type: 'SetSendCity', payload: param }) },
         SetSendTerminal: (param) => { dispatch({ type: 'SetSendTerminal', payload: param }) },
         SetRecTerminal: (param) => { dispatch({ type: 'SetRecTerminal', payload: param }) },
+        pop_last_window: () => { dispatch({ type: 'pop_last_window'}) },
     })
 )(Screen);
