@@ -283,7 +283,7 @@ class Screen extends React.Component {
 
                   
 
-
+                    console.log(copy_disp_data)
                     this.props.set_copy_disp_data(copy_disp_data)
                     if (SelectedSendCity !== undefined) {this.SelectSendCity(SelectedSendCity)}
                     if (SelectedRecCity !== undefined) {this.SelectRecCity(SelectedRecCity)}

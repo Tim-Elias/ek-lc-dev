@@ -266,8 +266,8 @@ export default function dispatch (state = initialState, action) {
       SendTerminal: action.payload.SendTerminal,
       // SendSelectTerminal: {},
       
-    
-      
+      InsureValue: action.payload.InsureValue,
+      COD: action.payload.COD,
       RecAdress: action.payload.RecAdress,
       RecCompany: action.payload.RecCompany,
       RecPhone: action.payload.RecPhone,
