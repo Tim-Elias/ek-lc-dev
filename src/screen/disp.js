@@ -197,7 +197,7 @@ class Screen extends React.Component {
         let number = 0
         this.props.set_active_window('wait')
         const current_disp_data = this.props.store.disp.data
-        console.log(current_disp_data)
+        //console.log(current_disp_data)
         const copy_disp_cargo = this.props.store.disp.cargo
         let CargoInfoType 
         this.props.reset_create_disp_data()
@@ -283,7 +283,7 @@ class Screen extends React.Component {
 
                   
 
-                    console.log(copy_disp_data)
+                    //console.log(copy_disp_data)
                     this.props.set_copy_disp_data(copy_disp_data)
                     if (SelectedSendCity !== undefined) {this.SelectSendCity(SelectedSendCity)}
                     if (SelectedRecCity !== undefined) {this.SelectRecCity(SelectedRecCity)}

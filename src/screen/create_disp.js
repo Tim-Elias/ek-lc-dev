@@ -263,7 +263,7 @@ RemoveCargo = (index) => {
           
               get_data('dispatch', data).then(
                 (result) => {
-                  console.log(result)
+                  //console.log(result)
                   this.props.set_data_disp(result);
                   this.props.set_active_window("disp");
                   this.props.set_last_window("create_disp");
