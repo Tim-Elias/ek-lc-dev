@@ -219,7 +219,13 @@ class Screen extends React.Component {
                     const SelectedSendCity = result.filter((el)=>el.value === current_disp_data.SebdCity)[0]
                     const SelectedRecCity = result.filter((el)=>el.value === current_disp_data.RecCity)[0]
                     
-                   
+                    const PayTypeList = [
+                        {label:"Безналичная оплата", value:"БезналичнаяОплата"},
+                        {label:"Оплата наличными при отправлении", value:"ОплатаНаличнымиПриОтправлении"},
+                        {label:"Оплата наличными при получении", value:"ОплатаНаличнымиПриПолучении"}
+                      ]
+                    
+                    const PayType = PayTypeList.find(ptel=>ptel.label === current_disp_data.PayType)
 
                     let RecTerminal = false
                     let SendTerminal = false
@@ -245,6 +251,7 @@ class Screen extends React.Component {
                         Number: number,
                         RecTerminal: RecTerminal,
                         SendTerminal: SendTerminal,
+                        PayType: PayType,
                         
                         SendAdress: current_disp_data.SendAdress,
                         SendCompany: current_disp_data.SendCompany,

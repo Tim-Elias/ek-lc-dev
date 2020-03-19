@@ -255,6 +255,7 @@ export default function dispatch (state = initialState, action) {
     return { ...state, 
     
       Number: action.payload.Number,
+      PayType: action.payload.PayType,
       SendAdress: action.payload.SendAdress,
       SendCompany: action.payload.SendCompany,
       SendPhone: action.payload.SendPhone,
