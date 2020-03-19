@@ -252,6 +252,9 @@ class Screen extends React.Component {
                         RecTerminal: RecTerminal,
                         SendTerminal: SendTerminal,
                         PayType: PayType,
+
+                        InsureValue: current_disp_data.InsureValue,
+                        COD: current_disp_data.COD,
                         
                         SendAdress: current_disp_data.SendAdress,
                         SendCompany: current_disp_data.SendCompany,
