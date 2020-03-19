@@ -1,5 +1,4 @@
-
-  const today = new Date
+  const today = new Date()
   let mm = today.getMonth() + 1; // getMonth() is zero-based
   let dd = today.getDate();
 

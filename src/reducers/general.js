@@ -3,16 +3,18 @@ const initialState = {
   active_window: 'home',
   hidemenu:false,
   wait: false,
-  error_show: false,
-  error_text:'',
+  modal_show: false,
+  modal_text:'',
+  modal_header:'',
 
 }
 
 export default function general (state = initialState, action) {
   switch (action.type) {
     case 'set_active_window': return { ...state, active_window: action.payload }
-    case 'set_error_show': return { ...state, error_show: action.payload }
-    case 'set_error_text': return { ...state, error_text: action.payload }
+    case 'set_modal_show': return { ...state, modal_show: action.payload }
+    case 'set_modal_text': return { ...state, modal_text: action.payload }
+    case 'set_modal_header': return { ...state, modal_header: action.payload }
     case 'set_last_window': 
       state.last_window.push(action.payload)
       return { ...state, last_window: state.last_window}

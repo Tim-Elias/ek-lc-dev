@@ -158,7 +158,7 @@ class Screen extends Component {
     }
 
     button_click = (target) => {
-
+        const list_data = { userkey: this.props.store.login.userkey }
         // this.clickChild()
 
         switch (target) {
@@ -222,7 +222,7 @@ class Screen extends Component {
             case 'upload_manifest':
 
                 this.props.reset_upload_manifest_data()
-                const list_data = { userkey: this.props.store.login.userkey }
+                
 
                 if (this.props.store.login.consolidate_upload_manifest) {
                     const set_upload_in_one = { label: "Загрузка консолидации", value: true }
@@ -250,6 +250,37 @@ class Screen extends Component {
                 );
 
                 this.props.set_active_window(target);
+                break
+
+            case 'setting':
+                this.props.set_active_window(target);
+
+                
+                // get_data('importtemplatelist', list_data).then(
+                //     (result) => {
+                //         this.props.set_import_template_list(result);
+                //     },
+                //     (err) => { console.log(err) }
+                // );
+                // get_data('defaulttemplatelist', list_data).then(
+                //     (result) => {
+                //         this.props.set_default_template_list(result);
+                //     },
+                //     (err) => { console.log(err) }
+                // );
+                get_data('disptemplatelist', list_data).then(
+                    (result) => {
+                        this.props.set_disp_template_list(result);
+                    },
+                    (err) => { console.log(err) }
+                );
+                get_data('citylist').then(
+                    (result) => {
+                        this.props.SetCityList(result);
+                    },
+                    (err) => { console.log(err) }
+                );
+
                 break
 
             default:

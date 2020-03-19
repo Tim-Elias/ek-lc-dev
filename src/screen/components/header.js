@@ -52,7 +52,7 @@ class Screen extends Component {
                 (result) => {
 
                     this.props.login(result);
-
+                    
                     this.get_list(result.userkey);
 
                     this.props.cookies.set('username', this.props.store.login.username)
@@ -61,8 +61,9 @@ class Screen extends Component {
 
                 },
                 (err) => {
-                    this.props.set_error_show(true)
-                    this.props.set_error_text(err)
+                    this.props.set_modal_show(true)
+                    this.props.set_modal_text(err)
+                    this.props.set_modal_header('Ошибка')
 
                     console.log(err)
                 }
@@ -73,8 +74,8 @@ class Screen extends Component {
         }
     };
 
-    close_error_portal = () => {
-        this.props.set_error_show(false)
+    close_modal_portal = () => {
+        this.props.set_modal_show(false)
     }
 
     logo_click = () => {
@@ -89,18 +90,18 @@ class Screen extends Component {
 
             <div id="pageHeader" className="topnav">
 
-
-
-                <div onClick={this.logo_click.bind(this)}>
                     <Modal closeIcon
-                        open={this.props.store.general.error_show}
-                        onClose={this.close_error_portal.bind(this)}
+                        open={this.props.store.general.modal_show}
+                        onClose={this.close_modal_portal.bind(this)}
                     >
-                        <Header>Ошибка</Header>
+                        <Header>{this.props.store.general.modal_header}</Header>
                         <Modal.Content>
-                            <p>{this.props.store.general.error_text}</p>
+                            <p>{this.props.store.general.modal_text}</p>
                         </Modal.Content>
                     </Modal>
+
+                <div onClick={this.logo_click.bind(this)}>
+                    
                     
                         <img className="header_logo" src={logo} />
                     
@@ -124,7 +125,7 @@ class Screen extends Component {
 
 
                 </div>) : (<div className="login-container">
-                    <div className="topnavusername">{this.props.store.login.alias} </div>
+                    <div className="topnavusername">{this.props.store.login.original_data.username} </div>
                     <div onClick={this.logout.bind(this)} className="logout"> Выход </div>
                 </div>)}
             </div>
@@ -142,7 +143,8 @@ export default withCookies(connect(
         set_active_window: (param) => { dispatch({ type: 'set_active_window', payload: param }); },
         set_list: (param) => { dispatch({ type: 'SET_DISPATCH_LIST', payload: param }) },
         set_error: (param) => { dispatch({ type: 'SET_ERROR', payload: param }) },
-        set_error_show: (param) => { dispatch({ type: 'set_error_show', payload: param }) },
-        set_error_text: (param) => { dispatch({ type: 'set_error_text', payload: param }) },
+        set_modal_show: (param) => { dispatch({ type: 'set_modal_show', payload: param }) },
+        set_modal_text: (param) => { dispatch({ type: 'set_modal_text', payload: param }) },
+        set_modal_header: (param) => { dispatch({ type: 'set_modal_header', payload: param }) },
     })
 )(Screen));

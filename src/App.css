@@ -499,3 +499,20 @@ margin: auto;
   color: #ffffff;
 }
 
+.setting_template_data{
+  display: grid;
+
+  grid-template-columns: 300px 30px 100px ;
+  margin: 5px;
+}
+
+.setting_general_data{
+  display: grid;
+
+  grid-template-columns: 200px 230px ;
+  margin: 5px;
+}
+
+.page_header{
+  margin: 0 10px
+}

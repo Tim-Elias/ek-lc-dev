@@ -54,7 +54,7 @@ class Screen extends React.Component {
                 <div><Button compact icon onClick={this.back.bind(this)}>
                         <Icon name='arrow left' />
                     </Button>  
-                    <b style={{margin: "0 10px"}}>Реализация № {this.props.store.order.data.Number} от {this.props.store.order.data.Date}</b>
+                    <b className='page_header'>Реализация № {this.props.store.order.data.Number} от {this.props.store.order.data.Date}</b>
                     <Button onClick={this.get_order.bind(this)} >Счёт</Button>
                     <Button onClick={this.get_act.bind(this)} >Акт</Button>
                     {this.props.store.order.data.VAT === 0 ? (null):(<Button onClick={this.get_cf.bind(this)} >Счёт-фактура</Button>)}

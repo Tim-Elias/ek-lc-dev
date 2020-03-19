@@ -14,27 +14,58 @@ import Wait from './wait'
 import UploadMainfest from './upload_manifest'
 import Setting from './setting'
 import Order from './order'
+import ImportTemplateList from './import_template_list'
+import DefaultTemplateList from './default_template_list'
+import DispTemplateList from './disp_template_list'
+import ImportTemplate from './import_template'
+import DefaultTemplate from './default_template'
+import DispTemplate from './disp_template'
+
 
 class Screen extends React.Component {
+
+  back = () => {
+    const last_window = this.props.store.general.last_window[this.props.store.general.last_window.length -1]
+    this.props.pop_last_window();
+    this.props.set_active_window(last_window);
+}
+
   render () {
+
+    const modules = {
+      set_modal_show: this.props.set_modal_show,
+      set_active_window: this.props.set_active_window,
+      set_modal_text: this.props.set_modal_text,
+      set_modal_header: this.props.set_modal_header,
+      set_last_window: this.props.set_last_window,
+      back: this.back,
+
+    }
+
     return (
 
       <div className='content_window'>
 
-        {this.props.store.general.active_window === 'home' ? (<Home />) : (null)}
-        {this.props.store.general.active_window === 'my_disp' ? (<MyDisp />) : (null)}
-        {this.props.store.general.active_window === 'create_disp' ? (<CreateDisp />) : (null)}
-        {this.props.store.general.active_window === 'mutual' ? (<Mutual />) : (null)}
-        {this.props.store.general.active_window === 'storage' ? (<Storage />) : (null)}
-        {this.props.store.general.active_window === 'reciept' ? (<Reciept />) : (null)}
-        {this.props.store.general.active_window === 'send_manifest' ? (<SendManifest />) : (null)}
-        {this.props.store.general.active_window === 'get_manifest' ? (<GetManifest />) : (null)}
-        {this.props.store.general.active_window === 'disp' ? (<Disp />) : (null)}
-        {this.props.store.general.active_window === 'manifest' ? (<Manifest />) : (null)}
-        {this.props.store.general.active_window === 'wait' ? (<Wait />) : (null)}
-        {this.props.store.general.active_window === 'upload_manifest' ? (<UploadMainfest />) : (null)}
-        {this.props.store.general.active_window === 'setting' ? (<Setting />) : (null)}
-        {this.props.store.general.active_window === 'order' ? (<Order />) : (null)}
+        {this.props.store.general.active_window === 'home' ? (<Home modules={modules}/>) : (null)}
+        {this.props.store.general.active_window === 'my_disp' ? (<MyDisp modules={modules}/>) : (null)}
+        {this.props.store.general.active_window === 'create_disp' ? (<CreateDisp modules={modules}/>) : (null)}
+        {this.props.store.general.active_window === 'mutual' ? (<Mutual modules={modules}/>) : (null)}
+        {this.props.store.general.active_window === 'storage' ? (<Storage modules={modules}/>) : (null)}
+        {this.props.store.general.active_window === 'reciept' ? (<Reciept modules={modules}/>) : (null)}
+        {this.props.store.general.active_window === 'send_manifest' ? (<SendManifest modules={modules}/>) : (null)}
+        {this.props.store.general.active_window === 'get_manifest' ? (<GetManifest modules={modules}/>) : (null)}
+        {this.props.store.general.active_window === 'disp' ? (<Disp modules={modules}/>) : (null)}
+        {this.props.store.general.active_window === 'manifest' ? (<Manifest modules={modules}/>) : (null)}
+        {this.props.store.general.active_window === 'wait' ? (<Wait modules={modules}/>) : (null)}
+        {this.props.store.general.active_window === 'upload_manifest' ? (<UploadMainfest modules={modules}/>) : (null)}
+        {this.props.store.general.active_window === 'setting' ? (<Setting modules={modules}/>) : (null)}
+        {this.props.store.general.active_window === 'order' ? (<Order modules={modules}/>) : (null)}
+        {this.props.store.general.active_window === 'import_template_list' ? (<ImportTemplateList modules={modules}/>) : (null)}
+        {this.props.store.general.active_window === 'default_template_list' ? (<DefaultTemplateList modules={modules}/>) : (null)}
+        {this.props.store.general.active_window === 'disp_template_list' ? (<DispTemplateList modules={modules}/>) : (null)}
+        {this.props.store.general.active_window === 'import_template' ? (<ImportTemplate modules={modules}/>) : (null)}
+        {this.props.store.general.active_window === 'default_template' ? (<DefaultTemplate modules={modules}/>) : (null)}
+        {this.props.store.general.active_window === 'disp_template' ? (<DispTemplate modules={modules}/>) : (null)}
 
       </div>
 
@@ -46,5 +77,13 @@ export default connect(
   state => ({
     store: state
   }),
-  dispatch => ({})
+  dispatch => ({
+    set_active_window: (param) => { dispatch({ type: 'set_active_window', payload: param }) },
+    set_modal_show: (param) => { dispatch({ type: 'set_modal_show', payload: param }) },
+    set_modal_text: (param) => { dispatch({ type: 'set_modal_text', payload: param }) },
+    set_modal_header: (param) => { dispatch({ type: 'set_modal_header', payload: param }) },
+    set_last_window: (param) => { dispatch({ type: 'set_last_window', payload: param }) },
+    pop_last_window: () => { dispatch({ type: 'pop_last_window'}) },
+    
+  })
 )(Screen)

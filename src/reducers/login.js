@@ -1,4 +1,5 @@
 const initialState = {
+  original_data: {}, 
   username: '',
   pass: '',
   userkey: null,
@@ -21,14 +22,18 @@ const initialState = {
   Q_only: false,
   default_send: '0',
   default_rec: '0',
-  default_cargo: '0'
+  default_cargo: '0',
+  email: '',
+  phone: '',
 
 
 }
 
 export default function login (state = initialState, action) {
   switch (action.type) {
-    case 'AUTH': return { ...state, alias: action.payload.alias, 
+    case 'AUTH': return { ...state, 
+      original_data: action.payload,
+      alias: action.payload.alias, 
       userkey: action.payload.userkey, 
       logged: true, 
       client: action.payload.client, 
@@ -42,13 +47,18 @@ export default function login (state = initialState, action) {
       upload_manifest: action.payload.upload_manifest,
       full_list_template: action.payload.full_list_template,
       total_only: action.payload.total_only,
-      consolidate_upload_manifest: action.payload.consolidate_upload_manifest
+      consolidate_upload_manifest: action.payload.consolidate_upload_manifest,
+      email: action.payload.email,
+      phone: action.payload.phone
+      
   }
     case 'SET_USERNAME': return { ...state, username: action.payload }
     case 'SET_PASS': return { ...state, pass: action.payload }
     case 'SET_ERROR': return { ...state, error: action.payload }
 
-    case 'LOGIN': return { ...state, userkey: action.payload.userkey, 
+    case 'LOGIN': return { ...state, 
+      original_data: action.payload,
+      userkey: action.payload.userkey, 
       alias: action.payload.username, 
       agent: action.payload.agent, 
       logged: true, 
@@ -66,9 +76,27 @@ export default function login (state = initialState, action) {
       Q_only: action.payload.Q_only,
       default_send: action.payload.default_send,
       default_rec: action.payload.default_rec,
-      default_cargo: action.payload.default_cargo
+      default_cargo: action.payload.default_cargo,
+      email: action.payload.email,
+      phone: action.payload.phone
     }
     case 'LOGOUT': return { ...state, userkey: null, alias: null, logged: false, username: '', pass: '' }
+
+    case 'set_user_email': return { ...state, email: action.payload }
+    case 'set_user_phone': return { ...state, phone: action.payload }
+    case 'set_user_name': return { ...state, alias: action.payload }
+    case 'save_changes_user_data': return { ...state, 
+      alias: action.payload.name,
+      phone: action.payload.phone,
+      email: action.payload.email,
+      original_data: {...state.original_data,
+        username: action.payload.name,
+        phone: action.payload.phone,
+        email: action.payload.email,
+      }
+       
+    }
+
     default: return state
   }
 }
