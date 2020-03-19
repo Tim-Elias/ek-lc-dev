@@ -338,7 +338,7 @@ OpenRecTemplateModal = () => {
       
       <div>
                 <div className="disp_Number">
-                    <div>Создание новой накладной</div>
+    {this.props.store.create_disp.Number === 0 ? (<div>Создание новой накладной</div>):(<div>Редактирование накладной {this.props.store.create_disp.Number}</div>)}
                 </div>
                 <div className="disp_customer_data">
                     <div className="disp_data_label">Заказчик:</div>
@@ -641,7 +641,8 @@ OpenRecTemplateModal = () => {
                 <div className="disp_data_label">Наложенный платеж (руб.):</div>
                 <div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.props.SetCOD(e.target.value)} value={this.props.store.create_disp.COD} type="number"  /></div> 
                 </div>
-                <Button disabled={disabled} onClick={this.sent_disp.bind(this)}>Создать накладную</Button>
+                {this.props.store.create_disp.Number === 0 ? ( <Button disabled={disabled} onClick={this.sent_disp.bind(this)}>Создать накладную</Button>):( <Button disabled={disabled} onClick={this.sent_disp.bind(this)}>Сохранить изменения</Button>)}
+               
                 </div>
                 
                 

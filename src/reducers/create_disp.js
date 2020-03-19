@@ -1,4 +1,6 @@
 const initialState = {
+  
+
   CityList: [],
   CargoInfoType: { label: 'Внести информацию о каждом грузе', value: false },
   PayType: { label: 'Безналичная оплата', value: 'Безналичная оплата' },
@@ -252,7 +254,7 @@ export default function dispatch (state = initialState, action) {
     console.log(action.payload.Cargo)
     return { ...state, 
     
-      
+      Number: action.payload.Number,
       SendAdress: action.payload.SendAdress,
       SendCompany: action.payload.SendCompany,
       SendPhone: action.payload.SendPhone,

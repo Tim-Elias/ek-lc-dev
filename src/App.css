@@ -502,17 +502,33 @@ margin: auto;
 .setting_template_data{
   display: grid;
 
-  grid-template-columns: 300px 30px 100px ;
+  grid-template-columns: 400px 30px 100px ;
   margin: 5px;
 }
 
 .setting_general_data{
   display: grid;
 
-  grid-template-columns: 200px 230px ;
-  margin: 5px;
+  grid-template-columns: 300px 230px ;
+  margin: 5px 5px 0 5px;
+}
+
+.setting_general_data_template{
+  display: grid;
+  grid-template-columns: 300px 230px 100px ;
+  margin: 0 5px 5px 5px;
 }
 
 .page_header{
   margin: 0 10px
+}
+
+.setting_data_el{
+  font-size: 11px;
+  margin: 3px;
+  border-bottom: #c0c0c0 solid 1px;
+  min-height: 28px;
+  
+  
+  
 }

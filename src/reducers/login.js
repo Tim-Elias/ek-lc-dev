@@ -82,6 +82,8 @@ export default function login (state = initialState, action) {
     }
     case 'LOGOUT': return { ...state, userkey: null, alias: null, logged: false, username: '', pass: '' }
 
+    case 'set_user_default_send': return { ...state, default_send: action.payload }
+    case 'set_user_default_rec': return { ...state, default_rec: action.payload }
     case 'set_user_email': return { ...state, email: action.payload }
     case 'set_user_phone': return { ...state, phone: action.payload }
     case 'set_user_name': return { ...state, alias: action.payload }
@@ -89,10 +91,15 @@ export default function login (state = initialState, action) {
       alias: action.payload.name,
       phone: action.payload.phone,
       email: action.payload.email,
+      default_send: action.payload.default_send,
+      default_rec: action.payload.default_rec,
+
       original_data: {...state.original_data,
         username: action.payload.name,
         phone: action.payload.phone,
         email: action.payload.email,
+        default_send: action.payload.default_send,
+        default_rec: action.payload.default_rec,
       }
        
     }

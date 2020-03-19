@@ -193,15 +193,21 @@ class Screen extends React.Component {
           );
       }
 
-    copy_disp = () =>{
+    copy_disp = (edit) =>{
+        let number = 0
         this.props.set_active_window('wait')
         const current_disp_data = this.props.store.disp.data
+        console.log(current_disp_data)
         const copy_disp_cargo = this.props.store.disp.cargo
         let CargoInfoType 
         this.props.reset_create_disp_data()
                 get_data('citylist').then(
                 (result) => {
                     this.props.SetCityList(result);
+
+                    if(edit){
+                        number = this.props.store.disp.data.Number
+                    }
 
                     if(this.props.store.disp.cargo.reduce((accum, el) => accum + parseInt(el.Q), 0) === parseInt(this.props.store.disp.data.Total)){
                         CargoInfoType = { label: 'Внести информацию о каждом грузе', value: false }
@@ -236,7 +242,7 @@ class Screen extends React.Component {
                     } 
 
                     const copy_disp_data = {
-                      
+                        Number: number,
                         RecTerminal: RecTerminal,
                         SendTerminal: SendTerminal,
                         
@@ -246,6 +252,7 @@ class Screen extends React.Component {
                         SendPerson: current_disp_data.SendPerson,
                         SendAddInfo: current_disp_data.SendAddInfo,
                         SendEmail: current_disp_data.SendEmail,
+
                         RecAdress: current_disp_data.RecAdress,
                         RecCompany: current_disp_data.RecCompany,
                         RecPhone: current_disp_data.RecPhone,
@@ -413,7 +420,7 @@ class Screen extends React.Component {
                         </Modal>
 
                         {this.props.store.login.create_disp && (this.props.store.login.total_only || CargoInfoType ) ? (
-                            <Button onClick={this.copy_disp.bind(this)}>Скопировать</Button>
+                            <Button onClick={this.copy_disp.bind(this,false)}>Скопировать</Button>
                         ) : (null)}
 
                         {this.props.store.login.edit_disp && this.props.store.disp.data.Status == 'Ожидается от отправителя' ? (<Modal closeIcon
@@ -455,6 +462,10 @@ class Screen extends React.Component {
 
 
                         </Modal>) : (null)}
+
+                        {this.props.store.login.edit_disp && this.props.store.disp.data.Status == 'Ожидается от отправителя' ? (
+                            <Button onClick={this.copy_disp.bind(this,true)}>Редактировать</Button>
+                        ):(null)}
 
                     </div>
                     {/* ////////////////////// */}
