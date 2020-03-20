@@ -288,7 +288,7 @@ class Screen extends React.Component {
                     if (SelectedSendCity !== undefined) {this.SelectSendCity(SelectedSendCity)}
                     if (SelectedRecCity !== undefined) {this.SelectRecCity(SelectedRecCity)}
                     
-
+                    this.props.modules.set_last_window('disp');
                     this.props.set_active_window('create_disp');
 
 

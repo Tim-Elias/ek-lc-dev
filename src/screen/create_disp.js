@@ -3,9 +3,9 @@ import { connect } from 'react-redux'
 import './create_disp.css'
 import { get_data } from './../common/common_modules'
 import Select from 'react-select'
-import { Icon } from '@opuscapita/react-icons'
+
 import { customStyles } from "./../common/common_style";
-import { Table, Modal, Button } from 'semantic-ui-react'
+import { Table, Modal, Button, Icon} from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
 
 
@@ -321,6 +321,7 @@ OpenRecTemplateModal = () => {
 }
   
 
+
   render() {
     let disabled = false
     let total_weight = Math.ceil(this.props.store.create_disp.Cargo.reduce((accumulator, Cargo) => accumulator + Math.ceil(Cargo.Weight * Cargo.Q*1000)/1000, 0)*1000)/1000
@@ -338,7 +339,10 @@ OpenRecTemplateModal = () => {
       
       <div>
                 <div className="disp_Number">
-    {this.props.store.create_disp.Number === 0 ? (<div>Создание новой накладной</div>):(<div>Редактирование накладной {this.props.store.create_disp.Number}</div>)}
+                <Button compact icon onClick={this.props.modules.back}>
+                        <Icon name='arrow left' />
+                    </Button>
+    {this.props.store.create_disp.Number === 0 ? (<b>Создание новой накладной</b>):(<b>Редактирование накладной {this.props.store.create_disp.Number}</b>)}
                 </div>
                 <div className="disp_customer_data">
                     <div className="disp_data_label">Заказчик:</div>

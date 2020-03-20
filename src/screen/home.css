@@ -1,0 +1,86 @@
+.track_button{
+    margin: 0 3px;
+}
+
+.track_data{
+    max-height: 36px;
+    display: grid;
+    grid-template-columns: 300px 1fr ;
+}
+
+.calc_city_el{
+    display: grid;
+    grid-template-columns: 200px 300px ;
+}
+
+
+  .home_segment{
+    margin: 0 -1px!important
+  }
+
+  .home_map_row{
+    display: grid;
+    grid-template-columns: 200px 1fr 200px ;
+    
+    
+    /* height: 280px; */
+  }
+
+  .home_map_container{
+      text-align: center;
+  }
+
+  .home_1_row{
+    background-color: #F0F0F0;
+
+     padding: 0 1em;
+     margin: 0 -1em;
+     display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr ;
+  }
+
+  .home_1a_row{
+    background-color: #F0F0F0;
+   text-align: center;
+     padding: 10px 1em;
+     margin: 0 -1em;
+     
+  }
+
+  .home_2_row{
+    
+     height: 200px; 
+  }
+
+  .home_card{
+  
+      text-align: center;
+      margin: 10px;
+  }
+
+  .image_row{
+      vertical-align: middle;
+        padding: 150px 0 150px 50px;
+      height: 500px;
+      margin: 0 -1em;
+      
+      background-repeat: no-repeat;
+      background-position-x: center;
+      background-position-y: center;
+      background-size: 100%  ;
+      
+  }
+
+  .image_header{
+      height: 20pt;
+      color: white;
+    font-size: 26pt;
+    margin: 10px;
+  }
+
+  .image_text{
+      margin: 10px;
+    color: white;
+    font-size: 16pt;
+  }
+  

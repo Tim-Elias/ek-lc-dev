@@ -118,22 +118,33 @@ td {
   float: center;
  
   background-color: #ffffff;
-  border: #f0f0f0 1px solid;
+  border: #d4d4d5 1px solid;
   
   padding: 5px 5px;
   text-decoration: none;
   font-size: 14px;
-  border-radius: 3px;
+  border-radius: .28571429rem;
   margin: 10px 5px;
 }
 
 .content_window{
   float: center;
   background-color: #ffffff;
-  border: #f0f0f0 1px solid;
+  border: #d4d4d5 1px solid;
   padding: 5px 5px;
   text-decoration: none;
-  border-radius: 3px;
+  border-radius: .28571429rem;
+  margin: 10px 5px;
+ 
+}
+
+.content_window_home{
+  float: center;
+  background-color: #ffffff;
+  
+  
+  text-decoration: none;
+  
   margin: 10px 5px;
  
 }
@@ -529,6 +540,5 @@ margin: auto;
   border-bottom: #c0c0c0 solid 1px;
   min-height: 28px;
   
-  
-  
 }
+

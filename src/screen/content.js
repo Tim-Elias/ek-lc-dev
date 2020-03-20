@@ -41,12 +41,16 @@ class Screen extends React.Component {
       back: this.back,
 
     }
-
+    let className = 'content_window'
+    if(this.props.store.general.active_window === 'home'){
+      className = 'content_window_home'
+    }
+    
     return (
 
-      <div className='content_window'>
+      <div className={className}>
 
-        {this.props.store.general.active_window === 'home' ? (<Home modules={modules}/>) : (null)}
+        {/* {this.props.store.general.active_window === 'home' ? (<Home modules={modules}/>) : (null)} */}
         {this.props.store.general.active_window === 'my_disp' ? (<MyDisp modules={modules}/>) : (null)}
         {this.props.store.general.active_window === 'create_disp' ? (<CreateDisp modules={modules}/>) : (null)}
         {this.props.store.general.active_window === 'mutual' ? (<Mutual modules={modules}/>) : (null)}

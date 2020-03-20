@@ -14,6 +14,7 @@ import upload_manifest from './upload_manifest'
 import my_disp from './my_disp'
 import order from './order'
 import templates from './templates'
+import home from './home'
 
 export default combineReducers({
 
@@ -30,6 +31,7 @@ export default combineReducers({
   upload_manifest,
   my_disp,
   order,
-  templates
+  templates,
+  home
   
 })
