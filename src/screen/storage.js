@@ -65,6 +65,8 @@ class Screen extends React.Component {
 
   render() {
 
+    document.onkeydown = function (event) {}
+    
     const tr_click = (name) => {
       this.tr_click(name);
     };

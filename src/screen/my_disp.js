@@ -90,6 +90,7 @@ class Screen extends React.Component {
     const click_down = () => { this.click_down() }
     const click_enter = () => { this.click_enter() }
 
+    
     document.onkeydown = function (event) {
       try {
         if (event.keyCode === 38) {

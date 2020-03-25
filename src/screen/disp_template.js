@@ -98,6 +98,7 @@ class Screen extends React.Component {
 
 
     render() {
+        document.onkeydown = function (event) {}
         let changed = false
         if (JSON.stringify(this.props.store.templates.selected_disp_template)!==JSON.stringify(this.props.store.templates.original_data_disp_template)){
             changed = true

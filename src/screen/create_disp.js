@@ -323,6 +323,8 @@ OpenRecTemplateModal = () => {
 
 
   render() {
+    document.onkeydown = function (event) {}
+
     let disabled = false
     let total_weight = Math.ceil(this.props.store.create_disp.Cargo.reduce((accumulator, Cargo) => accumulator + Math.ceil(Cargo.Weight * Cargo.Q*1000)/1000, 0)*1000)/1000
 

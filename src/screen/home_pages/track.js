@@ -22,6 +22,8 @@ class Screen extends React.Component {
 
     render() {
 
+        
+        
         return (
             <div >
                 <div className='track_data'>

@@ -48,7 +48,9 @@ class Screen extends React.Component {
     }
 
     render() {
+      document.onkeydown = function (event) {}
         return (
+          
         <div>
            <div className="disp_Number">
                 <div><Button compact icon onClick={this.back.bind(this)}>

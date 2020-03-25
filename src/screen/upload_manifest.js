@@ -437,6 +437,7 @@ class Screen extends React.Component {
     }
 
   render() {
+    document.onkeydown = function (event) {}
 
     this.componentRef = []
     this.stickerRef = []

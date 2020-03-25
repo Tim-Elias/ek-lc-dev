@@ -60,7 +60,7 @@ class Screen extends React.Component {
   }
 
   render() {
-
+    document.onkeydown = function (event) {}
     let default_send_template = {}
     let default_rec_template = {}
 

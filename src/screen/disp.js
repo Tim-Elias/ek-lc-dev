@@ -353,6 +353,7 @@ class Screen extends React.Component {
       }
 
     render() {
+        document.onkeydown = function (event) {}
 
         let CargoInfoType = false
         if (this.props.store.disp.cargo.reduce((accum, el) => accum + parseInt(el.Q), 0) === parseInt(this.props.store.disp.data.Total)){

@@ -34,6 +34,7 @@ class Screen extends React.Component {
   }
 
   render() {
+    document.onkeydown = function (event) {}
     return (
 
       <div>
