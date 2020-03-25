@@ -319,10 +319,22 @@ OpenSendTemplateModal = () => {
 OpenRecTemplateModal = () => {
   this.props.SetOpenModalRecTemplate(true)
 }
+
+SetTotal = (value) =>{
+  this.props.SetTotal(value)
+  if (this.props.store.login.Q_only){
+    const Weight = value * parseInt(this.props.store.login.default_cargo)
+    this.props.SetWeight(Weight)
+    this.props.SetVolume(Weight)
+  }
+
+
+}
   
 
 
   render() {
+    const Q_only = this.props.store.login.Q_only
     document.onkeydown = function (event) {}
 
     let disabled = false
@@ -635,18 +647,20 @@ OpenRecTemplateModal = () => {
                 </div>
                     </div>):(<div className="disp_cargo_data">
                     <div className="disp_data_label">Общее количество мест:</div>
-                    <div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.props.SetTotal(e.target.value)} value={this.props.store.create_disp.Total} type="number" placeholder="Общее количество мест" /></div>
+                    <div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.SetTotal(e.target.value)} value={this.props.store.create_disp.Total} type="number" placeholder="Общее количество мест" /></div>
                     <div className="disp_data_label">Общий фактический вес (кг):</div>
-                    <div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.props.SetWeight(e.target.value)} value={this.props.store.create_disp.Weight} type="number" placeholder="Итоговый фактический вес" /></div>
+                    <div className="disp_data_el"><input readOnly={Q_only} className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.props.SetWeight(e.target.value)} value={this.props.store.create_disp.Weight} type="number" placeholder="Итоговый фактический вес" /></div>
                     <div className="disp_data_label">Общий объемный вес (кг):</div>
-                    <div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.props.SetVolume(e.target.value)} value={this.props.store.create_disp.Volume} type="number" placeholder="Итоговый объемный вес" /></div> 
+                    <div className="disp_data_el"><input readOnly={Q_only}  className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.props.SetVolume(e.target.value)} value={this.props.store.create_disp.Volume} type="number" placeholder="Итоговый объемный вес" /></div> 
                 </div>)}
-                <div className="disp_cargo_data">
-                <div className="disp_data_label">Страховая стоимость (руб.):</div>
-                <div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.props.SetInsureValue(e.target.value)} value={this.props.store.create_disp.InsureValue} type="number"  /></div>
-                <div className="disp_data_label">Наложенный платеж (руб.):</div>
-                <div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.props.SetCOD(e.target.value)} value={this.props.store.create_disp.COD} type="number"  /></div> 
-                </div>
+                {Q_only ? (null):(
+                  <div className="disp_cargo_data">
+                  <div className="disp_data_label">Страховая стоимость (руб.):</div>
+                  <div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.props.SetInsureValue(e.target.value)} value={this.props.store.create_disp.InsureValue} type="number"  /></div>
+                  <div className="disp_data_label">Наложенный платеж (руб.):</div>
+                  <div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.props.SetCOD(e.target.value)} value={this.props.store.create_disp.COD} type="number"  /></div> 
+                  </div>
+                )}
                 {this.props.store.create_disp.Number === 0 ? ( <Button disabled={disabled} onClick={this.sent_disp.bind(this)}>Создать накладную</Button>):( <Button disabled={disabled} onClick={this.sent_disp.bind(this)}>Сохранить изменения</Button>)}
                
                 </div>

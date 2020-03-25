@@ -165,6 +165,9 @@ class Screen extends Component {
             case 'create_disp':
                 this.props.set_active_window('wait');
                 this.props.reset_create_disp_data()
+                if(this.props.store.login.Q_only){
+                   this.props.SetCargoInfoType({label:"Указать итогвые значения", value: true}) 
+                }
                 get_data('citylist').then(
                     (result) => {
                         this.props.SetCityList(result);
@@ -426,6 +429,8 @@ export default connect(
         SetRecTerminalList: (param) => { dispatch({ type: 'SetRecTerminalList', payload: param }) },
         SetSelectedSendCity: (param) => { dispatch({ type: 'SetSelectedSendCity', payload: param }) },
         SetSelectedRecCity: (param) => { dispatch({ type: 'SetSelectedRecCity', payload: param }) },
+
+        SetCargoInfoType: (param) => { dispatch({ type: 'SetCargoInfoType', payload: param }) },
 
 
     })

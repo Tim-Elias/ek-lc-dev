@@ -20,6 +20,7 @@ const initialState = {
   consolidate_upload_manifest: false,
   print_ticket: false,
   Q_only: false,
+
   default_send: '0',
   default_rec: '0',
   default_cargo: '0',
