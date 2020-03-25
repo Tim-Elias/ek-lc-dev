@@ -1,12 +1,18 @@
 import React from 'react';
 import Barcode from 'react-barcode'
 import logo from './../logo.svg';
+import QRCode from 'qrcode.react';
 import './disp.css';
 
 class ComponentToPrint extends React.Component {
 
 
     render() {
+        const imageSettings ={
+            height: 10,
+            width: 10
+        }
+
         //console.log(this.props.disp)
         let initialValue = 0
         return (
@@ -21,7 +27,10 @@ class ComponentToPrint extends React.Component {
                                 <div className='disp_print_header'>
                                     <div className="logo_container"><img className="header_logo" src={logo} /></div>
                                     <div className="city_container">{disp.data.RecCity}</div>
-                                    <div><Barcode value={disp.data.Number} format='CODE39' width={1} height={30} /></div>
+                                    <div className="qrcode_container">
+                                        <QRCode value={disp.data.Number} />
+                                    </div>
+                                    <div className="barcode_container"><Barcode value={disp.data.Number} format='CODE39' width={1} height={30} /></div>
                                 </div>
                                 <div className="disp_print_address_data">
                                     <div className="disp_print_address_data_header">Данные отправителя</div>
@@ -73,8 +82,13 @@ class ComponentToPrint extends React.Component {
                                             <div className="disp_print_data_el">{disp.data.DelMethod}</div>
                                             <div className="disp_print_data_label"> Оплата:</div>
                                             <div className="disp_print_data_el">{disp.data.PayType}</div>
-                                            <div className="disp_print_data_label"> Страховая стоимость:</div>
-                                            <div className="disp_print_data_el">{disp.data.InsureValue}</div>
+                                            { disp.data.InsureValue !== 0 ? (
+                                                 <div className="disp_print_data_label"> Страховая стоимость:</div>
+                                            ):(null)}
+                                            { disp.data.InsureValue !== 0 ? (
+                                                  <div className="disp_print_data_el">{disp.data.InsureValue}</div>
+                                            ):(null)}
+                                            
                                             <div className="disp_print_data_label"> Наложенный платеж:</div>
                                             <div className="disp_print_data_el">{disp.data.COD}</div>
 
