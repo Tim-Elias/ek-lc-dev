@@ -2,10 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import transit from './../../common/transit-1.png'
 import { Card } from 'semantic-ui-react'
-import {Tick, MTLModel, OBJModel} from 'react-3d-viewer'
-import ft_mtl from './../../models/transit/FT.mtl'
-import ft_obj from './../../models/transit/FT.obj'
-import ft_c_obj from './../../models/transit_c/FT_c.obj'
+
+
 
 
 
@@ -14,11 +12,7 @@ class Screen extends React.Component {
     // componentWillMount(){
     //     this.tick.animate = false
     // }
-    componentDidMount(){
-      Tick(()=>{
-        this.props.rotate()
-      })
-    }
+   
     
     render() {
 
