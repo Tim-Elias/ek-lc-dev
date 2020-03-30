@@ -9,7 +9,9 @@ const initialState = {
     calc_rec_city:{},
     calc_weight:0,
 
-    calc_result:[]
+    calc_result:[],
+    position: {x:0,y:-50,z:-80},
+    rotation:{x:0,y:2,z:0}	
     
     
   
@@ -28,6 +30,10 @@ const initialState = {
 
       case 'set_calc_result': return { ...state, calc_result: action.payload }
 
+
+      case 'set_rotation': return { ...state, rotation: action.payload }
+
+      case 'rotate': return { ...state, rotation: {...state.rotation, y:state.rotation.y+0.005} }
 
      
       default: return state

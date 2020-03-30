@@ -1,17 +1,80 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import transit from './../../common/transit.png'
+import transit from './../../common/transit-1.png'
 import { Card } from 'semantic-ui-react'
+import {Tick, MTLModel, OBJModel} from 'react-3d-viewer'
+import ft_mtl from './../../models/transit/FT.mtl'
+import ft_obj from './../../models/transit/FT.obj'
+import ft_c_obj from './../../models/transit_c/FT_c.obj'
+
+
 
 class Screen extends React.Component {
+    
+    // componentWillMount(){
+    //     this.tick.animate = false
+    // }
+    componentDidMount(){
+      Tick(()=>{
+        this.props.rotate()
+      })
+    }
+    
     render() {
 
         return (
             <div className='home_main'>
-                <div className='image_row' >
-                    <div className='image_header'>Срочная доставка документов и грузов</div>
+                
+                {/* <MTLModel
+                //enableZoom ={false}
+                mtl = {ft_mtl} 
+                src = {ft_obj}
+                width={800}
+                rotation={this.props.store.home.rotation}
+                
+                position={this.props.store.home.position}
+                texPath = {process.env.PUBLIC_URL + '/'}
+                
+                
+                /> */}
+
+<div className='models'
+    style ={{ backgroundImage:`url(${transit})` }}
+>
+    <div className='home_main'>
+    <div className='image_row' >
+                    <div className='image_header'>Срочная доставка</div>
+                    <div className='image_header'>документов и грузов</div>
                     <div className='image_text'>по городам Сибири</div>
                 </div>
+    </div>
+   
+            {/* <OBJModel 
+            src= {ft_obj} 
+            enableZoom = {false}
+            width={400}
+            height = {300}
+            //texPath = {process.env.PUBLIC_URL + '/Textures/'}
+            rotation={this.props.store.home.rotation}
+            position={this.props.store.home.position}
+            />
+
+            <OBJModel 
+            src= {ft_c_obj} 
+            enableZoom = {false}
+            width={400}
+            height = {300}
+            //texPath = {process.env.PUBLIC_URL + '/Textures/'}
+            rotation={this.props.store.home.rotation}
+            position={this.props.store.home.position}
+            /> */}
+</div>
+               
+
+                {/* <div className='image_row' >
+                    <div className='image_header'>Срочная доставка документов и грузов</div>
+                    <div className='image_text'>по городам Сибири</div>
+                </div> */}
 
                 {/* <div className='home_1a_row'>
                     <h4>Филиалы Экспресс Кинетика</h4>
@@ -196,6 +259,8 @@ class Screen extends React.Component {
             </div>
         )
     }
+
+    
 }
 
 export default connect(
@@ -204,6 +269,7 @@ export default connect(
     }),
     dispatch => ({
         set_list_storage: (param) => { dispatch({ type: 'set_list_storage', payload: param }) },
+        rotate: () => { dispatch({ type: 'rotate' }) },
 
     })
 )(Screen);

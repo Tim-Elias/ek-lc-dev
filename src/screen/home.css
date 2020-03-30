@@ -97,3 +97,12 @@
   .home_track_input{
       border-radius: 3px;
   }
+
+  .models {
+    margin: -5px -14px;
+    height: 500px;
+    display: grid;
+    grid-template-columns: 1fr ;
+    background-repeat: no-repeat;
+    background-position: right;
+  }
