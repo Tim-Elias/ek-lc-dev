@@ -11,7 +11,19 @@ const initialState = {
 
     calc_result:[],
     position: {x:0,y:-50,z:-80},
-    rotation:{x:0,y:2,z:0}	
+    rotation:{x:0,y:2,z:0},	
+    
+    map: {
+      center: {
+        lat: 54.02,
+        lng: 82.56
+      },
+      zoom: 5,
+    },
+
+    
+    directions:null,
+      
     
     
   
@@ -32,6 +44,7 @@ const initialState = {
 
 
       case 'set_rotation': return { ...state, rotation: action.payload }
+      case 'set_directions': return { ...state, directions: action.payload }
 
       case 'rotate': return { ...state, rotation: {...state.rotation, y:state.rotation.y+0.005} }
 

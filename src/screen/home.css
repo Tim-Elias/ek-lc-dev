@@ -47,9 +47,30 @@
      
   }
 
+  .row_2_header{
+  
+      color: #2444B5;
+    font-size: 26pt;
+    padding: 30px 50px;
+  }
+
+  .row_2_text{
+   
+    
+    font-size: 14pt;
+    padding: 0 50px 20px 70px;
+  }
+
   .home_2_row{
+    background-color: #F0F0F0;
+  
+     margin: 0 -14px;
+  }
+
+  .home_3_row{
     
      height: 200px; 
+     margin: 0 -14px;
   }
 
   .home_card{
@@ -105,4 +126,43 @@
     grid-template-columns: 1fr ;
     background-repeat: no-repeat;
     background-position: right;
+  }
+
+  .dline {
+    line-height: 0.7;
+   }
+
+   .map {
+     height: 500px;
+     width: 100%;
+   }
+
+   .marker {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 25px;
+    height: 25px;
+    background-size: 100%;
+    border: 1 solid #fff;
+    border-radius: 100%;
+    user-select: none;
+    transform: translate(-50%, -50%);
+    
+   
+  }
+
+  .marker_agent {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 12px;
+    height: 12px;
+    background-color: #E87B1A;
+    background-size: 100%;
+    border: 1 solid #fff;
+    border-radius: 100%;
+    user-select: none;
+    transform: translate(-50%, -50%);
+   
   }

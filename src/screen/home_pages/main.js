@@ -8,67 +8,51 @@ import { Card } from 'semantic-ui-react'
 
 
 class Screen extends React.Component {
-    
+
     // componentWillMount(){
     //     this.tick.animate = false
     // }
-   
-    
+
+
     render() {
 
         return (
             <div className='home_main'>
-                
-                {/* <MTLModel
-                //enableZoom ={false}
-                mtl = {ft_mtl} 
-                src = {ft_obj}
-                width={800}
-                rotation={this.props.store.home.rotation}
-                
-                position={this.props.store.home.position}
-                texPath = {process.env.PUBLIC_URL + '/'}
-                
-                
-                /> */}
 
-<div className='models'
-    style ={{ backgroundImage:`url(${transit})` }}
->
-    <div className='home_main'>
-    <div className='image_row' >
-                    <div className='image_header'>Срочная доставка</div>
-                    <div className='image_header'>документов и грузов</div>
-                    <div className='image_text'>по городам Сибири</div>
+                <div className='models'
+                    style={{ backgroundImage: `url(${transit})` }}
+                >
+                    <div className='home_main'>
+                        <div className='image_row' >
+                            <div className='image_header'>Срочная доставка</div>
+                            <div className='image_header'>документов и грузов</div>
+                            <div className='image_text'>по городам Сибири</div>
+                        </div>
+                    </div>
+
                 </div>
-    </div>
-   
-            {/* <OBJModel 
-            src= {ft_obj} 
-            enableZoom = {false}
-            width={400}
-            height = {300}
-            //texPath = {process.env.PUBLIC_URL + '/Textures/'}
-            rotation={this.props.store.home.rotation}
-            position={this.props.store.home.position}
-            />
 
-            <OBJModel 
-            src= {ft_c_obj} 
-            enableZoom = {false}
-            width={400}
-            height = {300}
-            //texPath = {process.env.PUBLIC_URL + '/Textures/'}
-            rotation={this.props.store.home.rotation}
-            position={this.props.store.home.position}
-            /> */}
-</div>
-               
 
-                {/* <div className='image_row' >
-                    <div className='image_header'>Срочная доставка документов и грузов</div>
-                    <div className='image_text'>по городам Сибири</div>
-                </div> */}
+                <div className='home_2_row' >
+                <div className='row_2_header'>92 слова о тебе</div>
+                <div className='row_2_text'>
+                    <p className ='dline'>Приветствую тебя, любимый наш Клиент. </p>
+                    <p className ='dline'>Самое драгоценное, что у нас есть, это твое доверие. </p>
+                    <p className ='dline'>И будь уверен, каждый день мы работаем так, чтобы заслужить его снова и снова. </p>
+                    <p className ='dline'>Каждый день мы принимаем, перевозим и доставляем твои грузы. </p>
+                    <p className ='dline'>Делаем это бережно и вовремя. </p>
+                    <p className ='dline'>В любое время, что бы ни случилось, ты можешь положиться на нас. </p>
+                    <p className ='dline'>Все твои задачи по перевозке и экспедированию грузов будут решены. </p>
+                    <p className ='dline'>Сроки, терморежим, и любые другие индивидуальные условия работы не являются проблемой.  </p>
+                    <p className ='dline'>Просто скажи, что нужно, и мы всё сделаем. </p>
+                    <p className ='dline'>Мы ценим тебя, и очень надеемся, что это взаимно.</p>
+                    </div>
+
+                </div>
+
+                <div className='home_3_row' >
+                    
+                </div>
 
                 {/* <div className='home_1a_row'>
                     <h4>Филиалы Экспресс Кинетика</h4>
@@ -254,7 +238,7 @@ class Screen extends React.Component {
         )
     }
 
-    
+
 }
 
 export default connect(

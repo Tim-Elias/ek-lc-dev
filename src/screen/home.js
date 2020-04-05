@@ -41,7 +41,7 @@ class Screen extends React.Component {
 
       <div >
 
-        <Menu widths={3}  attached='top' tabular>
+        <Menu widths={4}  attached='top' tabular>
           <Menu.Item
             name='О компании'
             active={this.props.store.home.active_menu_item === 'main'}
@@ -57,12 +57,12 @@ class Screen extends React.Component {
             active={this.props.store.home.active_menu_item === 'calc'}
             onClick={this.calc.bind(this)}
           />
-          {/* <Menu.Item
+          <Menu.Item
             name='Филиалы'
             active={this.props.store.home.active_menu_item === 'filial'}
             onClick={() => this.props.set_active_menu_item('filial')}
           />
-          <Menu.Item
+          {/* <Menu.Item
             name='Заключить договор'
             active={this.props.store.home.active_menu_item === 'contract'}
             onClick={() => this.props.set_active_menu_item('contract')}
