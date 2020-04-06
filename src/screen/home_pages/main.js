@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import transit from './../../common/transit-1.png'
+import transit from './../../common/transit-2.png'
 import { Card } from 'semantic-ui-react'
 
 
