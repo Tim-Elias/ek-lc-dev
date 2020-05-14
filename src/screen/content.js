@@ -20,6 +20,7 @@ import DispTemplateList from './disp_template_list'
 import ImportTemplate from './import_template'
 import DefaultTemplate from './default_template'
 import DispTemplate from './disp_template'
+import DispMap from './disp_map'
 
 
 class Screen extends React.Component {
@@ -70,6 +71,7 @@ class Screen extends React.Component {
         {this.props.store.general.active_window === 'import_template' ? (<ImportTemplate modules={modules}/>) : (null)}
         {this.props.store.general.active_window === 'default_template' ? (<DefaultTemplate modules={modules}/>) : (null)}
         {this.props.store.general.active_window === 'disp_template' ? (<DispTemplate modules={modules}/>) : (null)}
+        {this.props.store.general.active_window === 'disp_map' ? (<DispMap modules={modules}/>) : (null)}
 
       </div>
 

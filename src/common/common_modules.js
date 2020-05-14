@@ -1,7 +1,5 @@
 import axios from 'axios/index'
 
-// const qs = require('querystring');
-
 const get_data = (url, data) => {
   return new Promise((resolve, reject) => {
     axios.post(`http://kinetika-1c.tmweb.ru/http/hs/agent/${url}/post`,

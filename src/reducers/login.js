@@ -20,6 +20,7 @@ const initialState = {
   consolidate_upload_manifest: false,
   print_ticket: false,
   Q_only: false,
+  disp_map: false,
 
   default_send: '0',
   default_rec: '0',
@@ -50,7 +51,9 @@ export default function login (state = initialState, action) {
       total_only: action.payload.total_only,
       consolidate_upload_manifest: action.payload.consolidate_upload_manifest,
       email: action.payload.email,
-      phone: action.payload.phone
+      phone: action.payload.phone,
+      disp_map: action.payload.disp_map
+
       
   }
     case 'SET_USERNAME': return { ...state, username: action.payload }
@@ -79,7 +82,8 @@ export default function login (state = initialState, action) {
       default_rec: action.payload.default_rec,
       default_cargo: action.payload.default_cargo,
       email: action.payload.email,
-      phone: action.payload.phone
+      phone: action.payload.phone,
+      disp_map: action.payload.disp_map
     }
     case 'LOGOUT': return { ...state, userkey: null, alias: null, logged: false, username: '', pass: '' }
 

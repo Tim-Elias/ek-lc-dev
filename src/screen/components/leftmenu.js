@@ -308,6 +308,8 @@ class Screen extends Component {
 
 
     render() {
+
+        
         return (
             <div>
                 {/* <CreateDispModules  setClick={click => this.clickChild = click}/> */}
@@ -348,6 +350,7 @@ class Screen extends Component {
                                     <div className='leftmenubuttonicon'><Icon name='setting' /></div>
                                 </Button>
                             </div>) : (null)}
+                        
 
 
                     </div>
@@ -370,6 +373,7 @@ class Screen extends Component {
                             {this.props.store.login.setting ? (
                                 <div onClick={this.button_click.bind(this, "setting")} className="leftmenuel"><Icon name='setting' /> Настройки</div>
                             ) : (null)}
+                            {this.props.store.login.disp_map ? (<div onClick={this.button_click.bind(this, "disp_map")} className="leftmenuel"><Icon name='edit outline' /> Накладные на карте</div>) : (null)}
                         </div>
                     )}
 
