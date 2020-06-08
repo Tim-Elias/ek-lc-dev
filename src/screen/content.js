@@ -23,6 +23,7 @@ import DispTemplate from './disp_template'
 import DispMap from './disp_map'
 
 
+
 class Screen extends React.Component {
 
   back = () => {
@@ -72,6 +73,7 @@ class Screen extends React.Component {
         {this.props.store.general.active_window === 'default_template' ? (<DefaultTemplate modules={modules}/>) : (null)}
         {this.props.store.general.active_window === 'disp_template' ? (<DispTemplate modules={modules}/>) : (null)}
         {this.props.store.general.active_window === 'disp_map' ? (<DispMap modules={modules}/>) : (null)}
+   
 
       </div>
 

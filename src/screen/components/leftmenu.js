@@ -222,6 +222,21 @@ class Screen extends Component {
                 this.props.set_my_disp_data([]);
                 break
 
+            case 'disp_map':
+
+            console.log ('map')
+            get_data('courierlist', { userkey: this.props.store.login.userkey }).then(
+                (result) => {
+                    this.props.set_courier_list(result);
+                },
+                (err) => { console.log(err) }
+            );
+                
+                this.props.set_active_window(target);
+            
+            break
+
+
             case 'upload_manifest':
 
                 this.props.reset_upload_manifest_data()
@@ -374,6 +389,7 @@ class Screen extends Component {
                                 <div onClick={this.button_click.bind(this, "setting")} className="leftmenuel"><Icon name='setting' /> Настройки</div>
                             ) : (null)}
                             {this.props.store.login.disp_map ? (<div onClick={this.button_click.bind(this, "disp_map")} className="leftmenuel"><Icon name='edit outline' /> Накладные на карте</div>) : (null)}
+                           
                         </div>
                     )}
 
@@ -435,7 +451,7 @@ export default connect(
         SetSelectedRecCity: (param) => { dispatch({ type: 'SetSelectedRecCity', payload: param }) },
 
         SetCargoInfoType: (param) => { dispatch({ type: 'SetCargoInfoType', payload: param }) },
-
+        set_courier_list: (param) => { dispatch({ type: 'set_courier_list', payload: param }) },
 
     })
 )(Screen);
