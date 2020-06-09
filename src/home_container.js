@@ -52,24 +52,29 @@ class Screen extends Component {
 
     
     return (
-      
-      <div className="grid-container">
+      <div>
+        {this.props.store.general.full_screen ? (<Content />):(
+        <div className="grid-container">
          
-       <Header />
-        {this.props.store.login.logged ? (<div>
-          {this.props.store.general.hidemenu ?(
-        <div className="logged_main_compact">
-        <LeftMenu />
-        <Content />
-        </div>):( <div className="logged_main">
-        <LeftMenu />
-        <Content />
-        </div>)}
-        </div>) : ( <div className="not_logged_main">
-          <Content />
-          </div>)}
-        <Footer />
+        <Header />
+         {this.props.store.login.logged ? (<div>
+           {this.props.store.general.hidemenu ?(
+         <div className="logged_main_compact">
+         <LeftMenu />
+         <Content />
+         </div>):( <div className="logged_main">
+         <LeftMenu />
+         <Content />
+         </div>)}
+         </div>) : ( <div className="not_logged_main">
+           <Content />
+           </div>)}
+         <Footer />
+       </div>
+       )}
+
       </div>
+      
       
     );
   }

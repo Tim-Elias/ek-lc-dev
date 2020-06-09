@@ -1,7 +1,38 @@
 .disp_map {
     height: 600px;
-    width: 100% ;
+    width: clac(100% - 250px) ;
+  }
 
+  .disp_map_button {
+    margin: 5px;
+  }
+
+
+.disp_map_window{
+ display: grid;
+  grid-template-columns: 250px 1fr;
+}
+
+  .disp_map_panel{
+    display: grid;
+  grid-template-columns: 5fr 3fr 8fr 3fr 2fr 2fr;
+  }
+
+  #rnk_div{
+    display: grid;
+    grid-template-columns: 80px 40px;
+  }
+  .disp_map_panel_input_element{
+    display: grid;
+    grid-template-columns: 80px 1fr;
+  }
+  .disp_map_panel_element {
+    margin: 0 10px ;
+
+  }
+
+  .blink{
+    animation: blinkingBackground 0.2s infinite
   }
 
   .map_marker {
@@ -19,6 +50,16 @@
     transform: translate(-50%, -50%);
     
     
+  }
+
+  .point{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+    border: 1px solid;
+    border-radius: 50%;
   }
 
   @keyframes blinkingBackground{

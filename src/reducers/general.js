@@ -6,6 +6,7 @@ const initialState = {
   modal_show: false,
   modal_text:'',
   modal_header:'',
+  full_screen: false,
 
 }
 
@@ -23,6 +24,7 @@ export default function general (state = initialState, action) {
       return { ...state, last_window: state.last_window} 
     case 'hidemenu': return { ...state, hidemenu: !state.hidemenu }
     case 'set_wait': return { ...state, wait: action.payload }
+    case 'set_full_screen': return { ...state, full_screen: !state.full_screen }
     default: return state
   }
 }
