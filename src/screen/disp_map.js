@@ -13,6 +13,7 @@ let bermudaTriangle
 let g_map
 let g_maps
 let markers = []
+let shift = false
 
 
 class Screen extends React.Component {
@@ -58,7 +59,7 @@ class Screen extends React.Component {
 
                   if (el.selected){
 
-                    if(!this.props.store.disp_map.assignment_mode){
+                    if(!this.props.store.disp_map.assignment_mode && !shift){
                         infowindow.open(g_map, marker);
                     }
                     
@@ -108,14 +109,14 @@ class Screen extends React.Component {
 
 
     marker_onClick = async (key) => {
-       await this.props.select_disp_map_disp_for_del(key)
+       await this.props.select_disp_map_disp_for_del({num:key, shift:shift})
         this.render_markers(this.props.store.disp_map.disp_for_del)
     }
 
     set_courier = () => {
         const set_courier_data = {
             userkey: this.props.store.login.userkey,
-            courier: this.props.store.disp_map.selected_courier,
+            courier: this.props.store.disp_map.input_courier,
             dispatch: this.props.store.disp_map.disp_for_del.filter(el=>el.selected).map(el=>{return(el.Num)})  
         }
         //console.log(set_courier_data)
@@ -333,7 +334,27 @@ class Screen extends React.Component {
             
         }
        
-        
+        document.onkeydown = function (event) {
+            //console.log(event.keyCode)
+            try {
+              if (event.keyCode === 16) {
+                //set_hold_shift_true()
+                //console.log("Нажал")
+                shift = true
+              }
+            } catch (e) { }
+          };
+      
+          document.onkeyup = function (event) {
+            try {
+              if (event.keyCode === 16) {
+                //set_hold_shift_false()
+                //console.log("Отпустил")
+                shift = false
+              }
+            } catch (e) { }
+          };
+          
         
         return (
             <div className="disp_map_window">
@@ -396,7 +417,7 @@ class Screen extends React.Component {
               <div className='disp_map_panel_element'><input onChange={e => this.props.set_disp_map_date(e.target.value)} value={this.props.store.disp_map.date}  type="date"></input></div> 
               <div id='rnk_div'><div>РНК</div><div><input onChange={e => this.set_disp_map_assignment_mode(e.target.checked)} checked={this.props.store.disp_map.assignment_mode}  type="checkbox"></input></div></div> 
               <div className='disp_map_panel_input_element'><div>Курьер </div>
-                <Dropdown
+                {/* <Dropdown
                         placeholder='Выберете курьера'
                         options={this.props.store.disp_map.courier_list}
                         
@@ -404,7 +425,25 @@ class Screen extends React.Component {
                         selection
                         value={this.props.store.disp_map.selected_courier}
                         onChange={(sel_value) => this.props.select_disp_map_courier(sel_value._targetInst.return.key)}
-                      /> 
+                      />  */}
+
+                    <div id="myDropdown" className="dropdown-content">
+                        <input type="text" value={this.props.store.disp_map.input_courier} onChange={(e)=>{this.props.set_input_courier(e.target.value)}} id="myInput" onFocus={()=>this.props.set_focus_input_courier(true)} />
+                        <button onClick={()=>this.props.set_input_courier('')}>x</button>
+                        {this.props.store.disp_map.courier_list.map((el,index)=>{
+                            if (this.props.store.disp_map.focus_input_courier){
+                                const filter = el.text.toUpperCase();
+                                const text = this.props.store.disp_map.input_courier.toUpperCase()
+                                if (filter.indexOf(text) > -1) {
+                                    return (<p onClick={()=>{
+                                        this.props.set_input_courier(el.text)
+                                        this.props.set_focus_input_courier(false)
+                                    }} key={index}>{el.text}</p>)
+                                }
+                        }
+                        })}
+                        
+                    </div>
                 </div> 
              
                 <div className='disp_map_button'><button className='ui button mini' onClick={this.get_map_data.bind(this)}>Получить данные</button></div>
@@ -508,5 +547,9 @@ export default connect(
         set_active_window: (param) => { dispatch({ type: 'set_active_window', payload: param }) },
         set_data_disp: (param) => { dispatch({ type: 'set_data_disp', payload: param }) },
         set_last_window: (param) => { dispatch({ type: 'set_last_window', payload: param }) },
+        set_focus_input_courier: (param) => { dispatch({ type: 'set_focus_input_courier', payload: param }) },
+        set_input_courier: (param) => { dispatch({ type: 'set_input_courier', payload: param }) },
+
+        
     })
 )(Screen);

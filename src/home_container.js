@@ -51,6 +51,29 @@ class Screen extends Component {
         // console.log(this.props.cookies.get('key'))
 
     
+        // const set_hold_shift_true = () => {this.props.set_hold_shift(true)}
+        // const set_hold_shift_false = () => {this.props.set_hold_shift(false)}
+
+        // document.onkeydown = function (event) {
+        //   //console.log(event.keyCode)
+        //   try {
+        //     if (event.keyCode === 16) {
+        //       //set_hold_shift_true()
+        //       console.log("Нажал")
+        //     }
+        //   } catch (e) { }
+        // };
+    
+        // document.onkeyup = function (event) {
+        //   try {
+        //     if (event.keyCode === 16) {
+        //       //set_hold_shift_false()
+        //       console.log("Отпустил")
+        //     }
+        //   } catch (e) { }
+        // };
+
+
     return (
       <div>
         {this.props.store.general.full_screen ? (<Content />):(
@@ -88,7 +111,8 @@ export default withCookies(connect(
     set_login: (param) => { dispatch({ type: 'SET_USERNAME', payload: param }); },
     set_password: (param) => { dispatch({ type: 'SET_PASS', payload: param }); },
     set_active_window: (param) => { dispatch({ type: 'set_active_window', payload: param }); },
-    set_list: (param) => { dispatch({ type: 'SET_DISPATCH_LIST', payload: param }) }
+    set_list: (param) => { dispatch({ type: 'SET_DISPATCH_LIST', payload: param }) },
+    set_hold_shift: (param) => { dispatch({ type: 'set_hold_shift', payload: param }) },
 })
   
 )(Screen));

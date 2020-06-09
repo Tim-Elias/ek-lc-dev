@@ -34,6 +34,8 @@ class Screen extends React.Component {
 
   render () {
 
+    
+
     const modules = {
       set_modal_show: this.props.set_modal_show,
       set_active_window: this.props.set_active_window,
@@ -92,6 +94,7 @@ export default connect(
     set_modal_header: (param) => { dispatch({ type: 'set_modal_header', payload: param }) },
     set_last_window: (param) => { dispatch({ type: 'set_last_window', payload: param }) },
     pop_last_window: () => { dispatch({ type: 'pop_last_window'}) },
+    
     
   })
 )(Screen)

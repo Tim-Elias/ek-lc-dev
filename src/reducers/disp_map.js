@@ -18,6 +18,8 @@ const initialState = {
     selected_courier: null,
     assignment_mode: false,
     polygon: [],
+    input_courier:"",
+    focus_input_courier: false,
 
 
 
@@ -26,12 +28,14 @@ const initialState = {
 export default function dispatch(state = initialState, action) {
     switch (action.type) {
         case 'set_disp_map_date': return { ...state, date: action.payload }
+        case 'set_input_courier': return { ...state, input_courier: action.payload }
+        case 'set_focus_input_courier': return { ...state, focus_input_courier: action.payload }
         case 'set_disp_map_disp_for_del': return { ...state, disp_for_del: action.payload }
         case 'select_disp_map_disp_for_del': 
-        if(state.assignment_mode){
-            return { ...state, disp_for_del: [...state.disp_for_del.map((el) => { if (el.Num === action.payload) { return { ...el, selected: !el.selected, modify: true } } else { return el} })] }
+        if(action.payload.shift){
+            return { ...state, disp_for_del: [...state.disp_for_del.map((el) => { if (el.Num === action.payload.num) { return { ...el, selected: !el.selected, modify: true } } else { return el} })] }
         } else {
-            return { ...state, disp_for_del: [...state.disp_for_del.map((el) => { if (el.Num === action.payload) { return { ...el, selected: true, modify: true } } else { 
+            return { ...state, disp_for_del: [...state.disp_for_del.map((el) => { if (el.Num === action.payload.num) { return { ...el, selected: true, modify: true } } else { 
                 if (el.selected) {
                 return {...el, selected: false, modify: true}
             } else return el 
