@@ -33,7 +33,17 @@ class Screen extends React.Component {
             const lng = parseFloat(el.RecLng.replace(/,/, '.'))
             const Num = el.Num
             const marker_onClick = this.marker_onClick
-            
+            let path
+            let scale
+
+            if (el.Weight > 5 || el.Volume > 5){
+                path = 'M -3,2 -2,3 2,3 3,2 3,-2 2,-3 -2,-3 -3,-2 z'
+                scale = 3
+            } else {
+                path = g_maps.SymbolPath.CIRCLE
+                scale = 10
+            }
+
             if (lat > 0 && lng > 0 ) {
                
                 var marker = new g_maps.Marker({
@@ -42,12 +52,12 @@ class Screen extends React.Component {
                     title: Num,
                     
                     icon: {
-                        path: g_maps.SymbolPath.CIRCLE,
+                        path: path,
                         fillColor: el.Color,
                         fillOpacity: 1,
                         strokeColor: 'black',
                         strokeWeight: .5,
-                        scale: 10,
+                        scale: scale,
                       }
                   });
 
