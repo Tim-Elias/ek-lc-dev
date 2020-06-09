@@ -52,7 +52,7 @@ class Screen extends React.Component {
 
                   
                   var infowindow = new g_maps.InfoWindow({
-                    content: `<div><div>${el.Num}</div><div>Заказчик: ${el.Customer}</div></div><div>Город: ${el.RecCity}</div><div>Адрес: <b>${el.RecAddress}</b></div><div>Получатель: ${el.RecPerson}</div><div>Телефон: ${el.RecPhone}</div><div>Время доставки: ${el.RecTime}</div><div>Вес: ${el.Weight} (${Math.round(el.Volume*5)/1000})</div>`
+                    content: `<div><div>${el.Num} </div><div>Заказчик: ${el.Customer}</div></div><div>Город: ${el.RecCity}</div><div>Адрес: <b>${el.RecAddress}</b></div><div>Получатель: ${el.RecPerson}</div><div>Телефон: ${el.RecPhone}</div><div>Время доставки: ${el.RecTime}</div><div>Вес: ${el.Weight} (${Math.round(el.Volume*5)/1000})</div>`
                     
                   });
 
@@ -359,8 +359,15 @@ class Screen extends React.Component {
                           {courier.checked?(
                               <List.List>
                                   {courier_disp.map((disp,index)=>{
+                                        let color_row
+                                        if(disp.selected){
+                                            color_row = "#DDD"
+                                        } else {
+                                            color_row = "#FFF"
+                                        }
                                       return(<List.Item  key={index}>
-                                          <List.Content onClick={this.marker_onClick.bind(this,disp.Num)}>
+
+                                          <List.Content style={{backgroundColor:color_row}} onClick={this.marker_onClick.bind(this,disp.Num)}>
                                           <List.Header as='a'>{disp.Num} <Icon name='expand' onClick={this.open_disp.bind(this,disp.Num)}></Icon></List.Header>
                                           <List.Description as='a'>{disp.RecCity}</List.Description>
                                             <List.Description as='a'>{disp.RecAddress}</List.Description>
