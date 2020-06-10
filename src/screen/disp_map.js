@@ -18,9 +18,10 @@ let shift = false
 
 class Screen extends React.Component {
 
-    render_markers = (arr) => {
+    render_markers = (arr,hard) => {
 
-        arr.filter((disp_el)=>{return disp_el.modify}).map(el=>{
+        console.log(hard)
+        arr.filter((disp_el)=>{return disp_el.modify || hard}).map(el=>{
             
             markers.filter((marker_el)=>{return marker_el.title === el.Num}).forEach((el_1)=>{
                 el_1.setMap(null)
@@ -186,7 +187,7 @@ class Screen extends React.Component {
         const userkey = this.props.store.login.userkey
         const get_map_data = this.get_map_data
         const reset = this.reset
-
+        const not_modify = this.props.store.disp_map.disp_for_del.filter(el=>el.Num!==Num).map(el=>{return(el.Num)})
         geocoder.geocode( { 'address': Address}, function(results, status) {
             console.log(results)
             console.log(status)
@@ -203,7 +204,7 @@ class Screen extends React.Component {
                 get_data('setreclatlng', lat_lng_data).then(
                     (result) => {
                         console.log(result);
-                        get_map_data();
+                        get_map_data(not_modify);
                         reset()
                     },
                     (err) => { console.log(err) }
@@ -218,7 +219,7 @@ class Screen extends React.Component {
         let geocoder = new g_maps.Geocoder();
         const userkey = this.props.store.login.userkey
         const array = this.props.store.disp_map.disp_for_del.filter(el=>el.RecLat==="" || el.RecLng==="")
-        
+        const not_modify = this.props.store.disp_map.disp_for_del.filter(el=>el.RecLat!=="" && el.RecLng!=="").map(el=>{return(el.Num)})
         for(const el of array){
             
             if(el.RecAddress !== ""){
@@ -246,7 +247,7 @@ class Screen extends React.Component {
         }
         }
 
-        this.get_map_data ()
+        this.get_map_data (not_modify)
         this.reset ()
 
         
@@ -320,7 +321,8 @@ class Screen extends React.Component {
         }
 
         }
-
+        const render_markers = this.render_markers
+        const arr = this.props.store.disp_map.disp_for_del
         const onGoogleApiLoaded = (map, maps) => {
             g_map = map
             g_maps = maps  
@@ -333,6 +335,12 @@ class Screen extends React.Component {
                 fillColor: '#FF0000',
                 fillOpacity: 0.35
               });
+              g_maps.event.addListenerOnce(g_map, 'tilesloaded', ()=>{
+                render_markers(arr,true)
+              });
+
+                
+
               g_maps.event.addListener(g_map, 'click', function(e) {
                
                 map_clck(e.latLng)
@@ -370,7 +378,10 @@ class Screen extends React.Component {
         return (
             <div className="disp_map_window">
                 <div className="disp_map_left_menu">
-                <div className='disp_map_button'><button className='ui button mini' onClick={()=>this.props.set_full_screen()}>Полноэкранный режим</button></div>
+                <div className='disp_map_button'><button className='ui button mini' onClick={()=>{
+                    this.props.set_full_screen()
+                    this.render_markers.bind(this,this.props.store.disp_map.disp_for_del,true)
+                }}>Полноэкранный режим</button></div>
                 <div className='disp_map_button'><button className='ui button mini'  onClick={this.geocode_all.bind(this)}>Получить все координаты ({this.props.store.disp_map.disp_for_del.filter(el=>el.RecLat==="" || el.RecLng==="").filter(el=>el.RecAddress!=="").length})</button></div>
                 <List divided relaxed>
                   
