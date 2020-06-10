@@ -20,6 +20,7 @@ const initialState = {
     polygon: [],
     input_courier:"",
     focus_input_courier: false,
+    input_courier_color: "#000",
 
 
 
@@ -28,9 +29,10 @@ const initialState = {
 export default function dispatch(state = initialState, action) {
     switch (action.type) {
         case 'set_disp_map_date': return { ...state, date: action.payload }
-        case 'set_input_courier': return { ...state, input_courier: action.payload }
+        case 'set_input_courier': return { ...state, input_courier: action.payload.courier, input_courier_color: action.payload.color }
         case 'set_focus_input_courier': return { ...state, focus_input_courier: action.payload }
         case 'set_disp_map_disp_for_del': return { ...state, disp_for_del: action.payload }
+        
         case 'select_disp_map_disp_for_del': 
         if(action.payload.shift){
             return { ...state, disp_for_del: [...state.disp_for_del.map((el) => { if (el.Num === action.payload.num) { return { ...el, selected: !el.selected, modify: true } } else { return el} })] }

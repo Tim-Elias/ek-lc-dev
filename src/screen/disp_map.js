@@ -439,8 +439,9 @@ class Screen extends React.Component {
                       />  */}
 
                     <div id="myDropdown" className="dropdown-content">
-                        <input type="text" value={this.props.store.disp_map.input_courier} onChange={(e)=>{this.props.set_input_courier(e.target.value)}} id="myInput" onFocus={()=>this.props.set_focus_input_courier(true)} />
-                        <button onClick={()=>this.props.set_input_courier('')}>x</button>
+                        <i aria-hidden="true" className="circle icon" style={{color:this.props.store.disp_map.input_courier_color}}></i>
+                        <input type="text" value={this.props.store.disp_map.input_courier} onChange={(e)=>{this.props.set_input_courier(e.target.value)}} id="disp_map_courier_input" onFocus={()=>this.props.set_focus_input_courier(true)} />
+                        <button onClick={()=>this.props.set_input_courier({courier:'',color:'#000'})}>x</button>
                         {this.props.store.disp_map.courier_list.map((el,index)=>{
                             if (this.props.store.disp_map.focus_input_courier){
                                 const filter = el.text.toUpperCase();
@@ -448,7 +449,7 @@ class Screen extends React.Component {
                                 if (filter.indexOf(text) > -1) {
                                     return (<p onClick={()=>{
                                         
-                                        this.props.set_input_courier(el.text)
+                                        this.props.set_input_courier({courier:el.text, color:el.color})
                                         this.props.set_focus_input_courier(false)
                                     }} key={index}>
                                         <i aria-hidden="true" className="circle icon" style={{color:el.color}}></i>
