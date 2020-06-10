@@ -19,9 +19,6 @@ let shift = false
 class Screen extends React.Component {
 
     render_markers = (arr) => {
-        
-
-        
 
         arr.filter((disp_el)=>{return disp_el.modify}).map(el=>{
             
@@ -50,7 +47,7 @@ class Screen extends React.Component {
                     position: {lat:lat, lng:lng},
                     map: g_map,
                     title: Num,
-                    
+                    selected: el.selected,
                     icon: {
                         path: path,
                         fillColor: el.Color,
@@ -88,9 +85,6 @@ class Screen extends React.Component {
                 markers.push(marker)
                 //console.log('push '+ Num)
                 
-
-                  
-
                   marker.addListener('click', function() {
                     marker_onClick(el.Num) 
                     
@@ -124,16 +118,18 @@ class Screen extends React.Component {
     }
 
     set_courier = () => {
+
         const set_courier_data = {
             userkey: this.props.store.login.userkey,
             courier: this.props.store.disp_map.input_courier,
-            dispatch: this.props.store.disp_map.disp_for_del.filter(el=>el.selected).map(el=>{return(el.Num)})  
+            dispatch: this.props.store.disp_map.disp_for_del.filter(el=>el.selected).map(el=>{return(el.Num)}),  
         }
+
         //console.log(set_courier_data)
         get_data('setcourier', set_courier_data).then(
             (result) => {
                 //console.log(result);
-                this.get_map_data();
+                this.get_map_data(this.props.store.disp_map.disp_for_del.filter(el=>!el.selected).map(el=>{return(el.Num)}) );
                 this.reset()
             },
             (err) => { console.log(err) }
@@ -141,17 +137,22 @@ class Screen extends React.Component {
         
     }
 
-    get_map_data = () =>{
-        console.log("get data")
+    get_map_data = (not_modify) =>{
+        
+        console.log(not_modify)
 
         markers.forEach((el_1)=>{
+            const search = not_modify.indexOf(el_1.title)
+            if (search === -1){
             el_1.setMap(null)
+            }
         })
 
         const data = {
             userkey: this.props.store.login.userkey,
             terminal: "000000001",
-            date: this.props.store.disp_map.date
+            date: this.props.store.disp_map.date,
+            not_modify: not_modify
         }
 
         get_data('dispfordel', data).then(
@@ -446,9 +447,13 @@ class Screen extends React.Component {
                                 const text = this.props.store.disp_map.input_courier.toUpperCase()
                                 if (filter.indexOf(text) > -1) {
                                     return (<p onClick={()=>{
+                                        
                                         this.props.set_input_courier(el.text)
                                         this.props.set_focus_input_courier(false)
-                                    }} key={index}>{el.text}</p>)
+                                    }} key={index}>
+                                        <i aria-hidden="true" className="circle icon" style={{color:el.color}}></i>
+                                        {el.text}
+                                        </p>)
                                 }
                         }
                         })}
@@ -456,7 +461,7 @@ class Screen extends React.Component {
                     </div>
                 </div> 
              
-                <div className='disp_map_button'><button className='ui button mini' onClick={this.get_map_data.bind(this)}>Получить данные</button></div>
+                <div className='disp_map_button'><button className='ui button mini' onClick={this.get_map_data.bind(this,[])}>Получить данные</button></div>
                 <div className='disp_map_button'><button className='ui button mini' onClick={this.reset.bind(this)}>Сброс</button></div>
                 <div className='disp_map_button'><button className='ui button mini' onClick={this.set_courier.bind(this)}>Назначить</button></div>
              {this.props.store.disp_map.assignment_mode ? (
