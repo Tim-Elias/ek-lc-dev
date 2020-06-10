@@ -60,7 +60,7 @@ class Screen extends React.Component {
 
                   
                   var infowindow = new g_maps.InfoWindow({
-                    content: `<div><div>${el.Num} </div><div>Заказчик: ${el.Customer}</div></div><div>Город: ${el.RecCity}</div><div>Адрес: <b>${el.RecAddress}</b></div><div>Получатель: ${el.RecPerson}</div><div>Телефон: ${el.RecPhone}</div><div>Время доставки: ${el.RecTime}</div><div>Вес: ${el.Weight} (${Math.round(el.Volume*5)/1000})</div>`
+                    content: `<div><div>${el.Num} </div><div>Заказчик: ${el.Customer}</div></div><div>Город: ${el.RecCity}</div><div>Адрес: <b>${el.RecAddress}</b></div><div>Получатель: ${el.RecPerson}</div><div>Телефон: ${el.RecPhone}</div><div>Время доставки: ${el.RecTime}</div><div>Вес: ${el.Weight} (${Math.round(el.Volume*5)/1000})</div><div>Статус: ${el.StatusType}: ${el.StatusValue} ${el.StoreZone===""?(""):("</div><div>Зона хранения:"+el.StoreZone)}</div></div>`
                     
                   });
 
@@ -403,6 +403,7 @@ class Screen extends React.Component {
                                           <List.Header as='a'>{disp.Num} <Icon name='expand' onClick={this.open_disp.bind(this,disp.Num)}></Icon></List.Header>
                                           <List.Description as='a'>{disp.RecCity}</List.Description>
                                             <List.Description as='a'>{disp.RecAddress}</List.Description>
+                                            <List.Description as='a'>{"Вес:" + disp.Weight +" ("+ Math.round(disp.Volume*5)/1000+")"}</List.Description>
                                             {disp.RecLat === "" || disp.RecLng === "" ?(
                                                 <Icon name='search' color='red' onClick={this.geocode.bind(this,disp.Num,disp.RecCity+disp.RecAddress)}></Icon>
                                             ):(null)}
@@ -441,7 +442,11 @@ class Screen extends React.Component {
                     <div id="myDropdown" className="dropdown-content">
                         <i aria-hidden="true" className="circle icon" style={{color:this.props.store.disp_map.input_courier_color}}></i>
                         <input type="text" value={this.props.store.disp_map.input_courier} onChange={(e)=>{this.props.set_input_courier(e.target.value)}} id="disp_map_courier_input" onFocus={()=>this.props.set_focus_input_courier(true)} />
-                        <button onClick={()=>this.props.set_input_courier({courier:'',color:'#000'})}>x</button>
+                        <button onClick={()=>{
+                            this.props.set_input_courier({courier:'',color:'#000'})
+                            this.props.set_focus_input_courier(false)
+                            }
+                            }>x</button>
                         {this.props.store.disp_map.courier_list.map((el,index)=>{
                             if (this.props.store.disp_map.focus_input_courier){
                                 const filter = el.text.toUpperCase();
