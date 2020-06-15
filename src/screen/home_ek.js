@@ -16,6 +16,7 @@ import client_3 from './../common/clients/client_3.png'
 import client_4 from './../common/clients/client_4.png'
 
 import review_1 from './../common/review_1.png'
+import director from './../common/director.png'
 
 
 
@@ -199,7 +200,7 @@ class Screen extends React.Component {
                 </div>
 
                 <div style={{backgroundColor: "#E87B1A"}} className="callbacker home_content_element">
-                    <h2 className="text_align_center">Необходимо индивидуальное предложение</h2>
+                    <h2 className="text_align_center">Необходимо индивидуальное предложение?</h2>
                     <div className="text_align_center">
                         Мы разработаем для вас индивидуальный маршрут.
                         <br />
@@ -214,9 +215,35 @@ class Screen extends React.Component {
                         </div>
                 </div> 
 
-                {/* <div className="about home_content_element">
-                    О компании
-                </div>       */}
+                <div className="about home_content_element">
+                    <div className="about_left">
+                        <div  className="about_container" >
+                            <img className="about_photo" src={director}/>
+                            {/* <div style={{ backgroundSize:  "300px auto", backgroundImage: `url(${director})` }} className="about_photo"> */}
+
+                            {/* </div> */}
+                        </div>
+                        
+                    </div>
+                    <div className="about_right">
+                        <h2>О Вас</h2>
+                        <div className="about_text">
+                       Любимый наш клиент, <br />
+                   Самое драгоценное, что у нас есть, это твое доверие. И будь уверен, каждый день мы работаем так, чтобы заслужить его снова и снова.
+                    Каждый день мы принимаем, перевозим и доставляем твои грузы.
+                    Делаем это бережно и вовремя.
+                    В любое время, что бы ни случилось, ты можешь положиться на нас.
+                   Все твои задачи по перевозке и экспедированию грузов будут решены.
+                   Сроки, терморежим, и любые другие индивидуальные условия работы не являются проблемой.
+                    Просто скажи, что нужно, и мы всё сделаем.
+                   Мы ценим тебя, и очень надеемся, что это взаимно.
+                   <br />
+                   <br />
+                   <b>Ярослав Адамович<br />Директор Экспресс Кинетика</b>
+                       </div>
+                    </div>
+                    
+                </div>      
      
                 <div className="advantage home_content_element">
                 <h2 className="text_align_center">Преимущества</h2>
@@ -230,29 +257,29 @@ class Screen extends React.Component {
                         </div>
                         <div className="advantages_card">
                         <div className="text_align_center advantages_card_number">2</div>
-                            <div className="text_align_center advantages_card_label">Прием груза до 19.00</div>
+                            <div className="text_align_center advantages_card_label">Прием груза до 19:00</div>
                             <div className="text_align_center advantages_card_text">Вы успеете отправить свой груз <br />вовремя, чтобы уже завтра он был <br />в пункте назначения</div>
                         
                         
                         </div>
                         <div className="advantages_card">
                         <div className="text_align_center advantages_card_number">3</div>
-                            <div className="text_align_center advantages_card_label">Выдача товара с 09:00</div>
-                            <div className="text_align_center advantages_card_text">Груз, который вы отправили вчера,<br /> будет доступен к выдачи утром <br />уже с 8.30</div>
+                            <div className="text_align_center advantages_card_label">Выдача груза с 09:00</div>
+                            <div className="text_align_center advantages_card_text">Груз, который вы отправили вчера,<br /> будет доступен к выдаче утром <br />уже с 9:00</div>
                         
                         
                         </div>
                         <div className="advantages_card">
                         <div className="text_align_center advantages_card_number">4</div>
                             <div className="text_align_center advantages_card_label">Работаем 7 дней в неделю</div>
-                            <div className="text_align_center advantages_card_text">Вы можете отправить и забрать <br />Ваш груз даже в выходные</div>
+                            <div className="text_align_center advantages_card_text">Вы можете отправить и забрать <br />Ваш груз даже в выходные и праздничные дни</div>
                         
                         
                         </div>
                         <div className="advantages_card">
                         <div className="text_align_center advantages_card_number">5</div>
                             <div className="text_align_center advantages_card_label">Температурный режим</div>
-                            <div className="text_align_center advantages_card_text">Мы перевозим грузы при положительной <br />температуре, Ваш груз не будет заморожен</div>
+                            <div className="text_align_center advantages_card_text">Мы перевозим грузы при положительной <br />температуре</div>
                         
                         
                         
@@ -282,6 +309,7 @@ class Screen extends React.Component {
                         <div style={{ backgroundSize:  "170px auto", backgroundImage: `url(${client_2})` }} className="clients_card"></div>
                         <div style={{ backgroundSize:  "170px auto", backgroundImage: `url(${client_3})` }} className="clients_card"></div>
                         <div style={{ backgroundSize:  "210px auto", backgroundImage: `url(${client_4})` }} className="clients_card"></div>
+                        
                     </div>
                     <div className="clients_button_navi">
                     <i aria-hidden="true" style={{ color:"#2444B5", cursor:"pointer"}} className="chevron large right icon"></i>

@@ -208,8 +208,9 @@ text-align: center;
 }
 
 .about{
-    height: 320px;
-    background-color: salmon;
+  
+    display: grid;
+    grid-template-columns:  320px 1fr;
 }
 
 .advantage{
@@ -278,7 +279,7 @@ text-align: center;
 .clients_cards{
 
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns:  1fr 1fr;
 }
 
 .clients_card{
@@ -323,4 +324,40 @@ text-align: center;
 
 .review_card_content{
 margin-left: 15px;
+}
+
+.about_text{
+    font-size: 18px;
+    word-wrap: "break-word"
+}
+
+.about_left{
+    margin: 10px;
+}
+
+.about_right{
+    margin: 30px ;
+    display: grid;
+    grid-template-rows: 45px 1fr 45px;
+    word-spacing: 150%;
+    line-height: 190%;
+
+}
+
+.about_container{
+    height: 215px;
+    margin-top: 80px;
+    background-color: #E87B1A;
+}
+
+.about_photo{
+    vertical-align: bottom;
+    margin: -80px 0 0 0 ;
+   
+}
+
+.about_sign{
+    font-size: 18px;
+    font-weight: bold;
+    vertical-align: bottom;
 }
