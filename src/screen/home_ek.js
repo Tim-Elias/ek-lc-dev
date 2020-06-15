@@ -8,7 +8,7 @@ import im_card from './../common/im_2.png'
 import logo from './../common/1024.png'
 import GoogleMapReact from 'google-map-react';
 import map from './../common/map.png'
-import { Menu, Segment, Input, Button, Image, Card, Icon } from 'semantic-ui-react'
+import { Modal, Dimmer, Loader, Table, Image, Card, Icon } from 'semantic-ui-react'
 import './home_ek.css';
 import client_1 from './../common/clients/client_1.png'
 import client_2 from './../common/clients/client_2.png'
@@ -27,6 +27,22 @@ const Marker = ({ size, text, el_key, onClick }) =>
 ></div> 
 
 class Screen extends React.Component {
+
+    find = () => {
+        if (this.props.store.home.track_number !== '') {
+            this.props.set_disp_history_loading(true)
+            get_data('history', { Number: this.props.store.home.track_number }).then(
+                (result) => {
+                    this.props.set_disp_history(result);
+                    this.props.set_disp_history_loading(false)
+                },
+                (err) => { console.log(err) }
+            );
+        }
+
+    }
+
+
     render() {
         document.onkeydown = function (event) {}
     
@@ -107,9 +123,55 @@ class Screen extends React.Component {
                     ):(null)}
                     {this.props.store.home_ek.home_service_selector === 2?(<div className="home_service_selector_content">
                     <div className="home_service_selector_content_track">
-                            <input placeholder='Номер накладной' className="home_service_selector_content_input"></input>
-                            <button className="home_service_selector_content_button">Отследить</button>
-                    </div>
+                            <input 
+                            placeholder='Номер накладной' 
+                            className="home_service_selector_content_input"
+                            onChange={(e) => this.props.set_track_number(e.target.value)}
+                            value={this.props.store.home.track_number}
+                            ></input>
+                            <button onClick={this.find.bind(this)} className="home_service_selector_content_button">Отследить</button>
+                            <Modal
+                            // trigger={}
+                            open={this.props.store.disp.history.length !== 0}
+                            onClose={()=>this.props.set_disp_history([])}
+                            basic
+                            size='small'
+                        >
+                        
+                            {this.props.store.disp.history_loading ? (
+                            <div>
+                                <Dimmer active inverted>
+                                    <Loader inverted content='Loading' />
+                                </Dimmer>
+                            </div>
+                        ) : (
+                            <div style={{margin:"20px"}}>
+                                <Table celled>
+                                    <Table.Header className="create_disp_template_list_th">
+                                        <Table.Row>
+                                            <Table.HeaderCell>Дата</Table.HeaderCell>
+                                            <Table.HeaderCell>Статус</Table.HeaderCell>
+                                            <Table.HeaderCell>Комментарий</Table.HeaderCell>
+                                        </Table.Row>
+                                    </Table.Header>
+
+                                    <Table.Body>
+                                        {this.props.store.disp.history.map((el, index) =>
+
+                                            <Table.Row className="create_disp_template_list_tr" key={index}>
+                                                <Table.Cell >{el.Date}</Table.Cell>
+                                                <Table.Cell>{el.Status}</Table.Cell>
+                                                <Table.Cell>{el.Comment}</Table.Cell>
+                                            </Table.Row>
+                                        )}
+                                    </Table.Body>
+                                </Table>
+                                </div>
+                             )} 
+                             
+                            </Modal>
+                  
+                  </div>
                     </div>
                     ):(null)}
                     {this.props.store.home_ek.home_service_selector === 3?(<div className="home_service_selector_content">
@@ -383,5 +445,8 @@ export default connect(
     set_active_menu_item: (param) => { dispatch({ type: 'set_active_menu_item', payload: param }) },
     SetCityList: (param) => { dispatch({ type: 'SetCityList', payload: param }) },
     set_home_service_selector: (param) => { dispatch({ type: 'set_home_service_selector', payload: param }) },
+    set_track_number: (param) => { dispatch({ type: 'set_track_number', payload: param }) },
+    set_disp_history_loading: (param) => { dispatch({ type: 'set_disp_history_loading', payload: param }) },
+    set_disp_history: (param) => { dispatch({ type: 'set_disp_history', payload: param }) },
   })
 )(Screen)
