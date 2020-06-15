@@ -22,6 +22,8 @@ import DefaultTemplate from './default_template'
 import DispTemplate from './disp_template'
 import DispMap from './disp_map'
 
+import HomeEk from './home_ek'
+
 
 
 class Screen extends React.Component {
@@ -54,7 +56,7 @@ class Screen extends React.Component {
 
       <div className={className}>
 
-        {this.props.store.general.active_window === 'home' ? (<Home modules={modules}/>) : (null)}
+        {this.props.store.general.active_window === 'home' ? (<HomeEk modules={modules}/>) : (null)}
         {this.props.store.general.active_window === 'my_disp' ? (<MyDisp modules={modules}/>) : (null)}
         {this.props.store.general.active_window === 'create_disp' ? (<CreateDisp modules={modules}/>) : (null)}
         {this.props.store.general.active_window === 'mutual' ? (<Mutual modules={modules}/>) : (null)}

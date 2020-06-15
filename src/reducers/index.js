@@ -16,6 +16,7 @@ import order from './order'
 import templates from './templates'
 import home from './home'
 import disp_map from './disp_map'
+import home_ek from './home_ek'
 
 export default combineReducers({
 
@@ -34,6 +35,7 @@ export default combineReducers({
   order,
   templates,
   home,
-  disp_map
+  disp_map,
+  home_ek
   
 })

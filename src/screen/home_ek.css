@@ -1,0 +1,326 @@
+.home_content{
+    width: 100%;
+    
+  
+    
+}
+
+.home_content_element{
+
+    margin: 20px;
+  
+    
+}
+
+.home_menu{
+    
+    display: flex;
+    overflow-y: hidden;
+    margin-top: 0;
+}
+
+.home_menu_element{
+    padding: 5px 15px;
+    border-bottom: 1px solid #BBB  ;
+    cursor: pointer;
+}
+
+.home_menu_element:hover{
+    padding: 5px 15px;
+    border-bottom: 1px solid #E87B1A  ;
+}
+
+.home_main_offer{
+   
+    height: 350px;
+    
+    background-size: auto 350px ;
+    background-repeat: no-repeat;
+    background-position: right;
+   
+    display: grid;
+    grid-template-rows: 1fr 1fr 40px;
+
+}
+
+.home_main_offer_label{
+font-size: 36pt;
+}
+
+.home_main_offer_list{
+    height: 100%;
+    font-size: 16px;
+}
+
+.home_main_offer_button{
+  width: 200px;
+  margin: 5px 0;
+  color: white;
+  background-color: #E87B1A;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+
+.home_main_offer_list_element{
+    display: grid;
+    grid-template-columns: 30px 1fr;
+    word-spacing: 3px;
+    margin: 10px 0;
+}
+
+.home_service_selector{
+    height: 160px;
+
+    display: grid;
+    grid-template-rows: 40px 1fr;
+}
+
+.home_service_selector_menu{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.home_service_selector_menu_element{
+    text-align: center;
+    padding: 5px;
+}
+
+.home_service_selector_menu_element_selected{
+    text-align: center;
+    padding: 5px;
+    color: white;
+    background-color: #2444B5;
+}
+
+.home_service_selector_content{
+background-color: #2444B5;
+color: white;
+}
+
+.home_service_selector_content_calc{
+    margin: 40px;
+    height: 50px;
+    display: grid;
+    grid-template-columns: 2fr 2fr 1fr 150px;
+}
+
+.home_service_selector_content_order{
+    margin: 40px;
+    height: 50px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 150px;
+}
+
+.home_service_selector_content_track{
+    margin: 40px;
+    height: 50px;
+    display: grid;
+    grid-template-columns: 1fr 150px;
+}
+
+.home_service_selector_content_input{
+    margin: 5px;
+    height: 40px;
+}
+
+.home_service_selector_content_button{
+    margin: 5px;
+}
+
+.home_service_cards{
+    
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin: 0 10px;
+
+}
+
+.home_service_card{
+    box-shadow: 0 2px 5px 1px #ccc;
+    height: 250px;
+    margin: 0 10px;
+    padding: 0 30px;
+    word-spacing: 2px;
+    display: grid;
+    grid-template-rows: 65px 1fr 40px;
+    
+    
+}
+
+.home_service_card_content{
+    background-size: auto 100% ;
+    background-repeat: no-repeat;
+    background-position: top right;
+}
+
+.home_service_card_label{
+text-align: center;
+padding: 20px 0;
+}
+
+.filials{
+    height: 760px;
+    display: grid;
+    grid-template-rows: 60px 80px 1fr;
+    padding: 10px;
+    box-shadow: 0 2px 5px 1px #ccc;
+
+
+    
+}
+
+.filials_map{
+    background-size:  auto 100% ;
+    background-repeat: no-repeat;
+    background-position:  center;
+}
+
+.text_align_center{
+text-align: center;
+}
+
+
+
+.callbacker{
+    padding-top: 20px;
+    display: grid;
+    grid-template-rows: 60px 40px 90px;
+    
+   
+   color: white;
+}
+.callbacker_content{
+    display: grid;
+    grid-template-columns: 2fr 2fr 1fr 150px;
+    margin: 20px;
+    height: 50px;
+}
+
+.callbacker_input{
+    margin: 5px;
+    height: 40px;
+}
+
+.callbacker_button{
+    margin: 5px;
+}
+
+.about{
+    height: 320px;
+    background-color: salmon;
+}
+
+.advantage{
+    
+    background-color: #FFF;
+}
+
+.clients{
+    display: grid;
+    grid-template-columns: 320px 30px 1fr 30px;
+    
+}
+
+.review{
+    background-color: white;
+    
+}
+
+.auto{
+    background-color: #AAA;
+}
+
+.advantages_cards{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin: -10px;
+    
+    
+}
+
+.advantages_card{
+    height: 250px;
+    margin: 10px;
+    box-shadow: 0 2px 5px 1px #ccc;
+    display: grid;
+    grid-template-rows: 120px 40px 90px;
+
+    
+}
+
+.advantages_card_number{
+    margin-top: 40px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 64px;
+    line-height: 23px;
+    color: #E87B1A
+}
+
+.advantages_card_label{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.advantages_card_text{
+    font-size: 16px;
+    
+}
+
+.clients_label{
+    padding: 30px;
+    
+}
+
+.clients_cards{
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.clients_card{
+    height: 130px;
+    margin: 5px;
+    
+    background-repeat: no-repeat;
+    background-position:  center;
+    box-shadow: 0 2px 5px 1px #ccc;
+}
+
+.clients_button_navi{
+    margin: auto;
+    height: 20px;
+    
+}
+
+.review_button_navi{
+    margin: auto;
+    height: 20px;
+}
+
+.review_cards{
+    display: grid;
+    grid-template-columns: 40px 1fr 1fr 40px;
+    
+}
+
+.review_card{
+    padding: 20px 40px 20px 10px ;
+    height: 200px;  
+    margin: 10px 30px;
+    box-shadow: 0 2px 5px 1px #ccc;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+}
+
+.review_card_photo{
+    background-repeat: no-repeat;
+    background-position:  center;
+}
+
+.review_card_content{
+margin-left: 15px;
+}
