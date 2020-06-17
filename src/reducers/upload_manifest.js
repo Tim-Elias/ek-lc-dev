@@ -9,21 +9,31 @@ const initialState = {
   disp_template_list: [],
   disp_data:[],
   upload_in_one: {label:"Загрузка каждой накладной", value: false },
-  consolidate_checkbox_index: 0
+  consolidate_checkbox_index: 0,
+
+  open_modal_dt: false,
 
 }
 
 export default function dispatch (state = initialState, action) {
   switch (action.type) {
+
+    case 'set_upload_manifest_disp_data_total': return { ...state, disp_data: [...state.disp_data.map((el) => { if (el.Key === action.payload.key) { return { ...el, Total: action.payload.value } } else { return el} }) ]  }
+    case 'set_upload_manifest_disp_data_weight': return { ...state, disp_data: [...state.disp_data.map((el) => { if (el.Key === action.payload.key) { return { ...el, Weight: action.payload.value } } else { return el} }) ]  }
+    case 'set_upload_manifest_disp_data_volume': return { ...state, disp_data: [...state.disp_data.map((el) => { if (el.Key === action.payload.key) { return { ...el, Volume: action.payload.value } } else { return el} }) ]  }
+   
     case 'reset_upload_manifest_data': return initialState
     case 'set_consolidate_checkbox_index': return { ...state, consolidate_checkbox_index: action.payload }
     case 'set_text_area': return { ...state, text_area: action.payload }
     case 'set_upload_in_one': return { ...state, upload_in_one: action.payload, data: [], disp_data: [] }
     case 'upload_manifest_reset_state': return  initialState 
     case 'set_import_template': return { ...state, import_template: action.payload }
+    case 'set_upload_manifest_open_modal_dt': return { ...state, open_modal_dt: action.payload }
     case 'set_default_template': return { ...state, default_template: action.payload }
-    case 'set_disp_data': return { ...state, disp_data: action.payload }
-
+    case 'set_disp_data': return { ...state, disp_data: [...state.disp_data.concat(action.payload) ] }
+    case 'upload_manifest_check_template_checkbox': return { ...state, disp_template_list: [...state.disp_template_list.map((el) => { if (el.Key === action.payload) { return { ...el, selected: !el.selected } } else { return el} }) ] }
+    case 'upload_manifest_reset_template_checkbox': return { ...state, disp_template_list: [...state.disp_template_list.map((el) => { return { ...el, selected: false } })] }
+    case 'upload_manifest_remove_disp': return { ...state, disp_data: state.disp_data.filter(el=>el.Key !== action.payload)}
     case 'upload_manifest_check_checkbox': return { ...state, data: state.data.map((el,index)=>{
       
       if (index === action.payload.element_index) {

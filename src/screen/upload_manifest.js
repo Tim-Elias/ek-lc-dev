@@ -208,10 +208,6 @@ class Screen extends React.Component {
         }
       }
       
-      
-      
-      
-      
       let disp = {Num: Num,
         SendCity: SendCity,
         SendAdress: SendAdress,
@@ -436,6 +432,148 @@ class Screen extends React.Component {
       
     }
 
+    upload_manifest_click_template_row = (el) => {
+
+      //console.log(el)
+    }
+
+    create_disp_from_temlate = () => {
+
+      let data = []
+      const dt = this.props.store.upload_manifest.default_template
+
+      this.props.store.upload_manifest.disp_template_list.filter(el=>el.selected).forEach((el,index)=>{
+      const max = this.props.store.upload_manifest.disp_data.reduce((prev, cur) => {
+        if (prev.Key > cur.Key) {
+          return prev.Key
+        }
+        return cur.Key
+      },0)
+
+      console.log(max)
+
+        let CurIndex = index + max + 1
+  
+        // if (this.props.store.upload_manifest.upload_in_one.value && this.props.store.upload_manifest.consolidate_checkbox_index !== 0 && this.props.store.upload_manifest.import_template.ConsolidateImportTemplate !==0 && consolidate_data.length !== 0){
+        //   CurIndex = index+1
+        // } else {
+        //   CurIndex = index
+        // }
+        // console.log(el)
+        let Num = ""
+        let SendCity = ""
+        let SendAdress = ""
+        let SendCompany = ""
+        let SendPerson = ""
+        let SendPhone = ""
+        let SendAddInfo = ""
+        let RecCity = ""
+        let RecAdress = ""
+        let RecCompany = ""
+        let RecPerson = ""
+        let RecPhone = ""
+        let RecAddInfo = ""
+  
+        let InsureValue = 0
+        let COD = 0
+        let Total = ""
+        let Weight = ""
+        let Volume = ""
+  
+        
+  
+  //console.log(dt)
+  
+        // if(it.Num !== 0) {Num = el[it.Num-1]}
+        // console.log(it.SendCity)
+        // console.log(dt.SendCity)
+        SendCity = dt.SendCity
+        SendAdress = dt.SendAdress
+        SendCompany = dt.SendCompany
+        SendPerson = dt.SendPerson
+        SendPhone = dt.SendPhone
+        SendAddInfo = dt.SendAddInfo
+  
+        RecCity = el.City
+        RecAdress = el.Adress
+        RecCompany = el.Company
+        RecPerson = el.Person
+        RecPhone = el.Phone
+        RecAddInfo = el.AddInfo
+  
+        // if(it.InsureValue !== "0") {InsureValue = el[it.InsureValue-1]} 
+        // if(it.COD !== "0") {COD = el[it.COD-1]} 
+        // if(it.Total !== "0") {Total = el[it.Total-1]} 
+        // if(it.Weight !== "0") {Weight = el[it.Weight-1]} 
+        // if(it.Volume !== "0") {Volume = el[it.Volume-1]} 
+  
+        
+        // if(RecCity == ""){
+        //   const Recdispt = this.props.store.upload_manifest.disp_template_list.find(el=>{
+        //     return el.label === RecAdress
+        //   })
+        //   if (Recdispt !== undefined){
+        //     RecCity = Recdispt.City
+        //     RecAdress = Recdispt.Adress
+        //     if (RecPhone == "") {RecPhone = Recdispt.Phone}
+        //     if (RecPerson == "") {RecPerson = Recdispt.Person}
+        //     if (RecCompany == "") {RecCompany = Recdispt.Company}
+        //     if (RecAddInfo == "") {RecAddInfo = Recdispt.AddInfo}
+        //   }
+        // }
+  
+        // if(SendCity == ""){
+        //   const Senddispt = this.props.store.upload_manifest.disp_template_list.find(el=>{
+        //     return el.label === SendAdress
+        //   })
+        //   if (Senddispt !== undefined){
+        //     SendCity = Senddispt.City
+        //     SendAdress = Senddispt.Adress
+        //     if (SendPhone == "") {SendPhone = Senddispt.Phone}
+        //     if (SendPerson == "") {SendPerson = Senddispt.Person}
+        //     if (SendCompany == "") {SendCompany = Senddispt.Company}
+        //     if (SendAddInfo == "") {SendAddInfo = Senddispt.AddInfo}
+        //   }
+        // }
+        
+        let disp = {Num: Num,
+          SendCity: SendCity,
+          SendAdress: SendAdress,
+          SendCompany: SendCompany,
+          SendPerson: SendPerson,
+          SendPhone: SendPhone,
+          SendAddInfo: SendAddInfo, 
+          RecCity: RecCity,
+          RecAdress: RecAdress,
+          RecCompany: RecCompany,
+          RecPerson: RecPerson,
+          RecPhone: RecPhone,
+          RecAddInfo: RecAddInfo,
+          InsureValue: InsureValue,
+          COD: COD,
+          Total: Total,
+          Weight: Weight,
+          Volume: Volume,
+          Status: 'Не загружено',
+          Key: CurIndex,
+          Comment:''
+        }
+       
+        data.push(disp)
+  
+  
+      })
+    this.props.set_disp_data(data)
+    this.props.set_upload_manifest_open_modal_dt(false)
+    this.props.upload_manifest_reset_template_checkbox()
+
+
+
+
+    }
+
+    
+
   render() {
     document.onkeydown = function (event) {}
 
@@ -446,13 +584,13 @@ class Screen extends React.Component {
     return (
       
       <div>
-      Загрузить манифест
+      {/* Загрузить манифест */}
 <div>
-      <textarea onChange={e => this.props.set_text_area(e.target.value)} value={this.props.store.upload_manifest.text_area} type="text"></textarea>
+      {/* <textarea onChange={e => this.props.set_text_area(e.target.value)} value={this.props.store.upload_manifest.text_area} type="text"></textarea> */}
       </div>
       <div>
-      <button className="ui button mini" onClick={this.read_text.bind(this)}>Прочитать</button>
-      <button className="ui button mini" disabled={this.props.store.upload_manifest.data.length==0} onClick={this.convert_data.bind(this)}>Преобразовать</button>
+      {/* <button className="ui button mini" onClick={this.read_text.bind(this)}>Прочитать</button> */}
+      {/* <button className="ui button mini" disabled={this.props.store.upload_manifest.data.length==0} onClick={this.convert_data.bind(this)}>Преобразовать</button> */}
       <button className="ui button mini" disabled={this.props.store.upload_manifest.disp_data.length==0} onClick={this.upload_data.bind(this)}>Загрузить данные</button>
       
       {complited.length !== 0 ? (<ReactToPrint
@@ -485,8 +623,11 @@ class Screen extends React.Component {
                       /> 
       </div>
       <div>
-      <Modal trigger={<button className="ui icon button mini"><i className="eye icon"></i></button>}>
+      
+
+      <Modal trigger={<button className="ui icon button mini"><i className="eye icon"></i></button>} >
       <Modal.Header>Шаблон импорта</Modal.Header>
+
       <Modal.Content>
       
       <Modal.Description>
@@ -602,7 +743,8 @@ class Screen extends React.Component {
     <div className="disp_data_label">Шаблоны адресов:</div>
     <div className="disp_data_el">{this.props.store.upload_manifest.disp_template_list.length}</div>
       <div>
-        <Modal trigger={<button className="ui icon button mini"><i className="eye icon"></i></button>}>
+     <button onClick={()=>{this.props.set_upload_manifest_open_modal_dt(true)}}  className="ui icon button mini"><i className="eye icon"></i></button>
+        <Modal onClose={()=>this.props.set_upload_manifest_open_modal_dt(false)} open={this.props.store.upload_manifest.open_modal_dt} >
           <Modal.Header>Шаблоны адресов</Modal.Header>
           <Modal.Content>
           
@@ -619,12 +761,13 @@ class Screen extends React.Component {
               <Table.HeaderCell>Конт. лицо</Table.HeaderCell>
               <Table.HeaderCell>Компания</Table.HeaderCell>
               <Table.HeaderCell>Доп. инфо</Table.HeaderCell>
+              <Table.HeaderCell></Table.HeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>
           {this.props.store.upload_manifest.disp_template_list.map((el,index)=>
             
-              <Table.Row key={index}>
+              <Table.Row key={index} onDoubleClick={this.upload_manifest_click_template_row.bind(this,el)}>
                 <Table.Cell>{el.label}</Table.Cell>
                 <Table.Cell>{el.City}</Table.Cell>
                 <Table.Cell>{el.Adress}</Table.Cell>
@@ -632,10 +775,13 @@ class Screen extends React.Component {
                 <Table.Cell>{el.Person}</Table.Cell>
                 <Table.Cell>{el.Company}</Table.Cell>
                 <Table.Cell>{el.AddInfo}</Table.Cell>
+                <Table.Cell><input onChange={()=>this.props.upload_manifest_check_template_checkbox(el.Key)} type='checkbox' checked={el.selected}></input></Table.Cell>
               </Table.Row>
           )}
           </Table.Body>
           </Table>
+
+          {this.props.store.upload_manifest.disp_template_list.filter((el)=>{return(el.selected)}).length > 0?(<button onClick={this.create_disp_from_temlate.bind(this)}>Cоздать ({this.props.store.upload_manifest.disp_template_list.filter((el)=>{return(el.selected)}).length})</button>):<button disabled>Cоздать</button>}
           </div>
             
           </Modal.Description>
@@ -700,11 +846,11 @@ class Screen extends React.Component {
       <div className="upload_manifest_data_label">Номер накладной:</div>
       <div className="upload_manifest_data_el">{el.Num}</div>
       <div className="upload_manifest_data_label">Итого мест:</div>
-      <div className="upload_manifest_data_el">{el.Total}</div>
+      <div className="upload_manifest_data_el"><input value={el.Total} onChange={(e)=>{this.props.set_upload_manifest_disp_data_total(el.Key,e.target.value)}}></input></div>
       <div className="upload_manifest_data_label">Фактический вес:</div>
-      <div className="upload_manifest_data_el">{el.Weight}</div>
+      <div className="upload_manifest_data_el"><input value={el.Weight} onChange={(e)=>{this.props.set_upload_manifest_disp_data_weight(el.Key,e.target.value)}}></input></div>
       <div className="upload_manifest_data_label">Объемный вес:</div>
-      <div className="upload_manifest_data_el">{el.Volume}</div>
+      <div className="upload_manifest_data_el"><input value={el.Volume} onChange={(e)=>{this.props.set_upload_manifest_disp_data_volume(el.Key,e.target.value)}}></input></div>
       <div className="upload_manifest_data_label">Страховая стоимость:</div>
       <div className="upload_manifest_data_el">{el.InsureValue}</div>
       <div className="upload_manifest_data_label">Налож. платеж:</div>
@@ -751,7 +897,7 @@ class Screen extends React.Component {
       {el.Status === 'Загружено' ? (<ReactToPrint
         trigger={() => <div className='upload_manifest_button_container'><Button size='mini'><Icon name='print'></Icon> Печать</Button></div>}
         content={() => this.componentRef[el.Key]}
-      />):(null)}
+      />):(<Button size='mini' onClick={()=>this.props.upload_manifest_remove_disp(el.Key)}><Icon name='remove'></Icon> Удалить</Button>)}
     
       {el.Status === 'Загружено' ? (<div style={{ display: "none" }} >
         <ComponentToPrint disp={[el.print_data]} ref={cur_el => (this.componentRef[el.Key] = cur_el)} />
@@ -794,8 +940,15 @@ export default connect(
     set_disp_data: (param) => { dispatch({ type: 'set_disp_data', payload: param }) },
     set_disp_status: (param) => { dispatch({ type: 'set_disp_status', payload: param }) },
     set_upload_in_one: (param) => { dispatch({ type: 'set_upload_in_one', payload: param }) },
+    set_upload_manifest_open_modal_dt: (param) => { dispatch({ type: 'set_upload_manifest_open_modal_dt', payload: param }) },
+    upload_manifest_check_template_checkbox: (param) => { dispatch({ type: 'upload_manifest_check_template_checkbox', payload: param }) },
     upload_manifest_check_checkbox: (param) => { dispatch({ type: 'upload_manifest_check_checkbox', payload: param }) },
     set_consolidate_checkbox_index: (param) => { dispatch({ type: 'set_consolidate_checkbox_index', payload: param }) }, 
+    upload_manifest_reset_template_checkbox: () => { dispatch({ type: 'upload_manifest_reset_template_checkbox' }) }, 
+    set_upload_manifest_disp_data_total: (key,value) => { dispatch({ type: 'set_upload_manifest_disp_data_total', payload: {key:key,value:value} }) }, 
+    set_upload_manifest_disp_data_weight: (key,value) => { dispatch({ type: 'set_upload_manifest_disp_data_weight', payload: {key:key,value:value} }) },
+    set_upload_manifest_disp_data_volume: (key,value) => { dispatch({ type: 'set_upload_manifest_disp_data_volume', payload: {key:key,value:value} }) }, 
+    upload_manifest_remove_disp: (param) => { dispatch({ type: 'upload_manifest_remove_disp', payload: param }) },
     //add_data_upload_manifest: (param) => { dispatch({ type: 'add_data_upload_manifest', payload: param }) },
   })
 )(Screen);

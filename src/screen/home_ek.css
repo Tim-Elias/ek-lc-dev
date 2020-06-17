@@ -320,6 +320,7 @@ text-align: center;
 .review_card_photo{
     background-repeat: no-repeat;
     background-position:  center;
+    min-height: 160px;
 }
 
 .review_card_content{

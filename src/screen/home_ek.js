@@ -288,7 +288,7 @@ class Screen extends React.Component {
                         
                     </div>
                     <div className="about_right">
-                        <h2>О Вас</h2>
+                        <h2></h2>
                         <div className="about_text">
                        Любимый наш клиент, <br />
                    Самое драгоценное, что у нас есть, это твое доверие. И будь уверен, каждый день мы работаем так, чтобы заслужить его снова и снова.
