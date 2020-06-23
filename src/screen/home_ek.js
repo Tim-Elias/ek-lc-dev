@@ -422,7 +422,7 @@ class Screen extends React.Component {
                 </div>      
      
                 <div className="advantage home_content_element">
-                <h2 className="text_align_center">Преимущества</h2>
+                <h2 className="text_align_center font_36">Преимущества</h2>
                     
                     <div className="advantages_cards">
                         <div className="advantages_card shadow">
