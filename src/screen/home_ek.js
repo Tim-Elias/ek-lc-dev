@@ -135,7 +135,12 @@ class Screen extends React.Component {
                     this.props.set_disp_history(result);
                     this.props.set_disp_history_loading(false)
                 },
-                (err) => { console.log(err) }
+                (err) => {
+                    this.props.set_disp_history_loading(false)
+                    this.props.set_disp_history([]);
+                    this.props.set_home_error_mesage("Накладная не найдена :(")
+                    console.log(err) 
+                }
             );
         }
 
@@ -255,14 +260,39 @@ class Screen extends React.Component {
                             value={this.props.store.home.track_number}
                             ></input>
                             <button onClick={this.find.bind(this)} className="home_service_selector_content_button">Отследить</button>
-                            <Modal
-                            // trigger={}
-                            open={this.props.store.disp.history.length !== 0}
-                            onClose={()=>this.props.set_disp_history([])}
-                            basic
-                            size='small'
-                        >
-                        
+                            
+                            
+                            
+                            
+                  
+                  </div>
+                    </div>
+                    ):(null)}
+                    {this.props.store.home_ek.home_service_selector === 3?(<div className="home_service_selector_content">
+                    <div className="home_service_selector_content_order">
+                            <input placeholder='Город отправления' className="home_service_selector_content_input"></input>
+                            <input placeholder='Адрес отправления' className="home_service_selector_content_input"></input>
+                            <input placeholder='Имя отправителя' className="home_service_selector_content_input"></input>
+                            <input placeholder='Телефон отправителя' className="home_service_selector_content_input"></input>
+                            <button className="home_service_selector_content_button">Вызвать курьера</button>
+
+                        </div>
+                    </div>
+                    ):(null)}
+                   </div>
+                </div>
+
+
+                {this.props.store.home_ek.error_mesage !== ""? (
+                    <div className="home_content_element scale">
+                        {this.props.store.home_ek.error_mesage}
+                    </div>):(null)}
+
+                             
+                {this.props.store.disp.history.length !== 0 && this.props.store.home_ek.home_service_selector === 2? (<div className="home_content_element scale">
+                            
+                            <button onClick={()=>this.props.set_disp_history([])}>Закрыть</button>
+                            
                             {this.props.store.disp.history_loading ? (
                             <div>
                                 <Dimmer active inverted>
@@ -294,24 +324,7 @@ class Screen extends React.Component {
                                 </div>
                              )} 
                              
-                            </Modal>
-                  
-                  </div>
-                    </div>
-                    ):(null)}
-                    {this.props.store.home_ek.home_service_selector === 3?(<div className="home_service_selector_content">
-                    <div className="home_service_selector_content_order">
-                            <input placeholder='Город отправления' className="home_service_selector_content_input"></input>
-                            <input placeholder='Адрес отправления' className="home_service_selector_content_input"></input>
-                            <input placeholder='Имя отправителя' className="home_service_selector_content_input"></input>
-                            <input placeholder='Телефон отправителя' className="home_service_selector_content_input"></input>
-                            <button className="home_service_selector_content_button">Вызвать курьера</button>
-
-                        </div>
-                    </div>
-                    ):(null)}
-                   </div>
-                </div>
+                             </div>):(null)}
 
                 
 
@@ -563,5 +576,6 @@ export default connect(
     set_track_number: (param) => { dispatch({ type: 'set_track_number', payload: param }) },
     set_disp_history_loading: (param) => { dispatch({ type: 'set_disp_history_loading', payload: param }) },
     set_disp_history: (param) => { dispatch({ type: 'set_disp_history', payload: param }) },
+    set_home_error_mesage: (param) => { dispatch({ type: 'set_home_error_mesage', payload: param }) },
   })
 )(Screen)
