@@ -300,7 +300,8 @@ grid-template-rows: 100px 80px 120px;
 }
 
 .clients{
-    margin: 150px 20px;
+    max-width: 1240px;
+    margin: auto;
     display: grid;
     grid-template-columns: 320px 30px 1fr 30px;
     
@@ -316,16 +317,17 @@ grid-template-rows: 100px 80px 120px;
 }
 
 .advantages_cards{
+    max-width: 1200px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    margin: -30px;
+    margin: auto;
     
     
 }
 
 .advantages_card{
     height: 250px;
-    margin: 30px;
+    margin: 15px;
     
     display: grid;
     grid-template-rows: 120px 40px 90px;
@@ -344,18 +346,22 @@ grid-template-rows: 100px 80px 120px;
 }
 
 .advantages_card_label{
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
 }
 
 .advantages_card_text{
-    font-size: 16px;
+    font-size: 15px;
     
 }
 
 .clients_label{
-    padding: 30px;
+    padding: 35px;
     
+}
+
+.clients_label_text{
+    font-size: 18px;
 }
 
 .clients_cards{

@@ -473,8 +473,8 @@ class Screen extends React.Component {
                 <div className="clients home_content_element">
                     
                     <div className="clients_label">
-                    <h2 className="">Наши клиенты</h2>
-                    <div className="">Нас выбирают как надежных <br />исполнителей и партнеров <br /><br />За то, что мы не боимся <br />сложных задач</div>
+                    <h2 className="font_36">Наши клиенты</h2>
+                    <div className="clients_label_text">Нас выбирают как надежных <br />исполнителей и партнеров <br /><br />За то, что мы не боимся <br />сложных задач</div>
 
                     </div>
                     <div className="clients_button_navi">
