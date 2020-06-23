@@ -18,15 +18,114 @@ import client_4 from './../common/clients/client_4.png'
 import review_1 from './../common/review_1.png'
 import director from './../common/director.png'
 
+let g_map
+let g_maps
+let markers = []
 
-
-const Marker = ({ size, text, el_key, onClick }) =>
-<div className="marker"
-    style={{ width: `${size}px`, height: `${size}px`, backgroundImage: `url(${logo})`, cursor: 'pointer' }}
-    title={text}
-></div> 
+// const Marker = ({ size, text, el_key, onClick }) =>
+// <div className="marker"
+//     style={{ width: `${size}px`, height: `${size}px`, backgroundImage: `url(${logo})`, cursor: 'pointer' }}
+//     title={text}
+// ></div> 
 
 class Screen extends React.Component {
+
+    render_markers = () => {
+
+        const arr = this.props.store.home.filial
+        // {this.props.store.home.filial.map(el=>{
+        //     return(
+        //         <Marker 
+        //         key={el.el_key}
+        //         lat={el.lat}
+        //         lng={el.lng}
+        //         text={el.text} 
+        //         size={el.size}
+        //         el_key={el.el_key}
+        //         onClick = {this.marker_onClick}
+                
+        //         />
+        //         )}
+        // )
+        //     }
+
+
+        
+        arr.map(el=>{
+            
+            
+            
+            // const marker_onClick = this.marker_onClick
+            
+            const lat = el.lat
+            const lng = el.lng
+            // const size = new g_maps.Size(30, 30)
+
+            // var image = { 
+            //     // url: process.env.PUBLIC_URL + '/static/media/1024.149b5f09.png',
+            //     // This marker is 20 pixels wide by 32 pixels high.
+            //     size: new g_maps.Size(20, 32),
+            //     // The origin for this image is (0, 0).
+            //     origin: new g_maps.Point(0, 0),
+            //     // The anchor for this image is the base of the flagpole at (0, 32).
+            //     anchor: new g_maps.Point(0, 32)
+            //   };
+              // Shapes define the clickable region of the icon. The type defines an HTML
+              // <area> element 'poly' which traces out a polygon as a series of X,Y points.
+              // The final coordinate closes the poly by connecting to the first coordinate.
+            //   var shape = {
+            //     coords: [1, 1, 1, 20, 18, 20, 18, 1],
+            //     type: 'poly'
+            //   };
+
+
+            // const path = 
+               
+                const marker = new g_maps.Marker({
+
+                    position: {lat:lat, lng:lng},
+                    map: g_map,
+                    title: el.text,
+                    // selected: el.selected,
+                    // icon: {
+                    //     url: logo,
+                    //     fillOpacity: 1,
+                        
+                        
+                    //   }
+                    // icon: image,
+                    // shape: shape,
+                  });
+
+                  
+                  var infowindow = new g_maps.InfoWindow({
+                    
+                    content: `<div><div>${el.text} </div><div>Заказчик: ${el.phone}</div></div><div>Город: ${el.email}</div><div>Адрес: <b>${el.work_hour}</b></div></div>`
+                    
+                  });
+
+                //   if (el.selected){
+
+                //     if(!this.props.store.disp_map.assignment_mode && !shift){
+                //         infowindow.open(g_map, marker);
+                //     }
+                    
+                // }
+
+                markers.push(marker)
+                //console.log('push '+ Num)
+                
+                  marker.addListener('click', function() {
+                    //marker_onClick(el.Num) 
+                    
+                  });
+
+            
+
+            
+            }
+        )
+    }
 
     find = () => {
         if (this.props.store.home.track_number !== '') {
@@ -44,6 +143,30 @@ class Screen extends React.Component {
 
 
     render() {
+        const render_markers = this.render_markers
+        const onGoogleApiLoaded = (map, maps) => {
+            g_map = map
+            g_maps = maps  
+
+            
+            g_maps.event.addListenerOnce(g_map, 'tilesloaded', ()=>{
+                render_markers()
+              });
+
+                
+
+            g_maps.event.addListener(g_map, 'click', function(e) {
+               
+                // map_clck(e.latLng)
+                
+            })
+
+            
+                
+
+            
+        }
+
         document.onkeydown = function (event) {}
     
         return (
@@ -59,7 +182,7 @@ class Screen extends React.Component {
                 </div>
                 <div className="home_main_offer home_content_element"  style={{ backgroundImage: `url(${transit})` }}>
                  
-                   <h1 className="home_main_offer_label">
+                   <h1 className="home_main_offer_label"> 
                        Срочная доставка
                     <br />
                        грузов и документов
@@ -83,7 +206,9 @@ class Screen extends React.Component {
                 </div>
 
                 <div className="home_service_selector home_content_element">
+                    <div className="home_service_content">
                    <div className="home_service_selector_menu">
+                       
                    {this.props.store.home_ek.home_service_selector === 1?(
                        <div onClick={()=>this.props.set_home_service_selector(1)}  className="home_service_selector_menu_element_selected" >
                        Рассчитать стоимость
@@ -185,13 +310,13 @@ class Screen extends React.Component {
                         </div>
                     </div>
                     ):(null)}
-                   
+                   </div>
                 </div>
 
                 
 
                 <div className="home_service_cards home_content_element">
-                    <div className="home_service_card" > 
+                    <div className="home_service_card shadow" > 
                         <h3 className="home_service_card_label">Междугородние перевозки</h3>
                        
                        <div className="home_service_card_content" style={{ backgroundImage: `url(${transit_card})` }}>
@@ -202,7 +327,7 @@ class Screen extends React.Component {
                         </div>
                     </div>
               
-                    <div className="home_service_card">
+                    <div className="home_service_card shadow">
                     <h3 className="home_service_card_label">Экспресс доставка от двери до двери</h3>
                        
                        <div className="home_service_card_content" style={{ backgroundImage: `url(${courier_card})` }}>
@@ -213,7 +338,7 @@ class Screen extends React.Component {
                         </div>
                     </div>
             
-                    <div className="home_service_card">
+                    <div className="home_service_card shadow">
                     <h3 className="home_service_card_label">Доставка заказов Интренет-магазинов</h3>
                        
                        <div className="home_service_card_content" style={{ backgroundImage: `url(${im_card})` }}>
@@ -225,9 +350,9 @@ class Screen extends React.Component {
                     </div>
                 </div>
 
-                <div className="filials home_content_element">
-                   <h2 className="text_align_center">География</h2>
-                    <div className="text_align_center">Экспресс Кинетика доставляет грузы и документы по всей России
+                <div className="filials home_content_element shadow">
+                   <h2 className="text_align_center font_36 filials_header">География</h2>
+                    <div className="text_align_center filials_text">Экспресс Кинетика доставляет грузы и документы по всей России
                         <br /> 
                         Мы ежедневно выполняем перевозки собственными авто между филиалами за 1 ночь по направлениям НСО, Кузбасс 
                         <br /> 
@@ -236,24 +361,11 @@ class Screen extends React.Component {
                     bootstrapURLKeys={{ key: 'AIzaSyD5AmmHNIXXN0yquTsPxoXuvtOp8OYhe2E' }}
                     defaultCenter={this.props.store.home.map.center}
                     defaultZoom={6}
+                    onGoogleApiLoaded={({ map, maps }) => onGoogleApiLoaded(map, maps)}
                     yesIWantToUseGoogleMapApiInternals
                     >
                     
-                    {this.props.store.home.filial.map(el=>{
-                        return(
-                            <Marker 
-                            key={el.el_key}
-                            lat={el.lat}
-                            lng={el.lng}
-                            text={el.text} 
-                            size={el.size}
-                            el_key={el.el_key}
-                            onClick = {this.marker_onClick}
-                            
-                            />
-                            )}
-                    )
-                        }
+                   
 
 
                 </GoogleMapReact>
@@ -261,9 +373,10 @@ class Screen extends React.Component {
                     
                 </div>
 
-                <div style={{backgroundColor: "#E87B1A"}} className="callbacker home_content_element">
-                    <h2 className="text_align_center">Необходимо индивидуальное предложение?</h2>
-                    <div className="text_align_center">
+                <div style={{backgroundColor: "#E87B1A"}} className="callbacker home_content_element ">
+                    <div className="callbacker_wrapper">
+                    <h2 className="text_align_center font_36">Необходимо индивидуальное предложение?</h2>
+                    <div className="text_align_center filials_text">
                         Мы разработаем для вас индивидуальный маршрут.
                         <br />
                         Можем сделать его как разовым, так и регулярным.
@@ -272,8 +385,9 @@ class Screen extends React.Component {
                             <input placeholder='Имя' className="callbacker_input"></input>
                             <input placeholder='Телефон' className="callbacker_input"></input>
                             <input placeholder='e-mail' className="callbacker_input"></input>
-                            <button className="callbacker_button">Рассчитать</button>
+                            <button className="callbacker_button_1">Рассчитать</button>
 
+                        </div>
                         </div>
                 </div> 
 
@@ -311,34 +425,34 @@ class Screen extends React.Component {
                 <h2 className="text_align_center">Преимущества</h2>
                     
                     <div className="advantages_cards">
-                        <div className="advantages_card">
+                        <div className="advantages_card shadow">
                             <div className="text_align_center advantages_card_number">1</div>
                             <div className="text_align_center advantages_card_label">Доставка за 1 день</div>
                             <div className="text_align_center advantages_card_text">Гарантируем доставку <br />по магистральным направлениям <br />за 1 день</div>
                         
                         </div>
-                        <div className="advantages_card">
+                        <div className="advantages_card shadow">
                         <div className="text_align_center advantages_card_number">2</div>
                             <div className="text_align_center advantages_card_label">Прием груза до 19:00</div>
                             <div className="text_align_center advantages_card_text">Вы успеете отправить свой груз <br />вовремя, чтобы уже завтра он был <br />в пункте назначения</div>
                         
                         
                         </div>
-                        <div className="advantages_card">
+                        <div className="advantages_card shadow">
                         <div className="text_align_center advantages_card_number">3</div>
                             <div className="text_align_center advantages_card_label">Выдача груза с 09:00</div>
                             <div className="text_align_center advantages_card_text">Груз, который вы отправили вчера,<br /> будет доступен к выдаче утром <br />уже с 9:00</div>
                         
                         
                         </div>
-                        <div className="advantages_card">
+                        <div className="advantages_card shadow">
                         <div className="text_align_center advantages_card_number">4</div>
                             <div className="text_align_center advantages_card_label">Работаем 7 дней в неделю</div>
                             <div className="text_align_center advantages_card_text">Вы можете отправить и забрать <br />Ваш груз даже в выходные и праздничные дни</div>
                         
                         
                         </div>
-                        <div className="advantages_card">
+                        <div className="advantages_card shadow">
                         <div className="text_align_center advantages_card_number">5</div>
                             <div className="text_align_center advantages_card_label">Температурный режим</div>
                             <div className="text_align_center advantages_card_text">Мы перевозим грузы при положительной <br />температуре</div>
@@ -346,7 +460,7 @@ class Screen extends React.Component {
                         
                         
                         </div>
-                        <div className="advantages_card">
+                        <div className="advantages_card shadow">
                         <div className="text_align_center advantages_card_number">6</div>
                             <div className="text_align_center advantages_card_label">Решаем задачи любой сложности</div>
                             <div className="text_align_center advantages_card_text">Для Вас мы готовы разработать <br />индивидуальный логистический проект,<br />и сделать его регулярным</div>
@@ -367,10 +481,10 @@ class Screen extends React.Component {
                     <i aria-hidden="true" style={{ color:"#2444B5", cursor:"pointer"}} className="chevron large left icon"></i>
                     </div>
                     <div className="clients_cards">
-                        <div style={{ backgroundSize:  "200px auto", backgroundImage: `url(${client_1})` }} className="clients_card"></div>
-                        <div style={{ backgroundSize:  "170px auto", backgroundImage: `url(${client_2})` }} className="clients_card"></div>
-                        <div style={{ backgroundSize:  "170px auto", backgroundImage: `url(${client_3})` }} className="clients_card"></div>
-                        <div style={{ backgroundSize:  "210px auto", backgroundImage: `url(${client_4})` }} className="clients_card"></div>
+                        <div style={{ backgroundSize:  "200px auto", backgroundImage: `url(${client_1})` }} className="clients_card shadow"></div>
+                        <div style={{ backgroundSize:  "170px auto", backgroundImage: `url(${client_2})` }} className="clients_card shadow"></div>
+                        <div style={{ backgroundSize:  "170px auto", backgroundImage: `url(${client_3})` }} className="clients_card shadow"></div>
+                        <div style={{ backgroundSize:  "210px auto", backgroundImage: `url(${client_4})` }} className="clients_card shadow"></div>
                         
                     </div>
                     <div className="clients_button_navi">
@@ -378,14 +492,14 @@ class Screen extends React.Component {
                     </div>
                 </div>  
 
-                <div className="review home_content_element">
+                {/* <div className="review home_content_element"> 
                     <h2 className="text_align_center">Отзывы</h2>
                     
                     <div className="review_cards">
                     <div className="review_button_navi">
                     <i aria-hidden="true" style={{ color:"#2444B5", cursor:"pointer"}} className="chevron large left icon"></i>
                     </div>
-                    <div className="review_card">
+                    <div className="review_card shadow">
                         <div style={{ backgroundSize:  "auto 160px", backgroundImage: `url(${review_1})` }} className="review_card_photo"></div>
                         <div className="review_card_content">
                             <h3>Дмитрий Кузнецов</h3>
@@ -394,7 +508,7 @@ class Screen extends React.Component {
 
                         </div>
                     </div>
-                    <div className="review_card">
+                    <div className="review_card shadow">
                     <div style={{ backgroundSize:  "auto 160px", backgroundImage: `url(${review_1})` }} className="review_card_photo"></div>
                         <div className="review_card_content">
                             <h3>Александр Ким</h3>
@@ -409,15 +523,16 @@ class Screen extends React.Component {
                     </div>
                     
                    
-                </div>
+                </div> */}
 
                 {/* <div className="auto home_content_element">
                     Автопарк
                 </div>    */}
 
                 <div style={{backgroundColor: "#2444B5"}} className="callbacker home_content_element">
-                    <h2 className="text_align_center">Есть вопросы или нужна помощь?</h2>
-                    <div className="text_align_center">
+                <div className="callbacker_wrapper">
+                    <h2 className="text_align_center font_36">Есть вопросы или нужна помощь?</h2>
+                    <div className="text_align_center filials_text">
                     Наши менеджеры свяжуться с вами в течении 15 минут 
                         <br />
                         и найдут решение по любому вашему вопросу
@@ -426,11 +541,11 @@ class Screen extends React.Component {
                             <input placeholder='Имя' className="callbacker_input"></input>
                             <input placeholder='Телефон' className="callbacker_input"></input>
                             <input placeholder='e-mail' className="callbacker_input"></input>
-                            <button className="callbacker_button">Нужна помощь</button>
+                            <button className="callbacker_button_2">Нужна помощь</button>
 
                         </div>
                 </div> 
-
+                </div> 
             </div>
         )
 
