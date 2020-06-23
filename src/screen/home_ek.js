@@ -134,6 +134,7 @@ class Screen extends React.Component {
                 (result) => {
                     this.props.set_disp_history(result);
                     this.props.set_disp_history_loading(false)
+                    this.props.set_home_error_mesage("")
                 },
                 (err) => {
                     this.props.set_disp_history_loading(false)
@@ -284,14 +285,14 @@ class Screen extends React.Component {
 
 
                 {this.props.store.home_ek.error_mesage !== ""? (
-                    <div className="home_content_element scale">
+                    <div className="service_info_window">
                         {this.props.store.home_ek.error_mesage}
                     </div>):(null)}
 
                              
-                {this.props.store.disp.history.length !== 0 && this.props.store.home_ek.home_service_selector === 2? (<div className="home_content_element scale">
+                {this.props.store.disp.history.length !== 0 && this.props.store.home_ek.home_service_selector === 2? (<div className="service_info_window">
                             
-                            <button onClick={()=>this.props.set_disp_history([])}>Закрыть</button>
+                            
                             
                             {this.props.store.disp.history_loading ? (
                             <div>
@@ -304,9 +305,9 @@ class Screen extends React.Component {
                                 <Table celled>
                                     <Table.Header className="create_disp_template_list_th">
                                         <Table.Row>
-                                            <Table.HeaderCell>Дата</Table.HeaderCell>
-                                            <Table.HeaderCell>Статус</Table.HeaderCell>
-                                            <Table.HeaderCell>Комментарий</Table.HeaderCell>
+                                            <Table.HeaderCell className="create_disp_template_list_td">Дата</Table.HeaderCell>
+                                            <Table.HeaderCell className="create_disp_template_list_td">Статус</Table.HeaderCell>
+                                            <Table.HeaderCell className="create_disp_template_list_td">Комментарий</Table.HeaderCell>
                                         </Table.Row>
                                     </Table.Header>
 
@@ -314,14 +315,16 @@ class Screen extends React.Component {
                                         {this.props.store.disp.history.map((el, index) =>
 
                                             <Table.Row className="create_disp_template_list_tr" key={index}>
-                                                <Table.Cell >{el.Date}</Table.Cell>
-                                                <Table.Cell>{el.Status}</Table.Cell>
-                                                <Table.Cell>{el.Comment}</Table.Cell>
+                                                <Table.Cell className="create_disp_template_list_td" >{el.Date}</Table.Cell>
+                                                <Table.Cell className="create_disp_template_list_td">{el.Status}</Table.Cell>
+                                                <Table.Cell className="create_disp_template_list_td">{el.Comment}</Table.Cell>
                                             </Table.Row>
                                         )}
                                     </Table.Body>
                                 </Table>
+                                <button className="service_info_window_button" onClick={()=>this.props.set_disp_history([])}>Закрыть</button>
                                 </div>
+                                
                              )} 
                              
                              </div>):(null)}

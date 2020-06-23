@@ -7,7 +7,23 @@
     padding: 20px;
 }
 
+.service_info_window{
+    max-width: 1200px;
+    margin: auto;
+}
 
+.service_info_window_button{
+    min-width: 200px;
+    min-height: 40px;
+    background-color: #2444B5;
+    color: #FFF;
+    font-weight: bold;
+    border: none;
+}
+
+.create_disp_template_list_td{
+    font-size: 16px;
+}
 
 .font_36{
     font-size: 36px;
@@ -90,7 +106,7 @@ line-height: 90%;
 
 .home_service_selector{
     height: 170px;
-    margin: 70px -25px 75px -25px;
+    margin: 70px -25px 45px -25px;
     background-color: #2444B5;
 
 }
@@ -164,7 +180,7 @@ color: white;
     
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    margin: 0 -10px;
+    margin: 60px -10px 0 -10px;
 
 }
 
