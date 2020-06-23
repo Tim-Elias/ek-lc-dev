@@ -18,6 +18,8 @@ import client_4 from './../common/clients/client_4.png'
 import review_1 from './../common/review_1.png'
 import director from './../common/director.png'
 
+
+
 let g_map
 let g_maps
 let markers = []
@@ -29,6 +31,41 @@ let markers = []
 // ></div> 
 
 class Screen extends React.Component {
+
+    calc = () =>{
+
+        this.props.set_focus_calc_input_send_city(false)
+        this.props.set_focus_calc_input_rec_city(false)
+        this.props.set_disp_history_loading(true)
+        if (true) {
+          //this.props.set_disp_history_loading(true)
+          const data ={
+            SendCity: this.props.store.home_ek.calc_send_city,
+            RecCity: this.props.store.home_ek.calc_rec_city,
+            Weight: this.props.store.home_ek.calc_weight
+          }
+          get_data('calc', data).then(
+              (result) => {
+                  console.log(result)
+                  if (result.length === 0){
+                    this.props.set_home_error_mesage("Не удалось рассчитать тариф")
+                    this.props.set_disp_history_loading(false) 
+                  } else {
+                  this.props.set_calc_result(result);
+                  this.props.set_disp_history_loading(false)
+                  this.props.set_home_error_mesage("")
+                  }
+                  //this.props.set_disp_history_loading(false)
+              },
+              (err) => { 
+                this.props.set_disp_history_loading(false)
+                this.props.set_home_error_mesage("Не удалось рассчитать тариф")
+                console.log(err) 
+            }
+          );
+      }
+    }
+
 
     render_markers = () => {
 
@@ -149,6 +186,18 @@ class Screen extends React.Component {
 
 
     render() {
+
+
+        if(this.props.store.create_disp.CityList.length === 0){
+            console.log("2")
+
+            get_data('citylist').then(
+                (result) => {
+                    this.props.SetCityList(result);
+                },
+                (err) => { console.log(err) }
+            );
+        }
         const render_markers = this.render_markers
         const onGoogleApiLoaded = (map, maps) => {
             g_map = map
@@ -244,10 +293,68 @@ class Screen extends React.Component {
                    </div>
                    {this.props.store.home_ek.home_service_selector === 1?(<div className="home_service_selector_content">
                         <div className="home_service_selector_content_calc">
-                            <input placeholder='Город отправления' className="home_service_selector_content_input"></input>
-                            <input placeholder='Город назначения' className="home_service_selector_content_input"></input>
-                            <input placeholder='Вес (кг)' className="home_service_selector_content_input"></input>
-                            <button className="home_service_selector_content_button">Рассчитать</button>
+
+                    <div>
+                        <input type="text" autoComplete="nope" placeholder='Город отправления' className="calc_city_input" value={this.props.store.home_ek.calc_send_city} onChange={(e)=>{this.props.set_calc_send_city(e.target.value)}}  onFocus={()=>{
+                            this.props.set_focus_calc_input_send_city(true)
+                            this.props.set_focus_calc_input_rec_city(false)
+                   }} />
+                        
+                        {this.props.store.home_ek.focus_calc_input_send_city?(
+                           <div className="dropdown_rec_city_list">
+                               
+                               {this.props.store.create_disp.CityList.filter((el)=>{
+                                    const filter = el.value.toUpperCase();
+                                    const text = this.props.store.home_ek.calc_send_city.toUpperCase()
+                                    return filter.indexOf(text) > -1
+                               }).slice(0,10).map((el,index)=>{
+                                return (<p className="dropdown_rec_city_element" onClick={()=>{
+                                    
+                                    this.props.set_calc_send_city(el.value)
+                                    this.props.set_focus_calc_input_send_city(false)
+                                }} key={index}>
+                                    
+                                    {el.value}
+                                    </p>)
+                            
+                    
+                    })}
+                    </div>
+                       ):(null)}
+                        </div>
+                        <div>
+                            <input autoComplete="nope" type="text" placeholder='Город назначения' className="calc_city_input" value={this.props.store.home_ek.calc_rec_city} onChange={(e)=>{this.props.set_calc_rec_city(e.target.value)}} onFocus={()=>{
+                                this.props.set_focus_calc_input_rec_city(true)
+                                this.props.set_focus_calc_input_send_city(false)
+                                }} />
+                       {this.props.store.home_ek.focus_calc_input_rec_city?(
+                           <div className="dropdown_rec_city_list">
+                               
+                               {this.props.store.create_disp.CityList.filter((el)=>{
+                                    const filter = el.value.toUpperCase();
+                                    const text = this.props.store.home_ek.calc_rec_city.toUpperCase()
+                                    return filter.indexOf(text) > -1
+                               }).slice(0,10).map((el,index)=>{
+                                return (<p className="dropdown_rec_city_element" onClick={()=>{
+                                    
+                                    this.props.set_calc_rec_city(el.value)
+                                    this.props.set_focus_calc_input_rec_city(false)
+                                }} key={index}>
+                                    
+                                    {el.value}
+                                    </p>)
+                            
+                    
+                    })}
+                    </div>
+                       ):(null)}
+                        
+              </div>
+                            <input type="number" placeholder='Вес (кг)' className="home_service_selector_content_input" value={this.props.store.home_ek.calc_weight} onChange={(e)=>{this.props.set_calc_weight(e.target.value)}} onFocus={()=>{
+                                this.props.set_focus_calc_input_rec_city(false)
+                                this.props.set_focus_calc_input_send_city(false)
+                                }}></input>
+                            <button onClick={this.calc.bind(this)} className="home_service_selector_content_button">Рассчитать</button>
 
                         </div>
                     </div>
@@ -283,14 +390,20 @@ class Screen extends React.Component {
                    </div>
                 </div>
 
+                
 
                 {this.props.store.home_ek.error_mesage !== ""? (
-                    <div className="service_info_window">
+                    <div className="service_info_window_wrapper shadow">
+                    <div className="service_info_window font_16">
                         {this.props.store.home_ek.error_mesage}
-                    </div>):(null)}
+                    </div>
+                    </div>
+                    ):(null)}
 
                              
-                {this.props.store.disp.history.length !== 0 && this.props.store.home_ek.home_service_selector === 2? (<div className="service_info_window">
+                {this.props.store.disp.history.length !== 0 && this.props.store.home_ek.home_service_selector === 2? (
+                <div className="service_info_window_wrapper shadow">
+                <div className="service_info_window">
                             
                             
                             
@@ -305,9 +418,9 @@ class Screen extends React.Component {
                                 <Table celled>
                                     <Table.Header className="create_disp_template_list_th">
                                         <Table.Row>
-                                            <Table.HeaderCell className="create_disp_template_list_td">Дата</Table.HeaderCell>
-                                            <Table.HeaderCell className="create_disp_template_list_td">Статус</Table.HeaderCell>
-                                            <Table.HeaderCell className="create_disp_template_list_td">Комментарий</Table.HeaderCell>
+                                            <Table.HeaderCell className="font_16">Дата</Table.HeaderCell>
+                                            <Table.HeaderCell className="font_16">Статус</Table.HeaderCell>
+                                            <Table.HeaderCell className="font_16">Комментарий</Table.HeaderCell>
                                         </Table.Row>
                                     </Table.Header>
 
@@ -315,9 +428,9 @@ class Screen extends React.Component {
                                         {this.props.store.disp.history.map((el, index) =>
 
                                             <Table.Row className="create_disp_template_list_tr" key={index}>
-                                                <Table.Cell className="create_disp_template_list_td" >{el.Date}</Table.Cell>
-                                                <Table.Cell className="create_disp_template_list_td">{el.Status}</Table.Cell>
-                                                <Table.Cell className="create_disp_template_list_td">{el.Comment}</Table.Cell>
+                                                <Table.Cell className="font_16" >{el.Date}</Table.Cell>
+                                                <Table.Cell className="font_16">{el.Status}</Table.Cell>
+                                                <Table.Cell className="font_16">{el.Comment}</Table.Cell>
                                             </Table.Row>
                                         )}
                                     </Table.Body>
@@ -326,9 +439,55 @@ class Screen extends React.Component {
                                 </div>
                                 
                              )} 
-                             
+                             </div>
                              </div>):(null)}
 
+                             {this.props.store.home.calc_result.length !== 0 && this.props.store.home_ek.home_service_selector === 1? (
+                <div className="service_info_window_wrapper shadow">
+                <div className="service_info_window">
+                            
+                            
+                            
+                            {this.props.store.disp.history_loading ? (
+                            <div>
+                                <Dimmer active inverted>
+                                    <Loader inverted content='Loading' />
+                                </Dimmer>
+                            </div>
+                        ) : (
+                            <div style={{margin:"20px"}}>
+                                <Table celled compact='very'>
+                                    <Table.Header className="create_disp_template_list_th">
+                                        <Table.Row>
+                                            <Table.HeaderCell>Тип доставки</Table.HeaderCell>
+                                            <Table.HeaderCell>Вид доставки</Table.HeaderCell>
+                                            <Table.HeaderCell>Срок от</Table.HeaderCell>
+                                            <Table.HeaderCell>Срок до</Table.HeaderCell>
+                                            <Table.HeaderCell>Цена</Table.HeaderCell>
+                                        </Table.Row>
+                                    </Table.Header>
+
+                                    <Table.Body>
+                                        {this.props.store.home.calc_result.map((el, index) =>
+
+                                            <Table.Row className="create_disp_template_list_tr" key={index}>
+                                                <Table.Cell >{el.del_type}</Table.Cell>
+                                                <Table.Cell>{el.del_method}</Table.Cell>
+                                                <Table.Cell>{el.min}</Table.Cell>
+                                                <Table.Cell>{el.max}</Table.Cell>
+                                                <Table.Cell>{el.price}</Table.Cell>
+                                            </Table.Row>
+                                        )}
+                                    </Table.Body>
+                                </Table>
+                                <button className="service_info_window_button" onClick={()=>this.props.set_calc_result([])}>Закрыть</button>
+                                </div>
+                                
+                             )} 
+                             </div>
+                             </div>):(null)}
+
+                     
                 
 
                 <div className="home_service_cards home_content_element">
@@ -580,5 +739,12 @@ export default connect(
     set_disp_history_loading: (param) => { dispatch({ type: 'set_disp_history_loading', payload: param }) },
     set_disp_history: (param) => { dispatch({ type: 'set_disp_history', payload: param }) },
     set_home_error_mesage: (param) => { dispatch({ type: 'set_home_error_mesage', payload: param }) },
+    set_calc_weight: (param) => { dispatch({ type: 'set_calc_weight', payload: param }) },
+    set_calc_rec_city: (param) => { dispatch({ type: 'set_calc_rec_city', payload: param }) },
+    set_calc_send_city: (param) => { dispatch({ type: 'set_calc_send_city', payload: param }) },
+    SetSendCity: (param) => { dispatch({ type: 'SetSendCity', payload: param }) },
+    set_focus_calc_input_send_city: (param) => { dispatch({ type: 'set_focus_calc_input_send_city', payload: param }) },
+    set_focus_calc_input_rec_city: (param) => { dispatch({ type: 'set_focus_calc_input_rec_city', payload: param }) },
+    set_calc_result: (param) => { dispatch({ type: 'set_calc_result', payload: param }) },
   })
 )(Screen)
