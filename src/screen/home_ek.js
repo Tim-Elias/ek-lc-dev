@@ -48,7 +48,7 @@ class Screen extends React.Component {
               (result) => {
                   console.log(result)
                   if (result.length === 0){
-                    this.props.set_home_error_mesage("Не удалось рассчитать тариф")
+                    this.props.set_home_error_mesage("Нам очень жаль, но по маршруту "+this.props.store.home_ek.calc_send_city+" - "+this.props.store.home_ek.calc_rec_city+" не удалось рассчитать тариф")
                     this.props.set_disp_history_loading(false) 
                   } else {
                   this.props.set_calc_result(result);
