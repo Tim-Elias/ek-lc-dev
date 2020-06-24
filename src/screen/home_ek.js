@@ -226,7 +226,7 @@ class Screen extends React.Component {
     
         return (
             <div className="home_content">
-                <div className="home_menu home_content_element">
+                {/* <div className="home_menu home_content_element">
                     <div className="home_menu_element">Услуги</div>
                     <div className="home_menu_element">Отслеживание</div>
                     <div className="home_menu_element">Тарифы</div>
@@ -234,7 +234,7 @@ class Screen extends React.Component {
                     <div className="home_menu_element">Экспресс доставка</div>
                     <div className="home_menu_element">Интренет-магазинам</div>
                     
-                </div>
+                </div> */}
                 <div className="home_main_offer home_content_element"  style={{ backgroundImage: `url(${transit})` }}>
                  
                    <h1 className="home_main_offer_label"> 
