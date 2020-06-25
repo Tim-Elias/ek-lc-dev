@@ -225,7 +225,7 @@ class Screen extends React.Component {
         }
 
         document.onkeydown = function (event) {}
-    
+      
         return (
             <div className="home_content">
                 {/* <div className="home_menu home_content_element">
