@@ -50,6 +50,7 @@ class Screen extends React.Component {
                   if (result.length === 0){
                     this.props.set_home_error_mesage("Нам очень жаль, но по маршруту "+this.props.store.home_ek.calc_send_city+" - "+this.props.store.home_ek.calc_rec_city+" не удалось рассчитать тариф")
                     this.props.set_disp_history_loading(false) 
+                    this.props.set_calc_result([]);
                   } else {
                   this.props.set_calc_result(result);
                   this.props.set_disp_history_loading(false)
@@ -60,6 +61,7 @@ class Screen extends React.Component {
               (err) => { 
                 this.props.set_disp_history_loading(false)
                 this.props.set_home_error_mesage("Не удалось рассчитать тариф")
+                this.props.set_calc_result([]);
                 console.log(err) 
             }
           );
