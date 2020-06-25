@@ -74,7 +74,7 @@ calc = () =>{
 
             <div>
             {this.props.store.home.calc_result.length !== 0 ? (
-                    <div className='home_history'>
+                    <div className='home_history'>  
                          
                                 <Table celled compact='very'>
                                     <Table.Header className="create_disp_template_list_th">
