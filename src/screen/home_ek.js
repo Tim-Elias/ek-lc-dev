@@ -53,7 +53,7 @@ class Screen extends React.Component {
                     this.props.set_calc_result([]);  
                   } else {
                   this.props.set_calc_result(result);
-                  this.props.set_disp_history_loading(false)
+                  this.props.set_disp_history_loading(false)  
                   this.props.set_home_error_mesage("")
                   }
                   //this.props.set_disp_history_loading(false)
