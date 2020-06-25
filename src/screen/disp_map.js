@@ -377,7 +377,7 @@ class Screen extends React.Component {
         
         return (
             <div className="disp_map_window">
-                <div className="disp_map_left_menu">
+                <div className="disp_map_left_menu overflow_y">
                 <div className='disp_map_button'><button className='ui button mini' onClick={()=>{
                     this.props.set_full_screen()
                     this.render_markers.bind(this,this.props.store.disp_map.disp_for_del,true)
