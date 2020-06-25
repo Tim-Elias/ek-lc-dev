@@ -374,7 +374,11 @@ class Screen extends React.Component {
             } catch (e) { }
           };
           
-        
+        let calc_height = "155px"
+        if(this.props.store.general.full_screen){
+            calc_height = "15px"
+        }
+
         return (
             <div className="disp_map_window">
                 <div className="disp_map_left_menu overflow_y">

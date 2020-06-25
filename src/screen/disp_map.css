@@ -98,6 +98,7 @@
   .overflow_y{
 
     overflow-y: auto;
-    max-height: 650px;
+    max-height: calc(100vh - 155px);
     margin-right: 5px;
   }
+
