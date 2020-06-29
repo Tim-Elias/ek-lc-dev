@@ -542,3 +542,23 @@ margin: auto;
   
 }
 
+.old{
+  margin: auto;
+  font-weight: bold;
+  background-color: #E87B1A;
+  padding: 10px 30px;
+  border: solid 2px #E87B1A;
+}
+
+.old a{
+  color: white;
+}
+
+.old a:hover{
+  color: #E87B1A;
+
+}
+
+.old:hover{
+  background-color: #FFF;
+}
