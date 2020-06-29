@@ -18,6 +18,12 @@ let shift = false
 
 class Screen extends React.Component {
 
+
+    set_courier_filter = async (value) => {
+        await  this.props.set_courier_filter(value)
+        this.render_markers(this.props.store.disp_map.disp_for_del,true) 
+    }
+
     render_markers = (arr,hard) => {
 
         console.log(hard)
@@ -27,6 +33,10 @@ class Screen extends React.Component {
                 el_1.setMap(null)
             })
             
+            if (this.props.store.disp_map.courier_filter === '' || this.props.store.disp_map.courier_filter === el.TaskValue){
+
+            
+
             const lat = parseFloat(el.RecLat.replace(/,/, '.'))
             const lng = parseFloat(el.RecLng.replace(/,/, '.'))
             const Num = el.Num
@@ -94,7 +104,8 @@ class Screen extends React.Component {
             }
 
             this.props.modify_disp_map({num:Num,modify:false})
-            }
+        }
+        }
         )
     }
 
@@ -387,20 +398,29 @@ class Screen extends React.Component {
                     this.render_markers.bind(this,this.props.store.disp_map.disp_for_del,true)
                 }}>Полноэкранный режим</button></div>
                 <div className='disp_map_button'><button className='ui button mini'  onClick={this.geocode_all.bind(this)}>Получить все координаты ({this.props.store.disp_map.disp_for_del.filter(el=>el.RecLat==="" || el.RecLng==="").filter(el=>el.RecAddress!=="").length})</button></div>
+            {this.props.store.disp_map.courier_filter !== ''?( <div>
+                <a style={{margin:"0 5px"}}>{this.props.store.disp_map.courier_filter} </a>
+                <button onClick={this.set_courier_filter.bind(this,'')}>x</button>
+            </div>):(null)}
+           
                 <List divided relaxed>
                   
                   {this.props.store.disp_map.courier_list.map((courier,index)=>{
                       const courier_disp = this.props.store.disp_map.disp_for_del.filter(el=>el.TaskValue === courier.text)
+                      const courier_disp_work = courier_disp.filter(el=>el.StatusType === 'У сотрудника').length
+                      const courier_disp_not_work = courier_disp.filter(el=>el.StatusType !== 'У сотрудника').length
                       const q = courier_disp.length
                     if(q>0){
                       return( <List.Item key={index}>
                           {/* <List.Icon name='circle' verticalAlign='middle' /> */}
-                          <i aria-hidden="true" className="circle icon" style={{color:courier.color}}></i>
+                          <i onClick={this.set_courier_filter.bind(this,courier.text)} aria-hidden="true" className="circle icon" style={{color:courier.color}}></i>
                           <List.Content>
                               {courier.text===''?(<List.Description as='a' onClick={()=>this.props.check_courier_disp_map(courier.key)}>
                           {"Не распределено"} <b>({q})</b>
                           </List.Description>):(<List.Description as='a' onClick={()=>this.props.check_courier_disp_map(courier.key)}>
-                          {courier.text} <b>({q})</b>
+                          {courier.text} 
+                          {courier_disp_work !== 0 ? (<b>({courier_disp_work})</b>):(null)}
+                          {courier_disp_not_work !== 0 ? (<b style={{color:'red'}}>({courier_disp_not_work})</b>):(null)}
                           </List.Description>)}
                           
                           {courier.checked?(
@@ -415,7 +435,10 @@ class Screen extends React.Component {
                                       return(<List.Item  key={index}>
 
                                           <List.Content style={{backgroundColor:color_row}} onClick={this.marker_onClick.bind(this,disp.Num)}>
-                                          <List.Header as='a'>{disp.Num} <Icon name='expand' onClick={this.open_disp.bind(this,disp.Num)}></Icon></List.Header>
+                                          <List.Header as='a'>{disp.Num} 
+                                          <Icon name='expand' onClick={this.open_disp.bind(this,disp.Num)}></Icon>
+                                          {disp.StatusType === 'У сотрудника'?(<Icon name='truck'></Icon>):(<Icon color='red' name='pallet'></Icon>)}
+                                          </List.Header>
                                           <List.Description as='a'>{disp.RecCity}</List.Description>
                                             <List.Description as='a'>{disp.RecAddress}</List.Description>
                                             <List.Description as='a'>{"Вес:" + disp.Weight +" ("+ Math.round(disp.Volume*5)/1000+")"}</List.Description>
@@ -585,7 +608,7 @@ export default connect(
         set_last_window: (param) => { dispatch({ type: 'set_last_window', payload: param }) },
         set_focus_input_courier: (param) => { dispatch({ type: 'set_focus_input_courier', payload: param }) },
         set_input_courier: (param) => { dispatch({ type: 'set_input_courier', payload: param }) },
-
+        set_courier_filter: (param) => { dispatch({ type: 'set_courier_filter', payload: param }) },
         
     })
 )(Screen);
