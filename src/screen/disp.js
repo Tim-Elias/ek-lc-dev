@@ -62,22 +62,31 @@ class Screen extends React.Component {
 
     render_markers = () => {
         
-        const lat = parseFloat(this.props.store.disp.lat.replace(/,/, '.'))
-        const lng = parseFloat(this.props.store.disp.lng.replace(/,/, '.'))
-            if(marker !== undefined){
-                marker.setMap(null)
-            }
-                
+        let lat
+        let lng
 
-                marker = new g_maps.Marker({
-                    position: {lat:lat, lng:lng},
-                    map: g_map,
-                    
-                  });
-
-                  marker.addListener('click', function() {
-                    //marker_onClick(el.Num) 
-                  });
+        if (this.props.store.disp.lat !== "" && this.props.store.disp.lng !== ""){
+            lat = parseFloat(this.props.store.disp.lat.replace(/,/, '.'))
+            lng = parseFloat(this.props.store.disp.lng.replace(/,/, '.'))
+   
+   
+   
+               if(marker !== undefined){
+                   marker.setMap(null)
+               }
+                   
+   
+                   marker = new g_maps.Marker({
+                       position: {lat:lat, lng:lng},
+                       map: g_map,
+                       
+                     });
+   
+                     marker.addListener('click', function() {
+                       //marker_onClick(el.Num) 
+                     });
+        }
+         
             }
     
 
@@ -443,9 +452,17 @@ class Screen extends React.Component {
                     lng:cur_lng
                 }
                 set_disp_lat_lng(set_disp_lat_lng_param)
-                
-                marker.setPosition(latlng)
+                console.log(marker)
+                if (marker == undefined) {
 
+                    marker = new g_maps.Marker({
+                        position: latlng,
+                        map: g_map,
+                        
+                      });
+                } else {
+                marker.setPosition(latlng)
+                }
             }
         })
 
@@ -482,13 +499,37 @@ class Screen extends React.Component {
                 }
                 set_disp_lat_lng(set_disp_lat_lng_param)
                 
-                marker.setPosition(latlng)
+                if (marker === undefined) {
+                    marker = new g_maps.Marker({
+                        position: latlng,
+                        map: g_map,
+                        
+                      });
+                } else {
+                    marker.setPosition(latlng)
+                }
+                
                 
             })
         }
 
-        const lat = parseFloat(this.props.store.disp.data.Lat.replace(/,/, '.'))
-        const lng = parseFloat(this.props.store.disp.data.Lng.replace(/,/, '.'))
+        let lat
+        let lng
+        if (this.props.store.disp.data.Lat === ""){
+             lat = 55.030324
+
+        } else {
+             lat = parseFloat(this.props.store.disp.data.Lat.replace(/,/, '.'))
+        }
+
+        if (this.props.store.disp.data.Lng === ""){
+             lng = 82.920938
+        } else {
+             lng = parseFloat(this.props.store.disp.data.Lng.replace(/,/, '.'))
+        }
+
+        // const lat = parseFloat(this.props.store.disp.data.Lat.replace(/,/, '.'))
+        // const lng = parseFloat(this.props.store.disp.data.Lng.replace(/,/, '.'))
         
         const center = {lat:lat,lng:lng}
         return (
@@ -766,7 +807,7 @@ class Screen extends React.Component {
 
                 {this.props.store.login.disp_map ? (<div className='disp_map'>
               
-                
+            
               <GoogleMapReact
                     bootstrapURLKeys={{ key: 'AIzaSyD5AmmHNIXXN0yquTsPxoXuvtOp8OYhe2E' }}
                     defaultCenter={center}
