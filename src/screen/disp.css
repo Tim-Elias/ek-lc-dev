@@ -242,3 +242,12 @@
     .sticker_list{
         width: 60mm;
     }
+
+    .search_input{
+        width: 600px;
+        margin-right: 10px;
+    }
+
+    .search_box{
+        margin: 5px;
+    }

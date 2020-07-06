@@ -332,6 +332,7 @@ class Screen extends React.Component {
         }
 
         }
+
         const render_markers = this.render_markers
         const arr = this.props.store.disp_map.disp_for_del
         const onGoogleApiLoaded = (map, maps) => {
@@ -442,7 +443,7 @@ class Screen extends React.Component {
                                           <List.Description as='a'>{disp.RecCity}</List.Description>
                                             <List.Description as='a'>{disp.RecAddress}</List.Description>
                                             <List.Description as='a'>{"Вес:" + disp.Weight +" ("+ Math.round(disp.Volume*5)/1000+")"}</List.Description>
-                                            {disp.RecLat === "" || disp.RecLng === "" ?(
+                                            {(disp.RecLat === "" || disp.RecLng === "") && disp.RecAddress!=="" ?(
                                                 <Icon name='search' color='red' onClick={this.geocode.bind(this,disp.Num,disp.RecCity+disp.RecAddress)}></Icon>
                                             ):(null)}
                                             </List.Content>

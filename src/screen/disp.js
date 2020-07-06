@@ -8,9 +8,78 @@ import logo from './../logo.svg';
 import './disp.css';
 import ComponentToPrint from './disp_print'
 import StickerToPrint from './sticker_print'
+import GoogleMapReact from 'google-map-react';
+
+
+let g_map
+let g_maps
+let marker
+
 
 
 class Screen extends React.Component {
+
+    save_lat_lng = () =>{
+        const lat_lng_data = {
+            userkey: this.props.store.login.userkey,
+            dispatch: this.props.store.disp.data.Number,
+            lat: this.props.store.disp.lat,
+            lng: this.props.store.disp.lng
+        }
+
+        get_data('setreclatlng', lat_lng_data).then(
+            (result) => {
+                console.log(result);
+                this.props.set_active_window("wait");
+    
+        const data = {
+          userkey: this.props.store.login.userkey,
+          status: "Накладная",
+          num: this.props.store.disp.data.Number
+        };
+    
+        get_data('dispatch', data).then(
+          (result) => {
+    
+            this.props.set_data_disp(result);
+            this.props.set_active_window("disp");
+            
+    
+          },
+          (err) => { 
+              console.log(err) 
+              this.props.set_active_window("disp");
+            }
+          
+        );
+            },
+            (err) => { 
+                console.log(err) 
+                this.props.set_active_window("disp");
+            }
+        );
+    }
+
+    render_markers = () => {
+        
+        const lat = parseFloat(this.props.store.disp.lat.replace(/,/, '.'))
+        const lng = parseFloat(this.props.store.disp.lng.replace(/,/, '.'))
+            if(marker !== undefined){
+                marker.setMap(null)
+            }
+                
+
+                marker = new g_maps.Marker({
+                    position: {lat:lat, lng:lng},
+                    map: g_map,
+                    
+                  });
+
+                  marker.addListener('click', function() {
+                    //marker_onClick(el.Num) 
+                  });
+            }
+    
 
     // print = () =>{
     //    get_file(this.props.store.login.userkey,'Накладная',this.props.store.disp.data.Number,this.props.store.disp.data.Number.concat('.pdf'))
@@ -352,6 +421,36 @@ class Screen extends React.Component {
         this.props.SetRecTerminal(data)
       }
 
+      search = () => {
+
+        let geocoder = new g_maps.Geocoder();
+        let position
+        const set_disp_lat_lng = this.props.set_disp_lat_lng
+
+        geocoder.geocode( { 'address': this.props.store.disp.search_box}, function(results, status) {
+            console.log(results)
+            console.log(status)
+            if (status == 'OK') {
+                position = results[0].geometry.location
+
+                g_map.setCenter(position)
+                const latlng = position
+                const cur_lat = latlng.lat().toString()
+                const cur_lng = latlng.lng().toString()
+                
+                const set_disp_lat_lng_param = {
+                    lat:cur_lat,
+                    lng:cur_lng
+                }
+                set_disp_lat_lng(set_disp_lat_lng_param)
+                
+                marker.setPosition(latlng)
+
+            }
+        })
+
+      }
+
     render() {
         document.onkeydown = function (event) {}
 
@@ -360,7 +459,43 @@ class Screen extends React.Component {
             CargoInfoType = true
         }
         
+        
+        const render_markers = this.render_markers
+        const set_disp_lat_lng = this.props.set_disp_lat_lng
+        const onGoogleApiLoaded = (map, maps) => {
+            g_map = map
+            g_maps = maps  
+
+            g_maps.event.addListenerOnce(g_map, 'tilesloaded', ()=>{
+                render_markers()
+              });
+    
+            g_maps.event.addListener(g_map, 'click', function(e) {
+               
+                const latlng = e.latLng
+                const cur_lat = latlng.lat().toString()
+                const cur_lng = latlng.lng().toString()
+                
+                const set_disp_lat_lng_param = {
+                    lat:cur_lat,
+                    lng:cur_lng
+                }
+                set_disp_lat_lng(set_disp_lat_lng_param)
+                
+                marker.setPosition(latlng)
+                
+            })
+        }
+
+        const lat = parseFloat(this.props.store.disp.data.Lat.replace(/,/, '.'))
+        const lng = parseFloat(this.props.store.disp.data.Lng.replace(/,/, '.'))
+        
+        const center = {lat:lat,lng:lng}
         return (
+
+
+            
+
 
             <div>
                 <div className="disp_Number">
@@ -525,6 +660,10 @@ class Screen extends React.Component {
                         <div className="disp_data_el">{this.props.store.disp.data.RecPerson}</div>
                         <div className="disp_data_label"> Доп. информация:</div>
                         <div className="disp_data_el">{this.props.store.disp.data.RecAddInfo}</div>
+                        {this.props.store.login.disp_map ? (<div className="disp_data_label"> Широта:</div>):(null)}
+                        {this.props.store.login.disp_map ? (<div className="disp_data_el">{this.props.store.disp.data.Lat}</div>):(null)}
+                        {this.props.store.login.disp_map ? (<div className="disp_data_label"> Долгота:</div>):(null)}
+                        {this.props.store.login.disp_map ? (<div className="disp_data_el">{this.props.store.disp.data.Lng}</div>):(null)}
                     </div>
 
                 </div>
@@ -618,6 +757,29 @@ class Screen extends React.Component {
                     <button onClick={this.reciept.bind(this)} className="send_pod">Принять на склад и закрыть</button>
                 </div>) : (null)}
 
+                {this.props.store.login.disp_map ? (
+                    <div className="search_box">
+                        <input className="search_input" value={this.props.store.disp.search_box} onChange={(e)=>(this.props.set_disp_search_box(e.target.value))}></input>
+                <button className="search_button" onClick={this.search.bind(this)}>Найти</button>
+                </div>
+                ):(null)}
+
+                {this.props.store.login.disp_map ? (<div className='disp_map'>
+              
+                
+              <GoogleMapReact
+                    bootstrapURLKeys={{ key: 'AIzaSyD5AmmHNIXXN0yquTsPxoXuvtOp8OYhe2E' }}
+                    defaultCenter={center}
+                    defaultZoom={14}
+                    yesIWantToUseGoogleMapApiInternals
+                    onGoogleApiLoaded={({ map, maps }) => onGoogleApiLoaded(map, maps)}
+                >
+
+                </GoogleMapReact>
+                
+                </div>):(null)}
+                {this.props.store.login.disp_map ? (<button className="search_box" onClick={this.save_lat_lng.bind(this)}>Сохранить</button>):(null)}
+
             </div>
 
         );
@@ -644,6 +806,7 @@ export default connect(
         SetCityList: (param) => { dispatch({ type: 'SetCityList', payload: param }) },
         set_disp_remove_confirm: (param) => { dispatch({ type: 'set_disp_remove_confirm', payload: param }) },
         set_copy_disp_data: (param) => { dispatch({ type: 'set_copy_disp_data', payload: param }) },
+        set_disp_lat_lng: (param) => { dispatch({ type: 'set_disp_lat_lng', payload: param }) },
 
         SetSelectedSendCity: (param) => { dispatch({ type: 'SetSelectedSendCity', payload: param }) },
         SetSelectedRecCity: (param) => { dispatch({ type: 'SetSelectedRecCity', payload: param }) },
@@ -656,5 +819,7 @@ export default connect(
         SetSendTerminal: (param) => { dispatch({ type: 'SetSendTerminal', payload: param }) },
         SetRecTerminal: (param) => { dispatch({ type: 'SetRecTerminal', payload: param }) },
         pop_last_window: () => { dispatch({ type: 'pop_last_window'}) },
+        set_data_disp: (param) => { dispatch({ type: 'set_data_disp', payload: param }) },
+        set_disp_search_box: (param) => { dispatch({ type: 'set_disp_search_box', payload: param }) },
     })
 )(Screen);
