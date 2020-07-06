@@ -463,6 +463,21 @@ class Screen extends React.Component {
                 } else {
                 marker.setPosition(latlng)
                 }
+
+                geocoder.geocode({ location: latlng }, function(results, status) {
+                    if (status === "OK") {
+                      if (results[0]) {
+                        let infowindow = new g_maps.InfoWindow();
+                        infowindow.setContent(results[0].formatted_address);
+                        infowindow.open(g_map, marker);
+                      } else {
+                        window.alert("No results found");
+                      }
+                    } else {
+                      window.alert("Geocoder failed due to: " + status);
+                    }
+                  });
+
             }
         })
 
@@ -508,6 +523,20 @@ class Screen extends React.Component {
                 } else {
                     marker.setPosition(latlng)
                 }
+                let geocoder = new g_maps.Geocoder();
+                geocoder.geocode({ location: latlng }, function(results, status) {
+                    if (status === "OK") {
+                      if (results[0]) {
+                        let infowindow = new g_maps.InfoWindow();
+                        infowindow.setContent(results[0].formatted_address);
+                        infowindow.open(g_map, marker);
+                      } else {
+                        window.alert("No results found");
+                      }
+                    } else {
+                      window.alert("Geocoder failed due to: " + status);
+                    }
+                  });
                 
                 
             })
