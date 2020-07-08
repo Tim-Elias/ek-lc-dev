@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/Cellar/yarn/1.15.2/libexec/bin/yarn.js add ymaps
+  /usr/local/bin/node /usr/local/Cellar/yarn/1.15.2/libexec/bin/yarn.js add react-sound
 
 PATH: 
   /Library/Frameworks/Python.framework/Versions/3.7/bin:/Users/elias/.npm-global/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/Users/elias/.npm-global/bin:/Users/elias/Library/Android/sdk/emulator:/Users/elias/Library/Android/sdk/tools:/Users/elias/Library/Android/sdk/tools/bin:/Users/elias/Library/Android/sdk/platform-tools:/Users/elias/Library/Android/sdk/emulator:/Users/elias/Library/Android/sdk/tools:/Users/elias/Library/Android/sdk/tools/bin:/Users/elias/Library/Android/sdk/platform-tools
@@ -14,7 +14,7 @@ Platform:
   darwin x64
 
 Trace: 
-  Error: EACCES: permission denied, unlink '/Users/elias/Documents/ek-lc-dev/node_modules/@mapbox/point-geometry/.travis.yml'
+  Error: EACCES: permission denied, unlink '/Users/elias/Documents/ek-lc-dev/node_modules/@babel/code-frame/README.md'
 
 npm manifest: 
   {

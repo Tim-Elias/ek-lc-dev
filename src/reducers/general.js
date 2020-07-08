@@ -7,13 +7,15 @@ const initialState = {
   modal_text:'',
   modal_header:'',
   full_screen: false,
-  hold_shift: false
+  hold_shift: false,
+  test_sound: undefined
 
 }
 
 export default function general (state = initialState, action) {
   switch (action.type) {
     case 'set_active_window': return { ...state, active_window: action.payload }
+    case 'set_test_sound': return { ...state, test_sound: action.payload }
     case 'set_hold_shift': return { ...state, hold_shift: action.payload }
     case 'set_modal_show': return { ...state, modal_show: action.payload }
     case 'set_modal_text': return { ...state, modal_text: action.payload }

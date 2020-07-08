@@ -9,7 +9,8 @@ import './disp.css';
 import ComponentToPrint from './disp_print'
 import StickerToPrint from './sticker_print'
 import GoogleMapReact from 'google-map-react';
-
+import Sound from 'react-sound';
+import test_sound from './../common/Sound_11084.wav'
 
 let g_map
 let g_maps
@@ -18,6 +19,11 @@ let marker
 
 
 class Screen extends React.Component {
+
+    sound_test = () =>{
+        this.props.set_test_sound(Sound.status.PLAYING)
+      
+    }
 
     save_lat_lng = () =>{
         const lat_lng_data = {
@@ -849,7 +855,15 @@ class Screen extends React.Component {
                 
                 </div>):(null)}
                 {this.props.store.login.disp_map ? (<button className="search_box" onClick={this.save_lat_lng.bind(this)}>Сохранить</button>):(null)}
-
+                {this.props.store.login.disp_map ? (<button className="search_box" onClick={this.sound_test.bind(this)}>Тест звука</button>):(null)}
+                <Sound
+      url={test_sound}
+      playStatus={this.props.store.general.test_sound}
+      playFromPosition={100 /* in milliseconds */}
+      onLoading={console.log('1')}
+      onPlaying={console.log('2')}
+      onFinishedPlaying={console.log('3')}
+    />
             </div>
 
         );
@@ -891,5 +905,6 @@ export default connect(
         pop_last_window: () => { dispatch({ type: 'pop_last_window'}) },
         set_data_disp: (param) => { dispatch({ type: 'set_data_disp', payload: param }) },
         set_disp_search_box: (param) => { dispatch({ type: 'set_disp_search_box', payload: param }) },
+        set_test_sound: (param) => { dispatch({ type: 'set_test_sound', payload: param }) },
     })
 )(Screen);
