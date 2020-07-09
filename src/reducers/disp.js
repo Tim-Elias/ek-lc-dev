@@ -13,6 +13,7 @@ const initialState = {
   lat:'',
   lng:'',
   search_box:'',
+  
 
 }
 
