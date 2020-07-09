@@ -389,7 +389,7 @@ class Screen extends Component {
                                 <div onClick={this.button_click.bind(this, "setting")} className="leftmenuel"><Icon name='setting' /> Настройки</div>
                             ) : (null)}
                             {this.props.store.login.disp_map ? (<div onClick={this.button_click.bind(this, "disp_map")} className="leftmenuel"><Icon name='edit outline' /> Накладные на карте</div>) : (null)}
-                            {this.props.store.login.userkey='000000234' ? (<div onClick={this.button_click.bind(this, "test")} className="leftmenuel"><Icon name='edit outline' />Test</div>) : (null)}
+                            {this.props.store.login.userkey=='000000234' ? (<div onClick={this.button_click.bind(this, "test")} className="leftmenuel"><Icon name='edit outline' />Test</div>) : (null)}
                            
                         </div>
                     )}

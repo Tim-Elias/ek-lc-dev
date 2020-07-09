@@ -42,7 +42,7 @@ class Screen extends React.Component {
                 <Sound
                 url={test_sound}
                 playStatus={this.props.store.general.test_sound}
-                playFromPosition={100 /* in milliseconds */}
+                
                 onLoading={console.log('1')}
                 onPlaying={console.log('2')}
                 onFinishedPlaying={console.log('3')}

@@ -166,7 +166,7 @@ class Screen extends React.Component {
             date: this.props.store.disp_map.date,
             not_modify: not_modify
         }
-
+        console.log(data)
         get_data('dispfordel', data).then(
             (result) => {
                 console.log(result)
