@@ -42,7 +42,7 @@ class Screen extends React.Component {
         
         const add_item = this.add_item
         document.onkeydown = function (event) {
-            console.log(event.keyCode)
+            //console.log(event.keyCode)
             
             try {
               if (event.keyCode === 13) {

@@ -18,6 +18,20 @@ let shift = false
 
 class Screen extends React.Component {
 
+    set_input_customer = async (value) =>{
+       
+        await this.props.set_input_customer(value)
+
+        await markers.forEach((el_1)=>{
+            el_1.setMap(null)
+        })
+         if (value === "") {
+            this.render_markers(this.props.store.disp_map.disp_for_del,true)
+        } else {
+            this.render_markers(this.props.store.disp_map.disp_for_del.filter((el)=>{return el.Customer === value}),true)
+        }
+
+    }
 
     set_courier_filter = async (value) => {
         await  this.props.set_courier_filter(value)
@@ -25,7 +39,7 @@ class Screen extends React.Component {
     }
 
     render_markers = (arr,hard) => {
-
+        console.log(arr)
         console.log(hard)
         arr.filter((disp_el)=>{return disp_el.modify || hard}).map(el=>{
             
@@ -391,6 +405,8 @@ class Screen extends React.Component {
             calc_height = "15px"
         }
 
+        let Customers = this.props.store.disp_map.disp_for_del.map((el)=>{ return el.Customer }).filter((item,index,array)=>{ return array.indexOf(item) === index })
+        
         return (
             <div className="disp_map_window">
                 <div className="disp_map_left_menu overflow_y">
@@ -404,10 +420,39 @@ class Screen extends React.Component {
                 <button onClick={this.set_courier_filter.bind(this,'')}>x</button>
             </div>):(null)}
            
+            <div className='disp_map_panel_input_element'><div>Заказчик </div>
+
+                    <div id="myDropdown" className="dropdown-customer">
+                        
+                        <input type="text" autoComplete="off" value={this.props.store.disp_map.input_customer} onChange={(e)=>{this.props.set_input_customer(e.target.value)}} id="disp_map_customer_input" onFocus={()=>this.props.set_focus_input_customer(true)} />
+                        <button onClick={()=>{
+                            this.set_input_customer("")
+                            this.props.set_focus_input_customer(false)
+                            }
+                            }>x</button>
+                        {Customers.map((el,index)=>{
+                            if (this.props.store.disp_map.focus_input_customer){
+                                const filter = el.toUpperCase();
+                                const text = this.props.store.disp_map.input_customer.toUpperCase()
+                                if (filter.indexOf(text) > -1) {
+                                    return (<p onClick={()=>{
+                                        
+                                         this.set_input_customer(el)
+                                         this.props.set_focus_input_customer(false)
+                                    }} key={index}>
+                                       
+                                        {el}
+                                        </p>)
+                                }
+                        }
+                        })}
+                        
+                    </div>
+                    </div> 
                 <List divided relaxed>
                   
                   {this.props.store.disp_map.courier_list.map((courier,index)=>{
-                      const courier_disp = this.props.store.disp_map.disp_for_del.filter(el=>el.TaskValue === courier.text)
+                      const courier_disp = this.props.store.disp_map.disp_for_del.filter(el=>el.TaskValue === courier.text).filter(el=>el.Customer === this.props.store.disp_map.input_customer || this.props.store.disp_map.input_customer === "")
                       const courier_disp_work = courier_disp.filter(el=>el.StatusType === 'У сотрудника').length
                       const courier_disp_not_work = courier_disp.filter(el=>el.StatusType !== 'У сотрудника').length
                       const q = courier_disp.length
@@ -504,6 +549,9 @@ class Screen extends React.Component {
                         })}
                         
                     </div>
+
+                    
+                    
                 </div> 
              
                 <div className='disp_map_button'><button className='ui button mini' onClick={this.get_map_data.bind(this,[])}>Получить данные</button></div>
@@ -610,6 +658,10 @@ export default connect(
         set_focus_input_courier: (param) => { dispatch({ type: 'set_focus_input_courier', payload: param }) },
         set_input_courier: (param) => { dispatch({ type: 'set_input_courier', payload: param }) },
         set_courier_filter: (param) => { dispatch({ type: 'set_courier_filter', payload: param }) },
+
+        set_focus_input_customer: (param) => { dispatch({ type: 'set_focus_input_customer', payload: param }) },
+        set_input_customer: (param) => { dispatch({ type: 'set_input_customer', payload: param }) },
+        set_customer_filter: (param) => { dispatch({ type: 'set_customer_filter', payload: param }) },
         
     })
 )(Screen);

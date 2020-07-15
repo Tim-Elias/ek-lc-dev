@@ -23,6 +23,10 @@ const initialState = {
     input_courier_color: "#000",
     courier_filter: '',
 
+    customer_filter: '',
+    focus_input_customer: false,
+    input_customer:"",
+
 
 
 }
@@ -30,7 +34,16 @@ const initialState = {
 export default function dispatch(state = initialState, action) {
     switch (action.type) {
         case 'set_disp_map_date': return { ...state, date: action.payload }
-        case 'set_input_courier': return { ...state, input_courier: action.payload.courier, input_courier_color: action.payload.color }
+        case 'set_input_courier': 
+        if (action.payload.courier === undefined) {
+            return { ...state, input_courier: action.payload }
+        } else {
+        return { ...state, input_courier: action.payload.courier, input_courier_color: action.payload.color }
+        }
+        case 'set_input_customer': return { ...state, input_customer: action.payload}
+        case 'set_focus_input_customer': return { ...state, focus_input_customer: action.payload }
+        case 'set_customer_filter': return { ...state, customer_filter: action.payload }
+
         case 'set_focus_input_courier': return { ...state, focus_input_courier: action.payload }
         case 'set_courier_filter': return { ...state, courier_filter: action.payload }
         case 'set_disp_map_disp_for_del': return { ...state, disp_for_del: action.payload }
