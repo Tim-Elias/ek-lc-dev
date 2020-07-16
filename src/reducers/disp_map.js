@@ -27,6 +27,8 @@ const initialState = {
     focus_input_customer: false,
     input_customer:"",
 
+    num_filter: "",
+
 
 
 }
@@ -43,6 +45,8 @@ export default function dispatch(state = initialState, action) {
         case 'set_input_customer': return { ...state, input_customer: action.payload}
         case 'set_focus_input_customer': return { ...state, focus_input_customer: action.payload }
         case 'set_customer_filter': return { ...state, customer_filter: action.payload }
+
+        case 'set_num_filter': return { ...state, num_filter: action.payload }
 
         case 'set_focus_input_courier': return { ...state, focus_input_courier: action.payload }
         case 'set_courier_filter': return { ...state, courier_filter: action.payload }

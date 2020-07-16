@@ -19,6 +19,8 @@ let shift = false
 class Screen extends React.Component {
 
     set_input_customer = async (value) =>{
+
+        if(value !== this.props.store.disp_map.input_customer){
        
         await this.props.set_input_customer(value)
 
@@ -30,7 +32,7 @@ class Screen extends React.Component {
         } else {
             this.render_markers(this.props.store.disp_map.disp_for_del.filter((el)=>{return el.Customer === value}),true)
         }
-
+    }
     }
 
     set_courier_filter = async (value) => {
@@ -420,7 +422,7 @@ class Screen extends React.Component {
                 <button onClick={this.set_courier_filter.bind(this,'')}>x</button>
             </div>):(null)}
            
-            <div className='disp_map_panel_input_element'><div>Заказчик </div>
+            <div className='disp_map_panel_input_element left_menu_filter'>
 
                     <div id="myDropdown" className="dropdown-customer">
                         
@@ -449,10 +451,27 @@ class Screen extends React.Component {
                         
                     </div>
                     </div> 
+
+                    <div className='disp_map_panel_input_element left_menu_filter'>
+
+                    <div id="myDropdown" className="dropdown-customer">
+                        
+                        <input type="text" autoComplete="off" value={this.props.store.disp_map.num_filter} onChange={(e)=>{this.props.set_num_filter(e.target.value)}} />
+                        <button onClick={()=>{this.props.set_num_filter("")}}>x</button>
+                        </div>
+                        </div>
+                        
                 <List divided relaxed>
                   
                   {this.props.store.disp_map.courier_list.map((courier,index)=>{
-                      const courier_disp = this.props.store.disp_map.disp_for_del.filter(el=>el.TaskValue === courier.text).filter(el=>el.Customer === this.props.store.disp_map.input_customer || this.props.store.disp_map.input_customer === "")
+                      const courier_disp = this.props.store.disp_map.disp_for_del.filter(el=>el.TaskValue === courier.text).filter(el=>el.Customer === this.props.store.disp_map.input_customer || this.props.store.disp_map.input_customer === "").filter(el=>{
+                        
+                        const filter_num = el.Num.toUpperCase()
+                        const filter_adress = el.RecAddress.toUpperCase()
+                        const text = this.props.store.disp_map.num_filter.toUpperCase()
+                        return text === "" || filter_num.indexOf(text) > -1 || filter_adress.indexOf(text) > -1
+                           
+                      })
                       const courier_disp_work = courier_disp.filter(el=>el.StatusType === 'У сотрудника').length
                       const courier_disp_not_work = courier_disp.filter(el=>el.StatusType !== 'У сотрудника').length
                       const q = courier_disp.length
@@ -662,6 +681,8 @@ export default connect(
         set_focus_input_customer: (param) => { dispatch({ type: 'set_focus_input_customer', payload: param }) },
         set_input_customer: (param) => { dispatch({ type: 'set_input_customer', payload: param }) },
         set_customer_filter: (param) => { dispatch({ type: 'set_customer_filter', payload: param }) },
+
+        set_num_filter: (param) => { dispatch({ type: 'set_num_filter', payload: param }) },
         
     })
 )(Screen);
