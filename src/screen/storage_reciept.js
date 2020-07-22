@@ -2,7 +2,9 @@ import React  from 'react';
 import { connect } from 'react-redux';
 
 import Sound from 'react-sound';
-import test_sound from './../common/Sound_11084.wav'
+import done_sound from './../common/ping.mp3'
+import err_sound from './../common/err.mp3'
+
 
 import { get_data } from './../common/common_modules'
 
@@ -11,9 +13,15 @@ import { get_data } from './../common/common_modules'
 
 class Screen extends React.Component {
 
-    sound_play = () =>{
-        this.props.set_test_sound(Sound.status.PLAYING) 
+    done_sound_play = () =>{
+        this.props.storage_reciept_set_done_sound(Sound.status.PLAYING) 
+        
     }
+
+    err_sound_play = () =>{
+      this.props.storage_reciept_set_err_sound(Sound.status.PLAYING) 
+     
+  }
 
     send_req = () => {
         console.log(this.props.store.test.barcode)
@@ -31,13 +39,20 @@ class Screen extends React.Component {
             this.props.modules.set_active_window("storage_reciept");
             this.props.storage_reciept_set_result(result);
             this.props.storage_reciept_set_barcode('')
+            if (result.status_type === 'ok') {
+              this.done_sound_play()
+            } else {
+              this.err_sound_play()
+            }
+            
           },
           (err) => { 
             this.props.modules.set_active_window("storage_reciept");
             this.props.storage_reciept_set_result({
               status_type: 'err',
               status_message: err
-            });
+            })
+            this.err_sound_play()
            }
         );
     
@@ -49,8 +64,21 @@ class Screen extends React.Component {
     
     
       render() {
-        
-        const send_req = this.send_req
+        let done_sound_status
+        if (this.props.store.storage_reciept.done_sound === undefined) {
+          done_sound_status = Sound.status.STOPPED
+        } else {
+          done_sound_status = this.props.store.storage_reciept.done_sound
+        }
+
+        let err_sound_status
+        if (this.props.store.storage_reciept.err_sound === undefined) {
+          err_sound_status = Sound.status.STOPPED
+        } else {
+          err_sound_status = this.props.store.storage_reciept.err_sound
+        }
+
+        const send_req = this.send_req 
         document.onkeydown = function (event) {
             //console.log(event.keyCode)
             
@@ -95,16 +123,19 @@ class Screen extends React.Component {
              </div>
            ):(null)}
             {/* <button className="search_box" onClick={this.sound_test.bind(this)}>Тест звука</button> */}
-           {this.props.store.general.test_sound !== undefined ? (
+           
                 <Sound
-                url={test_sound}
-                playStatus={this.props.store.general.test_sound}
+                url={done_sound}
+                playStatus={done_sound_status}
                 
-                onLoading={console.log('1')}
-                onPlaying={console.log('2')}
-                onFinishedPlaying={console.log('3')}
+                
               />
-           ):(null)}
+                <Sound
+                url={err_sound}
+                playStatus={err_sound_status}
+              />
+              
+   
            
           </div>
         )
@@ -119,6 +150,8 @@ export default connect(
       storage_reciept_set_barcode: (param) => { dispatch({ type: 'storage_reciept_set_barcode', payload: param }) },
       storage_reciept_set_result: (param) => { dispatch({ type: 'storage_reciept_set_result', payload: param }) },
       set_full_screen: () => { dispatch({ type: 'set_full_screen'}) },
+      storage_reciept_set_done_sound: (param) => { dispatch({ type: 'storage_reciept_set_done_sound', payload: param }) },
+      storage_reciept_set_err_sound: (param) => { dispatch({ type: 'storage_reciept_set_err_sound', payload: param }) },
      // set_active_window: (param) => { dispatch({ type: 'set_active_window', payload: param }) },
        
     })

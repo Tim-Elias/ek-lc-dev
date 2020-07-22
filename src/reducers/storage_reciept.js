@@ -29,13 +29,15 @@ const initialState = {
   status_type: null,
   status_message:'',
   target_date: date,
-  num:''
+  num:'',
+  done_sound: undefined,
+  err_sound: undefined,
   
 }
 
 export default function dispatch (state = initialState, action) {
   switch (action.type) {
-    case 'storage_reciept_set_barcode': return { ...state, barcode: action.payload }
+    case 'storage_reciept_set_barcode': return { ...state, barcode: action.payload, done_sound:undefined, err_sound: undefined }
     case 'storage_reciept_set_task_type': return { ...state, task_type: action.payload }
     case 'storage_reciept_set_task_date': return { ...state, task_date: action.payload }
     case 'storage_reciept_set_task_value': return { ...state, task_value: action.payload }
@@ -65,6 +67,8 @@ export default function dispatch (state = initialState, action) {
       num: action.payload.num
 
     }
+    case 'storage_reciept_set_err_sound': return { ...state, err_sound: action.payload }
+    case 'storage_reciept_set_done_sound': return { ...state, done_sound: action.payload }
 
 
     default: return state
