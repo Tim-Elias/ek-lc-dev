@@ -18,6 +18,7 @@ import home from './home'
 import disp_map from './disp_map'
 import home_ek from './home_ek'
 import test from './test'
+import storage_reciept from './storage_reciept'
 
 export default combineReducers({
 
@@ -38,6 +39,7 @@ export default combineReducers({
   home,
   disp_map,
   home_ek,
-  test
+  test,
+  storage_reciept
   
 })

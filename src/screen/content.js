@@ -21,6 +21,7 @@ import ImportTemplate from './import_template'
 import DefaultTemplate from './default_template'
 import DispTemplate from './disp_template'
 import DispMap from './disp_map'
+import StorageReciept from './storage_reciept'
 
 import HomeEk from './home_ek'
 import Test from './test'
@@ -79,6 +80,7 @@ class Screen extends React.Component {
         {this.props.store.general.active_window === 'disp_template' ? (<DispTemplate modules={modules}/>) : (null)}
         {this.props.store.general.active_window === 'disp_map' ? (<DispMap modules={modules}/>) : (null)}
         {this.props.store.general.active_window === 'test' ? (<Test modules={modules}/>) : (null)}
+        {this.props.store.general.active_window === 'storage_reciept' ? (<StorageReciept modules={modules}/>) : (null)}
    
 
       </div>

@@ -60,7 +60,7 @@ class Screen extends React.Component {
           <div>
             {/* <button onClick={this.start.bind(this)}>start</button>
             <button onClick={this.end.bind(this)}>end</button> */}
-            <input value={this.props.store.test.barcode} onChange={(e)=>{this.props.set_test_barcode(e.target.value)}} />
+            <input  value={this.props.store.test.barcode} onChange={(e)=>{this.props.set_test_barcode(e.target.value)}} />
             {this.props.store.test.list.map((el,index)=>{
                 return(
                     <div key={index}>{el}</div>

@@ -300,7 +300,18 @@ class Screen extends Component {
                 );
 
                 break
-
+                case 'storage_reciept':
+                    this.props.set_active_window(target);
+                    get_data('storagedata', list_data).then(
+                        (result) => {
+                            console.log(result)
+                            this.props.storage_reciept_set_storage(result.storage);
+                            this.props.storage_reciept_set_zone_list(result.zone_list);
+                            
+                        },
+                        (err) => { console.log(err) }
+                    );
+                break
             default:
                 this.props.set_active_window(target);
                 break
@@ -389,6 +400,7 @@ class Screen extends Component {
                                 <div onClick={this.button_click.bind(this, "setting")} className="leftmenuel"><Icon name='setting' /> Настройки</div>
                             ) : (null)}
                             {this.props.store.login.disp_map ? (<div onClick={this.button_click.bind(this, "disp_map")} className="leftmenuel"><Icon name='edit outline' /> Накладные на карте</div>) : (null)}
+                            {this.props.store.login.disp_map ? (<div onClick={this.button_click.bind(this, "storage_reciept")} className="leftmenuel"><Icon name='edit outline' /> Прием на склад</div>) : (null)}
                             {this.props.store.login.userkey=='000000234' ? (<div onClick={this.button_click.bind(this, "test")} className="leftmenuel"><Icon name='edit outline' />Test</div>) : (null)}
                            
                         </div>
@@ -454,5 +466,7 @@ export default connect(
         SetCargoInfoType: (param) => { dispatch({ type: 'SetCargoInfoType', payload: param }) },
         set_courier_list: (param) => { dispatch({ type: 'set_courier_list', payload: param }) },
 
+        storage_reciept_set_zone_list: (param) => { dispatch({ type: 'storage_reciept_set_zone_list', payload: param }) },
+        storage_reciept_set_storage: (param) => { dispatch({ type: 'storage_reciept_set_storage', payload: param }) },
     })
 )(Screen);
