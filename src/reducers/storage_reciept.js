@@ -32,12 +32,14 @@ const initialState = {
   num:'',
   done_sound: undefined,
   err_sound: undefined,
+  funk_sound: undefined,
+
   
 }
 
 export default function dispatch (state = initialState, action) {
   switch (action.type) {
-    case 'storage_reciept_set_barcode': return { ...state, barcode: action.payload, done_sound:undefined, err_sound: undefined }
+    case 'storage_reciept_set_barcode': return { ...state, barcode: action.payload, done_sound:undefined, err_sound: undefined, funk_sound:undefined }
     case 'storage_reciept_set_task_type': return { ...state, task_type: action.payload }
     case 'storage_reciept_set_task_date': return { ...state, task_date: action.payload }
     case 'storage_reciept_set_task_value': return { ...state, task_value: action.payload }
@@ -69,6 +71,8 @@ export default function dispatch (state = initialState, action) {
     }
     case 'storage_reciept_set_err_sound': return { ...state, err_sound: action.payload }
     case 'storage_reciept_set_done_sound': return { ...state, done_sound: action.payload }
+    case 'storage_reciept_set_funk_sound': return { ...state, funk_sound: action.payload }
+    case 'storage_reciept_sound_off': return { ...state, done_sound: undefined, err_sound: undefined, funk_sound: undefined }
 
 
     default: return state

@@ -4,9 +4,11 @@ import { connect } from 'react-redux';
 import Sound from 'react-sound';
 import done_sound from './../common/ping.mp3'
 import err_sound from './../common/err.mp3'
+import funk_sound from './../common/funk.mp3'
 
 
 import { get_data } from './../common/common_modules'
+import leftmenu from './components/leftmenu';
 
 
 
@@ -20,11 +22,34 @@ class Screen extends React.Component {
 
     err_sound_play = () =>{
       this.props.storage_reciept_set_err_sound(Sound.status.PLAYING) 
-     
   }
 
+  funk_sound_play = () =>{
+    this.props.storage_reciept_set_funk_sound(Sound.status.PLAYING) 
+}
+
     send_req = () => {
-        console.log(this.props.store.test.barcode)
+        // console.log(this.props.store.storage_reciept.barcode)
+        // console.log(this.props.store.storage_reciept.barcode.substring(0, 9))
+        if (this.props.store.storage_reciept.barcode.substring(0, 9)==="0000-0000") {
+          
+          let zone = this.props.store.storage_reciept.barcode.substring(10)
+          let find_zone = this.props.store.storage_reciept.zone_list.find(el=>el===zone)
+          console.log(find_zone)
+          if(find_zone === undefined){
+            this.props.storage_reciept_set_barcode('')
+            this.props.storage_reciept_set_status_type('err')
+            this.props.storage_reciept_set_status_message('Зона хранения не найдена')
+            this.err_sound_play()
+          } else {
+          this.props.storage_reciept_set_selected_zone(zone);
+          this.props.storage_reciept_set_barcode('')
+          this.props.storage_reciept_set_status_message('')
+          this.props.storage_reciept_set_status_type(null)
+
+          this.funk_sound_play()
+          }
+        } else {
         this.props.modules.set_active_window("wait");
         
         const data = {
@@ -56,7 +81,7 @@ class Screen extends React.Component {
            }
         );
     
-        
+          }
     }
 
    
@@ -69,6 +94,13 @@ class Screen extends React.Component {
           done_sound_status = Sound.status.STOPPED
         } else {
           done_sound_status = this.props.store.storage_reciept.done_sound
+        }
+
+        let funk_sound_status
+        if (this.props.store.storage_reciept.funk_sound === undefined) {
+          funk_sound_status = Sound.status.STOPPED
+        } else {
+          funk_sound_status = this.props.store.storage_reciept.funk_sound
         }
 
         let err_sound_status
@@ -101,7 +133,13 @@ class Screen extends React.Component {
                 }}>Полноэкранный режим</button></div>
            <div>
              Текущий склад: {this.props.store.storage_reciept.storage.name}
+            
            </div>
+           <div>
+            Зона хранения: {this.props.store.storage_reciept.selected_zone}
+            
+           </div>
+          
             <input autoFocus value={this.props.store.storage_reciept.barcode} onChange={(e)=>{this.props.storage_reciept_set_barcode(e.target.value)}} />
            {this.props.store.storage_reciept.status_type === "ok" ? (
              <div>
@@ -119,24 +157,14 @@ class Screen extends React.Component {
            ):(null)}
            {this.props.store.storage_reciept.status_type === "err" ? (
              <div>
-               {this.props.store.storage_reciept.storage.status_message}
+               {this.props.store.storage_reciept.status_message}
              </div>
            ):(null)}
-            {/* <button className="search_box" onClick={this.sound_test.bind(this)}>Тест звука</button> */}
-           
-                <Sound
-                url={done_sound}
-                playStatus={done_sound_status}
-                
-                
-              />
-                <Sound
-                url={err_sound}
-                playStatus={err_sound_status}
-              />
+          
+                <Sound url={done_sound} playStatus={done_sound_status} />
+                <Sound url={err_sound} playStatus={err_sound_status} />
+                <Sound url={funk_sound} playStatus={funk_sound_status} />
               
-   
-           
           </div>
         )
       }
@@ -149,10 +177,15 @@ export default connect(
     dispatch => ({
       storage_reciept_set_barcode: (param) => { dispatch({ type: 'storage_reciept_set_barcode', payload: param }) },
       storage_reciept_set_result: (param) => { dispatch({ type: 'storage_reciept_set_result', payload: param }) },
+      storage_reciept_set_selected_zone: (param) => { dispatch({ type: 'storage_reciept_set_selected_zone', payload: param }) },
       set_full_screen: () => { dispatch({ type: 'set_full_screen'}) },
       storage_reciept_set_done_sound: (param) => { dispatch({ type: 'storage_reciept_set_done_sound', payload: param }) },
       storage_reciept_set_err_sound: (param) => { dispatch({ type: 'storage_reciept_set_err_sound', payload: param }) },
-     // set_active_window: (param) => { dispatch({ type: 'set_active_window', payload: param }) },
+      storage_reciept_set_funk_sound: (param) => { dispatch({ type: 'storage_reciept_set_funk_sound', payload: param }) },
+      storage_reciept_set_status_message: (param) => { dispatch({ type: 'storage_reciept_set_status_message', payload: param }) },
+      storage_reciept_set_status_type: (param) => { dispatch({ type: 'storage_reciept_set_status_type', payload: param }) },
+     
+      // set_active_window: (param) => { dispatch({ type: 'set_active_window', payload: param }) },
        
     })
 )(Screen)

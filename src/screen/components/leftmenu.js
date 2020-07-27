@@ -160,7 +160,7 @@ class Screen extends Component {
     button_click = (target) => {
         const list_data = { userkey: this.props.store.login.userkey }
         // this.clickChild()
-
+        this.props.storage_reciept_sound_off()
         switch (target) {
             case 'create_disp':
                 this.props.set_active_window('wait');
@@ -301,15 +301,21 @@ class Screen extends Component {
 
                 break
                 case 'storage_reciept':
-                    this.props.set_active_window(target);
+
+                    
                     get_data('storagedata', list_data).then(
                         (result) => {
                             console.log(result)
                             this.props.storage_reciept_set_storage(result.storage);
                             this.props.storage_reciept_set_zone_list(result.zone_list);
+                            this.props.set_active_window(target);
                             
                         },
-                        (err) => { console.log(err) }
+                        (err) => { 
+                            console.log(err) 
+                            this.props.set_active_window(target)
+                        }
+                        
                     );
                 break
             default:
@@ -468,5 +474,7 @@ export default connect(
 
         storage_reciept_set_zone_list: (param) => { dispatch({ type: 'storage_reciept_set_zone_list', payload: param }) },
         storage_reciept_set_storage: (param) => { dispatch({ type: 'storage_reciept_set_storage', payload: param }) },
+
+        storage_reciept_sound_off: () => { dispatch({ type: 'storage_reciept_set_storage'}) },
     })
 )(Screen);
