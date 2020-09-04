@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
+import { Header, Modal, Table, Button } from 'semantic-ui-react'
 import { get_data } from './../common/common_modules'
 
 
@@ -64,31 +64,31 @@ class Screen extends React.Component {
                 {this.props.store.manifest.data.dispatches.length !== 0 ? (<div className="disp_cargo_table">
                     <div className="disp_cargo_table_header">Накладные по манифесту:</div>
                     <div className="disp_cargo_table_data">
-                        <table>
+                        <Table>
 
-                            <thead>
-                                <tr >
-                                    <th>Приниято</th>
-                                    <th>Номер</th>
-                                    <th>Заказчик</th>
-                                    <th>Количество мест</th>
-                                    <th>Вес</th>
+                            <Table.Header>
+                                <Table.Row >
+                                    <Table.HeaderCell>Приниято</Table.HeaderCell>
+                                    <Table.HeaderCell>Номер</Table.HeaderCell>
+                                    <Table.HeaderCell>Заказчик</Table.HeaderCell>
+                                    <Table.HeaderCell>Количество мест</Table.HeaderCell>
+                                    <Table.HeaderCell>Вес</Table.HeaderCell>
 
 
-                                </tr>
-                            </thead>
-                            <tbody>
+                                </Table.Row>
+                            </Table.Header>
+                            <Table.Body>
                                 {this.props.store.manifest.data.dispatches.map((disp, index) =>
-                                    <tr key={index} >
-                                        <td><input type="checkbox" checked={disp.selected} onChange={this.check.bind(this, disp.num)}></input></td>
-                                        <td>{disp.num}</td>
-                                        <td>{disp.customer}</td>
-                                        <td>{disp.total}</td>
-                                        <td>{disp.weight}</td>
+                                    <Table.Row key={index} >
+                                        <Table.Cell><input type="checkbox" checked={disp.selected} onChange={this.check.bind(this, disp.num)}></input></Table.Cell>
+                                        <Table.Cell>{disp.num}</Table.Cell>
+                                        <Table.Cell>{disp.customer}</Table.Cell>
+                                        <Table.Cell>{disp.total}</Table.Cell>
+                                        <Table.Cell>{disp.weight}</Table.Cell>
 
-                                    </tr>)}
-                            </tbody>
-                        </table>
+                                    </Table.Row>)}
+                            </Table.Body>
+                        </Table>
                         <div className="disp_cargo_table_header">Принято по манифесту:</div>
                 <div className="disp_data_el">Накладных: {this.props.store.manifest.data.dispatches.filter((el) => { return el.selected }).length} из {this.props.store.manifest.data.dispatches.length} (мест: {this.props.store.manifest.data.dispatches.filter((el) => { return el.selected }).reduce((sum, el) => { return sum + parseInt(el.total) }, 0)} из {this.props.store.manifest.data.dispatches.reduce((sum, el) => { return sum + parseInt(el.total) }, 0)})</div>
                 <button onClick={this.get_selected.bind(this)} className="send_pod">Принять на склад и закрыть</button>

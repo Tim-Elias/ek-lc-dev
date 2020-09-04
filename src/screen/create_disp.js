@@ -115,7 +115,7 @@ RemoveCargo = (index) => {
   this.props.SetSelectedSendCity(value)
 
     const city = value.label
-    this.props.SetSendCity(city)
+    this.props.SetSendCity(city) 
     
     get_data('terminallist', {city}).then(
           (result) => {
@@ -142,7 +142,6 @@ RemoveCargo = (index) => {
     
     get_data('terminallist', {city}).then(
           (result) => {
-            
             this.props.SetRecTerminalList(result)
             if (result.length === 0) {
               this.SetRecTerminal(false)
@@ -154,8 +153,6 @@ RemoveCargo = (index) => {
           }
       );
   }
-
-  
 
   SetSendTerminal = (param) => {
     let DelMethod
@@ -207,9 +204,6 @@ RemoveCargo = (index) => {
   }
 
   sent_disp = () => {
-
-  // console.log("start")
-  // console.log(this.props.store.create_disp.Number)
 
     const create_disp_data = {
       userkey: this.props.store.login.userkey,
@@ -263,7 +257,7 @@ RemoveCargo = (index) => {
           
               get_data('dispatch', data).then(
                 (result) => {
-                  //console.log(result)
+                 
                   this.props.set_data_disp(result);
                   this.props.set_active_window("disp");
                   this.props.set_last_window("create_disp");
@@ -279,7 +273,7 @@ RemoveCargo = (index) => {
   SelectSendTemplate = (value) => {
     if(value!==null){
       const city = this.props.store.create_disp.CityList.filter((el)=>el.value === value.City)[0]
-      //console.log(value)
+    
       this.SelectSendCity(city)
       this.props.SetSendAdress(value.Adress)
       this.props.SetSendAdress(value.Adress)

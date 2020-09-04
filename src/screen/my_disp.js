@@ -22,7 +22,6 @@ class Screen extends React.Component {
       date_to: this.props.store.my_disp.date_to
     }
 
-    //document.getElementById("date").value
     get_data('mydisplist', data).then(
       (result) => {
         this.props.set_active_window("my_disp");

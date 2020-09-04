@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
+import { Header, Modal, Table, Button } from 'semantic-ui-react'
 import { get_data } from './../common/common_modules'
 
 
@@ -125,64 +125,64 @@ class Screen extends React.Component {
           {this.props.store.storage.list.length !== 0 ? (
             <div>
 
-              <table>
+<Table celled size='small' compact='very'>
 
-                <thead>
-                  <tr >
-                    <th>Дата</th>
-                    <th>Тип</th>
-                    <th>Заказчик</th>
-                    <th>Номер накладной</th>
-                    <th>Адрес</th>
-                    <th>Телефон</th>
-                    <th>Контактное лицо</th>
-                    <th>К оплате</th>
-                    <th>Количество мест</th>
-                    <th>Вес</th>
+<Table.Header>
+<Table.Row>
+<Table.HeaderCell>Дата</Table.HeaderCell>
+<Table.HeaderCell>Тип</Table.HeaderCell>
+<Table.HeaderCell>Заказчик</Table.HeaderCell>
+<Table.HeaderCell>Номер накладной</Table.HeaderCell>
+<Table.HeaderCell>Адрес</Table.HeaderCell>
+<Table.HeaderCell>Телефон</Table.HeaderCell>
+<Table.HeaderCell>Контактное лицо</Table.HeaderCell>
+<Table.HeaderCell>К оплате</Table.HeaderCell>
+<Table.HeaderCell>Количество мест</Table.HeaderCell>
+<Table.HeaderCell>Вес</Table.HeaderCell>
 
-                  </tr>
-                </thead>
+                  </Table.Row>
+                </Table.Header>
 
                 {this.props.store.storage.list.filter((el)=>this.props.store.storage.search === "" || el.Number.indexOf(this.props.store.storage.search) !== -1).map((disp, index) =>
-                  <tbody key={index}>
+                  <Table.Body key={index}>
 
                     {disp.Number === this.props.store.storage.active ? (
-                      <tr className='active' id={index} name={disp.Number} status={disp.Type} onKeyDown={console.log('Key down')} 
+                      <Table.Row className='active' id={index} name={disp.Number} status={disp.Type} onKeyDown={console.log('Key down')} 
                       onClick={this.tr_click.bind(this, disp.Number)} 
                       onTouchStart={this.handleButtonPress.bind(this)} 
                       onTouchEnd={this.handleButtonRelease.bind(this)} 
                       onDoubleClick={this.tr_double_click.bind(this, disp)} key={index} >
 
-                        <td>{disp.Date}</td>
-                        <td>{disp.Type}</td>
-                        <td>{disp.Customer}</td>
-                        <td>{disp.Number}</td>
-                        <td>{disp.Adress}</td>
-                        <td>{disp.Phone}</td>
-                        <td>{disp.Person}</td>
-                        <td>{disp.COD}</td>
-                        <td>{disp.total}</td>
-                        <td>{disp.weight}</td>
+                        <Table.Cell>{disp.Date}</Table.Cell>
+                        <Table.Cell>{disp.Type}</Table.Cell>
+                        <Table.Cell>{disp.Customer}</Table.Cell>
+                        <Table.Cell>{disp.Number}</Table.Cell>
+                        <Table.Cell>{disp.Adress}</Table.Cell>
+                        <Table.Cell>{disp.Phone}</Table.Cell>
+                        <Table.Cell>{disp.Person}</Table.Cell>
+                        <Table.Cell>{disp.COD}</Table.Cell>
+                        <Table.Cell>{disp.total}</Table.Cell>
+                        <Table.Cell>{disp.weight}</Table.Cell>
 
 
-                      </tr>) : (<tr onClick={this.tr_click.bind(this, disp.Number)} id={index} name={disp.Number} key={index} >
-                        <td>{disp.Date}</td>
-                        <td>{disp.Type}</td>
-                        <td>{disp.Customer}</td>
-                        <td>{disp.Number}</td>
-                        <td>{disp.Adress}</td>
-                        <td>{disp.Phone}</td>
-                        <td>{disp.Person}</td>
-                        <td>{disp.COD}</td>
-                        <td>{disp.total}</td>
-                        <td>{disp.weight}</td>
+                      </Table.Row>) : (<Table.Row onClick={this.tr_click.bind(this, disp.Number)} id={index} name={disp.Number} key={index} >
+                        <Table.Cell>{disp.Date}</Table.Cell>
+                        <Table.Cell>{disp.Type}</Table.Cell>
+                        <Table.Cell>{disp.Customer}</Table.Cell>
+                        <Table.Cell>{disp.Number}</Table.Cell>
+                        <Table.Cell>{disp.Adress}</Table.Cell>
+                        <Table.Cell>{disp.Phone}</Table.Cell>
+                        <Table.Cell>{disp.Person}</Table.Cell>
+                        <Table.Cell>{disp.COD}</Table.Cell>
+                        <Table.Cell>{disp.total}</Table.Cell>
+                        <Table.Cell>{disp.weight}</Table.Cell>
 
-                      </tr>)}
-                  </tbody>
+                      </Table.Row>)}
+                  </Table.Body>
 
                 )}
 
-              </table>
+              </Table>
             </div>) : ('')}
         </div>
       </div>

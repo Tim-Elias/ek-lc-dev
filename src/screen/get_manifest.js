@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
+import { Header, Modal, Table, Button } from 'semantic-ui-react'
 import { get_data } from './../common/common_modules'
 
 
@@ -93,48 +93,48 @@ class Screen extends React.Component {
 
           {this.props.store.get_manifest.list.length !== 0 ? (
             <div>
-              <table>
-                <thead>
-                  <tr >
-                    <th>Дата отправления</th>
-                    <th>Номер менифеста</th>
-                    <th>Склад отправления</th>
-                    <th>Перевозчик</th>
-                    <th>Количество накладных</th>
-                    <th>Общее количество мест</th>
-                    <th>Общий вес</th>
-                  </tr>
-                </thead>
+              <Table>
+                <Table.Header>
+                  <Table.Row>
+                    <Table.HeaderCell>Дата отправления</Table.HeaderCell>
+                    <Table.HeaderCell>Номер менифеста</Table.HeaderCell>
+                    <Table.HeaderCell>Склад отправления</Table.HeaderCell>
+                    <Table.HeaderCell>Перевозчик</Table.HeaderCell>
+                    <Table.HeaderCell>Количество накладных</Table.HeaderCell>
+                    <Table.HeaderCell>Общее количество мест</Table.HeaderCell>
+                    <Table.HeaderCell>Общий вес</Table.HeaderCell>
+                  </Table.Row>
+                </Table.Header>
 
                 {this.props.store.get_manifest.list.map((disp, index) =>
-                  <tbody key={index}>
+                  <Table.Body key={index}>
 
                     {disp.num === this.props.store.get_manifest.active ? (
-                      <tr className='active' id={index} name={disp.num} onClick={this.tr_click.bind(this, disp.num)} onDoubleClick={this.tr_double_click.bind(this, disp.num)} key={index} >
+                      <Table.Row className='active' id={index} name={disp.num} onClick={this.tr_click.bind(this, disp.num)} onDoubleClick={this.tr_double_click.bind(this, disp.num)} key={index} >
 
-                        <td>{disp.date}</td>
-                        <td>{disp.num}</td>
-                        <td>{disp.sender}</td>
-                        <td>{disp.carrier}</td>
-                        <td>{disp.totaldisp}</td>
-                        <td>{disp.total}</td>
-                        <td>{disp.totalweight}</td>
-                      </tr>) : (<tr onClick={this.tr_click.bind(this, disp.num)} id={index} name={disp.num} key={index} >
+                        <Table.Cell>{disp.date}</Table.Cell>
+                        <Table.Cell>{disp.num}</Table.Cell>
+                        <Table.Cell>{disp.sender}</Table.Cell>
+                        <Table.Cell>{disp.carrier}</Table.Cell>
+                        <Table.Cell>{disp.totaldisp}</Table.Cell>
+                        <Table.Cell>{disp.total}</Table.Cell>
+                        <Table.Cell>{disp.totalweight}</Table.Cell>
+                      </Table.Row>) : (<Table.Row onClick={this.tr_click.bind(this, disp.num)} id={index} name={disp.num} key={index} >
 
-                        <td>{disp.date}</td>
-                        <td>{disp.num}</td>
-                        <td>{disp.sender}</td>
-                        <td>{disp.carrier}</td>
-                        <td>{disp.totaldisp}</td>
-                        <td>{disp.total}</td>
-                        <td>{disp.totalweight}</td>
+                        <Table.Cell>{disp.date}</Table.Cell>
+                        <Table.Cell>{disp.num}</Table.Cell>
+                        <Table.Cell>{disp.sender}</Table.Cell>
+                        <Table.Cell>{disp.carrier}</Table.Cell>
+                        <Table.Cell>{disp.totaldisp}</Table.Cell>
+                        <Table.Cell>{disp.total}</Table.Cell>
+                        <Table.Cell>{disp.totalweight}</Table.Cell>
 
-                      </tr>)}
-                  </tbody>
+                      </Table.Row>)}
+                  </Table.Body>
 
                 )}
 
-              </table>
+              </Table>
             </div>) : ("Нет ожидаемых входящих манифестов")}
         </div>
       </div>

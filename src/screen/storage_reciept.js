@@ -1,38 +1,29 @@
 import React  from 'react';
 import { connect } from 'react-redux';
-
 import Sound from 'react-sound';
 import done_sound from './../common/ping.mp3'
 import err_sound from './../common/err.mp3'
 import funk_sound from './../common/funk.mp3'
-
-
 import { get_data } from './../common/common_modules'
 import leftmenu from './components/leftmenu';
-
-
-
 
 class Screen extends React.Component {
 
     done_sound_play = () =>{
         this.props.storage_reciept_set_done_sound(Sound.status.PLAYING) 
-        
     }
 
     err_sound_play = () =>{
       this.props.storage_reciept_set_err_sound(Sound.status.PLAYING) 
-  }
+    }
 
-  funk_sound_play = () =>{
-    this.props.storage_reciept_set_funk_sound(Sound.status.PLAYING) 
-}
+    funk_sound_play = () =>{
+      this.props.storage_reciept_set_funk_sound(Sound.status.PLAYING) 
+    }
 
     send_req = () => {
-        // console.log(this.props.store.storage_reciept.barcode)
-        // console.log(this.props.store.storage_reciept.barcode.substring(0, 9))
+       
         if (this.props.store.storage_reciept.barcode.substring(0, 9)==="0000-0000") {
-          
           let zone = this.props.store.storage_reciept.barcode.substring(10)
           let find_zone = this.props.store.storage_reciept.zone_list.find(el=>el===zone)
           console.log(find_zone)
@@ -46,7 +37,6 @@ class Screen extends React.Component {
           this.props.storage_reciept_set_barcode('')
           this.props.storage_reciept_set_status_message('')
           this.props.storage_reciept_set_status_type(null)
-
           this.funk_sound_play()
           }
         } else {
@@ -69,7 +59,6 @@ class Screen extends React.Component {
             } else {
               this.err_sound_play()
             }
-            
           },
           (err) => { 
             this.props.modules.set_active_window("storage_reciept");
@@ -80,14 +69,9 @@ class Screen extends React.Component {
             this.err_sound_play()
            }
         );
-    
-          }
+      }
     }
 
-   
-    
-    
-    
       render() {
         let done_sound_status
         if (this.props.store.storage_reciept.done_sound === undefined) {
@@ -112,19 +96,15 @@ class Screen extends React.Component {
 
         const send_req = this.send_req 
         document.onkeydown = function (event) {
-            //console.log(event.keyCode)
             
             try {
               if (event.keyCode === 13) {
-           
                 send_req()
-                
-                
               }
             } catch (e) { 
                 console.log(e)
-            }
-          };
+              }
+            };
 
         return (
           <div>
@@ -133,11 +113,9 @@ class Screen extends React.Component {
                 }}>Полноэкранный режим</button></div>
            <div>
              Текущий склад: {this.props.store.storage_reciept.storage.name}
-            
            </div>
            <div>
             Зона хранения: {this.props.store.storage_reciept.selected_zone}
-            
            </div>
           
             <input autoFocus value={this.props.store.storage_reciept.barcode} onChange={(e)=>{this.props.storage_reciept_set_barcode(e.target.value)}} />
@@ -152,7 +130,6 @@ class Screen extends React.Component {
                 <div>Адрес: {this.props.store.storage_reciept.rec_adress}</div>
                 <div>Район: {this.props.store.storage_reciept.rec_district}</div>
                 <div>Получатель: {this.props.store.storage_reciept.rec_name}</div>
-                
              </div>
            ):(null)}
            {this.props.store.storage_reciept.status_type === "err" ? (
@@ -160,11 +137,9 @@ class Screen extends React.Component {
                {this.props.store.storage_reciept.status_message}
              </div>
            ):(null)}
-          
                 <Sound url={done_sound} playStatus={done_sound_status} />
                 <Sound url={err_sound} playStatus={err_sound_status} />
                 <Sound url={funk_sound} playStatus={funk_sound_status} />
-              
           </div>
         )
       }
@@ -184,9 +159,6 @@ export default connect(
       storage_reciept_set_funk_sound: (param) => { dispatch({ type: 'storage_reciept_set_funk_sound', payload: param }) },
       storage_reciept_set_status_message: (param) => { dispatch({ type: 'storage_reciept_set_status_message', payload: param }) },
       storage_reciept_set_status_type: (param) => { dispatch({ type: 'storage_reciept_set_status_type', payload: param }) },
-     
-      // set_active_window: (param) => { dispatch({ type: 'set_active_window', payload: param }) },
-       
     })
 )(Screen)
 

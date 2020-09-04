@@ -4,6 +4,8 @@ const initialState = {
   CityList: [],
   CargoInfoType: { label: 'Внести информацию о каждом грузе', value: false },
   PayType: { label: 'Безналичная оплата', value: 'Безналичная оплата' },
+  PayerList: [],
+  Payer: {name:'', id:''},
   DelMethod: 'Дверь - Дверь',
   CustomerEmailInformer: false,
 
@@ -12,7 +14,7 @@ const initialState = {
   OpenModalSendTemplate: false,
   OpenModalRecTemplate: false,
 
-  FilterModalSendTemplate: "",
+  FilterModalSendTemplate: "", 
   FilterModalRecTemplate: "",
   
   SendTerminalList: [],
@@ -76,6 +78,10 @@ export default function dispatch (state = initialState, action) {
     
     case 'reset_create_disp_data': return  initialState 
     case 'SetDelMethod': return { ...state, DelMethod: action.payload }
+
+    case 'SetPayerList': return { ...state, PayerList: action.payload }
+
+    case 'SetPayer': return { ...state, Payer: action.payload }
 
     case 'SetCOD': return { ...state, COD: action.payload }
     case 'SetInsureValue': return { ...state, InsureValue: action.payload }
