@@ -58,7 +58,7 @@ class Screen extends React.Component {
 
       <div className={className}>
 
-        {this.props.store.general.active_window === 'home' && !this.props.store.login.logged ? (null) : (null)}
+        {this.props.store.general.active_window === 'home' && !this.props.store.login.logged ? (<HomeEk modules={modules}/>) : (null)}
         {this.props.store.general.active_window === 'my_disp' ? (<MyDisp modules={modules}/>) : (null)}
         {this.props.store.general.active_window === 'create_disp' ? (<CreateDisp modules={modules}/>) : (null)}
         {this.props.store.general.active_window === 'mutual' ? (<Mutual modules={modules}/>) : (null)}

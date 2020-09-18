@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Sound from 'react-sound';
 import test_sound from './../common/Sound_11084.wav'
 
+//import voxImplant from 'voximplant-websdk'
 
 // import SpeechRecognition from "react-speech-recognition";
 
@@ -16,8 +17,12 @@ import test_sound from './../common/Sound_11084.wav'
 //     console.log(event)
 //   }
 
+
+let voximplant
+
 class Screen extends React.Component {
 
+  
     sound_test = () =>{
         this.props.set_test_sound(Sound.status.PLAYING) 
     }
@@ -36,6 +41,67 @@ class Screen extends React.Component {
     //     recognition.end()
 
     // }
+
+    call = () =>{
+      const call = voximplant.call("102");
+    }
+
+
+     voximplant = async ()  => {
+
+      
+
+      // const fetchJsFromCDN = (src, externals = []) => {
+      //   new Promise((resolve, reject) => {
+      //     const script = document.createElement('script')
+      //     script.setAttribute('src', src)
+      //     script.addEventListener('load', () => {
+      //       resolve(externals.map(key => {
+      //         const ext = window[key]
+      //         typeof ext === 'undefined' && console.warn(`No external named '${key}' in window`)
+      //         return ext
+      //       }))
+      //     })
+      //     script.addEventListener('error', reject)
+      //     document.body.appendChild(script)
+      //   })
+      // }
+      
+      // fetchJsFromCDN('//cdn.voximplant.com/edge/voximplant.min.js', ['VoxImplant']).then(([voximplant]) => voximplant.init())
+
+      //console.log(VoxImplant)
+      voximplant = window.VoxImplant.getInstance();
+      try {
+        await voximplant.init();
+        console.log('SDK initialized')
+        // voximplant.addEventListener(voximplant.Events.ConnectionClosed, () => {
+        //   console.log('Connection was closed')
+        // });
+        try {
+          await voximplant.connect();
+          console.log('Connection was established successfully')
+        } catch (e) {
+          console.log('Connection failed')
+        }
+       } catch (e) {
+        console.log('SDK init failure')
+       }
+
+       try {
+        // Change "appname" and "accname" to names of your application and account,
+        // "username" and "password" to name and password of user created via
+        // the control panel.
+        await voximplant.login("101@express-kinetika.timelias.voximplant.com",
+          "Explorer48");
+          console.log('Authorization success')
+        // Authorization success
+       } catch (e) {
+        // Authorization failure
+       }
+    }
+    
+
+    
     
     
       render() {
@@ -58,8 +124,9 @@ class Screen extends React.Component {
 
         return (
           <div>
-            {/* <button onClick={this.start.bind(this)}>start</button>
-            <button onClick={this.end.bind(this)}>end</button> */}
+            <button onClick={this.voximplant.bind(this)}>Voximplant</button>
+            <button onClick={this.call.bind(this)}>Call</button>
+           {/*  <button onClick={this.end.bind(this)}>end</button> */}
             <input  value={this.props.store.test.barcode} onChange={(e)=>{this.props.set_test_barcode(e.target.value)}} />
             {this.props.store.test.list.map((el,index)=>{
                 return(

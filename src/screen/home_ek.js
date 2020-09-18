@@ -237,7 +237,7 @@ class Screen extends React.Component {
                     <div className="home_menu_element">Интренет-магазинам</div>
                     
                 </div> */}
-                <div className="home_main_offer home_content_element"  style={{ backgroundImage: `url(${transit})` }}>
+                {/* <div className="home_main_offer home_content_element"  style={{ backgroundImage: `url(${transit})` }}>
                  
                    <h1 className="home_main_offer_label"> 
                        Срочная доставка
@@ -260,7 +260,7 @@ class Screen extends React.Component {
                    
 
                    
-                </div>
+                </div> */}
 
                 <div className="home_service_selector home_content_element">
                     <div className="home_service_content">
@@ -284,14 +284,14 @@ class Screen extends React.Component {
                        Отследить накладную
                        </div>)}
 
-                       {this.props.store.home_ek.home_service_selector === 3?(
+                       {/* {this.props.store.home_ek.home_service_selector === 3?(
                        <div onClick={()=>this.props.set_home_service_selector(3)}  className="home_service_selector_menu_element_selected" >
                        Вызвать курьера
                        </div>
                    ):(
                         <div onClick={()=>this.props.set_home_service_selector(3)}  className="home_service_selector_menu_element" >
                        Вызвать курьера
-                       </div>)}
+                       </div>)} */}
                    </div>
                    {this.props.store.home_ek.home_service_selector === 1?(<div className="home_service_selector_content">
                         <div className="home_service_selector_content_calc">
@@ -378,7 +378,7 @@ class Screen extends React.Component {
                   </div>
                     </div>
                     ):(null)}
-                    {this.props.store.home_ek.home_service_selector === 3?(<div className="home_service_selector_content">
+                    {/* {this.props.store.home_ek.home_service_selector === 3?(<div className="home_service_selector_content">
                     <div className="home_service_selector_content_order">
                             <input placeholder='Город отправления' className="home_service_selector_content_input"></input>
                             <input placeholder='Адрес отправления' className="home_service_selector_content_input"></input>
@@ -388,7 +388,7 @@ class Screen extends React.Component {
 
                         </div>
                     </div>
-                    ):(null)}
+                    ):(null)} */}
                    </div>
                 </div>
 
@@ -492,7 +492,7 @@ class Screen extends React.Component {
                      
                 
 
-                <div className="home_service_cards home_content_element">
+                {/* <div className="home_service_cards home_content_element">
                     <div className="home_service_card shadow" > 
                         <h3 className="home_service_card_label">Междугородние перевозки</h3>
                        
@@ -525,9 +525,9 @@ class Screen extends React.Component {
                         <i aria-hidden="true" style={{color:"#E87B1A", cursor:"pointer"}} className="big long arrow alternate right icon"></i>
                         </div>
                     </div>
-                </div>
+                </div> */}
 
-                <div className="filials home_content_element shadow">
+                {/* <div className="filials home_content_element shadow">
                    <h2 className="text_align_center font_36 filials_header">География</h2>
                     <div className="text_align_center filials_text">Экспресс Кинетика доставляет грузы и документы по всей России
                         <br /> 
@@ -546,11 +546,11 @@ class Screen extends React.Component {
 
 
                 </GoogleMapReact>
-                    {/* <div className="filials_map" style={{ backgroundImage: `url(${map})` }}></div> */}
+                    <div className="filials_map" style={{ backgroundImage: `url(${map})` }}></div>
                     
-                </div>
+                </div> */}
 
-                <div style={{backgroundColor: "#E87B1A"}} className="callbacker home_content_element ">
+                {/* <div style={{backgroundColor: "#E87B1A"}} className="callbacker home_content_element ">
                     <div className="callbacker_wrapper">
                     <h2 className="text_align_center font_36">Необходимо индивидуальное предложение?</h2>
                     <div className="text_align_center filials_text">
@@ -566,15 +566,15 @@ class Screen extends React.Component {
 
                         </div>
                         </div>
-                </div> 
+                </div>  */}
 
-                <div className="about home_content_element">
+                {/* <div className="about home_content_element">
                     <div className="about_left">
                         <div  className="about_container" >
                             <img className="about_photo" src={director}/>
-                            {/* <div style={{ backgroundSize:  "300px auto", backgroundImage: `url(${director})` }} className="about_photo"> */}
+                            <div style={{ backgroundSize:  "300px auto", backgroundImage: `url(${director})` }} className="about_photo">
 
-                            {/* </div> */}
+                            </div>
                         </div>
                         
                     </div>
@@ -596,9 +596,9 @@ class Screen extends React.Component {
                        </div>
                     </div>
                     
-                </div>      
+                </div>       */}
      
-                <div className="advantage home_content_element">
+                {/* <div className="advantage home_content_element">
                 <h2 className="text_align_center font_36">Преимущества</h2>
                     
                     <div className="advantages_cards">
@@ -645,9 +645,9 @@ class Screen extends React.Component {
                         
                         </div>
                     </div>
-                </div>   
+                </div>    */}
 
-                <div className="clients home_content_element">
+                {/* <div className="clients home_content_element">
                     
                     <div className="clients_label">
                     <h2 className="font_36">Наши клиенты</h2>
@@ -667,7 +667,7 @@ class Screen extends React.Component {
                     <div className="clients_button_navi">
                     <i aria-hidden="true" style={{ color:"#2444B5", cursor:"pointer"}} className="chevron large right icon"></i>
                     </div>
-                </div>  
+                </div>   */}
 
                 {/* <div className="review home_content_element"> 
                     <h2 className="text_align_center">Отзывы</h2>
@@ -706,7 +706,7 @@ class Screen extends React.Component {
                     Автопарк
                 </div>    */}
 
-                <div style={{backgroundColor: "#2444B5"}} className="callbacker home_content_element">
+                {/* <div style={{backgroundColor: "#2444B5"}} className="callbacker home_content_element">
                 <div className="callbacker_wrapper">
                     <h2 className="text_align_center font_36">Есть вопросы или нужна помощь?</h2>
                     <div className="text_align_center filials_text">
@@ -722,7 +722,7 @@ class Screen extends React.Component {
 
                         </div>
                 </div> 
-                </div> 
+                </div>  */}
             </div>
         )
 
