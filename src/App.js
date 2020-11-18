@@ -17,6 +17,8 @@ class App extends Component {
 
 
   render() {
+    
+    if (window.location.href = 'https://e-kinetika.ru') window.location.href = 'https://express-kinetika.ru'
     return (
       
       <div><HomeContainer cookies={this.props.cookies}/></div>
