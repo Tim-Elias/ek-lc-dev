@@ -209,7 +209,7 @@ RemoveCargo = (index) => {
       userkey: this.props.store.login.userkey,
       Number: this.props.store.create_disp.Number,
       PayType: this.props.store.create_disp.PayType.value,
-
+      DispDate: this.props.store.create_disp.DispDate,
       SendCity: this.props.store.create_disp.SendCity,
       SendAdress: this.props.store.create_disp.SendAdress,
       SendCompany: this.props.store.create_disp.SendCompany,
@@ -357,6 +357,8 @@ SetTotal = (value) =>{
                     <div className="disp_data_el">{this.props.store.login.alias}</div>
                     <div className="disp_data_label">Вид доставки:</div>
                     <div className="disp_data_el">{this.props.store.create_disp.DelMethod}</div>
+                    <div className="disp_data_label">Дата заявки:</div>
+                    <div className="disp_data_el"><input onChange={e => this.props.SetDispDate(e.target.value)} value={this.props.store.create_disp.DispDate} className="DispDate" type="date"></input></div>
                     <div className="disp_data_label">Тип оплаты:</div>
                      <div className="disp_data_el">
                      <Select
@@ -760,6 +762,8 @@ export default connect(
 
     SetFilterModalSendTemplate: (param) => { dispatch({ type: 'SetFilterModalSendTemplate', payload: param }) },
     SetFilterModalRecTemplate: (param) => { dispatch({ type: 'SetFilterModalRecTemplate', payload: param }) },
+    
+    SetDispDate: (param) => { dispatch({ type: 'SetDispDate', payload: param }) },
 
     SetCOD: (param) => { dispatch({ type: 'SetCOD', payload: param }) },
     SetInsureValue: (param) => { dispatch({ type: 'SetInsureValue', payload: param }) },

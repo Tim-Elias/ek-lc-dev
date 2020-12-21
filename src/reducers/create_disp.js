@@ -1,3 +1,15 @@
+const today = new Date()
+  let mm = today.getMonth() + 1; // getMonth() is zero-based
+  let dd = today.getDate();
+
+  const y = today.getFullYear()
+
+  if (mm<10) { mm = '0' + mm }
+  if (dd<10) {dd = '0' + dd}
+        
+  const date = y+'-'+mm+'-'+dd
+
+
 const initialState = {
   
 
@@ -68,7 +80,8 @@ const initialState = {
 
   IRR: false,
   Fragile: false,
-  DelType: ''
+  DelType: '',
+  DispDate: date
 
 }
 
@@ -232,7 +245,7 @@ export default function dispatch (state = initialState, action) {
       return { ...state, Cargo: state.Cargo }
 
     case 'SetCargoInfoType': return { ...state, CargoInfoType: action.payload }
-
+    case 'SetDispDate': return { ...state, DispDate: action.payload }
     case 'SetTotal': return { ...state, Total: action.payload }
     case 'SetWeight': return { ...state, Weight: action.payload }
     case 'SetVolume': return { ...state, Volume: action.payload }

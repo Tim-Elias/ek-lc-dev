@@ -82,3 +82,7 @@ text-align: right;
 .create_disp_template_list_th{
   font-size: 12px;
 }
+
+.DispDate{
+  border: none;
+}
