@@ -15,6 +15,16 @@ class ComponentToPrint extends React.Component {
 
         //console.log(this.props.disp)
         let initialValue = 0
+        const today = new Date()
+  let mm = today.getMonth() + 1; // getMonth() is zero-based
+  let dd = today.getDate();
+
+  const year = today.getFullYear()
+
+  if (mm<10) { mm = '0' + mm }
+  if (dd<10) {dd = '0' + dd}
+        
+  const curDate = dd+'.'+mm+'.'+year
         return (
             <div>
                 {this.props.disp.map((disp, index) => {
@@ -145,7 +155,7 @@ class ComponentToPrint extends React.Component {
                                     <table className='disp_print_pod_table'>
                                         <tbody>
                                             <tr>
-                                                <td className='disp_print_pod_td'>Дата отправки</td>
+                                                <td className='disp_print_pod_td'>{this.props.userkey === "000000001" ? (<div className="send_date">{curDate}</div>):(null)}<br></br>Дата отправки</td>
                                                 <td className='disp_print_pod_td'>Время</td>
                                                 <td className='disp_print_pod_td'>Отправитель (Ф.И.О.)</td>
                                                 <td className='disp_print_pod_td'>Подпись</td>

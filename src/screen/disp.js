@@ -586,7 +586,7 @@ class Screen extends React.Component {
                             content={() => this.componentRef}
                         />
                         <div style={{ display: "none" }}>
-                            <ComponentToPrint disp={[this.props.store.disp]} ref={el => (this.componentRef = el)} />
+                            <ComponentToPrint userkey = {this.props.store.login.userkey} disp={[this.props.store.disp]} ref={el => (this.componentRef = el)} />
                         </div>
 
                         {this.props.store.login.print_ticket ? (<ReactToPrint
