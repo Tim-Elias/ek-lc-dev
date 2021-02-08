@@ -599,7 +599,7 @@ class Screen extends React.Component {
       />):(null)}
     
       {complited.length !== 0 ? (<div style={{ display: "none" }} >
-        <ComponentToPrint disp={complited.map((el)=>{return el.print_data})} ref={cur_el => (this.all_disp_print = cur_el)} />
+        <ComponentToPrint userkey = {this.props.store.login.userkey} disp={complited.map((el)=>{return el.print_data})} ref={cur_el => (this.all_disp_print = cur_el)} />
       </div>):(null)}
 
       {complited.length !== 0 && this.props.store.login.print_ticket ? (<ReactToPrint
