@@ -9,6 +9,10 @@ import { Table, Modal, Button, Icon} from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
 
 
+
+// Tim 48
+
+
 const PayTypeList = [
   {label:"Безналичная оплата", value:"БезналичнаяОплата"},
   {label:"Оплата наличными при отправлении", value:"ОплатаНаличнымиПриОтправлении"},
@@ -29,6 +33,37 @@ const CargoTypeList = [
 ]
 
 class Screen extends React.Component {
+
+CalcPrice = (total_weight, total_volume) => {
+  
+  let weight;
+  let volume ;
+
+
+  if(this.props.store.create_disp.CargoInfoType.value) {
+    weight = this.props.store.create_disp.Weight;
+    volume = this.props.store.create_disp.Volume;
+  } else {
+    weight = total_weight;
+    volume = total_volume;
+  }
+  
+  const create_disp_data = {
+    userkey: this.props.store.login.userkey, 
+    SendCity: this.props.store.create_disp.SendCity, 
+    SendTerminal: this.props.store.create_disp.SendTerminal, 
+    RecCity: this.props.store.create_disp.RecCity, 
+    RecTerminal: this.props.store.create_disp.RecTerminal, 
+    Volume: volume, 
+    Weight: weight, 
+  }
+
+  get_data('customercalc', create_disp_data).then(
+    (result) => {
+      this.props.SetPrice(result);
+    }
+  );
+}
 
 TotalQ = () => {
   return 1
@@ -206,36 +241,36 @@ RemoveCargo = (index) => {
   sent_disp = () => {
 
     const create_disp_data = {
-      userkey: this.props.store.login.userkey,
+      userkey: this.props.store.login.userkey, 
       Number: this.props.store.create_disp.Number,
       PayType: this.props.store.create_disp.PayType.value,
       DispDate: this.props.store.create_disp.DispDate,
-      SendCity: this.props.store.create_disp.SendCity,
+      SendCity: this.props.store.create_disp.SendCity, 
       SendAdress: this.props.store.create_disp.SendAdress,
       SendCompany: this.props.store.create_disp.SendCompany,
       SendPhone: this.props.store.create_disp.SendPhone,
       SendPerson: this.props.store.create_disp.SendPerson,
       SendAddInfo: this.props.store.create_disp.SendAddInfo,
       SendEmail: this.props.store.create_disp.SendEmail,
-      SendTerminal: this.props.store.create_disp.SendTerminal,
+      SendTerminal: this.props.store.create_disp.SendTerminal, 
       SendSelectTerminal: this.props.store.create_disp.SendSelectTerminal.value,
       SendEmailInformer: this.props.store.create_disp.SendEmailInformer,
 
-      RecCity: this.props.store.create_disp.RecCity,
+      RecCity: this.props.store.create_disp.RecCity, 
       RecAdress: this.props.store.create_disp.RecAdress,
       RecCompany: this.props.store.create_disp.RecCompany,
       RecPhone: this.props.store.create_disp.RecPhone,
       RecPerson: this.props.store.create_disp.RecPerson,
       RecAddInfo: this.props.store.create_disp.RecAddInfo,
       RecEmail: this.props.store.create_disp.RecEmail,
-      RecTerminal: this.props.store.create_disp.RecTerminal,
+      RecTerminal: this.props.store.create_disp.RecTerminal, 
       RecSelectTerminal: this.props.store.create_disp.RecSelectTerminal,
       RecEmailInformer: this.props.store.create_disp.RecEmailInformer,
 
       Cargo: this.props.store.create_disp.Cargo,
       Total: this.props.store.create_disp.Total,
-      Volume: this.props.store.create_disp.Volume,
-      Weight: this.props.store.create_disp.Weight,
+      Volume: this.props.store.create_disp.Volume, 
+      Weight: this.props.store.create_disp.Weight, 
 
       InsureValue: this.props.store.create_disp.InsureValue,
       COD: this.props.store.create_disp.COD,
@@ -333,6 +368,7 @@ SetTotal = (value) =>{
 
     let disabled = false
     let total_weight = Math.ceil(this.props.store.create_disp.Cargo.reduce((accumulator, Cargo) => accumulator + Math.ceil(Cargo.Weight * Cargo.Q*1000)/1000, 0)*1000)/1000
+    let total_volume = Math.ceil(this.props.store.create_disp.Cargo.reduce((accumulator, Cargo) => accumulator + Math.ceil(Cargo.L * Cargo.W * Cargo.H * Cargo.Q / 5) / 1000, 0) * 1000) / 1000
 
     if(this.props.store.create_disp.SelectedSendCity===null 
       || this.props.store.create_disp.SelectedRecCity===null 
@@ -636,10 +672,10 @@ SetTotal = (value) =>{
                     <div className="disp_cargo_data">
                     <div className="disp_data_label">Общее количество мест:</div>
                     <div className="disp_data_el">{this.props.store.create_disp.Cargo.reduce((accumulator, Cargo) => accumulator + Number(Cargo.Q), 0)}</div>
-                    <div className="disp_data_label">Общий фактический вес (кг):</div>
+                    <div className="disp_data_label">Общий фактический вес (кг):</div> 
                     <div className="disp_data_el">{total_weight}</div>
                     <div className="disp_data_label">Общий объемный вес (кг):</div>
-                    <div className="disp_data_el">{Math.ceil(this.props.store.create_disp.Cargo.reduce((accumulator, Cargo) => accumulator + Math.ceil(Cargo.L * Cargo.W * Cargo.H * Cargo.Q /5)/1000, 0)*1000)/1000}</div> 
+                    <div className="disp_data_el">{total_volume}</div> 
                 </div>
                     </div>):(<div className="disp_cargo_data">
                     <div className="disp_data_label">Общее количество мест:</div>
@@ -655,10 +691,21 @@ SetTotal = (value) =>{
                   <div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.props.SetInsureValue(e.target.value)} value={this.props.store.create_disp.InsureValue} type="number"  /></div>
                   <div className="disp_data_label">Наложенный платеж (руб.):</div>
                   <div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.props.SetCOD(e.target.value)} value={this.props.store.create_disp.COD} type="number"  /></div> 
+              <div className="disp_data_label">Расчетная стоимость перевозки:</div>
+              <div className="disp_data_el"><input className="create_disp_data_input" readOnly value={this.props.store.create_disp.Price} /></div>
+
                   </div>
                 )}
+
+                {/* <div className="disp_cargo_table_data">
+                  <input value={this.props.store.create_disp.Price} />
+                  
+                </div> */}
+                <div className="disp_cargo_table_data">
+                  <button onClick={this.CalcPrice.bind(this, total_weight, total_volume)}>Рассчитать стоимость</button>
+                </div>
                 {this.props.store.create_disp.Number === 0 ? ( <Button disabled={disabled} onClick={this.sent_disp.bind(this)}>Создать накладную</Button>):( <Button disabled={disabled} onClick={this.sent_disp.bind(this)}>Сохранить изменения</Button>)}
-               
+
                 </div>
                 
                 
@@ -707,6 +754,8 @@ export default connect(
     store: state
   }),
   dispatch => ({
+
+    SetPrice: (param) => { dispatch({ type:'SetPrice', payload: param }) },
 
     SetSendCity: (param) => { dispatch({ type: 'SetSendCity', payload: param }) },
     SetSendTerminal: (param) => { dispatch({ type: 'SetSendTerminal', payload: param }) },
