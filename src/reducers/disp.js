@@ -1,4 +1,21 @@
+const today = new Date()
+let mm = today.getMonth() + 1; // getMonth() is zero-based
+let dd = today.getDate();
+
+const y = today.getFullYear()
+
+if (mm < 10) { mm = '0' + mm }
+if (dd < 10) { dd = '0' + dd }
+
+const date = y + '-' + mm + '-' + dd
+
 const initialState = {
+  FIO_Customer: '',
+  delivery_date: date,
+  cash_accepted: '',
+  comment: '',
+  
+  
   is_new: false,
   action: null,
   data: {},
@@ -19,6 +36,11 @@ const initialState = {
 
 export default function dispatch (state = initialState, action) {
   switch (action.type) {
+    case 'set_disp_comment': return { ...state, comment: action.payload }
+    case 'set_disp_cash': return { ...state, cash_accepted: action.payload }
+    case 'set_disp_FIO': return { ...state, FIO_Customer: action.payload }
+    case 'set_disp_date': return { ...state, delivery_date: action.payload }
+
     case 'set_disp_lat_lng': return { ...state, lat: action.payload.lat, lng: action.payload.lng}
     case 'set_disp_search_box': return { ...state, search_box: action.payload}
     case 'set_disp_history_loading': return { ...state, history_loading: action.payload }

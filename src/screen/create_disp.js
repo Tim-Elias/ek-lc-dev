@@ -8,11 +8,6 @@ import { customStyles } from "./../common/common_style";
 import { Table, Modal, Button, Icon} from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
 
-
-
-// Tim 48
-
-
 const PayTypeList = [
   {label:"Безналичная оплата", value:"БезналичнаяОплата"},
   {label:"Оплата наличными при отправлении", value:"ОплатаНаличнымиПриОтправлении"},
@@ -37,8 +32,7 @@ class Screen extends React.Component {
 CalcPrice = (total_weight, total_volume) => {
   
   let weight;
-  let volume ;
-
+  let volume;
 
   if(this.props.store.create_disp.CargoInfoType.value) {
     weight = this.props.store.create_disp.Weight;
@@ -356,10 +350,7 @@ SetTotal = (value) =>{
     this.props.SetWeight(Weight)
     this.props.SetVolume(Weight)
   }
-
-
 }
-  
 
 
   render() {
@@ -386,7 +377,7 @@ SetTotal = (value) =>{
                 <Button compact icon onClick={this.props.modules.back}>
                         <Icon name='arrow left' />
                     </Button>
-    {this.props.store.create_disp.Number === 0 ? (<b>Создание новой накладной</b>):(<b>Редактирование накладной {this.props.store.create_disp.Number}</b>)}
+                {this.props.store.create_disp.Number === 0 ? (<b>Создание новой накладной</b>):(<b>Редактирование накладной {this.props.store.create_disp.Number}</b>)}
                 </div>
                 <div className="disp_customer_data">
                     <div className="disp_data_label">Заказчик:</div>
@@ -396,7 +387,7 @@ SetTotal = (value) =>{
                     <div className="disp_data_label">Дата заявки:</div>
                     <div className="disp_data_el"><input onChange={e => this.props.SetDispDate(e.target.value)} value={this.props.store.create_disp.DispDate} className="DispDate" type="date"></input></div>
                     <div className="disp_data_label">Тип оплаты:</div>
-                     <div className="disp_data_el">
+                     <div className="disp_data_el ">
                      <Select
                           options={PayTypeList}
                           styles={customStyles}
@@ -532,9 +523,9 @@ SetTotal = (value) =>{
                         </div>
                         
                         {this.props.store.create_disp.SendTerminalList.length === 0 ? (null):(<div className="disp_data_label">Отправка на складе</div>)}
-                        {this.props.store.create_disp.SendTerminalList.length === 0 ? (null):(<div><input name="send_type" type="radio"  onChange={this.SetSendTerminal.bind(this,true)} disabled={this.props.store.create_disp.SendTerminalList.length === 0} checked={this.props.store.create_disp.SendTerminal}></input></div>)}
+                        {this.props.store.create_disp.SendTerminalList.length === 0 ? (null) : (<div className="disp_data_radio"><input name="send_type" type="radio"  onChange={this.SetSendTerminal.bind(this,true)} disabled={this.props.store.create_disp.SendTerminalList.length === 0} checked={this.props.store.create_disp.SendTerminal}></input></div>)}
                         {this.props.store.create_disp.SendTerminalList.length === 0 ? (null):(<div className="disp_data_label">Забор с адреса</div>)}
-                        {this.props.store.create_disp.SendTerminalList.length === 0 ? (null):(<div><input name="send_type" type="radio" onChange={this.SetSendTerminal.bind(this,false)} checked={!this.props.store.create_disp.SendTerminal}></input></div>)}
+                        {this.props.store.create_disp.SendTerminalList.length === 0 ? (null) : (<div className="disp_data_radio"><input name="send_type" type="radio" onChange={this.SetSendTerminal.bind(this,false)} checked={!this.props.store.create_disp.SendTerminal}></input></div>)}
                         
                         {this.props.store.create_disp.SendTerminal? (<div className="disp_data_label"> Терминал:</div>):(<div className="disp_data_label"> Адрес:</div>)}
                         
@@ -576,9 +567,9 @@ SetTotal = (value) =>{
                         </div>
                         
                         {this.props.store.create_disp.RecTerminalList.length === 0 ? (null):(<div className="disp_data_label">Получение на складе</div>)}
-                        {this.props.store.create_disp.RecTerminalList.length === 0 ? (null):(<div><input name="rec_type" type="radio"  onChange={this.SetRecTerminal.bind(this,true)} disabled={this.props.store.create_disp.RecTerminalList.length === 0} checked={this.props.store.create_disp.RecTerminal}></input></div>)}
+                        {this.props.store.create_disp.RecTerminalList.length === 0 ? (null) : (<div className="disp_data_radio"><input name="rec_type" type="radio"  onChange={this.SetRecTerminal.bind(this,true)} disabled={this.props.store.create_disp.RecTerminalList.length === 0} checked={this.props.store.create_disp.RecTerminal}></input></div>)}
                         {this.props.store.create_disp.RecTerminalList.length === 0 ? (null):(<div className="disp_data_label">Доставка до адреса</div>)}
-                        {this.props.store.create_disp.RecTerminalList.length === 0 ? (null):(<div><input name="rec_type" type="radio" onChange={this.SetRecTerminal.bind(this,false)} checked={!this.props.store.create_disp.RecTerminal}></input></div>)}
+                        {this.props.store.create_disp.RecTerminalList.length === 0 ? (null) : (<div className="disp_data_radio"><input name="rec_type" type="radio" onChange={this.SetRecTerminal.bind(this,false)} checked={!this.props.store.create_disp.RecTerminal}></input></div>)}
                         
                         {this.props.store.create_disp.RecTerminal? (<div className="disp_data_label"> Терминал:</div>):(<div className="disp_data_label"> Адрес:</div>)}
                         
@@ -607,10 +598,10 @@ SetTotal = (value) =>{
                 </div>
 
                 <div className="disp_cargo_table">
-                <div className="disp_cargo_table_header">Данные о грузах:</div>
+                  <div className="disp_cargo_table_header">Данные о грузах:</div>
                     {this.props.store.login.total_only ? (<div className="disp_cargo_info">
                     <div className="disp_data_label">Метод внесения информации:</div>
-                     <div className="disp_data_el">
+                    <div className="disp_data_el ">
                       <Select
                           options={CargoInfoTypeList}
                           styles={customStyles}

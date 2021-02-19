@@ -10,7 +10,11 @@ import md5 from 'md5'
 
 class Screen extends Component {
 
-
+    handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            this.login();
+        }
+    }
 
     home = () => {
         this.props.set_active_window("home");
@@ -53,7 +57,7 @@ class Screen extends Component {
 
                     this.props.login(result);
                     
-                    this.get_list(result.userkey);
+                    this.get_list(result.userkey); //
 
                     this.props.cookies.set('username', this.props.store.login.username)
                     this.props.cookies.set('userkey', result.userkey)
@@ -74,6 +78,8 @@ class Screen extends Component {
         }
     };
 
+
+
     close_modal_portal = () => {
         this.props.set_modal_show(false)
     }
@@ -83,8 +89,6 @@ class Screen extends Component {
     }
 
     render() {
-
-        
 
         return (
 
@@ -100,11 +104,9 @@ class Screen extends Component {
                         </Modal.Content>
                     </Modal>
 
-                <div onClick={this.logo_click.bind(this)}>
+                <div onClick={this.logo_click.bind(this)}> 
                     
-                    
-                        <img className="header_logo" src={logo} />
-                    
+                    <img className="header_logo" src={logo} />
                     
                 </div>
                 <div className='mainmenu'>
@@ -117,9 +119,9 @@ class Screen extends Component {
 
                 {!this.props.store.login.logged ? (<div className="login-container">
                     <div className="login-pass-input">
-                        <input onChange={e => this.props.set_login(e.target.value)} value={this.props.store.login.username} type="text" placeholder="Логин" name="username" />
+                        <input onKeyDown={this.handleKeyDown} onChange={e => this.props.set_login(e.target.value)} value={this.props.store.login.username} type="text" placeholder="Логин" name="username" />
 
-                        <input onChange={e => this.props.set_password(e.target.value)} value={this.props.store.login.pass} type="password" placeholder="Пароль" name="psw" />
+                        <input onKeyDown={this.handleKeyDown} onChange={e => this.props.set_password(e.target.value)} value={this.props.store.login.pass} type="password" placeholder="Пароль" name="psw" />
                     </div>
                     <div onClick={this.login.bind(this)} className="logout">Вход</div>
 

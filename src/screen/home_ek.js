@@ -268,20 +268,20 @@ class Screen extends React.Component {
                        
                    {this.props.store.home_ek.home_service_selector === 1?(
                        <div onClick={()=>this.props.set_home_service_selector(1)}  className="home_service_selector_menu_element_selected" >
-                       Рассчитать стоимость
+                       <p>Рассчитать стоимость</p>
                        </div>
                    ):(
                         <div onClick={()=>this.props.set_home_service_selector(1)} style={{borderRight:"1px solid #2444B5"}} className="home_service_selector_menu_element" >
-                       Рассчитать стоимость
+                       <p>Рассчитать стоимость</p>
                        </div>)}
 
                        {this.props.store.home_ek.home_service_selector === 2?(
                        <div onClick={()=>this.props.set_home_service_selector(2)}  className="home_service_selector_menu_element_selected" >
-                       Отследить накладную
+                       <p>Отследить накладную</p>
                        </div>
                    ):(
                         <div onClick={()=>this.props.set_home_service_selector(2)} style={{borderRight:"1px solid #2444B5"}} className="home_service_selector_menu_element" >
-                       Отследить накладную
+                       <p>Отследить накладную</p>
                        </div>)}
 
                        {/* {this.props.store.home_ek.home_service_selector === 3?(

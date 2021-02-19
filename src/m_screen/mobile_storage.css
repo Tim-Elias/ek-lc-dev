@@ -1,0 +1,33 @@
+.mobile_storage {
+    margin: 0 0 10px 0;
+}
+
+.mobile_storage_item {
+    border: 2px solid #f0f0f0;
+    border-bottom: none;
+    text-align: left;
+    padding: 10px;
+    font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+}
+.mobile_storage_item:last-child {
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.mobile_storage_item--canceling {
+    background-color: red;
+}
+
+.mobile_storage_field {
+    margin: 5px 0 0 0;
+}
+.mobile_storage_field:first-child {
+    margin: 0;
+}
+
+.mobile_storage_item_row {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}

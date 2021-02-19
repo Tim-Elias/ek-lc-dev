@@ -16,14 +16,14 @@ const customStyles = {
 
   indicatorsContainer: (base) => ({
     ...base,
-    display: 'none'
+    display: 'none',
   }),
 
   singleValue: (base) => ({
     ...base,
     marginLeft: '0px',
     color: 'black'
-  })
+  }),
 
 }
 

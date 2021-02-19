@@ -68,7 +68,7 @@ input::-webkit-inner-spin-button {
   border-radius: 2px;
   font-size: 10px;
   padding: 5px;
- 
+  cursor: pointer;
 }
 
 .create_disp_template_button_container{
@@ -85,4 +85,8 @@ text-align: right;
 
 .DispDate{
   border: none;
+  cursor: pointer;
+}
+.DispDate:hover {
+  background-color: #f0f0f0;
 }

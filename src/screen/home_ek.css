@@ -22,8 +22,13 @@
     color: #FFF;
     font-weight: bold;
     border: none;
-    
+    cursor: pointer;
     margin-left: 960px;
+}
+.service_info_window_button:hover {
+    border: 4px solid #2444B5;
+    background-color: white;
+    color: #2444B5;
 }
 
 .service_info_window_wrapper{
@@ -146,18 +151,37 @@ line-height: 90%;
 }
 
 .home_service_selector_menu_element{
+    position: relative;
     text-align: center;
     padding: 5px;
     color: #2444B5;
     background-color: white;
+    cursor: pointer;
+}
+.home_service_selector_menu_element:hover {
+    background-color: #f0f0f0;
+}
+.home_service_selector_menu_element p {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: 50%;
 }
 
 .home_service_selector_menu_element_selected{
+    position: relative;
     text-align: center;
     padding: 5px;
     color: white;
     background-color: #2444B5;
 }
+.home_service_selector_menu_element_selected p {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: 50%;
+}
+
 
 .home_service_selector_content{
 background-color: #2444B5;
@@ -195,7 +219,8 @@ color: white;
     height: 40px;
     background-color: #2444B5;
     border: #FFF solid 2px;
-    color: #FFF
+    color: #FFF;
+    cursor: pointer;
 }
 
 .home_service_selector_content_button:hover{
@@ -204,7 +229,6 @@ color: white;
     background-color: #FFF;
     border: #FFF solid 2px;
     color: #2444B5;
-
 }
 
 .home_service_cards{

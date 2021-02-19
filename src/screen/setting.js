@@ -108,7 +108,7 @@ class Screen extends React.Component {
                       /> 
                       
           </div>
-          <div><Button onClick={this.clear_default_send.bind(this)} style={{margin: '0 5px', padding: '6px'}} size='mini'>X</Button></div>
+          <div className="setting_template_button"><Button onClick={this.clear_default_send.bind(this)} style={{margin: '0 5px', padding: '6px'}} size='mini'>X</Button></div>
           <div className="disp_data_label">Шаблон получателя по умолчанию</div>
           <div className="setting_data_el">
           <Select
@@ -119,7 +119,7 @@ class Screen extends React.Component {
                       /> 
                       
           </div>
-          <div><Button onClick={this.clear_default_rec.bind(this)} style={{margin: '0 5px', padding: '6px'}} size='mini'>X</Button></div>
+          <div className="setting_template_button"><Button onClick={this.clear_default_rec.bind(this)} style={{margin: '0 5px', padding: '6px'}} size='mini'>X</Button></div>
           </div>
         
         <div className="disp_Number">
@@ -128,7 +128,7 @@ class Screen extends React.Component {
         <div className="setting_template_data">
         <div className="disp_data_label">Шаблоны отправителей и получателей:</div>
         <div className="setting_data_el">{this.props.store.upload_manifest.disp_template_list.length}</div>
-        <div><Button onClick={this.click_disp_template_list.bind(this)} style={{margin: '0 5px', padding: '6px'}} size='mini'>Редактировать</Button></div>
+          <div className="setting_template_button"><Button onClick={this.click_disp_template_list.bind(this)} style={{margin: '0 5px', padding: '6px'}} size='mini'>Редактировать</Button></div>
         {/* <div className="disp_data_label">Шаблоны импорта:</div>
         <div className="disp_data_el">{this.props.store.upload_manifest.import_template_list.length}</div>
         <div><Button onClick={this.click_import_template_list.bind(this)} style={{margin: '0 5px', padding: '6px'}} size='mini'>Редактировать</Button></div>

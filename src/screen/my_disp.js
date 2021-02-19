@@ -7,7 +7,6 @@ import './disp_map.css';
 import './my_disp.css';
 
 
-
 class Screen extends React.Component {
 
   constructor(props) {
@@ -159,7 +158,7 @@ class Screen extends React.Component {
                         onChange={(e) => this.props.set_my_disp_num_filter(e.target.value)}>
                       </input>
                       <button className = 'my_disp_button' onClick={() => this.props.set_my_disp_num_filter("")}>
-                        х
+                          Сброс
                       </button>
                       </div>
                       
@@ -233,7 +232,7 @@ class Screen extends React.Component {
                       <button className = 'my_disp_button' onClick={() => {
                         this.props.set_my_disp_sender_address("")
                       }}>
-                        х
+                          Сброс
                       </button>
                       </div>
                     </div>
@@ -317,7 +316,7 @@ class Screen extends React.Component {
                       <button className = 'my_disp_button' onClick={() => {
                         this.props.set_my_disp_rec_address("")
                       }}>
-                        х
+                        Сброс
                       </button>
                       </div>
                     </div>
@@ -526,9 +525,6 @@ class Screen extends React.Component {
           )}
         </div>
       </div>
-
-
-
     );
   }
 };

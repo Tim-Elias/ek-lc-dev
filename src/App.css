@@ -97,6 +97,7 @@ td {
   font-size: 12px;
   border-radius: 3px;
   margin: 10px 5px;
+  cursor: pointer;
 }
 
 .leftmenubutton{
@@ -112,6 +113,10 @@ td {
 .leftmenuel:hover {
   background-color: #E87B1A;
   color: #ffffff;
+}
+
+.leftmenuel:active {
+  background-color: #C66814;
 }
 
 .leftmenu{
@@ -180,6 +185,13 @@ td {
   border-bottom: #c0c0c0 solid 1px;
 }
 
+.disp_data_radio {
+  padding: 8px 0 0 0;
+}
+.disp_data_radio input {
+  cursor: pointer;
+}
+
 .disp_data_input{
   margin: 3px;
   font-size: 13px;
@@ -210,19 +222,19 @@ td {
 }
 
 .pod_input{
-  
   width: 140px;
   border: none;
   border-bottom: #c0c0c0 1px solid;
+  cursor: pointer;
+}
+.pod_input:hover {
+  background-color: #f0f0f0;
 }
 
 .disp_data_el{
   font-size: 11px;
   margin: 3px;
   border-bottom: #c0c0c0 solid 1px;
-  
-  
-  
 }
 
 .disp_data_select{
@@ -392,6 +404,7 @@ td {
 .logout:hover {
   background-color: #ddd;
   color: black;
+  cursor: pointer;
 }
 
 .topnavel {
@@ -465,6 +478,11 @@ margin: auto;
   color: #fff;
   overflow: hidden;
   border-top: 2px solid #E87B1A;
+}
+
+.mobile_version {
+  width: 150px;
+  margin-left: 20px;
 }
 
 .small_table_data{
@@ -542,6 +560,10 @@ margin: auto;
   
 }
 
+.setting_template_button {
+  padding: 5px 0 0 0;
+}
+
 .old{
   margin: auto;
   font-weight: bold;
@@ -554,11 +576,12 @@ margin: auto;
   color: white;
 }
 
-.old a:hover{
+.old:hover a{
   color: #E87B1A;
 
 }
 
 .old:hover{
   background-color: #FFF;
+  cursor: pointer;
 }
