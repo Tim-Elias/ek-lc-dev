@@ -3,16 +3,16 @@
 }
 
 .mobile_storage_item {
-    border: 2px solid #f0f0f0;
-    border-bottom: none;
+    border: 1px solid #f0f0f0;
     text-align: left;
     padding: 10px;
     font-size: 12px;
     display: flex;
     justify-content: space-between;
+    margin: 0 0 5px 0;
 }
 .mobile_storage_item:last-child {
-    border-bottom: 2px solid #f0f0f0;
+    margin: 0;
 }
 
 .mobile_storage_item--canceling {

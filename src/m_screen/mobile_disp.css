@@ -26,7 +26,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin: 0 15px 20px 15px;
+    margin: 0 15px 15px 15px;
 }
 
 .mobile_disp_button_item {
@@ -51,6 +51,13 @@
     width: 100%;
 }
 
+.mobile_disp_button_item--full {
+    padding: 15px 20px;
+    margin: 0 0 35px 0;
+    border: 0;
+    width: 100%;
+}
+
 .mobile_disp_customer_data {
     display: grid;
     grid-template-columns: 150px 1fr;
@@ -58,5 +65,21 @@
 }
 
 .mobile_disp_input {
+    margin: 3px 0 20px 0;
+    font-size: 15px;
     border: 0;
+    border-bottom: #c0c0c0 solid 1px;
+}
+
+.mobile_disp_data_label {
+    margin: 3px 5px 20px 0;
+    border: 0;
+    border-bottom: #c0c0c0 solid 1px;
+    font-size: 15px;
+}
+
+.mobile_disp_data_el {
+    font-size: 15px;
+    margin: 3px 5px 20px 0;
+    border-bottom: #c0c0c0 solid 1px;
 }

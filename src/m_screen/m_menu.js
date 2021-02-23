@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import './mobile.css'; 
 import './mobil_menu.css';
 import { withCookies } from 'react-cookie';
-import { get_data } from './../common/common_modules'
+import { get_data } from './../common/common_modules';
 
 class Screen extends React.Component {
 
@@ -48,6 +48,7 @@ class Screen extends React.Component {
                         <li className="mobile_menu_item"><button className="mobile_menu_button">Входящие манифесты</button></li>
                         <li className="mobile_menu_item"><button className="mobile_menu_button">Отправка манифеста</button></li>
                         <li className="mobile_menu_item"><button className="mobile_menu_button">Приемка на склад</button></li>
+                        <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'foto')}>FOTO</button></li>
                         <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'setting')}>Настройки</button></li>
                         <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.mobile_version.bind(this)}>Web Версия</button></li>
                         <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.logout.bind(this)}>Выйти</button></li>

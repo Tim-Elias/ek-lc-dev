@@ -8,22 +8,6 @@ import './mobile_disp.css';
 
 class Screen extends React.Component {
 
-    disp_date = (date) => {
-        this.props.set_disp_date(date);
-    }
-
-    disp_FIO = (fio) => {
-        this.props.set_disp_FIO(fio);
-    }
-
-    disp_cash = (cash) => {
-        this.props.set_disp_cash(cash);
-    }
-
-    disp_comment = (comment) => {
-        this.props.set_disp_comment(comment);
-    }
-
     render() {
 
         return (
@@ -43,20 +27,22 @@ class Screen extends React.Component {
 
                 <div className="mobile_disp_customer_data">
                     <div className="mobile_disp_data_label">Номер накладной:</div>
-                    <div className="disp_data_el">{this.props.store.disp.data.Number}</div>
+                    <div className="mobile_disp_input">{this.props.store.disp.data.Number}</div>
                     <div className="mobile_disp_data_label">Дата доставки</div>
-                    <div className="disp_data_input"><input onChange={e => this.props.set_disp_date(e.target.value)} value={this.props.store.disp.delivery_date} className="mobile_disp_input" type="date"></input></div>
+                    <input onChange={e => this.props.set_disp_date(e.target.value)} value={this.props.store.disp.delivery_date} className="mobile_disp_input" type="date"></input>
+                    <div className="mobile_disp_data_label">Время доставки</div>
+                    <input onChange={e => this.props.set_disp_time(e.target.value)} value={this.props.store.disp.delivery_time} className="mobile_disp_input" type="time"></input>
                     <div className="mobile_disp_data_label">ФИО получателя</div>
-                    <div className="disp_data_input"><input onChange={e => this.props.set_disp_FIO(e.target.value)} value={this.props.store.disp.FIO_Customer} className="mobile_disp_input" type="text"></input></div>
+                    <input onChange={e => this.props.set_disp_FIO(e.target.value)} value={this.props.store.disp.FIO_Customer} className="mobile_disp_input" type="text"></input>
                     <div className="mobile_disp_data_label">Принятая сумма наличных</div>
-                    <div className="disp_data_input"><input onChange={e => this.props.set_disp_cash(e.target.value)} value={this.props.store.disp.cash_accepted} className="mobile_disp_input" type="number"></input></div>
+                    <input onChange={e => this.props.set_disp_cash(e.target.value)} value={this.props.store.disp.cash_accepted} className="mobile_disp_input" type="number"></input>
                     <div className="mobile_disp_data_label">Комментарий</div>
-                    <div className="disp_data_input"><input onChange={e => this.props.set_disp_comment(e.target.value)} value={this.props.store.disp.comment} className="mobile_disp_input" type="text"></input></div>
+                    <input onChange={e => this.props.set_disp_comment(e.target.value)} value={this.props.store.disp.comment} className="mobile_disp_input" type="text"></input>
                 </div>
 
             </div>
         )
-    }
+    } 
 };
 
 
@@ -69,6 +55,7 @@ export default connect(
         set_disp_cash: (param) => { dispatch({ type: 'set_disp_cash', payload: param }); },
         set_disp_FIO: (param) => { dispatch({ type: 'set_disp_FIO', payload: param }); },
         set_disp_date: (param) => { dispatch({ type: 'set_disp_date', payload: param }); },
+        set_disp_time: (param) => { dispatch({ type: 'set_disp_time', payload: param }); },
     })
 
 )(Screen);

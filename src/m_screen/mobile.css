@@ -4,13 +4,46 @@ body {
 
 .mobile_container {
     position: relative;
-    padding: 0 15px 0 15px;
+    padding: 0 5px 0 5px;
     text-align: center;
 }
 
 .mobile_heading {
     text-align: center;
     background-color: #f0f0f0;
-    padding: 15px 0 15px 0;
-    margin: 0 0 30px 0;
+    padding: 10px 0 10px 0;
+    margin: 0 0 10px 0;
+}
+
+.foto {
+    width: 100%;
+}
+
+.video {
+    width: 100%;
+}
+
+.video_container {
+    position: relative;
+}
+
+.video_button {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    border: 0;
+    width: 50px;
+    height: 50px;
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+.mobile_button_container {
+    margin: 10px 0 30px 0;
+}
+
+.camera_button {
+    width: 250px;
+    height: 40px;
 }

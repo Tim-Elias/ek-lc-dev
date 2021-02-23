@@ -13,8 +13,8 @@ class Screen extends React.Component {
         this.props.set_mobile_menu('Mmenu');
     }
 
-    menu_active_arrow = () => {
-        this.props.set_mobile_menu('m_storage');
+    menu_active_arrow = (window) => {
+        this.props.set_mobile_menu(window);
     }
 
 
@@ -23,8 +23,9 @@ class Screen extends React.Component {
         return (
             <header className="header_mobile">
                 <div className="mobile_container">
-                    <img className={(this.props.store.general.active_window === 'm_disp') ? "blue_arrow" : "none"} src={ arrow } onClick={this.menu_active_arrow.bind(this)} />
-                    <img className={(this.props.store.general.active_window === 'Mmenu' || this.props.store.general.active_window === 'm_disp') ? "none" : "burger_menu"} src={ menu } onClick={ this.menu_active.bind(this) } />
+                    <img className={(this.props.store.general.active_window === 'm_delivered' || this.props.store.general.active_window === 'm_not_delivered') ? "blue_arrow" : "none"} src={arrow} onClick={this.menu_active_arrow.bind(this, 'm_disp')} />
+                    <img className={(this.props.store.general.active_window === 'm_disp') ? "blue_arrow" : "none"} src={arrow} onClick={this.menu_active_arrow.bind(this, 'm_storage')} />
+                    <img className={(this.props.store.general.active_window === 'Mmenu' || this.props.store.general.active_window === 'm_disp' || this.props.store.general.active_window === 'm_delivered' || this.props.store.general.active_window === 'm_not_delivered') ? "none" : "burger_menu"} src={ menu } onClick={ this.menu_active.bind(this) } />
                     <img className="header_mobile_logo" src={logo} />
                 </div>
             </header>
