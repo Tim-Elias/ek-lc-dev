@@ -1,6 +1,6 @@
 import React  from 'react';
 import { connect } from 'react-redux';
-
+import { get_data } from './../common/common_modules'
 import Sound from 'react-sound';
 import test_sound from './../common/Sound_11084.wav'
 
@@ -101,7 +101,26 @@ class Screen extends React.Component {
     }
     
 
+    check = () =>{
+      
+        this.props.set_active_window("wait");
+        const data = {
+            userkey: this.props.store.login.userkey,
+           
+        }
+        get_data('createcheck', data).then(
+            (result) => {
+              this.props.set_active_window("test");  
+              console.log(result)
+            },
+            (err) => {
+                this.props.set_active_window("test");
+                console.log(err)
+            }
+        );
+
     
+    }
     
     
       render() {
@@ -125,6 +144,7 @@ class Screen extends React.Component {
         return (
           <div>
             <button onClick={this.voximplant.bind(this)}>Voximplant</button>
+            <button onClick={this.check.bind(this)}>Chek</button>
             <button onClick={this.call.bind(this)}>Call</button>
            {/*  <button onClick={this.end.bind(this)}>end</button> */}
             <input  value={this.props.store.test.barcode} onChange={(e)=>{this.props.set_test_barcode(e.target.value)}} />
@@ -155,6 +175,7 @@ export default connect(
         store: state
     }),
     dispatch => ({
+      set_active_window: (param) => { dispatch({ type: 'set_active_window', payload: param }) },
         set_test_sound: (param) => { dispatch({ type: 'set_test_sound', payload: param }) },
         test_list_add_item: (param) => { dispatch({ type: 'test_list_add_item', payload: param }) },
         set_test_barcode: (param) => { dispatch({ type: 'set_test_barcode', payload: param }) },
