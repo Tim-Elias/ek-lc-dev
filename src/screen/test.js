@@ -4,6 +4,8 @@ import { get_data } from './../common/common_modules'
 import Sound from 'react-sound';
 import test_sound from './../common/Sound_11084.wav'
 import ReactToPrint from 'react-to-print'
+import QRCode from 'qrcode.react';
+import Barcode from 'react-barcode'
 import { Table, Button, Icon, Modal, Loader, Dimmer } from 'semantic-ui-react'
 
 //import voxImplant from 'voximplant-websdk'
@@ -157,6 +159,9 @@ class Screen extends React.Component {
                         <div style={{ display: "none" }}>
                             <div ref={el => (this.componentRef = el)}>
                               1234123123
+                              <div className="barcode_container"><Barcode value={"12341234"} format='CODE39' width={1} height={30} /></div>
+                              <div>AAAAAA</div>
+                              <QRCode value={"12341234"} />
                             </div>
                         </div>
 
