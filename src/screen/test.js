@@ -161,6 +161,10 @@ class Screen extends React.Component {
                               1234123123
                               <div className="barcode_container"><Barcode value={"12341234"} format='CODE39' width={1} height={30} /></div>
                               <div>AAAAAA</div>
+                              <div>AAAAAA</div>
+                              <div>AAAAAA</div>
+                              <div>AAAAAA</div>
+                              <div>AAAAAA</div>
                               <QRCode value={"12341234"} />
                             </div>
                         </div>
