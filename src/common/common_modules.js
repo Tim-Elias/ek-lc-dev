@@ -2,10 +2,10 @@ import axios from 'axios/index'
 
 const get_data = (url, data) => {
   return new Promise((resolve, reject) => {
-    axios.post(`http://kinetika-1c.tmweb.ru/http/hs/agent/${url}/post`,
+    axios.post(`https://kinetika-1c.tmweb.ru/http/hs/agent/${url}/post`,
       JSON.stringify(data),
       {
-        headers: { 'Content-Type': 'text/plain' }
+        headers: { 'Content-Type': 'text/plain' } 
       }
 
     ).then((result) => {
