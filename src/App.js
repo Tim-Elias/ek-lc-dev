@@ -17,9 +17,7 @@ class App extends Component {
     if (window.location.href == 'https://e-kinetika.ru/' || window.location.href == 'http://e-kinetika.ru/') {
       window.location.href = 'https://express-kinetika.ru'
     }
-    if (window.location.href == 'https://lk.express-kinetika.ru/' ) {
-      window.location.href = 'http://293128-ct90100.tmweb.ru'
-    }
+    
     //http://293128-ct90100.tmweb.ru/
     return (
       
