@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { get_data } from './../common/common_modules'
 import Sound from 'react-sound';
 import test_sound from './../common/Sound_11084.wav'
+import ReactToPrint from 'react-to-print'
+import { Table, Button, Icon, Modal, Loader, Dimmer } from 'semantic-ui-react'
 
 //import voxImplant from 'voximplant-websdk'
 
@@ -147,6 +149,18 @@ class Screen extends React.Component {
             <button onClick={this.check.bind(this)}>Chek</button>
             <button onClick={this.call.bind(this)}>Call</button>
            {/*  <button onClick={this.end.bind(this)}>end</button> */}
+
+           <ReactToPrint
+                            trigger={() => <Button><Icon name='print'></Icon> Печать</Button>}
+                            content={() => this.componentRef}
+                        />
+                        <div style={{ display: "none" }}>
+                            <div ref={el => (this.componentRef = el)}>
+                              1234123123
+                            </div>
+                        </div>
+
+                        
             <input  value={this.props.store.test.barcode} onChange={(e)=>{this.props.set_test_barcode(e.target.value)}} />
             {this.props.store.test.list.map((el,index)=>{
                 return(
