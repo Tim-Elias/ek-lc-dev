@@ -110,7 +110,7 @@ class Screen extends Component {
                     
                 </div>
                 <div className='mainmenu'>
-                <div className="old"><a href='http://old.express-kinetika.ru'>Старая версия</a></div>
+                {/* <div className="old"><a href='http://old.express-kinetika.ru'>Старая версия</a></div> */}
                 {/* <div className="main_menu_button">Расчет стоимости</div>
                 <div className="main_menu_button">Адреса и телефоны</div> */}
                 </div>
