@@ -81,7 +81,7 @@ class Screen extends React.Component {
                 <div className="mobile_button_container">
                     <button className={this.props.store.disp.cameraActive || this.props.store.disp.foto ? 'none' : 'camera_button'} onClick={() => {
                         let facingMode = FACING_MODES.ENVIRONMENT;
-                        let idealResolution = { width: 640, height: 640 };
+                        let idealResolution = { width: 1200, height: 1200 };
                         this.props.camera_active(true);
                         this.startCamera(facingMode, idealResolution);
                     }}>Включить Камеру</button>
