@@ -5,7 +5,7 @@ import './mobile.css';
 import foto from '../common/foto.png';
 import { get_data } from './../common/common_modules';
 //import Sound from 'react-sound';
-//import fotoSound from './../common/funk.mp3';
+import fotoSound from './../common/funk.mp3';
 
 class Screen extends React.Component {
     constructor(props, context) {
@@ -69,7 +69,12 @@ class Screen extends React.Component {
         };
         get_data('testimg', foto).then(
             (result) => {
-                console.log(result);
+                if(result == 'ok') {
+                    alert('Данные отправленны');
+                } else {
+                    alert('Ошибка');
+                    console.log(result);
+                }
             }
         )
     }
@@ -99,18 +104,18 @@ class Screen extends React.Component {
                     }}>Переснять</button>
                 </div>
 
-                <div className={this.props.store.disp.cameraActive ? "video_container" : "none"} className="">
+                <div className={this.props.store.disp.cameraActive ? "video_container" : "none"}>
                     <video className={this.props.store.disp.cameraActive ? "foto" : "none"} ref={this.videoRef} autoPlay = {true}/>
                     
                     <img className={this.props.store.disp.cameraActive ? "video_button" : "none"} src={foto} onClick={() => {this.takePhoto()}} />
-                    {/* <Sound url={fotoSound} playStatus={this.props.store.disp.foto_sound} /> */}
+
                 </div>
                 <img
                     className="foto"
                     src={this.props.store.disp.foto}
                 />
 
-                <button onClick={this.send.bind(this)}>отправить</button>
+                <button onClick={this.send.bind(this)} className={this.props.store.disp.foto ? 'camera_button' : 'none'}>Отправить</button>
             </div>
         );
     }
