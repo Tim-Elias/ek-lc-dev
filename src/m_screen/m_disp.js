@@ -172,8 +172,11 @@ class Screen extends React.Component {
                                 <div className="mobile_disp_data_el">{this.props.store.disp.data.Total}</div>
                                 <div className="mobile_disp_data_label">Сумма наложенного платежа:</div>
                                 <div className="mobile_disp_data_el">{this.props.store.disp.data.COD}</div>
-                                <div className="mobile_disp_data_label">Температурный режим:</div>
-                                <div className="mobile_disp_data_el">{this.props.store.disp.data.TMin} : {this.props.store.disp.data.TMax}</div>
+                                {this.props.store.disp.data.TMin !== "0" && this.props.store.disp.data.TMax !== "0" ? <div>
+                                    <div className="mobile_disp_data_label">Температурный режим:</div>
+                                    <div className="mobile_disp_data_el">{this.props.store.disp.data.TMin} : {this.props.store.disp.data.TMax}</div>
+                                </div>:(null)}
+                                
                             </div>
                     </div>            
                 </div>
@@ -183,7 +186,7 @@ class Screen extends React.Component {
                     <div className="disp_address_data_el mobile_disp_address_data_el">
                         {this.props.store.disp.cargo.map((cargo, index) =>
 
-                            <div className="cargo_item">
+                            <div key={index} className="cargo_item">
                                 <div className="">{cargo.Weight}кг, (Об. {cargo.Volume}кг), ({cargo.L}X{cargo.W}X{cargo.H}) {cargo.Q}шт.<br /> Итого {cargo.TotalWeight}кг,(Об. {cargo.TotalVolume}кг)</div>
                             </div>
                         )}

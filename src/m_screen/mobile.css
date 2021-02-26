@@ -5,7 +5,6 @@ body {
 .mobile_container {
     position: relative;
     padding: 0 5px 0 5px;
-    text-align: center;
 }
 
 .mobile_heading {
@@ -16,10 +15,6 @@ body {
 }
 
 .foto {
-    width: 100%;
-}
-
-.video {
     width: 100%;
 }
 
@@ -41,6 +36,7 @@ body {
 
 .mobile_button_container {
     margin: 10px 0 30px 0;
+    text-align: center;
 }
 
 .camera_button {

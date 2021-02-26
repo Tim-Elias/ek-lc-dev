@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { get_data } from './../common/common_modules'
-import Select from 'react-select'
+import { get_data } from './../common/common_modules';
+import Select from 'react-select';
 import { customStyles } from "./../common/common_style";
 import { Button } from 'semantic-ui-react';
 import './mobile_setting.css';
+import '../App.css';
 
 class Screen extends React.Component {
 
@@ -51,8 +52,9 @@ class Screen extends React.Component {
         return (
 
             <div className="mobile_setting">
+                <div className="mobile_heading">Настройки</div>
                 <div className="disp_Number">
-                    <div>Основные настройки {this.props.store.login.email !== this.props.store.login.original_data.email
+                    <div>{this.props.store.login.email !== this.props.store.login.original_data.email
                         || this.props.store.login.alias !== this.props.store.login.original_data.username
                         || this.props.store.login.default_send !== this.props.store.login.original_data.default_send
                         || this.props.store.login.default_rec !== this.props.store.login.original_data.default_rec
@@ -63,10 +65,10 @@ class Screen extends React.Component {
                     )}</div>
                 </div>
                 <div className="setting_general_data setting_general_data_mobile">
-                    <div className="disp_data_label">Код пользователя:</div>
-                    <div className="setting_data_el">{this.props.store.login.userkey}</div>
-                    <div className="disp_data_label">Имя пользователя:</div>
-                    <div className="setting_data_el"><input maxLength="100" className="create_disp_data_input" onChange={e => this.props.set_user_name(e.target.value)} value={this.props.store.login.alias} type="text" placeholder="введите имя пользователя..." /></div>
+                    <div className="mobile_disp_data_label">Код пользователя:</div>
+                    <div className="mobile_disp_data_el">{this.props.store.login.userkey}</div>
+                    <div className="mobile_disp_data_label">Имя пользователя:</div>
+                    <div className="mobile_disp_data_el"><input maxLength="100" className="create_disp_data_input" onChange={e => this.props.set_user_name(e.target.value)} value={this.props.store.login.alias} type="text" placeholder="введите имя пользователя..." /></div>
                 </div>
             </div>
         );

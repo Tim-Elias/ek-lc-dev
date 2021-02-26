@@ -15,6 +15,9 @@ const initialState = {
   cash_accepted: '',
   comment: '',
   
+  foto: '',
+  cameraActive: false,
+  foto_sound: undefined,
   
   is_new: false,
   action: null,
@@ -36,6 +39,10 @@ const initialState = {
 
 export default function dispatch (state = initialState, action) {
   switch (action.type) {
+    case 'set_disp_foto': return { ...state, foto: action.payload }
+    case 'set_camera_active': return { ...state, cameraActive: action.payload }
+    case 'set_foto_sound': return { ...state, foto_sound: action.payload }
+
     case 'set_disp_comment': return { ...state, comment: action.payload }
     case 'set_disp_cash': return { ...state, cash_accepted: action.payload }
     case 'set_disp_FIO': return { ...state, FIO_Customer: action.payload }

@@ -11,6 +11,7 @@ class Screen extends React.Component {
 
     menu_active = () => {
         this.props.set_mobile_menu('Mmenu');
+        this.props.camera_active(false);
     }
 
     menu_active_arrow = (window) => {
@@ -25,7 +26,10 @@ class Screen extends React.Component {
                 <div className="mobile_container">
                     <img className={(this.props.store.general.active_window === 'm_delivered' || this.props.store.general.active_window === 'm_not_delivered') ? "blue_arrow" : "none"} src={arrow} onClick={this.menu_active_arrow.bind(this, 'm_disp')} />
                     <img className={(this.props.store.general.active_window === 'm_disp') ? "blue_arrow" : "none"} src={arrow} onClick={this.menu_active_arrow.bind(this, 'm_storage')} />
-                    <img className={(this.props.store.general.active_window === 'Mmenu' || this.props.store.general.active_window === 'm_disp' || this.props.store.general.active_window === 'm_delivered' || this.props.store.general.active_window === 'm_not_delivered') ? "none" : "burger_menu"} src={ menu } onClick={ this.menu_active.bind(this) } />
+                    <img className={(this.props.store.general.active_window === 'Mmenu' || this.props.store.general.active_window === 'm_disp' || this.props.store.general.active_window === 'm_delivered' || this.props.store.general.active_window === 'm_not_delivered' || this.props.store.general.active_window === 'm_movement' || this.props.store.general.active_window === 'm_bounty' || this.props.store.general.active_window === 'm_manifest') ? "none" : "burger_menu"} src={ menu } onClick={ this.menu_active.bind(this) } />
+                    <img className={(this.props.store.general.active_window === 'm_movement') ? "blue_arrow" : "none"} src={arrow} onClick={this.menu_active_arrow.bind(this, 'm_finance')} />
+                    <img className={(this.props.store.general.active_window === 'm_bounty') ? "blue_arrow" : "none"} src={arrow} onClick={this.menu_active_arrow.bind(this, 'm_finance')} />
+                    <img className={(this.props.store.general.active_window === 'm_manifest') ? "blue_arrow" : "none"} src={arrow} onClick={this.menu_active_arrow.bind(this, 'm_get_manifest')} />
                     <img className="header_mobile_logo" src={logo} />
                 </div>
             </header>
@@ -38,5 +42,6 @@ export default withCookies(connect(
     (state, ownProps) => ({ store: state, cookies: ownProps.cookies }),
     dispatch => ({
         set_mobile_menu: (param) => { dispatch({ type: 'set_mobile_menu', payload: param }) },
+        camera_active: (param) => { dispatch({ type: 'set_camera_active', payload: param }) },
     })
 )(Screen));

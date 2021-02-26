@@ -1,0 +1,25 @@
+.storage_reciept_container {
+    margin: 10px;
+    font-size: 16px;
+}
+
+.storage_reciept_item {
+    margin: 20px 0 0 0;
+    padding: 0 0 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.storage_reciept_input {
+    margin: 20px 0 0 0;
+    height: 30px;
+}
+
+.storage_reciept_button {
+    height: 30px;
+    margin: 10px 0 20px 10px;
+    background-color: #cacbcd;
+    box-shadow: 0 0 0 1px transparent inset,0 0 0 0 rgba(34,36,38,.15) inset;
+    color: rgba(0,0,0,.8);
+    border: none;
+    border-radius: 3px;
+}

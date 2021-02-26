@@ -1,0 +1,39 @@
+.finance_row {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0 20px 0;
+}
+
+.finance_item {
+    width: 45%;
+    border-bottom: 1px black solid;
+    padding: 0 0 10px 0;
+}
+
+.mobile_finance_button {
+    width: 45%;
+    margin: 0 0 20px 0;
+    padding: 15px 20px;
+    border: 0;
+    background-color: rgb(123, 191, 255);
+}
+
+.mobile_finance_button--b {
+    display: block;
+    width: 90%;
+    margin: 0 auto 20px auto;
+    padding: 15px 20px;
+    border: 0;
+    background-color: rgb(123, 191, 255);
+}
+
+.mobile_movememt_date {
+    margin: 0 0 20px 0;
+    width: 45%;
+}
+
+.finance_list {
+    border-top: 1px black solid;
+    border-bottom: 1px black solid;
+    border: 1px #f0f0f0 solid;
+}

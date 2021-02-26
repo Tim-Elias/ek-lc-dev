@@ -38,7 +38,7 @@ class Screen extends React.Component {
                     <div className="mobile_container">
                         {this.props.store.storage.list.filter((el) => this.props.store.storage.search === "" || el.Number.indexOf(this.props.store.storage.search) !== -1).map((disp, index) =>
 
-                            <div className={disp.Status === 'Отменена' ? "mobile_storage_item mobile_storage_item--canceling" : "mobile_storage_item"} onClick={this.tr_click.bind(this, disp)}>
+                            <div key={index} className={disp.Status === 'Отменена' ? "mobile_storage_item mobile_storage_item--canceling" : "mobile_storage_item"} onClick={this.tr_click.bind(this, disp)}>
                                 <div>
                                     <div className="mobile_storage_field">{disp.Customer}</div>
                                     <div className="mobile_storage_field">{disp.Date}</div>

@@ -13,21 +13,59 @@ class Screen extends React.Component {
     }
 
     settings_window = (window) => {
+        const list_data = { userkey: this.props.store.login.userkey }
         this.props.set_active_window(window);
-    }
+        if (window === 'storage_reciept') {
+            get_data('storagedata', list_data).then(
+                (result) => {
+                    console.log(result)
+                    this.props.storage_reciept_set_storage(result.storage);
+                    this.props.storage_reciept_set_zone_list(result.zone_list);
+                    this.props.set_active_window(window);
 
-    storage = () => {
-        this.props.set_active_window("wait");
-        const list_data = { userkey: this.props.store.login.userkey };
+                },
+                (err) => {
+                    console.log(err)
+                    this.props.set_active_window(window)
+                }
 
-        get_data('list', list_data).then(
-            (result) => {
-                this.props.set_list_storage(result);
-                this.props.set_active_window("m_storage");
-                this.props.set_search_storagre("");
-            },
-            (err) => { console.log(err) }
-        );
+            );
+        } else if (window === 'm_send_manifest') {
+            this.props.set_active_window("wait");
+            const list_data = { userkey: this.props.store.login.userkey };
+
+            get_data('list', list_data).then(
+                (result) => {
+                    this.props.set_list_storage(result);
+                    this.props.set_active_window(window);
+                    this.props.set_search_storagre("");
+                },
+                (err) => { console.log(err) }
+            );
+        } else if (window === 'm_get_manifest') {
+            this.props.set_active_window("wait");
+            const list_data = { userkey: this.props.store.login.userkey };
+
+            get_data('enroute', list_data).then(
+                (result) => {
+                    this.props.set_list_get_manifest(result);
+                    this.props.set_active_window(window);
+                },
+                (err) => { console.log(err) }
+            );
+        } else if (window === 'm_storage') {
+            this.props.set_active_window("wait");
+            const list_data = { userkey: this.props.store.login.userkey };
+
+            get_data('list', list_data).then(
+                (result) => {
+                    this.props.set_list_storage(result);
+                    this.props.set_active_window("m_storage");
+                    this.props.set_search_storagre("");
+                },
+                (err) => { console.log(err) }
+            );
+        }
     }
 
     logout = () => {
@@ -43,11 +81,12 @@ class Screen extends React.Component {
             <nav className="mobile_menu">
                 <div className="mobile_container">
                     <ul>
-                        <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.storage.bind(this, 'm_storage')}>Доставки и Заявки</button></li>
-                        <li className="mobile_menu_item"><button className="mobile_menu_button">Получить от отправителя</button></li>
-                        <li className="mobile_menu_item"><button className="mobile_menu_button">Входящие манифесты</button></li>
-                        <li className="mobile_menu_item"><button className="mobile_menu_button">Отправка манифеста</button></li>
-                        <li className="mobile_menu_item"><button className="mobile_menu_button">Приемка на склад</button></li>
+                        <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'm_storage')}>Доставки и Заявки</button></li>
+                        <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'reciept')}>Получить от отправителя</button></li>
+                        <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'm_get_manifest')}>Входящие манифесты</button></li>
+                        <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'm_send_manifest')}>Отправка манифеста</button></li>
+                        <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'storage_reciept')}>Приемка на склад</button></li>
+                        <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'm_finance')}>Финансы</button></li>
                         <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'foto')}>FOTO</button></li>
                         <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'setting')}>Настройки</button></li>
                         <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.mobile_version.bind(this)}>Web Версия</button></li>
@@ -69,5 +108,9 @@ export default withCookies(connect(
         use_width: (param) => { dispatch({ type: 'set_use_width', payload: param }); },
         set_list_storage: (param) => { dispatch({ type: 'set_list_storage', payload: param }) },
         set_search_storagre: (param) => { dispatch({ type: 'set_search_storagre', payload: param }) },
+
+        storage_reciept_set_zone_list: (param) => { dispatch({ type: 'storage_reciept_set_zone_list', payload: param }) },
+        storage_reciept_set_storage: (param) => { dispatch({ type: 'storage_reciept_set_storage', payload: param }) },
+        set_list_get_manifest: (param) => { dispatch({ type: 'set_list_get_manifest', payload: param }) },
     })
 )(Screen));
