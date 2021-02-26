@@ -103,7 +103,7 @@ class Screen extends React.Component {
                     <video className={this.props.store.disp.cameraActive ? "foto" : "none"} ref={this.videoRef} autoPlay = {true}/>
                     
                     <img className={this.props.store.disp.cameraActive ? "video_button" : "none"} src={foto} onClick={() => {this.takePhoto()}} />
-                    <Sound url={fotoSound} playStatus={this.props.store.disp.foto_sound} />
+                    {/* <Sound url={fotoSound} playStatus={this.props.store.disp.foto_sound} /> */}
                 </div>
                 <img
                     className="foto"
