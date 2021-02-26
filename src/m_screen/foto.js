@@ -5,7 +5,7 @@ import './mobile.css';
 import foto from '../common/foto.png';
 import { get_data } from './../common/common_modules';
 //import Sound from 'react-sound';
-import fotoSound from './../common/funk.mp3';
+//import fotoSound from './../common/funk.mp3';
 
 class Screen extends React.Component {
     constructor(props, context) {
@@ -81,7 +81,7 @@ class Screen extends React.Component {
                 <div className="mobile_button_container">
                     <button className={this.props.store.disp.cameraActive || this.props.store.disp.foto ? 'none' : 'camera_button'} onClick={() => {
                         let facingMode = FACING_MODES.ENVIRONMENT;
-                        let idealResolution = { width: 1200, height: 1200 };
+                        let idealResolution = { width: 1280, height: 1280 };
                         this.props.camera_active(true);
                         this.startCamera(facingMode, idealResolution);
                     }}>Включить Камеру</button>
@@ -92,7 +92,7 @@ class Screen extends React.Component {
 
                     <button className={this.props.store.disp.foto ? 'camera_button' : 'none'} onClick={() => {
                         let facingMode = FACING_MODES.ENVIRONMENT;
-                        let idealResolution = { width: 640, height: 640 };
+                        let idealResolution = { width: 1280, height: 1280 };
                         this.props.take_foto('');
                         this.props.camera_active(true);
                         this.startCamera(facingMode, idealResolution);
