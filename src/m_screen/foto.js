@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import './mobile.css';
 import foto from '../common/foto.png';
 import { get_data } from './../common/common_modules';
-import Sound from 'react-sound';
+//import Sound from 'react-sound';
 import fotoSound from './../common/funk.mp3';
 
 class Screen extends React.Component {
@@ -16,11 +16,11 @@ class Screen extends React.Component {
     }
 
     foto_sound_play = () => {
-        this.props.storage_reciept_set_foto_sound(Sound.status.PLAYING);
+        //this.props.storage_reciept_set_foto_sound(Sound.status.PLAYING);
     }
 
     foto_sound_stop = () => {
-        this.props.storage_reciept_set_foto_sound(Sound.status.STOPPED);
+       // this.props.storage_reciept_set_foto_sound(Sound.status.STOPPED);
     }
 
     componentDidMount() {
