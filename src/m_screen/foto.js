@@ -69,7 +69,12 @@ class Screen extends React.Component {
         };
         get_data('testimg', foto).then(
             (result) => {
-                console.log(result);
+                if(result == 'ok') {
+                    alert('Данные отправленны');
+                } else {
+                    alert('Ошибка');
+                    console.log(result);
+                }
             }
         )
     }
@@ -81,7 +86,7 @@ class Screen extends React.Component {
                 <div className="mobile_button_container">
                     <button className={this.props.store.disp.cameraActive || this.props.store.disp.foto ? 'none' : 'camera_button'} onClick={() => {
                         let facingMode = FACING_MODES.ENVIRONMENT;
-                        let idealResolution = { width: 1200, height: 1200 };
+                        let idealResolution = { width: 1280, height: 1280 };
                         this.props.camera_active(true);
                         this.startCamera(facingMode, idealResolution);
                     }}>Включить Камеру</button>
@@ -92,25 +97,25 @@ class Screen extends React.Component {
 
                     <button className={this.props.store.disp.foto ? 'camera_button' : 'none'} onClick={() => {
                         let facingMode = FACING_MODES.ENVIRONMENT;
-                        let idealResolution = { width: 640, height: 640 };
+                        let idealResolution = { width: 1280, height: 1280 };
                         this.props.take_foto('');
                         this.props.camera_active(true);
                         this.startCamera(facingMode, idealResolution);
                     }}>Переснять</button>
                 </div>
 
-                <div className={this.props.store.disp.cameraActive ? "video_container" : "none"} className="">
+                <div className={this.props.store.disp.cameraActive ? "video_container" : "none"}>
                     <video className={this.props.store.disp.cameraActive ? "foto" : "none"} ref={this.videoRef} autoPlay = {true}/>
                     
                     <img className={this.props.store.disp.cameraActive ? "video_button" : "none"} src={foto} onClick={() => {this.takePhoto()}} />
-                    {/* <Sound url={fotoSound} playStatus={this.props.store.disp.foto_sound} /> */}
+
                 </div>
                 <img
                     className="foto"
                     src={this.props.store.disp.foto}
                 />
 
-                <button onClick={this.send.bind(this)}>отправить</button>
+                <button onClick={this.send.bind(this)} className={this.props.store.disp.foto ? 'camera_button' : 'none'}>Отправить</button>
             </div>
         );
     }
