@@ -43,6 +43,7 @@ class Screen extends React.Component {
             sizeFactor: 1
         };
         let dataUri = this.cameraPhoto.getDataUri(config);
+        
         this.props.take_foto(dataUri);
         this.stopCamera();
     }

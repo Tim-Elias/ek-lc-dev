@@ -27,6 +27,7 @@ const initialState = {
   default_cargo: '0',
   email: '',
   phone: '',
+  kkm: false,
 
 
 }
@@ -52,7 +53,9 @@ export default function login (state = initialState, action) {
       consolidate_upload_manifest: action.payload.consolidate_upload_manifest,
       email: action.payload.email,
       phone: action.payload.phone,
+      kkm: action.payload.kkm,
       disp_map: action.payload.disp_map
+
 
       
   }
@@ -83,6 +86,7 @@ export default function login (state = initialState, action) {
       default_cargo: action.payload.default_cargo,
       email: action.payload.email,
       phone: action.payload.phone,
+      kkm: action.payload.kkm,
       disp_map: action.payload.disp_map
     }
     case 'LOGOUT': return { ...state, userkey: null, alias: null, logged: false, username: '', pass: '' }

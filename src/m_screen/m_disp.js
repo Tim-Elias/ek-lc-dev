@@ -7,82 +7,6 @@ import './mobile_disp.css';
 
 class Screen extends React.Component {
 
-    back = () => {
-        const last_window = this.props.store.general.last_window[this.props.store.general.last_window.length - 1]
-        this.props.pop_last_window();
-        this.props.set_active_window(last_window);
-    }
-
-    open_history = () => {
-        this.props.set_disp_history_loading(true)
-        this.props.set_disp_show_history(true)
-        get_data('history', { Number: this.props.store.disp.data.Number }).then(
-            (result) => {
-                this.props.set_disp_history(result);
-                this.props.set_disp_history_loading(false)
-            },
-            (err) => { console.log(err) }
-        );
-    }
-
-    close_history = () => {
-        this.props.set_disp_show_history(false)
-        this.props.set_disp_history([])
-    }
-
-    remove_disp = () => {
-        this.props.set_disp_remove_confirm(false)
-        this.props.set_disp_show_remove_modal(true)
-    }
-
-    close_remove_modal = () => {
-        this.props.set_disp_show_remove_modal(false)
-        if (this.props.store.disp.remove_confirm) {
-            if (this.props.store.general.last_window == 'my_disp') {
-                this.props.set_active_window("wait");
-
-                const data = {
-                    userkey: this.props.store.login.userkey,
-                    date_from: this.props.store.my_disp.date_from,
-                    date_to: this.props.store.my_disp.date_to
-                }
-
-                get_data('mydisplist', data).then(
-                    (result) => {
-                        this.props.set_active_window("my_disp");
-                        this.props.set_my_disp_data(result);
-                    },
-                    (err) => { console.log(err) }
-                );
-            } else {
-                this.back()
-            }
-        }
-    }
-
-    confirm_remove_disp = () => {
-        this.props.set_disp_remove_modal_loading(true)
-        this.props.set_disp_remove_confirm(true)
-
-        const data = {
-            userkey: this.props.store.login.userkey,
-            Number: this.props.store.disp.data.Number,
-        }
-        get_data('removedisp', data).then(
-            (result) => {
-
-                if (result == 1) {
-                    this.props.set_disp_text_remove_modal("Накладная успешно удалена");
-                } else {
-                    this.props.set_disp_text_remove_modal("Не удалось удалить накладную");
-                }
-
-                this.props.set_disp_remove_modal_loading(false)
-            },
-            (err) => { console.log(err) }
-        );
-    }
-
     settings_window = (window) => {
         this.props.set_active_window(window);
     }
@@ -145,7 +69,7 @@ class Screen extends React.Component {
                         <div className="mobile_disp_data_label"> Телефон:</div>
                         <div className="mobile_disp_data_el">
                             {SendPhoneList.map((item, index) => 
-                                <div><a href={"tel:" + item}>{item}</a>{index != SendPhoneList.length - 1 ? (', ') : (null)}</div>
+                                <div key={index}><a href={"tel:" + item}>{item}</a>{index != SendPhoneList.length - 1 ? (', ') : (null)}</div>
                             )}
                         </div>
                         <div className="mobile_disp_data_label"> Контактное лицо:</div>
@@ -168,7 +92,7 @@ class Screen extends React.Component {
                         <div className="mobile_disp_data_label"> Телефон:</div>
                         <div className="mobile_disp_data_el">
                             {RecPhoneList.map((item, index) =>
-                                <div><a href={"tel:" + item}>{item}</a>{index != RecPhoneList.length - 1 ? (', ') : (null)}</div>
+                                <div key={index}><a href={"tel:" + item}>{item}</a>{index != RecPhoneList.length - 1 ? (', ') : (null)}</div>
                             )}
                         </div>
                         <div className="mobile_disp_data_label"> Контактное лицо:</div>

@@ -8,6 +8,40 @@ import Foto from './foto';
 
 class Screen extends React.Component {
 
+    sendpod = (type) => {
+        this.props.set_active_window("wait");
+        let barcode = this.props.store.disp.foto.split(',').pop();
+        const data = {
+            userkey: this.props.store.login.userkey,
+            num: this.props.store.disp.data.Number,
+            comment: this.props.store.disp.comment,
+            img: barcode,
+            result: type,
+        }
+        get_data('notdelivered', data).then(
+            (result) => {
+
+                const list_data = { userkey: this.props.store.login.userkey };
+
+                get_data('list', list_data).then(
+                    (result) => {
+                        console.log(result);
+                        alert("Данные отправлены!")
+                        this.props.set_active_window("m_storage");
+                    },
+                    (err) => {
+                        console.log(err);
+                        alert("Ошибка!");
+                    }
+                );
+            },
+            (err) => {
+                this.props.set_active_window("m_disp");
+                alert("Ошибка!");
+                console.log(err)
+            }
+        );
+    };
 
     render() {
 
@@ -22,11 +56,11 @@ class Screen extends React.Component {
                 </div>
 
                 <div className="mobile_container">
-                <button className="mobile_disp_button_item--full mobile_disp_button_item--not">Отказ при доставке</button>
-                <button className="mobile_disp_button_item--full mobile_disp_button_item--yellow">Отмена заказа</button>
-                <button className="mobile_disp_button_item--full mobile_disp_button_item--blue">Недозвон</button>
-                <button className="mobile_disp_button_item--full mobile_disp_button_item">Перенос</button>
-                <button className="mobile_disp_button_item--full mobile_disp_button_item--not">Нет получателя/Неверный адрес</button>
+                    <button className="mobile_disp_button_item--full mobile_disp_button_item--not" onClick={this.sendpod.bind(this, "ОтказПриДоставке")}>Отказ при доставке</button>
+                    <button className="mobile_disp_button_item--full mobile_disp_button_item--yellow" onClick={this.sendpod.bind(this, "ОтменаЗаказа")}>Отмена заказа</button>
+                    <button className="mobile_disp_button_item--full mobile_disp_button_item--blue" onClick={this.sendpod.bind(this, "Недозвон")}>Недозвон</button>
+                    <button className="mobile_disp_button_item--full mobile_disp_button_item" onClick={this.sendpod.bind(this, "Перенос")}>Перенос</button>
+                    <button className="mobile_disp_button_item--full mobile_disp_button_item--not" onClick={this.sendpod.bind(this, "НетПолучателя")}>Нет получателя/Неверный адрес</button>
                 </div>
 
                 <Foto />
@@ -42,6 +76,7 @@ export default connect(
     }),
     dispatch => ({
         set_disp_comment: (param) => { dispatch({ type: 'set_disp_comment', payload: param }); },
+        set_active_window: (param) => { dispatch({ type: 'set_active_window', payload: param }); },
     })
 
 )(Screen);

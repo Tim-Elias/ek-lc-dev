@@ -32,3 +32,21 @@
     justify-content: space-between;
     text-align: right;
 }
+
+
+.mobile_search {
+    display: flex;
+    flex-direction: row;
+    margin: 0 0 10px 0;
+}
+
+.mobile_search_label {
+    font-size: 15px;
+}
+
+.mobile_search_input {
+    border: none;
+    border-bottom: #c0c0c0 solid 1px;
+    margin: 0 0 0 10px;
+    font-size: 15px;
+}

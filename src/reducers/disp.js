@@ -18,13 +18,15 @@ const initialState = {
   FIO_Customer: '',
   delivery_date: date,
   delivery_time: time,
-  cash_accepted: '',
+  cash_accepted: 0,
   comment: '',
-  type_cash: 'cash',
+  type_cash: false,
 
   foto: '',
   cameraActive: false,
   
+  popup: false,
+
   is_new: false,
   action: null,
   data: {},
@@ -43,6 +45,8 @@ const initialState = {
 
 export default function dispatch (state = initialState, action) {
   switch (action.type) {
+    case 'set_popup': return { ...state, popup: action.payload }
+
     case 'set_disp_foto': return { ...state, foto: action.payload }
     case 'set_camera_active': return { ...state, cameraActive: action.payload }
 

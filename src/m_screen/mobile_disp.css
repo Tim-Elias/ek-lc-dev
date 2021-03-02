@@ -36,6 +36,13 @@
     width: 47%;
 }
 
+.mobile_disp_button_item--nonactive {
+    background-color: rgb(203, 221, 203);
+    padding: 10px 20px;
+    border: 0;
+    width: 47%;
+}
+
 .mobile_disp_button_item--not {
     background-color: rgb(219, 44, 44);
 }

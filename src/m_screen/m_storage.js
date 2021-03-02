@@ -33,9 +33,23 @@ class Screen extends React.Component {
                 <div className="mobile_heading">
                     Доставки и Заявки
                 </div>
+
                 <div className="mobile_storage">
                     <div className="mobile_container">
-                        {this.props.store.storage.list.filter((el) => this.props.store.storage.search === "" || el.Number.indexOf(this.props.store.storage.search) !== -1).map((disp, index) =>
+
+                        <div className="mobile_search">
+                            <div className="mobile_search_label">
+                                Поиск:
+                            </div>
+                            <input className="mobile_search_input" onChange={(e) => { this.props.set_search_storagre(e.target.value) }} />
+                        </div>
+
+                        {this.props.store.storage.list.filter((el) => {
+                            const filter_num = el.Number.toUpperCase()
+                            const filter_adress = el.Adress.toUpperCase()
+                            const text = this.props.store.storage.search.toUpperCase()
+                            return text === "" || filter_num.indexOf(text) > -1 || filter_adress.indexOf(text) > -1
+                        }).map((disp, index) =>
 
                             <div key={index} className={disp.Status === 'Отменена' ? "mobile_storage_item mobile_storage_item--canceling" : "mobile_storage_item"} onClick={this.tr_click.bind(this, disp)}>
                                 <div>
@@ -68,7 +82,8 @@ export default connect(
         set_data_disp: (param) => { dispatch({ type: 'set_data_disp', payload: param }) },
         set_last_window: () => { dispatch({ type: 'set_last_window', payload: "storage" }) },
         set_active_window: (param) => { dispatch({ type: 'set_active_window', payload: param }) },
-        set_action: (param) => { dispatch({ type: 'set_action', payload: param }) },
+        set_action: (param) => { dispatch({ type: 'set_action', payload: param }) }, 
+        set_search_storagre: (param) => { dispatch({ type: 'set_search_storagre', payload: param }) }, 
     })
 
 )(Screen);
