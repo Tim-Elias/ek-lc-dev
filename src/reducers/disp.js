@@ -2,22 +2,28 @@ const today = new Date()
 let mm = today.getMonth() + 1; // getMonth() is zero-based
 let dd = today.getDate();
 
-const y = today.getFullYear()
+const y = today.getFullYear();
 
 if (mm < 10) { mm = '0' + mm }
 if (dd < 10) { dd = '0' + dd }
 
-const date = y + '-' + mm + '-' + dd
+const date = y + '-' + mm + '-' + dd;
+
+let H = today.getHours();
+let M = today.getMinutes();
+
+const time = H + ':' + M;
 
 const initialState = {
   FIO_Customer: '',
   delivery_date: date,
+  delivery_time: time,
   cash_accepted: '',
   comment: '',
-  
+  type_cash: 'cash',
+
   foto: '',
   cameraActive: false,
-  foto_sound: undefined,
   
   is_new: false,
   action: null,
@@ -33,20 +39,19 @@ const initialState = {
   lat:'',
   lng:'',
   search_box:'',
-  
-
 }
 
 export default function dispatch (state = initialState, action) {
   switch (action.type) {
     case 'set_disp_foto': return { ...state, foto: action.payload }
     case 'set_camera_active': return { ...state, cameraActive: action.payload }
-    case 'set_foto_sound': return { ...state, foto_sound: action.payload }
 
     case 'set_disp_comment': return { ...state, comment: action.payload }
     case 'set_disp_cash': return { ...state, cash_accepted: action.payload }
     case 'set_disp_FIO': return { ...state, FIO_Customer: action.payload }
     case 'set_disp_date': return { ...state, delivery_date: action.payload }
+    case 'set_disp_time': return { ...state, delivery_date: action.payload }
+    case 'set_disp_type_cash': return { ...state, type_cash: action.payload }
 
     case 'set_disp_lat_lng': return { ...state, lat: action.payload.lat, lng: action.payload.lng}
     case 'set_disp_search_box': return { ...state, search_box: action.payload}

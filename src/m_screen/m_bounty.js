@@ -8,7 +8,6 @@ import './mobile_finance.css';
 class Screen extends React.Component {
 
 
-
     render() {
 
         return (
@@ -27,10 +26,10 @@ class Screen extends React.Component {
                         <div className="disp_address_data_header disp_address_data_header">Список</div>
                         <div className="disp_address_data_el mobile_disp_address_data_el">
 
-                            <div className="">
-                                <p>Доставка накладной получателю</p>
-                                <p>000370727</p>
-                                <p>25.02.2021 14:43:49 123123123123</p>
+                            <div className="cargo_item">
+                                Доставка накладной получателю<br/>
+                                000370727<br />
+                                25.02.2021 14:43:49 123123123123<br />
                             </div>
 
                         </div>
@@ -38,7 +37,7 @@ class Screen extends React.Component {
 
                     <div className="finance_row">
                         <div className="finance_item">Начислено за период</div>
-                        <div className="finance_item">100.00</div>
+                        <div className="finance_item">{this.props.store.movement.cash_for_period}</div>
                     </div>
                 </div>
             </div>
@@ -51,7 +50,8 @@ export default connect(
         store: state
     }),
     dispatch => ({
-
+        set_date_start: (param) => { dispatch({ type: 'set_date_start', payload: param }) },
+        set_date_end: (param) => { dispatch({ type: 'set_date_end', payload: param }) },
     })
 
 )(Screen);

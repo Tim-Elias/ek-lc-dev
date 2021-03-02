@@ -36,7 +36,6 @@ class Screen extends React.Component {
 
         get_data('manifestenroute', data).then(
             (result) => {
-                console.log(result)
                 this.props.set_data_manifest(result);
                 this.props.set_active_window("m_manifest");
                 this.props.set_action_manifest("get");
@@ -69,7 +68,7 @@ class Screen extends React.Component {
                         <div>
                             
                             {this.props.store.get_manifest.list.map((disp, index) =>
-                            <div onClick={this.tr_double_click.bind(this, disp.num)}>
+                            <div key={index} onClick={this.tr_double_click.bind(this, disp.num)}>
                                 <div className="disp_address_data_header">Манифест № {disp.num}</div>
                                 <div className="disp_address_data_el">
                                     <div className="mobile_disp_data_label">Дата отправления:</div>

@@ -586,11 +586,11 @@ class Screen extends React.Component {
       <div>
       {/* Загрузить манифест */}
 <div>
-      {/* <textarea onChange={e => this.props.set_text_area(e.target.value)} value={this.props.store.upload_manifest.text_area} type="text"></textarea> */}
+      <textarea onChange={e => this.props.set_text_area(e.target.value)} value={this.props.store.upload_manifest.text_area} type="text"></textarea>
       </div>
       <div>
-      {/* <button className="ui button mini" onClick={this.read_text.bind(this)}>Прочитать</button> */}
-      {/* <button className="ui button mini" disabled={this.props.store.upload_manifest.data.length==0} onClick={this.convert_data.bind(this)}>Преобразовать</button> */}
+      <button className="ui button mini" onClick={this.read_text.bind(this)}>Прочитать</button>
+      <button className="ui button mini" disabled={this.props.store.upload_manifest.data.length==0} onClick={this.convert_data.bind(this)}>Преобразовать</button>
       <button className="ui button mini" disabled={this.props.store.upload_manifest.disp_data.length==0} onClick={this.upload_data.bind(this)}>Загрузить данные</button>
       
       {complited.length !== 0 ? (<ReactToPrint

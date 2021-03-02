@@ -89,16 +89,35 @@ class Screen extends React.Component {
 
     render() {
 
+        let SendPhoneList = this.props.store.disp.data.SendPhone.split(',');// для нескольких телефонов
+        let RecPhoneList = this.props.store.disp.data.RecPhone.split(',');// для нескольких телефонов
+
         return (
             <div>
                 <div className="mobile_heading">
                     {this.props.store.disp.data.Type} №{this.props.store.disp.data.Number}
                 </div>
 
-                <div className="mobile_disp_button">
-                    <button className="mobile_disp_button_item" onClick={this.settings_window.bind(this, 'm_delivered')}>Доставлено</button>
-                    <button className="mobile_disp_button_item--not mobile_disp_button_item" onClick={this.settings_window.bind(this, 'm_not_delivered')}>Не доставлено</button>
-                </div>
+                {this.props.store.disp.data.Type === 'Заявка' && this.props.store.disp.data.Status === 'Подтверждено' ? 
+                    (<div className="mobile_disp_button">
+                        <button className="mobile_disp_button_item mobile_disp_button_item--full">Выполнено</button>
+                    </div>)
+                : (null)}
+
+                {this.props.store.disp.data.Type === 'Заявка' && this.props.store.disp.data.Status === 'Новая' ? 
+                    (<div className="mobile_disp_button">
+                        <button className="mobile_disp_button_item mobile_disp_button_item--full">Подтвердить</button>
+                    </div>)
+                : (null)}
+
+                {this.props.store.disp.data.Type === 'Доставка' ?
+                    (<div className="mobile_disp_button">
+                        <button className="mobile_disp_button_item" onClick={this.settings_window.bind(this, 'm_delivered')}>Доставлено</button>
+                        <button className="mobile_disp_button_item--not mobile_disp_button_item" onClick={this.settings_window.bind(this, 'm_not_delivered')}>Не доставлено</button>
+                    </div>)
+                : (null)}
+
+                
 
                 <div className="disp_customer_data">
                     <div className="mobile_disp_data_label">Заказчик:</div>
@@ -124,7 +143,11 @@ class Screen extends React.Component {
                         <div className="mobile_disp_data_label"> Компания:</div>
                         <div className="mobile_disp_data_el">{this.props.store.disp.data.SendCompany}</div>
                         <div className="mobile_disp_data_label"> Телефон:</div>
-                        <div className="mobile_disp_data_el">{this.props.store.disp.data.SendPhone}</div>
+                        <div className="mobile_disp_data_el">
+                            {SendPhoneList.map((item, index) => 
+                                <div><a href={"tel:" + item}>{item}</a>{index != SendPhoneList.length - 1 ? (', ') : (null)}</div>
+                            )}
+                        </div>
                         <div className="mobile_disp_data_label"> Контактное лицо:</div>
                         <div className="mobile_disp_data_el">{this.props.store.disp.data.SendPerson}</div>
                         <div className="mobile_disp_data_label"> Доп. информация:</div>
@@ -143,7 +166,11 @@ class Screen extends React.Component {
                         <div className="mobile_disp_data_label"> Компания:</div>
                         <div className="mobile_disp_data_el">{this.props.store.disp.data.RecCompany}</div>
                         <div className="mobile_disp_data_label"> Телефон:</div>
-                        <div className="mobile_disp_data_el">{this.props.store.disp.data.RecPhone}</div>
+                        <div className="mobile_disp_data_el">
+                            {RecPhoneList.map((item, index) =>
+                                <div><a href={"tel:" + item}>{item}</a>{index != RecPhoneList.length - 1 ? (', ') : (null)}</div>
+                            )}
+                        </div>
                         <div className="mobile_disp_data_label"> Контактное лицо:</div>
                         <div className="mobile_disp_data_el">{this.props.store.disp.data.RecPerson}</div>
                         <div className="mobile_disp_data_label"> Доп. информация:</div>

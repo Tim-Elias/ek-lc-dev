@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 import './mobile.css';
 import foto from '../common/foto.png';
 import { get_data } from './../common/common_modules';
-//import Sound from 'react-sound';
-import fotoSound from './../common/funk.mp3';
 
 class Screen extends React.Component {
     constructor(props, context) {
@@ -15,16 +13,16 @@ class Screen extends React.Component {
         this.videoRef = React.createRef();
     }
 
-    foto_sound_play = () => {
-        //this.props.storage_reciept_set_foto_sound(Sound.status.PLAYING);
-    }
-
-    foto_sound_stop = () => {
-       // this.props.storage_reciept_set_foto_sound(Sound.status.STOPPED);
-    }
-
     componentDidMount() {
+        let facingMode = FACING_MODES.ENVIRONMENT;
+        let idealResolution = { width: 1280, height: 1280 };
         this.cameraPhoto = new CameraPhoto(this.videoRef.current);
+        this.startCamera(facingMode, idealResolution);
+    }
+
+    componentWillUnmount() {
+        this.stopCamera();
+        this.props.take_foto('');
     }
 
     startCamera(idealFacingMode, idealResolution) {
@@ -45,14 +43,11 @@ class Screen extends React.Component {
             sizeFactor: 1
         };
         let dataUri = this.cameraPhoto.getDataUri(config);
-        console.log(dataUri);
         this.props.take_foto(dataUri);
-        this.foto_sound_play();
         this.stopCamera();
     }
 
     stopCamera() {
-        this.foto_sound_stop();
         this.props.camera_active(false);
         this.cameraPhoto.stopCamera()
             .then(() => {
@@ -61,22 +56,6 @@ class Screen extends React.Component {
             .catch((error) => {
                 console.log('No camera to stop!:', error);
             });
-    }
-
-    send() {
-        let foto = { 
-            img: this.props.store.disp.foto,
-        };
-        get_data('testimg', foto).then(
-            (result) => {
-                if(result == 'ok') {
-                    alert('Данные отправленны');
-                } else {
-                    alert('Ошибка');
-                    console.log(result);
-                }
-            }
-        )
     }
 
     render() {
@@ -115,7 +94,6 @@ class Screen extends React.Component {
                     src={this.props.store.disp.foto}
                 />
 
-                <button onClick={this.send.bind(this)} className={this.props.store.disp.foto ? 'camera_button' : 'none'}>Отправить</button>
             </div>
         );
     }
@@ -126,6 +104,5 @@ export default connect(
     dispatch => ({
         take_foto: (param) => { dispatch({ type: 'set_disp_foto', payload: param }) },
         camera_active: (param) => { dispatch({ type: 'set_camera_active', payload: param }) },
-        storage_reciept_set_foto_sound: (param) => { dispatch({ type: 'set_foto_sound', payload: param }) },
     })
 )(Screen);

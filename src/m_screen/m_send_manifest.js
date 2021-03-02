@@ -101,10 +101,10 @@ class Screen extends React.Component {
                     <div className="search_error">{this.props.store.reciept.error}</div>
 
                     {this.props.store.storage.list.filter((el) => { if (el.selected) return el }).length !== 0 ? (
-                        <div>
+                        <div key={this.el}>
                             
                             {this.props.store.storage.list.filter((el) => { if (el.selected) return el }).map((disp, index) =>
-                            <div>
+                            <div key={index}>
                                 <div className="disp_address_data_header">Накладная № {disp.Number}</div>
                                 <div className="disp_address_data_el">
                                     <div className="mobile_disp_data_label">Дата:</div>

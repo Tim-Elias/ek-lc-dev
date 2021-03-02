@@ -90,3 +90,11 @@ text-align: right;
 .DispDate:hover {
   background-color: #f0f0f0;
 }
+
+  @media (max-width: 1000px) {
+
+    .create_disp_data_input {
+      font-size: 15px;
+    }
+  }
+

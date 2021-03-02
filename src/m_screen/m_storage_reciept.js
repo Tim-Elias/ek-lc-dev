@@ -27,7 +27,6 @@ class Screen extends React.Component {
         if (this.props.store.storage_reciept.barcode.substring(0, 9) === "0000-0000") {
             let zone = this.props.store.storage_reciept.barcode.substring(10)
             let find_zone = this.props.store.storage_reciept.zone_list.find(el => el === zone)
-            console.log(find_zone)
             if (find_zone === undefined) {
                 this.props.storage_reciept_set_barcode('')
                 this.props.storage_reciept_set_status_type('err')

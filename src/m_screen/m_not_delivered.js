@@ -4,6 +4,7 @@ import './mobile.css';
 import { get_data } from '../common/common_modules';
 import { Table, Button, Icon, Modal, Loader, Dimmer } from 'semantic-ui-react';
 import './mobile_disp.css';
+import Foto from './foto';
 
 class Screen extends React.Component {
 
@@ -12,15 +13,12 @@ class Screen extends React.Component {
 
         return (
             <div>
-                <div className="mobile_heading">
-                    Не Доставлено
-                </div>
 
                 <div className="mobile_disp_customer_data">
-                    <div className="mobile_disp_data_label">Номер накладной:</div>
-                    <div className="mobile_disp_input">{this.props.store.disp.data.Number}</div>
-                    <div className="mobile_disp_data_label">Комментарий</div>
-                    <input onChange={e => this.props.set_disp_comment(e.target.value)} value={this.props.store.disp.comment} className="mobile_disp_input" type="text"></input>
+                    <div className="mobile_del_data_label">Номер накладной:</div>
+                    <div className="mobile_del_input">{this.props.store.disp.data.Number}</div>
+                    <div className="mobile_del_data_label">Комментарий</div>
+                    <input onChange={e => this.props.set_disp_comment(e.target.value)} value={this.props.store.disp.comment} className="mobile_del_input" type="text"></input>
                 </div>
 
                 <div className="mobile_container">
@@ -30,6 +28,8 @@ class Screen extends React.Component {
                 <button className="mobile_disp_button_item--full mobile_disp_button_item">Перенос</button>
                 <button className="mobile_disp_button_item--full mobile_disp_button_item--not">Нет получателя/Неверный адрес</button>
                 </div>
+
+                <Foto />
             </div>
         )
     }

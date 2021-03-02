@@ -1,0 +1,18 @@
+select {
+    height: 25px;
+    font-size: 12px;
+}
+
+.mobile_del_data_label {
+    margin: 2px 5px 10px 0;
+    border: 0;
+    border-bottom: #c0c0c0 solid 1px;
+    font-size: 14px;
+}
+
+.mobile_del_input {
+    margin: 2px 0 10px 0;
+    font-size: 14px;
+    border: 0;
+    border-bottom: #c0c0c0 solid 1px;
+}
