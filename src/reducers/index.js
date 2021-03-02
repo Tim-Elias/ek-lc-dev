@@ -19,6 +19,7 @@ import disp_map from './disp_map'
 import home_ek from './home_ek'
 import test from './test'
 import storage_reciept from './storage_reciept'
+import movement from './movement'
 
 export default combineReducers({
 
@@ -40,6 +41,7 @@ export default combineReducers({
   disp_map,
   home_ek,
   test,
-  storage_reciept
+  storage_reciept,
+  movement,
   
 })

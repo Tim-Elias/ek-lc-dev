@@ -11,9 +11,8 @@ class Screen extends React.Component {
 
     menu_active = () => {
         this.props.set_mobile_menu('Mmenu');
-        this.props.camera_active(false);
     }
-
+    
     menu_active_arrow = (window) => {
         this.props.set_mobile_menu(window);
     }
@@ -42,6 +41,5 @@ export default withCookies(connect(
     (state, ownProps) => ({ store: state, cookies: ownProps.cookies }),
     dispatch => ({
         set_mobile_menu: (param) => { dispatch({ type: 'set_mobile_menu', payload: param }) },
-        camera_active: (param) => { dispatch({ type: 'set_camera_active', payload: param }) },
     })
 )(Screen));

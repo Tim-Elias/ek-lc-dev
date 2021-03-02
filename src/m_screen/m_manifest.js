@@ -51,19 +51,19 @@ class Screen extends React.Component {
                 <div className="mobile_heading">Манифест входящий {this.props.store.manifest.data.num}</div>
 
                 <div className="disp_customer_data">
-                    <div className="disp_data_label">Склад отправления:</div>
-                    <div className="disp_data_el">{this.props.store.manifest.data.sender}</div>
-                    <div className="disp_data_label">Дата отправления:</div>
-                    <div className="disp_data_el">{this.props.store.manifest.data.date}</div>
-                    <div className="disp_data_label">Перевозчик:</div>
-                    <div className="disp_data_el">{this.props.store.manifest.data.carrier}</div>
+                    <div className="mobile_disp_data_label">Склад отправления:</div>
+                    <div className="mobile_disp_data_el">{this.props.store.manifest.data.sender}</div>
+                    <div className="mobile_disp_data_label">Дата отправления:</div>
+                    <div className="mobile_disp_data_el">{this.props.store.manifest.data.date}</div>
+                    <div className="mobile_disp_data_label">Перевозчик:</div>
+                    <div className="mobile_disp_data_el">{this.props.store.manifest.data.carrier}</div>
                 </div>
 
                 {this.props.store.manifest.data.dispatches.length !== 0 ? (<div className="disp_cargo_table">
                     <div className="disp_cargo_table_data">
 
                     {this.props.store.manifest.data.dispatches.map((disp, index) =>
-                    <div>
+                    <div key={index}>
                         <div className="disp_address_data_header">Накладные по манифесту</div>
                         <div className="disp_address_data_el">
                             <div className="mobile_disp_data_label">Приниято:</div>

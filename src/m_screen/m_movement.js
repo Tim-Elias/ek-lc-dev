@@ -8,7 +8,6 @@ import './mobile_finance.css';
 class Screen extends React.Component {
 
 
-
     render() {
 
         return (
@@ -18,23 +17,23 @@ class Screen extends React.Component {
                 </div>
                 <div className="mobile_container">
                     <div className="finance_row">
-                        <input className="mobile_movememt_date" type="date"></input>
-                        <input className="mobile_movememt_date" type="date"></input>
+                        <input className="mobile_movememt_date" onChange={e => this.props.set_date_start(e.target.value)} type="date" />
+                        <input className="mobile_movememt_date" onChange={e => this.props.set_date_end(e.target.value)} type="date" />
                     </div>
                     <button className="mobile_finance_button--b">Получить данные</button>
                     <div className="finance_row">
                         <div className="finance_item">Остаток на начало</div>
-                        <div className="finance_item">0.00</div>
+                        <div className="finance_item">{this.props.store.movement.balance_start}</div>
                     </div>
 
                     <div className="mobile_disp_address_data">
                         <div className="disp_address_data_header disp_address_data_header">Список</div>
                         <div className="disp_address_data_el mobile_disp_address_data_el">
 
-                            <div className="">
-                                <p>Доставка накладной получателю</p>
-                                <p>000370727</p>
-                                <p>25.02.2021 14:43:49 123123123123</p>
+                            <div className="cargo_item">
+                                Доставка накладной получателю<br/>
+                                000370727<br />
+                                25.02.2021 14:43:49 123123123123<br />
                             </div>
 
                         </div>
@@ -42,7 +41,7 @@ class Screen extends React.Component {
 
                     <div className="finance_row">
                         <div className="finance_item">Остаток на конец</div>
-                        <div className="finance_item">1000.00</div>
+                        <div className="finance_item">{this.props.store.movement.balance_end}</div>
                     </div>
                 </div>
             </div>
@@ -55,7 +54,7 @@ export default connect(
         store: state
     }),
     dispatch => ({
-
+        set_date_start: (param) => { dispatch({ type: 'set_date_start', payload: param }) },
+        set_date_end: (param) => { dispatch({ type: 'set_date_end', payload: param }) },
     })
-
 )(Screen);

@@ -19,6 +19,8 @@ import MManifest from './m_manifest';
 import MFinance from './m_finance';
 import MMovement from './m_movement';
 import MBounty from './m_bounty';
+import MScanner from './scanner'; 
+import MPosition from './position'; 
 
 class Screen extends React.Component {
 
@@ -44,7 +46,8 @@ class Screen extends React.Component {
                 {this.props.store.general.active_window === 'setting' ? (<MSetting />) : (null)}
                 {this.props.store.general.active_window === 'wait' ? (<Wait />) : (null)}
 
-                {this.props.store.general.active_window === 'foto' ? (<Foto />) : (null)}
+                {this.props.store.general.active_window === 'scanner' ? (<MScanner />) : (null)}
+                {this.props.store.general.active_window === 'position' ? (<MPosition />) : (null)}
             </div>
         )
     }

@@ -87,7 +87,8 @@ class Screen extends React.Component {
                         <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'm_send_manifest')}>Отправка манифеста</button></li>
                         <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'storage_reciept')}>Приемка на склад</button></li>
                         <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'm_finance')}>Финансы</button></li>
-                        <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'foto')}>FOTO</button></li>
+                        {/* <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'scanner')}>SCANNER</button></li>
+                        <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'position')}>position</button></li> */}
                         <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'setting')}>Настройки</button></li>
                         <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.mobile_version.bind(this)}>Web Версия</button></li>
                         <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.logout.bind(this)}>Выйти</button></li>

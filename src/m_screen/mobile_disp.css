@@ -26,24 +26,23 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin: 0 15px 15px 15px;
+    margin: 5px 15px 10px 15px;
 }
 
 .mobile_disp_button_item {
     background-color: rgb(95, 187, 95);
-    padding: 15px 20px;
+    padding: 10px 20px;
     border: 0;
     width: 47%;
 }
 
 .mobile_disp_button_item--not {
     background-color: rgb(219, 44, 44);
-    
 }
 
 .mobile_disp_button_item--yellow {
     background-color: rgb(255, 187, 0);
-    padding: 15px 5px;
+    padding: 10px 5px;
 }
 
 .mobile_disp_button_item--blue {
@@ -52,8 +51,8 @@
 }
 
 .mobile_disp_button_item--full {
-    padding: 15px 20px;
-    margin: 0 0 35px 0;
+    padding: 10px 20px;
+    margin: 0 0 15px 0;
     border: 0;
     width: 100%;
 }
@@ -65,14 +64,14 @@
 }
 
 .mobile_disp_input {
-    margin: 3px 0 20px 0;
+    margin: 3px 0 15px 0;
     font-size: 15px;
     border: 0;
     border-bottom: #c0c0c0 solid 1px;
 }
 
 .mobile_disp_data_label {
-    margin: 3px 5px 20px 3px;
+    margin: 3px 5px 15px 0;
     border: 0;
     border-bottom: #c0c0c0 solid 1px;
     font-size: 15px;
@@ -80,7 +79,7 @@
 
 .mobile_disp_data_el {
     font-size: 15px;
-    margin: 3px 5px 20px 0;
+    margin: 3px 5px 15px 0;
     border-bottom: #c0c0c0 solid 1px;
     word-wrap: break-word;
 }
