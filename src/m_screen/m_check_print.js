@@ -26,13 +26,13 @@ class Screen extends React.Component {
                         
                     </div>
                 </div>
-                <div>{this.props.store.check.check_data.qr}</div>
+                {/* <div>{this.props.store.check.check_data.qr}</div> */}
                 
                 <div>{this.props.store.check.check_data.date}</div>
                 
                 <div>{this.props.store.check.check_data.summ}</div>
                 
-                <div>{this.props.store.check.check_data.qr}</div>
+                {/* <div>{this.props.store.check.check_data.qr}</div> */}
                 
                 
             </div>
