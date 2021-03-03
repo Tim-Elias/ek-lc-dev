@@ -10,6 +10,7 @@ import Foto from './foto';
 import Wait from "../screen/wait";
 import ReactToPrint from 'react-to-print'
 import QRCode from 'qrcode.react';
+import './mobile_check_print.css'
 
 class Screen extends React.Component {
 
@@ -112,8 +113,9 @@ class Screen extends React.Component {
                 <div style={{ display: "none" }}>
                     <div ref={el => (this.componentRef = el)}>
                         
-                        
+                    <div className="check_print_qr">
                         <QRCode value={this.props.store.disp.qr} />
+                        </div>
                     </div>
                 </div>
                 </div>
