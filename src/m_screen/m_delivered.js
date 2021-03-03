@@ -80,7 +80,7 @@ class Screen extends React.Component {
                         } else {
                             this.props.check_disable();
                             this.props.set_print_check_disabled(false)
-                            this.props.set_qr(result)
+                            this.props.set_QR(result)
                             alert("Чек напечатан!");
 
                         }
