@@ -53,8 +53,40 @@ class Screen extends React.Component {
     receipt = () => {
         this.props.set_popup(!(this.props.store.disp.popup));
     }
+    
+    createcheck = () => {
+        const data =
+        {
+            userkey: this.props.store.login.userkey,
+            summ: this.props.store.disp.cash_accepted,
+            terminal: this.props.store.disp.type_cash,
+            num: this.props.store.disp.data.Number,
+        }
+        console.log(data);
+        get_data('createcheck', data).then(
+            (result) => {
 
+                const list_data = { userkey: this.props.store.login.userkey };
 
+                get_data('list', list_data).then(
+                    (result) => {
+                        console.log(result);
+                        alert(result)
+                        this.props.set_active_window("m_storage");
+                    },
+                    (err) => {
+                        console.log(err);
+                        alert(err);
+                    }
+                );
+            },
+            (err) => {
+                this.props.set_active_window("m_disp");
+                alert(err);
+                console.log(err)
+            }
+        );
+    }
 
     componentDidMount() {
         this.props.set_disp_cash(this.props.store.disp.data.COD);
@@ -80,7 +112,7 @@ class Screen extends React.Component {
                         <div>Сумма: {this.props.store.disp.cash_accepted} руб.</div>
                     </div>
                     <div className="PopUp_button_container">
-                        <button className="PopUp_button">Да</button>
+                        <button className="PopUp_button" onClick={this.createcheck.bind(this)}>Да</button>
                         <button className="PopUp_button" onClick={this.receipt.bind(this)}>Нет</button>
                     </div>
                 </div>
@@ -92,7 +124,7 @@ class Screen extends React.Component {
                 </div>
 
                 <div className="mobile_disp_button">
-                    <button className="mobile_disp_button_item mobile_disp_button_item--blue" onClick={this.receipt.bind(this)}>Чек</button>
+                    <button className={+this.props.store.disp.cash_accepted > 0 && this.props.store.login.kkm ? "mobile_disp_button_item mobile_disp_button_item--blue" : "none"} onClick={this.receipt.bind(this)}>Чек</button>
                 </div>
 
                 <div className="mobile_disp_customer_data">

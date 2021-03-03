@@ -16,6 +16,7 @@
     border-bottom: #c0c0c0 solid 1px;
     margin: 10px 0 10px 0;
     font-size: 16px;
+    position: relative;
 }
 .cargo_item:last-child {
     margin: 0;
@@ -34,6 +35,10 @@
     padding: 10px 20px;
     border: 0;
     width: 47%;
+    box-shadow: 0 0 0 60px rgba(0,0,0,0) inset, .1em .1em .2em rgb(122, 122, 122);
+}
+.mobile_disp_button_item:active {
+    box-shadow: 0 0 0 60px rgba(0,0,0,.05) inset;
 }
 
 .mobile_disp_button_item--nonactive {
@@ -62,6 +67,10 @@
     margin: 0 0 15px 0;
     border: 0;
     width: 100%;
+    box-shadow: 0 0 0 60px rgba(0,0,0,0) inset, .1em .1em .2em rgb(122, 122, 122);
+}
+.mobile_disp_button_item--full:active {
+    box-shadow: 0 0 0 60px rgba(0,0,0,.05) inset;
 }
 
 .mobile_disp_customer_data {
