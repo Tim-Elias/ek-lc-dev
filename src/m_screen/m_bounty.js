@@ -4,6 +4,7 @@ import './mobile.css';
 import { get_data } from '../common/common_modules';
 import './mobile_disp.css';
 import './mobile_finance.css';
+import Wait from "../screen/wait";
 
 class Screen extends React.Component {
 
@@ -12,7 +13,7 @@ class Screen extends React.Component {
     }
 
     update = () => {
-        // this.props.set_active_window("wait");
+        this.props.set_active_loader(true);
         let from = this.props.store.movement.date_start.split("-").reverse().join("-") + "_" + "00:00:00";
         let to = this.props.store.movement.date_end.split("-").reverse().join("-") + "_" + "23:59:59";
 
@@ -25,6 +26,7 @@ class Screen extends React.Component {
             (result) => {
                 this.props.set_profit_for_period(result.total);
                 this.props.set_disp_list(result.data);
+                this.props.set_active_loader(false);
             },
             (err) => {
                 alert("Ошибка!");
@@ -40,6 +42,7 @@ class Screen extends React.Component {
                 <div className="mobile_heading">
                     Вознаграждение
                 </div>
+                {this.props.store.general.active_loader ? (<Wait />) : (
                 <div className="mobile_container">
                     <div className="finance_row">
                         <input className="mobile_movememt_date" onChange={e => this.props.set_date_start(e.target.value)} value={this.props.store.movement.date_start} type="date"></input>
@@ -69,6 +72,7 @@ class Screen extends React.Component {
                         </div>
                     </div>
                 </div>
+                )}
             </div>
         )
     }
@@ -79,6 +83,7 @@ export default connect(
         store: state
     }),
     dispatch => ({
+        set_active_loader: (param) => { dispatch({ type: 'set_active_loader', payload: param }); },
         set_date_start: (param) => { dispatch({ type: 'set_date_start', payload: param }) },
         set_date_end: (param) => { dispatch({ type: 'set_date_end', payload: param }) },
         set_profit_for_period: (param) => { dispatch({ type: 'set_profit_for_period', payload: param }) }, 

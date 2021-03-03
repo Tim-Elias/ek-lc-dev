@@ -41,11 +41,16 @@ const initialState = {
   lat:'',
   lng:'',
   search_box:'',
+  QR:'',
+  print_check_disabled: true,
 }
 
 export default function dispatch (state = initialState, action) {
   switch (action.type) {
     case 'set_popup': return { ...state, popup: action.payload }
+    case 'set_QR': return { ...state, QR: action.payload }
+    case 'set_print_check_disabled': return { ...state, print_check_disabled: action.payload }
+    case 'check_disable': return { ...state, data: { ...state.data, CheckEnabled: false} }
 
     case 'set_disp_foto': return { ...state, foto: action.payload }
     case 'set_camera_active': return { ...state, cameraActive: action.payload }

@@ -7,6 +7,9 @@ import './mobile_delivery.css';
 import './mobile_disp.css';
 import './popup.css';
 import Foto from './foto';
+import Wait from "../screen/wait";
+import ReactToPrint from 'react-to-print'
+import QRCode from 'qrcode.react';
 
 class Screen extends React.Component {
 
@@ -32,7 +35,6 @@ class Screen extends React.Component {
 
                 get_data('list', list_data).then(
                     (result) => {
-                        console.log(result);
                         alert("Данные отправлены!")
                         this.props.set_active_window("m_storage");
                     },
@@ -55,6 +57,9 @@ class Screen extends React.Component {
     }
     
     createcheck = () => {
+        this.props.set_popup(false);
+        this.props.set_active_loader(true);
+
         const data =
         {
             userkey: this.props.store.login.userkey,
@@ -62,7 +67,6 @@ class Screen extends React.Component {
             terminal: this.props.store.disp.type_cash,
             num: this.props.store.disp.data.Number,
         }
-        console.log(data);
         get_data('createcheck', data).then(
             (result) => {
 
@@ -70,11 +74,19 @@ class Screen extends React.Component {
 
                 get_data('list', list_data).then(
                     (result) => {
-                        console.log(result);
-                        alert(result)
-                        this.props.set_active_window("m_storage");
+                        this.props.set_active_loader(false);
+                        if(result == '') {
+                            alert('ККМ Сервер недоступен :(')
+                        } else {
+                            this.props.check_disable();
+                            this.props.set_print_check_disabled(false)
+                            alert("Чек напечатан!");
+
+                        }
+                        
                     },
                     (err) => {
+                        this.props.set_active_loader(false);
                         console.log(err);
                         alert(err);
                     }
@@ -90,11 +102,13 @@ class Screen extends React.Component {
 
     componentDidMount() {
         this.props.set_disp_cash(this.props.store.disp.data.COD);
+
     }
 
     componentWillUnmount() {
         this.props.set_disp_FIO('');
         this.props.set_disp_comment('');
+        
     }
 
 
@@ -102,13 +116,22 @@ class Screen extends React.Component {
 
         return (
             <div>
-
+                <div>
+                
+                <div style={{ display: "none" }}>
+                    <div ref={el => (this.componentRef = el)}>
+                        
+                        
+                        <QRCode value={this.props.store.disp.QR} />
+                    </div>
+                </div>
+                </div>
                 <div className={this.props.store.disp.popup ? "PopUp_container" : "none"} onClick={this.receipt.bind(this)}></div>
                 <div className={this.props.store.disp.popup ? "PopUp_window" : "none"}>
                     <p>Вы точно хотите распечатать чек?</p>
                     <div className="PopUp_date">
                         <div>Номер накладной: {this.props.store.disp.data.Number}</div>
-                        <div>Тип оплаты: {this.props.store.disp.type_cash ? "Наличные" : "Безналичные"}</div>
+                        <div>Тип оплаты: {this.props.store.disp.type_cash ? "Безналичные" : "Наличные"}</div>
                         <div>Сумма: {this.props.store.disp.cash_accepted} руб.</div>
                     </div>
                     <div className="PopUp_button_container">
@@ -117,38 +140,49 @@ class Screen extends React.Component {
                     </div>
                 </div>
 
-                <div className="mobile_disp_button">
-                    <button className={+this.props.store.disp.cash_accepted !== +this.props.store.disp.data.COD ? ("none") : ("mobile_disp_button_item")} onClick={this.sendpod.bind(this, false)}>Доставленно</button>
-                    <button className={+this.props.store.disp.cash_accepted !== +this.props.store.disp.data.COD ? ("mobile_disp_button_item--nonactive") : ("none")}>Доставленно</button>
-                    <button className="mobile_disp_button_item--yellow mobile_disp_button_item" onClick={this.sendpod.bind(this, true)}>Частично доставленно</button>
+                {this.props.store.general.active_loader ? (<Wait />) : (
+                <div>
+                    <div className="mobile_disp_button">
+                        <button className={+this.props.store.disp.cash_accepted !== +this.props.store.disp.data.COD ? ("none") : ("mobile_disp_button_item")} onClick={this.sendpod.bind(this, false)}>Доставленно</button>
+                        <button className={+this.props.store.disp.cash_accepted !== +this.props.store.disp.data.COD ? ("mobile_disp_button_item--nonactive") : ("none")}>Доставленно</button>
+                        <button className="mobile_disp_button_item--yellow mobile_disp_button_item" onClick={this.sendpod.bind(this, true)}>Частично доставленно</button>
+                    </div>
+
+                    <div className="mobile_disp_button">
+                        <button className={+this.props.store.disp.cash_accepted > 0 && this.props.store.login.kkm && this.props.store.disp.data.CheckEnabled ? "mobile_disp_button_item mobile_disp_button_item--blue" : "none"} onClick={this.receipt.bind(this)}>Чек</button>
+                            
+                    </div>
+
+                        <div className="mobile_disp_button">
+                            <ReactToPrint
+                                trigger={() => <button className="mobile_disp_button_item mobile_disp_button_item--blue" disabled={this.props.store.disp.print_check_disabled}>Печать чека</button>}
+                                content={() => this.componentRef}
+                            />
+                        </div>
+
+                    <div className="mobile_disp_customer_data">
+                        <div className="mobile_del_data_label">Номер накладной:</div>
+                        <div className="mobile_del_input">{this.props.store.disp.data.Number}</div>
+                        <div className="mobile_del_data_label">Дата доставки</div>
+                        <input onChange={e => this.props.set_disp_date(e.target.value)} value={this.props.store.disp.delivery_date} className="mobile_del_input" type="date"></input>
+                        <div className="mobile_del_data_label">Время доставки</div>
+                        <input onChange={e => this.props.set_disp_time(e.target.value)} value={this.props.store.disp.delivery_time} className="mobile_del_input" type="time"></input>
+                        <div className="mobile_del_data_label">ФИО получателя</div>
+                        <input onChange={e => this.props.set_disp_FIO(e.target.value)} value={this.props.store.disp.FIO_Customer} className="mobile_del_input" type="text"></input>
+                        <div className="mobile_del_data_label">Тип оплаты</div>
+                        <select onChange={e => { this.props.set_disp_type_cash(e.target.value)}}>
+                            <option value={false}>Наличные</option>
+                            <option value={true}>Безналичный</option>
+                        </select>
+                        <div className="mobile_del_data_label">Принятая сумма</div>
+                        <input value={this.props.store.disp.cash_accepted} onChange={e => this.props.set_disp_cash(e.target.value)} className="mobile_del_input" type="number"></input>
+                        <div className="mobile_del_data_label">Комментарий</div>
+                        <input onChange={e => this.props.set_disp_comment(e.target.value)} value={this.props.store.disp.comment} className="mobile_del_input" type="text"></input>
+                    </div>
+
+                    <Foto />
                 </div>
-
-                <div className="mobile_disp_button">
-                    <button className={+this.props.store.disp.cash_accepted > 0 && this.props.store.login.kkm ? "mobile_disp_button_item mobile_disp_button_item--blue" : "none"} onClick={this.receipt.bind(this)}>Чек</button>
-                </div>
-
-                <div className="mobile_disp_customer_data">
-                    <div className="mobile_del_data_label">Номер накладной:</div>
-                    <div className="mobile_del_input">{this.props.store.disp.data.Number}</div>
-                    <div className="mobile_del_data_label">Дата доставки</div>
-                    <input onChange={e => this.props.set_disp_date(e.target.value)} value={this.props.store.disp.delivery_date} className="mobile_del_input" type="date"></input>
-                    <div className="mobile_del_data_label">Время доставки</div>
-                    <input onChange={e => this.props.set_disp_time(e.target.value)} value={this.props.store.disp.delivery_time} className="mobile_del_input" type="time"></input>
-                    <div className="mobile_del_data_label">ФИО получателя</div>
-                    <input onChange={e => this.props.set_disp_FIO(e.target.value)} value={this.props.store.disp.FIO_Customer} className="mobile_del_input" type="text"></input>
-                    <div className="mobile_del_data_label">Тип оплаты</div>
-                    <select onChange={e => { this.props.set_disp_type_cash(e.target.value)}}>
-                        <option value={false}>Наличные</option>
-                        <option value={true}>Безналичный</option>
-                    </select>
-                    <div className="mobile_del_data_label">Принятая сумма</div>
-                    <input value={this.props.store.disp.cash_accepted} onChange={e => this.props.set_disp_cash(e.target.value)} className="mobile_del_input" type="number"></input>
-                    <div className="mobile_del_data_label">Комментарий</div>
-                    <input onChange={e => this.props.set_disp_comment(e.target.value)} value={this.props.store.disp.comment} className="mobile_del_input" type="text"></input>
-                </div>
-
-                <Foto />
-
+                )}
             </div>
         )
     } 
@@ -160,7 +194,12 @@ export default connect(
         store: state
     }),
     dispatch => ({
+        
+        set_print_check_disabled: (param) => { dispatch({ type: 'set_print_check_disabled', payload: param }); },
+
+        set_active_loader: (param) => { dispatch({ type: 'set_active_loader', payload: param }); },
         set_disp_comment: (param) => { dispatch({ type: 'set_disp_comment', payload: param }); },
+        check_disable: () => { dispatch({ type: 'check_disable' }); },
         set_disp_cash: (param) => { dispatch({ type: 'set_disp_cash', payload: param }); },
         set_disp_FIO: (param) => { dispatch({ type: 'set_disp_FIO', payload: param }); },
         set_disp_date: (param) => { dispatch({ type: 'set_disp_date', payload: param }); },

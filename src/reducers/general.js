@@ -11,10 +11,13 @@ const initialState = {
   full_screen: false,
   hold_shift: false,
   test_sound: undefined,
+
+  active_loader: false,
 }
 
 export default function general (state = initialState, action) {
   switch (action.type) {
+    case 'set_active_loader': return { ...state, active_loader: action.payload }
     case 'M_ACTIVE': return { ...state, mobile: action.payload }
     case 'set_mobile_menu': return { ...state, active_window: action.payload }
     case 'set_use_width': return { ...state, use_width: action.payload }
