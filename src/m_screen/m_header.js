@@ -25,8 +25,17 @@ class Screen extends React.Component {
                 <div className="mobile_container">
                     <img className={(this.props.store.general.active_window === 'm_delivered' || this.props.store.general.active_window === 'm_not_delivered') ? "blue_arrow" : "none"} src={arrow} onClick={this.menu_active_arrow.bind(this, 'm_disp')} />
                     <img className={(this.props.store.general.active_window === 'm_disp') ? "blue_arrow" : "none"} src={arrow} onClick={this.menu_active_arrow.bind(this, 'm_storage')} />
-                    <img className={(this.props.store.general.active_window === 'Mmenu' || this.props.store.general.active_window === 'm_disp' || this.props.store.general.active_window === 'm_delivered' || this.props.store.general.active_window === 'm_not_delivered' || this.props.store.general.active_window === 'm_movement' || this.props.store.general.active_window === 'm_bounty' || this.props.store.general.active_window === 'm_manifest') ? "none" : "burger_menu"} src={ menu } onClick={ this.menu_active.bind(this) } />
+                    <img className={(this.props.store.general.active_window === 'Mmenu' 
+                    || this.props.store.general.active_window === 'm_disp' 
+                    || this.props.store.general.active_window === 'm_delivered' 
+                    || this.props.store.general.active_window === 'm_not_delivered' 
+                    || this.props.store.general.active_window === 'm_movement' 
+                    || this.props.store.general.active_window === 'm_bounty' 
+                    || this.props.store.general.active_window === 'm_manifest'    
+                    || this.props.store.general.active_window === 'm_check_print') ? "none" : "burger_menu"} src={ menu } onClick={ this.menu_active.bind(this) } />
                     <img className={(this.props.store.general.active_window === 'm_movement') ? "blue_arrow" : "none"} src={arrow} onClick={this.menu_active_arrow.bind(this, 'm_finance')} />
+                    <img className={(this.props.store.general.active_window === 'm_check_print') ? "blue_arrow" : "none"} src={arrow} onClick={this.menu_active_arrow.bind(this, 'm_bounty')} />
+                    
                     <img className={(this.props.store.general.active_window === 'm_bounty') ? "blue_arrow" : "none"} src={arrow} onClick={this.menu_active_arrow.bind(this, 'm_finance')} />
                     <img className={(this.props.store.general.active_window === 'm_manifest') ? "blue_arrow" : "none"} src={arrow} onClick={this.menu_active_arrow.bind(this, 'm_get_manifest')} />
                     <img className="header_mobile_logo" src={logo} />

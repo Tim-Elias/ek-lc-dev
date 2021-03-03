@@ -69,18 +69,13 @@ class Screen extends React.Component {
         }
         get_data('createcheck', data).then(
             (result) => {
-
-                const list_data = { userkey: this.props.store.login.userkey };
-
-                get_data('list', list_data).then(
-                    (result) => {
                         this.props.set_active_loader(false);
                         if(result == '') {
                             alert('ККМ Сервер недоступен :(')
                         } else {
                             this.props.check_disable();
                             this.props.set_print_check_disabled(false)
-                            this.props.set_QR(result)
+                            this.props.set_qr(result)
                             alert("Чек напечатан!");
 
                         }
@@ -92,13 +87,8 @@ class Screen extends React.Component {
                         alert(err);
                     }
                 );
-            },
-            (err) => {
-                this.props.set_active_window("m_disp");
-                alert(err);
-                console.log(err)
-            }
-        );
+           
+        
     }
 
     componentDidMount() {
@@ -123,7 +113,7 @@ class Screen extends React.Component {
                     <div ref={el => (this.componentRef = el)}>
                         
                         
-                        <QRCode value={this.props.store.disp.QR} />
+                        <QRCode value={this.props.store.disp.qr} />
                     </div>
                 </div>
                 </div>
@@ -197,7 +187,7 @@ export default connect(
     dispatch => ({
         
         set_print_check_disabled: (param) => { dispatch({ type: 'set_print_check_disabled', payload: param }); },
-        set_QR: (param) => { dispatch({ type: 'set_QR', payload: param }); },
+        set_qr: (param) => { dispatch({ type: 'set_qr', payload: param }); },
 
         set_active_loader: (param) => { dispatch({ type: 'set_active_loader', payload: param }); },
         set_disp_comment: (param) => { dispatch({ type: 'set_disp_comment', payload: param }); },

@@ -20,6 +20,7 @@ import home_ek from './home_ek'
 import test from './test'
 import storage_reciept from './storage_reciept'
 import movement from './movement'
+import check from './check'
 
 export default combineReducers({
 
@@ -43,5 +44,6 @@ export default combineReducers({
   test,
   storage_reciept,
   movement,
+  check,
   
 })

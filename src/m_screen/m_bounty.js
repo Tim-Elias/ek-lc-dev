@@ -12,6 +12,26 @@ class Screen extends React.Component {
         this.update();
     }
 
+    check_print = (num) => {
+        const data = {
+            userkey: this.props.store.login.userkey,
+            num: num,
+        }
+
+        get_data('getcheck', data).then(
+            (result) => {
+                console.log(result)
+                this.props.set_check_data(result);
+                this.props.set_active_window("m_check_print")
+                
+            },
+            (err) => {
+                
+                console.log(err)
+            }
+        );
+    }
+
     update = () => {
         this.props.set_active_loader(true);
         let from = this.props.store.movement.date_start.split("-").reverse().join("-") + "_" + "00:00:00";
@@ -66,7 +86,10 @@ class Screen extends React.Component {
                                 {item.date} <br/>
                                 {item.city} {item.address}<br/>
                                 {item.disp}<br/><br/>
+                                {item.check == 1 ? (<button onClick={this.check_print.bind(this,item.disp)}>Чек</button>):(null)}<br/><br/>
+
                                 Начислено: {item.summ} руб.<br/>
+
                             </div>
                         )}
                         </div>
@@ -83,6 +106,8 @@ export default connect(
         store: state
     }),
     dispatch => ({
+        set_active_window: (param) => { dispatch({ type: 'set_active_window', payload: param }); },
+        set_check_data: (param) => { dispatch({ type: 'set_check_data', payload: param }); },
         set_active_loader: (param) => { dispatch({ type: 'set_active_loader', payload: param }); },
         set_date_start: (param) => { dispatch({ type: 'set_date_start', payload: param }) },
         set_date_end: (param) => { dispatch({ type: 'set_date_end', payload: param }) },
