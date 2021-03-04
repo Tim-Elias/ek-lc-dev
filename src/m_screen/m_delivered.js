@@ -157,12 +157,13 @@ class Screen extends React.Component {
                     </div>
 
                     <div className="mobile_disp_button">
-                        {/* <button className={+this.props.store.disp.cash_accepted > 0 && this.props.store.login.kkm && this.props.store.disp.data.CheckEnabled ? "mobile_disp_button_item mobile_disp_button_item--blue" : "none"} onClick={this.receipt.bind(this)}>Чек</button> */}
-                        <CheckPrint />    
+                        <button className={+this.props.store.disp.cash_accepted > 0 && this.props.store.login.kkm && this.props.store.disp.data.CheckEnabled ? "mobile_disp_button_item mobile_disp_button_item--blue" : "none"} onClick={this.receipt.bind(this)}>Чек</button>
+                           
                     </div>
 
                         <div className="mobile_disp_button">
-                               <button className="mobile_disp_button_item mobile_disp_button_item--blue" disabled={this.props.store.disp.print_check_disabled}>Печать чека</button>
+                        <CheckPrint /> 
+                               {/* <button className="mobile_disp_button_item mobile_disp_button_item--blue" disabled={this.props.store.disp.print_check_disabled}>Печать чека</button> */}
                         </div>
 
                     <div className="mobile_disp_customer_data">
