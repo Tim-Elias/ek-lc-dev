@@ -13,9 +13,9 @@ class Screen extends React.Component {
     render() {
     let print_button
        if( this.props.store.check.check_data.qr == ""){
-            print_button = false;
+            print_button = true;
        } else {
-        print_button = true;
+        print_button = false;
        }
 
         return (
