@@ -43,7 +43,7 @@ class Screen extends React.Component {
                                 Поиск:
                             </div>
                             <input className="mobile_search_input" onChange={(e) => { this.props.set_search_storagre(e.target.value) }} />
-                            <img src={reload} className="reload" />
+                            {/* <img src={reload} className="reload" /> */}
                         </div>
 
                         {this.props.store.storage.list.filter((el) => {
