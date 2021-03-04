@@ -10,7 +10,6 @@ import Foto from './foto';
 import Wait from "../screen/wait";
 import ReactToPrint from 'react-to-print'
 import QRCode from 'qrcode.react';
-import './mobile_check_print.css'
 
 class Screen extends React.Component {
 
@@ -70,15 +69,19 @@ class Screen extends React.Component {
         }
         get_data('createcheck', data).then(
             (result) => {
+
+                const list_data = { userkey: this.props.store.login.userkey };
+
+                get_data('list', list_data).then(
+                    (result) => {
                         this.props.set_active_loader(false);
                         if(result == '') {
                             alert('ККМ Сервер недоступен :(')
                         } else {
                             this.props.check_disable();
                             this.props.set_print_check_disabled(false)
-                            this.props.set_qr(result)
+                            this.props.set_QR(result)
                             alert("Чек напечатан!");
-
                         }
                         
                     },
@@ -88,19 +91,22 @@ class Screen extends React.Component {
                         alert(err);
                     }
                 );
-           
-        
+            },
+            (err) => {
+                this.props.set_active_window("m_disp");
+                alert(err);
+                console.log(err)
+            }
+        );
     }
 
     componentDidMount() {
         this.props.set_disp_cash(this.props.store.disp.data.COD);
-
     }
 
     componentWillUnmount() {
         this.props.set_disp_FIO('');
         this.props.set_disp_comment('');
-        
     }
 
 
@@ -109,16 +115,13 @@ class Screen extends React.Component {
         return (
             <div>
                 <div>
-                
-                <div style={{ display: "none" }}>
-                    <div ref={el => (this.componentRef = el)}>
-                        
-                    <div className="check_print_qr">
-                        <QRCode value={this.props.store.disp.qr} />
+                    <div style={{ display: "none" }}>
+                        <div ref={el => (this.componentRef = el)}>
+                            <QRCode value={this.props.store.disp.QR} />
                         </div>
                     </div>
                 </div>
-                </div>
+
                 <div className={this.props.store.disp.popup ? "PopUp_container" : "none"} onClick={this.receipt.bind(this)}></div>
                 <div className={this.props.store.disp.popup ? "PopUp_window" : "none"}>
                     <p>Вы точно хотите распечатать чек?</p>
@@ -189,7 +192,7 @@ export default connect(
     dispatch => ({
         
         set_print_check_disabled: (param) => { dispatch({ type: 'set_print_check_disabled', payload: param }); },
-        set_qr: (param) => { dispatch({ type: 'set_qr', payload: param }); },
+        set_QR: (param) => { dispatch({ type: 'set_QR', payload: param }); },
 
         set_active_loader: (param) => { dispatch({ type: 'set_active_loader', payload: param }); },
         set_disp_comment: (param) => { dispatch({ type: 'set_disp_comment', payload: param }); },
