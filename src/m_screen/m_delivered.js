@@ -203,7 +203,7 @@ export default connect(
         
         set_print_check_disabled: (param) => { dispatch({ type: 'set_print_check_disabled', payload: param }); },
         set_QR: (param) => { dispatch({ type: 'set_QR', payload: param }); },
-
+        set_check_data: (param) => { dispatch({ type: 'set_check_data', payload: param }); },
         set_active_loader: (param) => { dispatch({ type: 'set_active_loader', payload: param }); },
         set_disp_comment: (param) => { dispatch({ type: 'set_disp_comment', payload: param }); },
         check_disable: () => { dispatch({ type: 'check_disable' }); },

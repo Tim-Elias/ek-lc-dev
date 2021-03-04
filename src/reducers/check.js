@@ -3,7 +3,7 @@ const initialState = {
     
     list: [],
     check_data: {
-        qr:"",
+        qr: "",
     },
 
 }
