@@ -28,6 +28,7 @@ class Screen extends React.Component {
 
                 <div style={{ display: "none" }}>
                     <div ref={el => (this.componentRef = el)}>
+                        
                         <div className="check_print_qr">
                             <div className="check_print_row check_print_row--center">{this.props.store.check.check_data.organization}</div>
                             <div className="check_print_row check_print_row--center">Кассовый чек</div>
