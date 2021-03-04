@@ -10,6 +10,7 @@ import Foto from './foto';
 import Wait from "../screen/wait";
 import ReactToPrint from 'react-to-print'
 import QRCode from 'qrcode.react';
+import CheckPrint from './m_check_print'
 
 class Screen extends React.Component {
 
@@ -81,7 +82,25 @@ class Screen extends React.Component {
                             this.props.check_disable();
                             this.props.set_print_check_disabled(false)
                             this.props.set_QR(result)
-                            alert("Чек напечатан!");
+                            alert("Чек пробит успешно!");
+                            // get_data()
+
+                            const check_data = {
+                                userkey: this.props.store.login.userkey,
+                                num: this.props.store.disp.data.Number,
+
+                            }
+
+                            get_data('getcheck', check_data).then(
+                                (result) => {
+                                    console.log(result)
+                                    this.props.set_check_data(result);
+                                },
+                                (err) => {
+
+                                    console.log(err)
+                                }
+                            );
                         }
                         
                     },
@@ -145,15 +164,12 @@ class Screen extends React.Component {
                     </div>
 
                     <div className="mobile_disp_button">
-                        <button className={+this.props.store.disp.cash_accepted > 0 && this.props.store.login.kkm && this.props.store.disp.data.CheckEnabled ? "mobile_disp_button_item mobile_disp_button_item--blue" : "none"} onClick={this.receipt.bind(this)}>Чек</button>
-                            
+                        {/* <button className={+this.props.store.disp.cash_accepted > 0 && this.props.store.login.kkm && this.props.store.disp.data.CheckEnabled ? "mobile_disp_button_item mobile_disp_button_item--blue" : "none"} onClick={this.receipt.bind(this)}>Чек</button> */}
+                        <CheckPrint />    
                     </div>
 
                         <div className="mobile_disp_button">
-                            <ReactToPrint
-                                trigger={() => <button className="mobile_disp_button_item mobile_disp_button_item--blue" disabled={this.props.store.disp.print_check_disabled}>Печать чека</button>}
-                                content={() => this.componentRef}
-                            />
+                               <button className="mobile_disp_button_item mobile_disp_button_item--blue" disabled={this.props.store.disp.print_check_disabled}>Печать чека</button>
                         </div>
 
                     <div className="mobile_disp_customer_data">

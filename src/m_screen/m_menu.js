@@ -66,6 +66,32 @@ class Screen extends React.Component {
                 (err) => { console.log(err) }
             );
         }
+
+        else if (window === 'm_check_print') {
+            const data = {
+                userkey: this.props.store.login.userkey,
+                num: "RUS19541649",
+                
+            }
+
+            get_data('getcheck', data).then(
+                (result) => {
+                    console.log(result)
+                    this.props.set_check_data(result);
+                    this.props.set_active_window("m_check_print")
+
+                },
+                (err) => {
+
+                    console.log(err)
+                }
+            );
+        }
+
+      
+        
+            
+        
     }
 
     logout = () => {
@@ -103,6 +129,7 @@ class Screen extends React.Component {
 export default withCookies(connect(
     (state, ownProps) => ({ store: state, cookies: ownProps.cookies }),
     dispatch => ({
+        set_check_data: (param) => { dispatch({ type: 'set_check_data', payload: param }); },
         web_active: (param) => { dispatch({ type: 'M_ACTIVE', payload: param }) },
         logout: () => { dispatch({ type: 'LOGOUT' }) },
         set_active_window: (param) => { dispatch({ type: 'set_active_window', payload: param }); },
