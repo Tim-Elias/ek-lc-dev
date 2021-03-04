@@ -19,17 +19,17 @@ class Screen extends React.Component {
        }
 
         return (
-            <div>
+            <div className="mobile_disp_button">
                 <ReactToPrint
 
-                    trigger={() => <button disabled={print_button}>Печать чека</button>}
+                    trigger={() => <button className={this.props.store.check.check_data.qr == "" ? ("mobile_disp_button_item mobile_disp_button_item--blue_nonactive") : ("mobile_disp_button_item mobile_disp_button_item--blue")} disabled={print_button}>Печать чека</button>}
                     content={() => this.componentRef}
                 />
-
 
                 <div style={{ display: "none" }}>
                     <div ref={el => (this.componentRef = el)}>
                         <div className="check_print_qr">
+                            <div className="check_print_row check_print_row--center">{this.props.store.check.check_data.organization}</div>
                             <div className="check_print_row check_print_row--center">Кассовый чек</div>
                             <div className="check_print_row">Приход</div>
                             <div className="check_print_row">Оплата по накладной {this.props.store.check.check_data.num}</div>
@@ -45,11 +45,11 @@ class Screen extends React.Component {
                                 <div>&equiv;{this.props.store.check.check_data.summ}</div>
                             </div>
                             <div className="check_print_row">
-                                <div>{this.props.store.check.check_data.cash_type == 0 ? "Наличными" : "Безналичными"}</div>
+                                <div>{this.props.store.check.check_data.cash_type == 1 ? "Наличными" : "Безналичными"}</div>
                                 <div>&equiv;{this.props.store.check.check_data.summ}</div>
                             </div>
                             <div className="check_print_row">
-                                <div>Поулчено</div>
+                                <div>Получено</div>
                                 <div>&equiv;{this.props.store.check.check_data.summ}</div>
                             </div>
                             <div className="check_print_row">
@@ -82,12 +82,12 @@ class Screen extends React.Component {
                                 <div>Смена №: </div>
                                 <div>{this.props.store.check.check_data.smena}</div>
                             </div>
-                            {/* <div className="check_print_row">
-                                <div>Чек №: </div>
-                                <div>{this.props.store.check.check_data}</div>
-                            </div> */}
                             <div className="check_print_row">
-                                <div>Дата и Время: </div>
+                                <div>Чек №: </div>
+                                <div>{this.props.store.check.check_data.check_number}</div>
+                            </div>
+                            <div className="check_print_row">
+                                <div>Дата Время: </div>
                                 <div>{this.props.store.check.check_data.date}</div>
                             </div>
                             <div className="check_print_row">

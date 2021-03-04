@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import './mobile.css';
 import './mobile_storage.css';
 import { get_data } from '../common/common_modules';
+import reload from '../common/reload.png';
 
 class Screen extends React.Component {
 
@@ -42,6 +43,7 @@ class Screen extends React.Component {
                                 Поиск:
                             </div>
                             <input className="mobile_search_input" onChange={(e) => { this.props.set_search_storagre(e.target.value) }} />
+                            {/* <img src={reload} className="reload" /> */}
                         </div>
 
                         {this.props.store.storage.list.filter((el) => {

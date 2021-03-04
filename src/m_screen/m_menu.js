@@ -65,13 +65,10 @@ class Screen extends React.Component {
                 },
                 (err) => { console.log(err) }
             );
-        }
-
-        else if (window === 'm_check_print') {
+        } else if (window === 'm_check_print') {
             const data = {
                 userkey: this.props.store.login.userkey,
                 num: "RUS19541649",
-                
             }
 
             get_data('getcheck', data).then(
@@ -79,7 +76,6 @@ class Screen extends React.Component {
                     console.log(result)
                     this.props.set_check_data(result);
                     this.props.set_active_window("m_check_print")
-
                 },
                 (err) => {
 
@@ -87,11 +83,6 @@ class Screen extends React.Component {
                 }
             );
         }
-
-      
-        
-            
-        
     }
 
     logout = () => {
@@ -113,11 +104,10 @@ class Screen extends React.Component {
                         <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'm_send_manifest')}>Отправка манифеста</button></li>
                         <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'storage_reciept')}>Приемка на склад</button></li>
                         <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'm_finance')}>Финансы</button></li>
-                        {/* <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'scanner')}>SCANNER</button></li>
-                        <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'position')}>position</button></li> */}
                         <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'setting')}>Настройки</button></li>
                         <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.mobile_version.bind(this)}>Web Версия</button></li>
                         <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.logout.bind(this)}>Выйти</button></li>
+                        {/* <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'm_check_print')}>check</button></li> */}
                     </ul>
                 </div>
             </nav>

@@ -133,7 +133,6 @@ class Screen extends React.Component {
         return (
             <div>
                 
-
                 <div className={this.props.store.disp.popup ? "PopUp_container" : "none"} onClick={this.receipt.bind(this)}></div>
                 <div className={this.props.store.disp.popup ? "PopUp_window" : "none"}>
                     <p>Вы точно хотите распечатать чек?</p>
@@ -158,13 +157,10 @@ class Screen extends React.Component {
 
                     <div className="mobile_disp_button">
                         <button className={+this.props.store.disp.cash_accepted > 0 && this.props.store.login.kkm && this.props.store.disp.data.CheckEnabled ? "mobile_disp_button_item mobile_disp_button_item--blue" : "none"} onClick={this.receipt.bind(this)}>Чек</button>
-                           
                     </div>
 
-                        <div className="mobile_disp_button">
-                        <CheckPrint /> 
-                               {/* <button className="mobile_disp_button_item mobile_disp_button_item--blue" disabled={this.props.store.disp.print_check_disabled}>Печать чека</button> */}
-                        </div>
+                    <CheckPrint /> 
+                    {/* <button className="mobile_disp_button_item mobile_disp_button_item--blue" disabled={this.props.store.disp.print_check_disabled}>Печать чека</button> */}
 
                     <div className="mobile_disp_customer_data">
                         <div className="mobile_del_data_label">Номер накладной:</div>
