@@ -45,7 +45,7 @@ class Screen extends React.Component {
                                 <div>&equiv;{this.props.store.check.check_data.summ}</div>
                             </div>
                             <div className="check_print_row">
-                                <div>{this.props.store.check.check_data.cash_type == 1 ? "Наличными" : "Безналичными"}</div>
+                                <div>{this.props.store.check.check_data.type == 0 ? ("Наличными") : ("Безналичными")}</div>
                                 <div>&equiv;{this.props.store.check.check_data.summ}</div>
                             </div>
                             <div className="check_print_row">
@@ -79,11 +79,11 @@ class Screen extends React.Component {
                                 <div>{this.props.store.check.check_data.zn}</div>
                             </div>
                             <div className="check_print_row">
-                                <div>Смена №: </div>
+                                <div>Смена №</div>
                                 <div>{this.props.store.check.check_data.smena}</div>
                             </div>
                             <div className="check_print_row">
-                                <div>Чек №: </div>
+                                <div>Чек №</div>
                                 <div>{this.props.store.check.check_data.check_number}</div>
                             </div>
                             <div className="check_print_row">
