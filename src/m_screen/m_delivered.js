@@ -8,8 +8,7 @@ import './mobile_disp.css';
 import './popup.css';
 import Foto from './foto';
 import Wait from "../screen/wait";
-import ReactToPrint from 'react-to-print'
-import QRCode from 'qrcode.react';
+
 import CheckPrint from './m_check_print'
 
 class Screen extends React.Component {
@@ -133,13 +132,7 @@ class Screen extends React.Component {
 
         return (
             <div>
-                <div>
-                    <div style={{ display: "none" }}>
-                        <div ref={el => (this.componentRef = el)}>
-                            <QRCode value={this.props.store.disp.QR} />
-                        </div>
-                    </div>
-                </div>
+                
 
                 <div className={this.props.store.disp.popup ? "PopUp_container" : "none"} onClick={this.receipt.bind(this)}></div>
                 <div className={this.props.store.disp.popup ? "PopUp_window" : "none"}>
