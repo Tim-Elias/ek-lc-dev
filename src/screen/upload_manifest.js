@@ -46,6 +46,7 @@ const translate = {
 class Screen extends React.Component {
 
   convert_data = () => {
+    this.props.reset_disp_data()
     const it = this.props.store.upload_manifest.import_template
     const dt = this.props.store.upload_manifest.default_template
     let consolidate_data = []
@@ -126,7 +127,11 @@ class Screen extends React.Component {
 
     sourse_data = this.props.store.upload_manifest.data
     sourse_data.forEach((el, index, arr) => {
+      
       let push_it = true
+      if (el.length == 1) {
+        push_it = false
+      }
       let CurIndex
 
       if (this.props.store.upload_manifest.upload_in_one.value && this.props.store.upload_manifest.consolidate_checkbox_index !== 0 && this.props.store.upload_manifest.import_template.ConsolidateImportTemplate !== 0 && consolidate_data.length !== 0) {
@@ -273,7 +278,7 @@ class Screen extends React.Component {
       }
       if (push_it) {
         data.push(disp)
-      }
+      } 
 
 
 
@@ -984,6 +989,7 @@ export default connect(
     set_default_template: (param) => { dispatch({ type: 'set_default_template', payload: param }) },
     set_import_template: (param) => { dispatch({ type: 'set_import_template', payload: param }) },
     set_disp_data: (param) => { dispatch({ type: 'set_disp_data', payload: param }) },
+    reset_disp_data: () => { dispatch({ type: 'reset_disp_data' }) },
     set_disp_status: (param) => { dispatch({ type: 'set_disp_status', payload: param }) },
     set_upload_in_one: (param) => { dispatch({ type: 'set_upload_in_one', payload: param }) },
     set_upload_manifest_open_modal_dt: (param) => { dispatch({ type: 'set_upload_manifest_open_modal_dt', payload: param }) },

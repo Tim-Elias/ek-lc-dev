@@ -31,6 +31,7 @@ export default function dispatch(state = initialState, action) {
     case 'set_upload_manifest_open_modal_dt': return { ...state, open_modal_dt: action.payload }
     case 'set_default_template': return { ...state, default_template: action.payload }
     case 'set_disp_data': return { ...state, disp_data: [...state.disp_data.concat(action.payload)] }
+    case 'reset_disp_data': return { ...state, disp_data: []}
     case 'upload_manifest_check_template_checkbox': return { ...state, disp_template_list: [...state.disp_template_list.map((el) => { if (el.Key === action.payload) { return { ...el, selected: !el.selected } } else { return el } })] }
     case 'upload_manifest_reset_template_checkbox': return { ...state, disp_template_list: [...state.disp_template_list.map((el) => { return { ...el, selected: false } })] }
     case 'upload_manifest_remove_disp': return { ...state, disp_data: state.disp_data.filter(el => el.Key !== action.payload) }
