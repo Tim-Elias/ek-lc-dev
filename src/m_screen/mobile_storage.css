@@ -6,7 +6,7 @@
     border: 3px solid #727272;
     text-align: left;
     padding: 10px;
-    font-size: 12px;
+    font-size: 15px;
     display: flex;
     justify-content: space-between;
     margin: 0 0 8px 0;
@@ -25,7 +25,7 @@
 }
 
 .mobile_storage_field {
-    margin: 5px 0 0 0;
+    margin: 3px 0 0 0;
 }
 .mobile_storage_field:first-child {
     margin: 0;

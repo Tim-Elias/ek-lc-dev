@@ -110,6 +110,7 @@ class Screen extends React.Component {
                                     <div className="mobile_storage_field">{disp.Type} {disp.Number}</div>
                                     <div className="mobile_storage_field">{disp.reccity} {disp.Adress}</div>
                                     <div className="mobile_storage_field">{disp.Phone} {disp.Person}</div>
+                                    <div className="mobile_storage_field">{disp.AddInfo}</div>
                                 </div>
                                 <div className="mobile_storage_item_row">
                                     <div className="mobile_storage_field">{disp.Status}<br />{disp.Time}</div>

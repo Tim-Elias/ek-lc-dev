@@ -69,44 +69,31 @@ class Screen extends React.Component {
                             <button className="mobile_disp_button_item" onClick={this.settings_window.bind(this, 'm_delivered')}>Доставлено</button>
                             <button className="mobile_disp_button_item--not mobile_disp_button_item" onClick={this.settings_window.bind(this, 'm_not_delivered')}>Не доставлено</button>
                         </div>)
-                    : (null)}
-
-                    
+                    : (null)}                    
 
                     <div className="disp_customer_data">
                         <div className="mobile_disp_data_label">Заказчик:</div>
                         <div className="mobile_disp_data_el">{this.props.store.disp.data.Customer}</div>
-                        <div className="mobile_disp_data_label">Срочность:</div>
-                        <div className="mobile_disp_data_el">{this.props.store.disp.data.DelType}</div>
-                        <div className="mobile_disp_data_label">Тип оплаты:</div>
-                        <div className="mobile_disp_data_el">{this.props.store.disp.data.PayType}</div>
-                        <div className="mobile_disp_data_label">Ответственный менеджер:</div>
-                        <div className="mobile_disp_data_el">{this.props.store.disp.data.Manager}</div>
+                        {this.props.store.disp.data.Type === 'Доставка' ? (null) : (
+                            <div>
+                                <div className="mobile_disp_data_label">Срочность:</div>
+                                <div className="mobile_disp_data_el">{this.props.store.disp.data.DelType}</div>
+                            </div>
+                        )}
+                        {this.props.store.disp.data.Type === 'Доставка' ? (null) : (
+                            <div>
+                                <div className="mobile_disp_data_label">Тип оплаты:</div>
+                                <div className="mobile_disp_data_el">{this.props.store.disp.data.PayType}</div>
+                            </div>
+                        )}
+                        {this.props.store.disp.data.Type === 'Доставка' ? (null) : (
+                            <div>
+                                <div className="mobile_disp_data_label">Ответственный менеджер:</div>
+                                <div className="mobile_disp_data_el">{this.props.store.disp.data.Manager}</div>
+                            </div>
+                        )}
                         <div className="mobile_disp_data_label">К оплате:</div>
                         <div className="mobile_disp_data_el">{this.props.store.disp.data.COD}</div>
-                    </div>
-
-                    <div className="mobile_disp_address_data">
-                        <div className="disp_address_data_header">Данные отправителя</div>
-
-                        <div className="disp_address_data_el">
-                            <div className="mobile_disp_data_label"> Город:</div>
-                            <div className="mobile_disp_data_el">{this.props.store.disp.data.SebdCity}</div>
-                            <div className="mobile_disp_data_label"> Адрес:</div>
-                            <div className="mobile_disp_data_el">{this.props.store.disp.data.SendAdress}</div>
-                            <div className="mobile_disp_data_label"> Компания:</div>
-                            <div className="mobile_disp_data_el">{this.props.store.disp.data.SendCompany}</div>
-                            <div className="mobile_disp_data_label"> Телефон:</div>
-                            <div className="mobile_disp_data_el">
-                                {SendPhoneList.map((item, index) => 
-                                    <div key={index}><a href={"tel:" + item}>{item}</a>{index != SendPhoneList.length - 1 ? (', ') : (null)}</div>
-                                )}
-                            </div>
-                            <div className="mobile_disp_data_label"> Контактное лицо:</div>
-                            <div className="mobile_disp_data_el">{this.props.store.disp.data.SendPerson}</div>
-                            <div className="mobile_disp_data_label"> Доп. информация:</div>
-                            <div className="mobile_disp_data_el">{this.props.store.disp.data.SendAddInfo}</div>
-                        </div>
                     </div>
 
                     <div className="mobile_disp_address_data">
@@ -129,10 +116,31 @@ class Screen extends React.Component {
                             <div className="mobile_disp_data_el">{this.props.store.disp.data.RecPerson}</div>
                             <div className="mobile_disp_data_label"> Доп. информация:</div>
                             <div className="mobile_disp_data_el">{this.props.store.disp.data.RecAddInfo}</div>
-                            {this.props.store.login.disp_map ? (<div className="mobile_disp_data_label"> Широта:</div>) : (null)}
-                            {this.props.store.login.disp_map ? (<div className="mobile_disp_data_el">{this.props.store.disp.data.Lat}</div>) : (null)}
-                            {this.props.store.login.disp_map ? (<div className="mobile_disp_data_label"> Долгота:</div>) : (null)}
-                            {this.props.store.login.disp_map ? (<div className="mobile_disp_data_el">{this.props.store.disp.data.Lng}</div>) : (null)}
+                            <div className="mobile_disp_data_label"> Время:</div>
+                            <div className="mobile_disp_data_el">{this.props.store.disp.data.Time}</div>
+                        </div>
+                    </div>
+
+                    <div className="mobile_disp_address_data">
+                        <div className="disp_address_data_header">Данные отправителя</div>
+
+                        <div className="disp_address_data_el">
+                            <div className="mobile_disp_data_label"> Город:</div>
+                            <div className="mobile_disp_data_el">{this.props.store.disp.data.SebdCity}</div>
+                            <div className="mobile_disp_data_label"> Адрес:</div>
+                            <div className="mobile_disp_data_el">{this.props.store.disp.data.SendAdress}</div>
+                            <div className="mobile_disp_data_label"> Компания:</div>
+                            <div className="mobile_disp_data_el">{this.props.store.disp.data.SendCompany}</div>
+                            <div className="mobile_disp_data_label"> Телефон:</div>
+                            <div className="mobile_disp_data_el">
+                                {SendPhoneList.map((item, index) => 
+                                    <div key={index}><a href={"tel:" + item}>{item}</a>{index != SendPhoneList.length - 1 ? (', ') : (null)}</div>
+                                )}
+                            </div>
+                            <div className="mobile_disp_data_label"> Контактное лицо:</div>
+                            <div className="mobile_disp_data_el">{this.props.store.disp.data.SendPerson}</div>
+                            <div className="mobile_disp_data_label"> Доп. информация:</div>
+                            <div className="mobile_disp_data_el">{this.props.store.disp.data.SendAddInfo}</div>
                         </div>
                     </div>
 
@@ -162,6 +170,13 @@ class Screen extends React.Component {
                         </div>            
                     </div>
 
+                    <div className={this.props.store.disp.data.Type === 'Доставка' ? ("disp_customer_data") : ("none")}>
+                        <div className="mobile_disp_data_label">Тип оплаты:</div>
+                        <div className="mobile_disp_data_el">{this.props.store.disp.data.PayType}</div>
+                        <div className="mobile_disp_data_label">Тип доставки:</div>
+                        <div className="mobile_disp_data_el">{this.props.store.disp.data.DelMethod}</div>
+                    </div>
+                    
                     <div className="mobile_disp_address_data">
                         <div className="disp_address_data_header disp_address_data_header--green">Грузы</div>
                         <div className="disp_address_data_el mobile_disp_address_data_el">

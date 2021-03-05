@@ -22,7 +22,6 @@ class Screen extends React.Component {
                     this.props.storage_reciept_set_storage(result.storage);
                     this.props.storage_reciept_set_zone_list(result.zone_list);
                     this.props.set_active_window(window);
-
                 },
                 (err) => {
                     console.log(err)
@@ -56,23 +55,6 @@ class Screen extends React.Component {
         } else if (window === 'm_storage') {
             this.props.set_active_window("m_storage");
             
-        } else if (window === 'm_check_print') {
-            const data = {
-                userkey: this.props.store.login.userkey,
-                num: "RUS19541649",
-            }
-
-            get_data('getcheck', data).then(
-                (result) => {
-                    console.log(result)
-                    this.props.set_check_data(result);
-                    this.props.set_active_window("m_check_print")
-                },
-                (err) => {
-
-                    console.log(err)
-                }
-            );
         }
     }
 
