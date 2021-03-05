@@ -22,8 +22,32 @@ import MBounty from './m_bounty';
 import MScanner from './scanner'; 
 import MPosition from './position'; 
 import MCheckPrint from './m_check_print';
+import { withCookies } from 'react-cookie';
 
 class Screen extends React.Component {
+
+    componentDidMount() {
+        if (this.props.store.general.active_window === "home") {
+            
+            const wind = this.props.cookies.get('window')
+            if (wind == undefined){
+                this.props.set_active_window("m_storage")
+            }else{
+            this.props.set_active_window(wind)
+            if(wind === 'm_disp') {
+
+                const data = {
+                    userkey: this.props.store.login.userkey,
+                    status: this.props.cookies.get('status'),
+                    num: this.props.cookies.get('num'),
+                };
+
+                this.props.set_key(data);
+            }
+        }
+        }
+    }
+
 
     render() {
 
@@ -55,12 +79,13 @@ class Screen extends React.Component {
 };
 
 
-export default connect(
+export default withCookies(connect(
     state => ({
         store: state
     }),
     dispatch => ({
+        set_active_window: (param) => { dispatch({ type: 'set_active_window', payload: param }); },
+        set_key: (param) => { dispatch({ type: 'set_key', payload: param }) },
         login: (param) => { dispatch({ type: 'LOGIN', payload: param }) },
     })
-
-)(Screen);
+)(Screen));

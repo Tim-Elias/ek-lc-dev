@@ -8,7 +8,7 @@ import './mobile_disp.css';
 import './popup.css';
 import Foto from './foto';
 import Wait from "../screen/wait";
-
+import { withCookies } from 'react-cookie';
 import CheckPrint from './m_check_print'
 
 class Screen extends React.Component {
@@ -35,6 +35,9 @@ class Screen extends React.Component {
 
                 get_data('list', list_data).then(
                     (result) => {
+                        this.props.cookies.remove('num');
+                        this.props.cookies.remove('status');
+                        this.props.cookies.remove('window');
                         alert("Данные отправлены!")
                         this.props.set_active_window("m_storage");
                     },
@@ -133,7 +136,6 @@ class Screen extends React.Component {
 
         return (
             <div>
-                
                 <div className={this.props.store.disp.popup ? "PopUp_container" : "none"} onClick={this.receipt.bind(this)}></div>
                 <div className={this.props.store.disp.popup ? "PopUp_window" : "none"}>
                     <p>Вы точно хотите распечатать чек?</p>
@@ -192,7 +194,7 @@ class Screen extends React.Component {
 };
 
 
-export default connect(
+export default withCookies(connect(
     state => ({
         store: state
     }),
@@ -214,4 +216,4 @@ export default connect(
         set_popup: (param) => { dispatch({ type: 'set_popup', payload: param }); }, 
     })
 
-)(Screen);
+)(Screen));

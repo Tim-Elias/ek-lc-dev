@@ -60,9 +60,9 @@ class Screen extends React.Component {
                         || this.props.store.login.default_send !== this.props.store.login.original_data.default_send
                         || this.props.store.login.default_rec !== this.props.store.login.original_data.default_rec
                         || this.props.store.login.phone !== this.props.store.login.original_data.phone ? (
-                            <Button style={{ margin: '0 5px', padding: '8px' }} size='mini' onClick={this.save_changes_user_data.bind(this)}>Сохранить изменения</Button>
+                            <Button style={{ margin: '0 5px', padding: '8px' }} onClick={this.save_changes_user_data.bind(this)}>Сохранить изменения</Button>
                         ) : (
-                            <Button style={{ margin: '0 5px', padding: '8px' }} size='mini' disabled>Сохранить изменения</Button>
+                            <Button style={{ margin: '0 5px', padding: '8px' }} disabled>Сохранить изменения</Button>
                     )}</div>
                 </div>
                 <div className="setting_general_data setting_general_data_mobile">
@@ -74,7 +74,7 @@ class Screen extends React.Component {
 
                 <div className="mobile_disp_button">
                     <ReactToPrint
-                        trigger={() => <button className="">Тестовая печать</button>}
+                        trigger={() => <Button>Тестовая печать</Button>}
                         content={() => this.componentRef}
                     />
 

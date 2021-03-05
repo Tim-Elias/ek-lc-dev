@@ -5,6 +5,7 @@ import { get_data } from '../common/common_modules';
 import { Table, Button, Icon, Modal, Loader, Dimmer } from 'semantic-ui-react';
 import './mobile_disp.css';
 import Foto from './foto';
+import { withCookies } from 'react-cookie';
 
 class Screen extends React.Component {
 
@@ -25,6 +26,9 @@ class Screen extends React.Component {
 
                 get_data('list', list_data).then(
                     (result) => {
+                        this.props.cookies.remove('num');
+                        this.props.cookies.remove('status');
+                        this.props.cookies.remove('window');
                         console.log(result);
                         alert("Данные отправлены!")
                         this.props.set_active_window("m_storage");
@@ -70,7 +74,7 @@ class Screen extends React.Component {
 };
 
 
-export default connect(
+export default withCookies(connect(
     state => ({
         store: state
     }),
@@ -78,5 +82,4 @@ export default connect(
         set_disp_comment: (param) => { dispatch({ type: 'set_disp_comment', payload: param }); },
         set_active_window: (param) => { dispatch({ type: 'set_active_window', payload: param }); },
     })
-
-)(Screen);
+)(Screen));

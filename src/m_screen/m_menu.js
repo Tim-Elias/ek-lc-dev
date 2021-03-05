@@ -54,17 +54,8 @@ class Screen extends React.Component {
                 (err) => { console.log(err) }
             );
         } else if (window === 'm_storage') {
-            this.props.set_active_window("wait");
-            const list_data = { userkey: this.props.store.login.userkey };
-
-            get_data('list', list_data).then(
-                (result) => {
-                    this.props.set_list_storage(result);
-                    this.props.set_active_window("m_storage");
-                    this.props.set_search_storagre("");
-                },
-                (err) => { console.log(err) }
-            );
+            this.props.set_active_window("m_storage");
+            
         } else if (window === 'm_check_print') {
             const data = {
                 userkey: this.props.store.login.userkey,
@@ -107,7 +98,7 @@ class Screen extends React.Component {
                         <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'setting')}>Настройки</button></li>
                         <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.mobile_version.bind(this)}>Web Версия</button></li>
                         <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.logout.bind(this)}>Выйти</button></li>
-                        {/* <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'm_check_print')}>check</button></li> */}
+                        {/* <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'position')}>test</button></li> */}
                     </ul>
                 </div>
             </nav>

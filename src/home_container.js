@@ -15,8 +15,11 @@ class Screen extends Component {
     
   render() {
     
+
+
     if(!this.props.store.login.logged){
        const username = this.props.cookies.get('username') 
+
         if(username!==undefined){
             //console.log('un')
             const authdata = {
@@ -28,9 +31,9 @@ class Screen extends Component {
             get_data('autorization', authdata).then(
                 (result) => {
                   //console.log(result)
-                    this.props.login(result);
-                    //this.get_list(result.userkey);
-                    this.props.cookies.set('userkey',result.userkey)
+                  this.props.login(result);
+                  //this.get_list(result.userkey);
+                  this.props.cookies.set('userkey', result.userkey, { maxAge: 30 })
                 },
                 (err) => { 
                     console.log(err)
@@ -83,7 +86,7 @@ class Screen extends Component {
 
             {this.props.store.general.full_screen ? (<Content />):(
             <div className="grid-container">
-          
+            
             <Header />
             {this.props.store.login.logged ? (<div>
               {this.props.store.general.hidemenu ?(

@@ -29,7 +29,14 @@ const initialState = {
 
   is_new: false,
   action: null,
-  data: {},
+  key: {
+    num:"",
+    status:"",
+  },
+  data: {
+    SendPhone:"",
+    RecPhone:"",
+  },
   cargo: [],
   show_history: false,
   history: [],
@@ -47,6 +54,8 @@ const initialState = {
 
 export default function dispatch (state = initialState, action) {
   switch (action.type) {
+    case 'set_key': return { ...state, key: { ...state.key, num: action.payload.num, status: action.payload.status } }
+
     case 'set_popup': return { ...state, popup: action.payload }
     case 'set_qr': return { ...state, qr: action.payload }
     case 'set_print_check_disabled': return { ...state, print_check_disabled: action.payload }

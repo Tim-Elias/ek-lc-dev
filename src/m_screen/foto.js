@@ -14,10 +14,7 @@ class Screen extends React.Component {
     }
 
     componentDidMount() {
-        let facingMode = FACING_MODES.ENVIRONMENT;
-        let idealResolution = { width: 1280, height: 1280 };
         this.cameraPhoto = new CameraPhoto(this.videoRef.current);
-        this.startCamera(facingMode, idealResolution);
     }
 
     componentWillUnmount() {

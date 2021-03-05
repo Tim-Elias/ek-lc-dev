@@ -3,13 +3,14 @@
 }
 
 .mobile_storage_item {
-    border: 1px solid #f0f0f0;
+    border: 3px solid #727272;
     text-align: left;
     padding: 10px;
     font-size: 12px;
     display: flex;
     justify-content: space-between;
-    margin: 0 0 5px 0;
+    margin: 0 0 8px 0;
+    border-radius: 5px;
 }
 .mobile_storage_item:last-child {
     margin: 0;
@@ -17,6 +18,10 @@
 
 .mobile_storage_item--canceling {
     background-color: red;
+}
+
+.mobile_storage_item--applications {
+    background-color: #dcffdc;
 }
 
 .mobile_storage_field {
@@ -38,6 +43,7 @@
     display: flex;
     flex-direction: row;
     margin: 0 0 10px 0;
+    align-items: end;
 }
 
 .mobile_search_label {
@@ -51,6 +57,7 @@
     font-size: 15px;
 }
 
-.reload {
-    height: 30px;
+.update {
+    height: 25px;
+    margin: 0 0 0 10px;
 }
