@@ -9,6 +9,10 @@ import Wait from "../screen/wait";
 
 class Screen extends React.Component {
 
+    settings_window = (window) => {
+        this.props.set_active_window(window);
+    }
+
     tr_click = async (disp) => {
 
         const data = {
@@ -75,6 +79,12 @@ class Screen extends React.Component {
     }
 
     render() {
+
+        window.history.pushState(null, "", window.location.href);
+        window.onpopstate = function () {
+            this.settings_window('Mmenu')
+            window.history.pushState(null, "", window.location.href);
+        }.bind(this);
 
         return (
             <div>

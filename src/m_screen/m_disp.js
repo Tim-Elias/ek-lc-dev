@@ -39,6 +39,11 @@ class Screen extends React.Component {
     }
 
     render() {
+        window.history.pushState(null, "", window.location.href);
+        window.onpopstate = function () {
+            this.settings_window('m_storage')
+            window.history.pushState(null, "", window.location.href);
+        }.bind(this);
 
         let SendPhoneList = this.props.store.disp.data.SendPhone.split(',');// для нескольких телефонов
         let RecPhoneList = this.props.store.disp.data.RecPhone.split(',');// для нескольких телефонов

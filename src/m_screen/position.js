@@ -1,17 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import foto from '../common/foto.png';
-import { browserHistory } from 'react-router';
 
 class Screen extends Component {
-    constructor(props, context) {
-        super(props, context);
-
-    }
-
-    // onDragEnd = (result: any) => {
-    //     console.log("Элемент отпущен!");
-    // }
 
     // pos = () => {
     //     navigator.geolocation.getCurrentPosition(
@@ -22,22 +13,18 @@ class Screen extends Component {
     //     );
     // }
 
-    componentDidMount() {
-        this._isMounted = true;
-        window.onpopstate = () => {
-            if (this._isMounted) {
-                const { hash } = this.location;
-                if (hash.indexOf('home') > -1 && this.state.value !== 0)
-                    alert("it's worked!!!")
-                if (hash.indexOf('users') > -1 && this.state.value !== 1)
-                    alert("it's worked!!!")
-                if (hash.indexOf('data') > -1 && this.state.value !== 2)
-                    alert("it's worked!!!")
-            }
-        }
-    }
-
     render() {
+        
+        // window.onbeforeunload = function () { 
+        //     return (
+        //         "Your work will be lost."
+        //     )
+        // };
+
+        window.history.pushState(null, "", window.location.href);
+        window.onpopstate = function () {
+            window.history.pushState(null, "", window.location.href);
+        };
 
         return (
             <div>

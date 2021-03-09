@@ -13,6 +13,10 @@ import CheckPrint from './m_check_print'
 
 class Screen extends React.Component {
 
+    settings_window = (window) => {
+        this.props.set_active_window(window);
+    }
+
     sendpod = (type) => {
         this.props.set_active_window("wait");
         let barcode = this.props.store.disp.foto.split(',').pop();
@@ -133,6 +137,12 @@ class Screen extends React.Component {
 
 
     render() {
+
+        window.history.pushState(null, "", window.location.href);
+        window.onpopstate = function () {
+            this.settings_window('m_disp')
+            window.history.pushState(null, "", window.location.href);
+        }.bind(this);
 
         return (
             <div>

@@ -48,6 +48,12 @@ class Screen extends React.Component {
 
     render() {
 
+        window.history.pushState(null, "", window.location.href);
+        window.onpopstate = function () {
+            this.active_window('Mmenu')
+            window.history.pushState(null, "", window.location.href);
+        }.bind(this);
+
         return (
             <div>
                 <div className="mobile_heading">

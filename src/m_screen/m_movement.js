@@ -9,6 +9,10 @@ import Wait from "../screen/wait";
 
 class Screen extends React.Component {
 
+    settings_window = (window) => {
+        this.props.set_active_window(window);
+    }
+
     componentDidMount() {
         this.update();
     }
@@ -39,6 +43,12 @@ class Screen extends React.Component {
     };
 
     render() {
+
+        window.history.pushState(null, "", window.location.href);
+        window.onpopstate = function () {
+            this.settings_window('m_finance')
+            window.history.pushState(null, "", window.location.href);
+        }.bind(this);
 
         return (
             <div>
