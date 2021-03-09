@@ -30,6 +30,7 @@ class Screen extends Component {
             <div>
                 {/* <button onClick={this.pos.bind(this)}>Где я?</button> */}
                 <button>back</button>
+                <img draggable="true" src={foto} />
             </div>
         )
     }
