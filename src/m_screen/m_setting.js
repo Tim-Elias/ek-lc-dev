@@ -10,6 +10,9 @@ import ReactToPrint from 'react-to-print';
 
 class Screen extends React.Component {
 
+    settings_window = (window) => {
+        this.props.set_active_window(window);
+    }
 
     save_changes_user_data = () => {
         const data = {
@@ -38,6 +41,13 @@ class Screen extends React.Component {
     }
 
     render() {
+
+        window.history.pushState(null, "", window.location.href);
+        window.onpopstate = function () {
+            this.settings_window('Mmenu')
+            window.history.pushState(null, "", window.location.href);
+        }.bind(this);
+
         document.onkeydown = function (event) { }
         let default_send_template = {}
         let default_rec_template = {}
@@ -98,6 +108,6 @@ export default connect(
         set_user_default_send: (param) => { dispatch({ type: 'set_user_default_send', payload: param }) },
         set_user_default_rec: (param) => { dispatch({ type: 'set_user_default_rec', payload: param }) },
         save_changes_user_data: (param) => { dispatch({ type: 'save_changes_user_data', payload: param }) },
-
+        set_active_window: (param) => { dispatch({ type: 'set_active_window', payload: param }) },
     })
 )(Screen);
