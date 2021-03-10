@@ -62,11 +62,15 @@ class Screen extends React.Component {
         return (
             <div>
 
-                <div className="mobile_disp_customer_data">
-                    <div className="mobile_del_data_label">Номер накладной:</div>
-                    <div className="mobile_del_input">{this.props.store.disp.data.Number}</div>
-                    <div className="mobile_del_data_label">Комментарий</div>
-                    <input onChange={e => this.props.set_disp_comment(e.target.value)} value={this.props.store.disp.comment} className="mobile_del_input" type="text"></input>
+                <div className="mobile_container">
+                    <div className="mobile_del_row">
+                        <div className="mobile_del_data_label">Номер накладной:</div>
+                        <div className="mobile_del_input">{this.props.store.disp.data.Number}</div>
+                    </div>
+                    <div className="mobile_del_row">
+                        <div className="mobile_del_data_label">Комментарий</div>
+                        <input onChange={e => this.props.set_disp_comment(e.target.value)} value={this.props.store.disp.comment} className="mobile_del_input" type="text"></input>
+                    </div>
                 </div>
 
                 <div className="mobile_container">

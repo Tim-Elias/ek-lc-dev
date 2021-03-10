@@ -169,7 +169,9 @@ class Screen extends React.Component {
                     </div>
 
                     <div className="mobile_disp_button">
-                            <button className={+this.props.store.disp.cash_accepted > 0 && this.props.store.login.kkm && this.props.store.disp.data.CheckEnabled && this.props.store.disp.data.ChangeSumm === false ? ("mobile_disp_button_item mobile_disp_button_item--blue") : ("none")} onClick={this.receipt.bind(this)}>Чек</button>
+                        <button className={+this.props.store.disp.cash_accepted > 0 && this.props.store.login.kkm && this.props.store.disp.data.CheckEnabled && this.props.store.disp.data.ChangeSumm == false ? ("mobile_disp_button_item mobile_disp_button_item--blue") : ("none")} onClick={this.receipt.bind(this)}>
+                            Чек
+                        </button>
                     </div>
 
                     <div className={this.props.store.disp.data.ChangeSumm === false ? ("") : ("none")}>
@@ -177,24 +179,45 @@ class Screen extends React.Component {
                     </div>
                     {/* <button className="mobile_disp_button_item mobile_disp_button_item--blue" disabled={this.props.store.disp.print_check_disabled}>Печать чека</button> */}
 
-                    <div className="mobile_disp_customer_data">
-                        <div className="mobile_del_data_label">Номер накладной:</div>
-                        <div className="mobile_del_input">{this.props.store.disp.data.Number}</div>
-                        <div className="mobile_del_data_label">Дата доставки</div>
-                        <input onChange={e => this.props.set_disp_date(e.target.value)} value={this.props.store.disp.delivery_date} className="mobile_del_input" type="date"></input>
-                        <div className="mobile_del_data_label">Время доставки</div>
-                        <input onChange={e => this.props.set_disp_time(e.target.value)} value={this.props.store.disp.delivery_time} className="mobile_del_input" type="time"></input>
-                        <div className="mobile_del_data_label">ФИО получателя</div>
-                        <input onChange={e => this.props.set_disp_FIO(e.target.value)} value={this.props.store.disp.FIO_Customer} className="mobile_del_input" type="text"></input>
-                        <div className="mobile_del_data_label">Тип оплаты</div>
-                        <select onChange={e => { this.props.set_disp_type_cash(e.target.value)}}>
-                            <option value={false}>Наличные</option>
-                            <option value={true}>Безналичный</option>
-                        </select>
-                        <div className="mobile_del_data_label">Принятая сумма</div>
-                        <input value={this.props.store.disp.cash_accepted} onChange={e => this.props.set_disp_cash(e.target.value)} className="mobile_del_input" type="number"></input>
-                        <div className="mobile_del_data_label">Комментарий</div>
-                        <input onChange={e => this.props.set_disp_comment(e.target.value)} value={this.props.store.disp.comment} className="mobile_del_input" type="text"></input>
+                    <div className="mobile_container">
+                        <div className="mobile_del_row">
+                            <div className="mobile_del_data_label">Номер накладной:</div>
+                            <div className="mobile_del_input">{this.props.store.disp.data.Number}</div>
+                        </div>
+                        
+                        <div className="mobile_del_row">
+                            <div className="mobile_del_data_label">Дата доставки</div>
+                            <input onChange={e => this.props.set_disp_date(e.target.value)} value={this.props.store.disp.delivery_date} className="mobile_del_input" type="date"></input>
+                        </div>
+
+                        <div className="mobile_del_row">
+                            <div className="mobile_del_data_label">Время доставки</div>
+                            <input onChange={e => this.props.set_disp_time(e.target.value)} value={this.props.store.disp.delivery_time} className="mobile_del_input" type="time"></input>
+                        </div>
+                       
+                        <div className="mobile_del_row">
+                            <div className="mobile_del_data_label">ФИО получателя</div>
+                            <input onChange={e => this.props.set_disp_FIO(e.target.value)} value={this.props.store.disp.FIO_Customer} className="mobile_del_input" type="text"></input>
+                        </div>
+
+                        <div className="mobile_del_row">
+                            <div className="mobile_del_data_label">Тип оплаты</div>
+                            <select onChange={e => { this.props.set_disp_type_cash(e.target.value)}}>
+                                <option value={false}>Наличные</option>
+                                <option value={true}>Безналичный</option>
+                            </select>
+                        </div>
+
+                        <div className="mobile_del_row">
+                            <div className="mobile_del_data_label">Принятая сумма</div>
+                            <input className="mobile_del_input" value={this.props.store.disp.cash_accepted} onChange={e => this.props.set_disp_cash(e.target.value)} type="number"></input>
+                            {this.props.store.disp.data.ChangeSumm ? (<button onClick={() => this.props.set_disp_cash(0)}>X</button>) : (null)}
+                        </div>
+
+                        <div className="mobile_del_row">
+                            <div className="mobile_del_data_label">Комментарий</div>
+                            <input onChange={e => this.props.set_disp_comment(e.target.value)} value={this.props.store.disp.comment} className="mobile_del_input" type="text"></input>
+                        </div>
                     </div>
 
                     <Foto />

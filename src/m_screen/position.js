@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import foto from '../common/foto.png';
-// import './mobile.css';
-// import { DndProvider } from 'react-dnd';
-// import { HTML5Backend } from 'react-dnd-html5-backend';
+import foto from '../common/foto.png';
+import './mobile.css';
 
 class Screen extends Component {
 
@@ -30,29 +28,10 @@ class Screen extends Component {
         }; 
 
         return (
-            // <div>
-            //     {/* <button onClick={this.pos.bind(this)}>Где я?</button> */}
-            // </div>
-            
             <div>
-                <div>
-                    <div className="mobile_storage_field">qweqwe</div>
-                    <div className="mobile_storage_field">12.01.2020</div>
-                    <div className="mobile_storage_field">dlfskdlf 123123</div>
-                    <div className="mobile_storage_field">adress asdasdqweqwe</div>
-                    <div className="mobile_storage_field">89123123</div>
-                    <div className="mobile_storage_field">yfkbxysq hfcxtn</div>
-                </div> 
-
-                <div>
-                    <div className="mobile_storage_field">qweqwe</div>
-                    <div className="mobile_storage_field">12.01.2020</div>
-                    <div className="mobile_storage_field">dlfskdlf 123123</div>
-                    <div className="mobile_storage_field">adress asdasdqweqwe</div>
-                    <div className="mobile_storage_field">89123123</div>
-                    <div className="mobile_storage_field">yfkbxysq hfcxtn</div>
-                </div>
-            </div>    
+                {/* <button onClick={this.pos.bind(this)}>Где я?</button> */}
+            </div>
+            
         )
     }
 }
