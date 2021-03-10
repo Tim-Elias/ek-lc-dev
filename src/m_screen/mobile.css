@@ -53,3 +53,7 @@ body {
     bottom: 0;
     right: 5px;
 }
+
+.selected {
+  opacity: 0.6;
+}

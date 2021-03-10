@@ -163,16 +163,18 @@ class Screen extends React.Component {
                 {this.props.store.general.active_loader ? (<Wait />) : (
                 <div>
                     <div className="mobile_disp_button">
-                        <button className={+this.props.store.disp.cash_accepted !== +this.props.store.disp.data.COD ? ("none") : ("mobile_disp_button_item")} onClick={this.sendpod.bind(this, false)}>Доставленно</button>
-                        <button className={+this.props.store.disp.cash_accepted !== +this.props.store.disp.data.COD ? ("mobile_disp_button_item--nonactive") : ("none")}>Доставленно</button>
+                        <button className={+this.props.store.disp.cash_accepted !== +this.props.store.disp.data.COD && this.props.store.disp.data.ChangeSumm == false ? ("none") : ("mobile_disp_button_item")} onClick={this.sendpod.bind(this, false)}>Доставленно</button>
+                        <button className={+this.props.store.disp.cash_accepted !== +this.props.store.disp.data.COD && this.props.store.disp.data.ChangeSumm == false ? ("mobile_disp_button_item--nonactive") : ("none")}>Доставленно</button>
                         <button className="mobile_disp_button_item--yellow mobile_disp_button_item" onClick={this.sendpod.bind(this, true)}>Частично доставленно</button>
                     </div>
 
                     <div className="mobile_disp_button">
-                        <button className={+this.props.store.disp.cash_accepted > 0 && this.props.store.login.kkm && this.props.store.disp.data.CheckEnabled ? "mobile_disp_button_item mobile_disp_button_item--blue" : "none"} onClick={this.receipt.bind(this)}>Чек</button>
+                            <button className={+this.props.store.disp.cash_accepted > 0 && this.props.store.login.kkm && this.props.store.disp.data.CheckEnabled && this.props.store.disp.data.ChangeSumm === false ? ("mobile_disp_button_item mobile_disp_button_item--blue") : ("none")} onClick={this.receipt.bind(this)}>Чек</button>
                     </div>
 
-                    <CheckPrint /> 
+                    <div className={this.props.store.disp.data.ChangeSumm === false ? ("") : ("none")}>
+                        <CheckPrint /> 
+                    </div>
                     {/* <button className="mobile_disp_button_item mobile_disp_button_item--blue" disabled={this.props.store.disp.print_check_disabled}>Печать чека</button> */}
 
                     <div className="mobile_disp_customer_data">

@@ -72,10 +72,10 @@ class Screen extends React.Component {
                 <div className="mobile_container">
                     <ul>
                         <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'm_storage')}>Доставки и Заявки</button></li>
-                        <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'reciept')}>Получить от отправителя</button></li>
-                        <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'm_get_manifest')}>Входящие манифесты</button></li>
-                        <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'm_send_manifest')}>Отправка манифеста</button></li>
-                        <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'storage_reciept')}>Приемка на склад</button></li>
+                        {this.props.store.login.original_data.courier ? (null) : (<li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'reciept')}>Получить от отправителя</button></li>)}
+                        {this.props.store.login.original_data.courier ? (null) : (<li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'm_get_manifest')}>Входящие манифесты</button></li>) }
+                        {this.props.store.login.original_data.courier ? (null) : (<li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'm_send_manifest')}>Отправка манифеста</button></li>) }
+                        {this.props.store.login.original_data.courier ? (null) : (<li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'storage_reciept')}>Приемка на склад</button></li>)}
                         <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'm_finance')}>Финансы</button></li>
                         <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'setting')}>Настройки</button></li>
                         <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.mobile_version.bind(this)}>Web Версия</button></li>

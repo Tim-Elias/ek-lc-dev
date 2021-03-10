@@ -34,7 +34,11 @@ class Screen extends React.Component {
                 this.props.set_action("deliver");
                 this.props.set_active_loader(false);
             },
-            (err) => { console.log(err) }
+            (err) => { 
+                console.log(err) 
+                alert(err)
+                this.props.set_active_window("m_storage")
+            }
         );
     }
 

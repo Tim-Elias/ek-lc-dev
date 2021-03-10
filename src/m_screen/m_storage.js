@@ -111,7 +111,7 @@ class Screen extends React.Component {
                         }).map((disp, index) =>
                             
                             <div key={index} onClick={this.tr_click.bind(this, disp)} 
-                            className={(disp.Status === 'Отменена') ? "mobile_storage_item mobile_storage_item--canceling" : 
+                            className={(disp.Status === 'Отмена') ? "mobile_storage_item mobile_storage_item--canceling" : 
                                 (disp.Type === 'Заявка') ? ('mobile_storage_item mobile_storage_item--applications') : 
                                     ("mobile_storage_item")}>
                                 <div>
