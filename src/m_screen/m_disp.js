@@ -112,7 +112,7 @@ class Screen extends React.Component {
                             <div className="mobile_disp_data_label"> Телефон:</div>
                             <div className="mobile_disp_data_el">
                                 {RecPhoneList.map((item, index) =>
-                                    <div key={index}><a href={"tel:" + item}>{(item[0] == 7) ? ("+" + item) : (item[0] == "(") ? ("+7" + item) : (item[0] == "9") ? ("+7" + item) : (item)}</a>{index != RecPhoneList.length - 1 ? (', ') : (null)}</div>
+                                    <div key={index}><a href={"tel:" + ((item[0] == 7) ? ("+" + item) : (item[0] == "(") ? ("+7" + item) : (item[0] == 9) ? ("+7" + item) : (item))}>{(item[0] == 7) ? ("+" + item) : (item[0] == "(") ? ("+7" + item) : (item[0] == "9") ? ("+7" + item) : (item)}</a>{index != RecPhoneList.length - 1 ? (', ') : (null)}</div>
                                 )}
                             </div>
                             <div className="mobile_disp_data_label"> Контактное лицо:</div>
