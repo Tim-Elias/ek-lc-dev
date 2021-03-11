@@ -548,3 +548,67 @@ margin-left: 15px;
     border-bottom: solid 1px #888;
     z-index: 4;
 }
+
+
+@media (max-width: 1000px) {
+
+    .home_service_selector_content_calc {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        margin: 20px 5px 10px 5px;
+    }
+
+    .home_content input {
+        width: 100%;
+        border: 3px solid #727272;
+        border-radius: 5px;
+    }
+
+    .calc_city_input {
+        margin: 5px 0 5px 0;
+    }
+
+    .dropdown_rec_city_list {
+        position: absolute;
+        z-index: 10;
+        top: 47px;
+        left: 0px;
+        width: 100%;
+        margin: 0;
+        border-bottom-left-radius: 3px;
+        border-bottom-right-radius: 3px;
+    }
+
+    .dropdown_rec_city_list--bottom {
+        top: 103px;
+    }
+
+    .home_service_selector_content_button {
+        font-weight: bold;
+        margin: 5px 0 5px 0;
+        border: 0;
+    }
+    
+    .home_service_selector_content_button:hover {
+        margin: 5px 0 5px 0;
+        background-color: #2444B5;
+        border: none;
+        color: #FFF;
+    }
+
+    .service_info_window_button {
+        margin: 0;
+        width: 100%;
+    }
+    .service_info_window_button:hover {
+        background-color: #2444B5;
+        color: #FFF;
+        border: none;
+    }
+
+    .dropdown_rec_city_element:last-child {
+        border: 0;
+    }
+}

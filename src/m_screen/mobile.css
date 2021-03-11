@@ -54,6 +54,10 @@ body {
     right: 5px;
 }
 
+.calc_volume_weight_container {
+    border-top:#f0f0f0 2px solid;
+}
+
 .selected {
   opacity: 0.6;
 }

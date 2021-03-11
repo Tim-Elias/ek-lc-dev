@@ -22,6 +22,7 @@ import MBounty from './m_bounty';
 import MScanner from './scanner'; 
 import MPosition from './position'; 
 import MCheckPrint from './m_check_print';
+import MCalcPrice from './m_calc_price';
 import { withCookies } from 'react-cookie';
 
 class Screen extends React.Component {
@@ -69,6 +70,7 @@ class Screen extends React.Component {
                 {this.props.store.general.active_window === 'm_movement' ? (<MMovement />) : (null)}
                 {this.props.store.general.active_window === 'm_bounty' ? (<MBounty />) : (null)}
                 {this.props.store.general.active_window === 'setting' ? (<MSetting />) : (null)}
+                {this.props.store.general.active_window === 'm_calc_price' ? (<MCalcPrice />) : (null)}
                 {this.props.store.general.active_window === 'wait' ? (<Wait />) : (null)}
                 {this.props.store.general.active_window === 'm_check_print' ? (<MCheckPrint />) : (null)}
                 {this.props.store.general.active_window === 'scanner' ? (<MScanner />) : (null)}

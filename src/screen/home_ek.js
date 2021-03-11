@@ -297,10 +297,8 @@ class Screen extends React.Component {
                         <div className="home_service_selector_content_calc">
 
                     <div>
-                        <input type="text" autoComplete="nope" placeholder='Город отправления' className="calc_city_input" value={this.props.store.home_ek.calc_send_city} onChange={(e)=>{this.props.set_calc_send_city(e.target.value)}}  onFocus={()=>{
-                            this.props.set_focus_calc_input_send_city(true)
-                            this.props.set_focus_calc_input_rec_city(false)
-                   }} />
+                        <input onBlur={() => setTimeout(() => { this.props.set_focus_calc_input_send_city(false) }, 100)} type="text" autoComplete="nope" placeholder='Город отправления' className="calc_city_input" value={this.props.store.home_ek.calc_send_city} onChange={(e)=>{this.props.set_calc_send_city(e.target.value)}}  
+                        onFocus={()=>{ this.props.set_focus_calc_input_send_city(true) }} />
                         
                         {this.props.store.home_ek.focus_calc_input_send_city?(
                            <div className="dropdown_rec_city_list">
@@ -325,10 +323,8 @@ class Screen extends React.Component {
                        ):(null)}
                         </div>
                         <div>
-                            <input autoComplete="nope" type="text" placeholder='Город назначения' className="calc_city_input" value={this.props.store.home_ek.calc_rec_city} onChange={(e)=>{this.props.set_calc_rec_city(e.target.value)}} onFocus={()=>{
-                                this.props.set_focus_calc_input_rec_city(true)
-                                this.props.set_focus_calc_input_send_city(false)
-                                }} />
+                            <input onBlur={() => setTimeout(() => { this.props.set_focus_calc_input_rec_city(false) }, 100)} autoComplete="nope" type="text" placeholder='Город назначения' className="calc_city_input" value={this.props.store.home_ek.calc_rec_city} onChange={(e)=>{this.props.set_calc_rec_city(e.target.value)}} 
+                            onFocus={()=>{ this.props.set_focus_calc_input_rec_city(true) }} />
                        {this.props.store.home_ek.focus_calc_input_rec_city?(
                            <div className="dropdown_rec_city_list">
                                
@@ -352,10 +348,7 @@ class Screen extends React.Component {
                        ):(null)}
                         
               </div>
-                            <input type="number" placeholder='Вес (кг)' className="home_service_selector_content_input" value={this.props.store.home_ek.calc_weight} onChange={(e)=>{this.props.set_calc_weight(e.target.value)}} onFocus={()=>{
-                                this.props.set_focus_calc_input_rec_city(false)
-                                this.props.set_focus_calc_input_send_city(false)
-                                }}></input>
+                            <input type="number" placeholder='Вес (кг)' className="home_service_selector_content_input" value={this.props.store.home_ek.calc_weight} onChange={(e)=>{this.props.set_calc_weight(e.target.value)}} />
                             <button onClick={this.calc.bind(this)} className="home_service_selector_content_button">Рассчитать</button>
 
                         </div>
