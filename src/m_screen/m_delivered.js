@@ -23,12 +23,12 @@ class Screen extends React.Component {
         const data = {
             userkey: this.props.store.login.userkey,
             num: this.props.store.disp.data.Number,
-            date: this.props.store.disp.delivery_date,
-            time: this.props.store.disp.delivery_time,
-            summ: this.props.store.disp.cash_accepted,
-            comment: this.props.store.disp.comment,
-            rec: this.props.store.disp.FIO_Customer,
-            terminal: this.props.store.disp.type_cash,
+            date: this.props.store.disp.delivery_date, 
+            time: this.props.store.disp.delivery_time, 
+            summ: this.props.store.disp.cash_accepted, 
+            comment: this.props.store.disp.comment, 
+            rec: this.props.store.disp.FIO_Customer, 
+            terminal: this.props.store.disp.type_cash, //
             img: barcode,
             partially: type,
         }
@@ -128,12 +128,33 @@ class Screen extends React.Component {
     componentDidMount() {
         this.props.set_disp_cash(this.props.store.disp.data.COD);
         this.props.reset_check_data();
+
+        const today = new Date()
+        let mm = today.getMonth() + 1;
+        let dd = today.getDate();
+
+        const y = today.getFullYear();
+
+        if (mm < 10) { mm = '0' + mm }
+        if (dd < 10) { dd = '0' + dd }
+
+        const date = y + '-' + mm + '-' + dd;
+        this.props.set_disp_date(date);
+
+        let H = today.getHours();
+        let M = today.getMinutes();
+
+        if (H < 10) { H = '0' + H }
+        if (M < 10) { M = '0' + M }
+
+        const time = H + ':' + M;
+        this.props.set_disp_time(time);
+
         console.log(this.props.store.disp.delivery_time);
     }
 
     componentWillUnmount() {
-        this.props.set_disp_FIO('');
-        this.props.set_disp_comment('');
+        this.props.reset_data();
     }
 
 
@@ -235,9 +256,9 @@ export default withCookies(connect(
         store: state
     }),
     dispatch => ({
-        
+        reset_data: (param) => { dispatch({ type: 'reset_data', payload: param }); },
         set_print_check_disabled: (param) => { dispatch({ type: 'set_print_check_disabled', payload: param }); },
-        set_QR: (param) => { dispatch({ type: 'set_QR', payload: param }); },
+        set_QR: (param) => { dispatch({ type: 'set_QR', payload: param }); }, 
         set_check_data: (param) => { dispatch({ type: 'set_check_data', payload: param }); },
         reset_check_data: (param) => { dispatch({ type: 'reset_check_data', payload: param }); },
         set_active_loader: (param) => { dispatch({ type: 'set_active_loader', payload: param }); },

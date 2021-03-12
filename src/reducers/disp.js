@@ -19,8 +19,8 @@ const time = H + ':' + M;
 
 const initialState = {
   FIO_Customer: '',
-  delivery_date: date,
-  delivery_time: time,
+  delivery_date: '',
+  delivery_time: '',
   cash_accepted: 0,
   comment: '',
   type_cash: false,
@@ -57,6 +57,8 @@ const initialState = {
 
 export default function dispatch (state = initialState, action) {
   switch (action.type) {
+    case 'reset_data': return { ...state, foto: '', FIO_Customer: '', comment: '', cash_accepted: 0, type_cash: false }
+
     case 'set_key': return { ...state, key: { ...state.key, num: action.payload.num, status: action.payload.status } }
 
     case 'set_popup': return { ...state, popup: action.payload }

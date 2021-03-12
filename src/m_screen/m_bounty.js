@@ -16,7 +16,6 @@ class Screen extends React.Component {
         this.update();
     }
 
-    //RUS19541649
     check_print = (num) => {
         const data = {
             userkey: this.props.store.login.userkey,

@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Footer from '../screen/components/footer';
 import logo from './../logo.svg';
 import './mobile_header.css';
 import menu from '../common/burger_menu.png';

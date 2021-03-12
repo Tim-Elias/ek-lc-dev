@@ -180,18 +180,20 @@ class Screen extends React.Component {
                         <div className="mobile_disp_data_el">{this.props.store.disp.data.DelMethod}</div>
                     </div>
                     
-                    <div className="mobile_disp_address_data">
-                        <div className="disp_address_data_header disp_address_data_header--green">Грузы</div>
-                        <div className="disp_address_data_el mobile_disp_address_data_el">
-                            {this.props.store.disp.cargo.map((cargo, index) =>
+                    {this.props.store.disp.cargo.length != 0 ? (
+                        <div className="mobile_disp_address_data">
+                            <div className="disp_address_data_header disp_address_data_header--green">Грузы</div>
+                            <div className="disp_address_data_el mobile_disp_address_data_el">
+                                {this.props.store.disp.cargo.map((cargo, index) =>
 
-                                <div key={index} className="cargo_item">
-                                    <div className="">{cargo.Weight}кг, (Об. {cargo.Volume}кг), ({cargo.L}X{cargo.W}X{cargo.H}) {cargo.Q}шт.<br /> Итого {cargo.TotalWeight}кг,(Об. {cargo.TotalVolume}кг)</div>
-                                </div>
-                            )}
+                                    <div key={index} className="cargo_item">
+                                        <div className="">{cargo.Weight}кг, (Об. {cargo.Volume}кг), ({cargo.L}X{cargo.W}X{cargo.H}) {cargo.Q}шт.<br /> Итого {cargo.TotalWeight}кг,(Об. {cargo.TotalVolume}кг)</div>
+                                    </div>
+                                )}
+                            </div>
                         </div>
-                    </div>
-
+                    ) : (null)}
+                    
                 </div>)}
 
             </div>
