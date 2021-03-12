@@ -127,7 +127,8 @@ class Screen extends React.Component {
 
     componentDidMount() {
         this.props.set_disp_cash(this.props.store.disp.data.COD);
-        this.props.reset_check_data()
+        this.props.reset_check_data();
+        console.log(this.props.store.disp.delivery_time);
     }
 
     componentWillUnmount() {

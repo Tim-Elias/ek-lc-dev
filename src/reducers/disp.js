@@ -12,6 +12,9 @@ const date = y + '-' + mm + '-' + dd;
 let H = today.getHours();
 let M = today.getMinutes();
 
+if (H < 10) { H = '0' + H }
+if (M < 10) { M = '0' + M }
+
 const time = H + ':' + M;
 
 const initialState = {
@@ -68,7 +71,7 @@ export default function dispatch (state = initialState, action) {
     case 'set_disp_cash': return { ...state, cash_accepted: action.payload }
     case 'set_disp_FIO': return { ...state, FIO_Customer: action.payload }
     case 'set_disp_date': return { ...state, delivery_date: action.payload }
-    case 'set_disp_time': return { ...state, delivery_date: action.payload }
+    case 'set_disp_time': return { ...state, delivery_time: action.payload }
     case 'set_disp_type_cash': return { ...state, type_cash: action.payload }
 
     case 'set_disp_lat_lng': return { ...state, lat: action.payload.lat, lng: action.payload.lng}
