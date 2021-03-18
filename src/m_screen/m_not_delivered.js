@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import './mobile.css';
 import { get_data } from '../common/common_modules';
-import { Table, Button, Icon, Modal, Loader, Dimmer } from 'semantic-ui-react';
 import './mobile_disp.css';
 import Foto from './foto';
 import { withCookies } from 'react-cookie';
@@ -97,6 +96,7 @@ export default withCookies(connect(
         store: state
     }),
     dispatch => ({
+        reset_data: (param) => { dispatch({ type: 'reset_data', payload: param }); },
         set_disp_comment: (param) => { dispatch({ type: 'set_disp_comment', payload: param }); },
         set_active_window: (param) => { dispatch({ type: 'set_active_window', payload: param }); },
     })
