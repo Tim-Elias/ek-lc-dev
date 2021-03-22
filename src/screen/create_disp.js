@@ -609,7 +609,7 @@ SetTotal = (value) =>{
                         
                            <Select 
                            value={this.props.store.create_disp.SelectedRecCity}
-                          options={this.props.store.create_disp.CityList}
+                          options={this.props.store.create_disp.PayType.value !== "БезналичнаяОплатаПолучателем" ? (this.props.store.create_disp.CityList) : ([])}
                           styles={customStyles}
                           onChange={(values) => {
                               if(this.props.store.create_disp.PayType.value !== "БезналичнаяОплатаПолучателем"){
