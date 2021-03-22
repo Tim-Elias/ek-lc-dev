@@ -54,7 +54,8 @@ export default function login (state = initialState, action) {
       email: action.payload.email,
       phone: action.payload.phone,
       kkm: action.payload.kkm,
-      disp_map: action.payload.disp_map
+      disp_map: action.payload.disp_map,
+      customers: action.payload.customers,
 
 
       
@@ -87,7 +88,8 @@ export default function login (state = initialState, action) {
       email: action.payload.email,
       phone: action.payload.phone,
       kkm: action.payload.kkm,
-      disp_map: action.payload.disp_map
+      disp_map: action.payload.disp_map,
+      customers: action.payload.customers,
     }
     case 'LOGOUT': return { ...state, userkey: null, alias: null, logged: false, username: '', pass: '' }
 

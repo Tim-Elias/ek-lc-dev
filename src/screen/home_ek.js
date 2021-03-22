@@ -308,12 +308,7 @@ class Screen extends React.Component {
                                     const text = this.props.store.home_ek.calc_send_city.toUpperCase()
                                     return filter.indexOf(text) > -1
                                }).slice(0,10).map((el,index)=>{
-                                return (<p className="dropdown_rec_city_element" onClick={()=>{
-                                    
-                                    this.props.set_calc_send_city(el.value)
-                                    this.props.set_focus_calc_input_send_city(false)
-                                }} key={index}>
-                                    
+                                return (<p className="dropdown_rec_city_element" onClick={()=>{ this.props.set_calc_send_city(el.value) }} key={index}>
                                     {el.value}
                                     </p>)
                             

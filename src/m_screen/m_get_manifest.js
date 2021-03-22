@@ -1,14 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Header, Modal, Table, Button } from 'semantic-ui-react';
 import { get_data } from './../common/common_modules';
 
 
 class Screen extends React.Component {
-
-    constructor(props) {
-        super(props);
-    }
 
     update = () => {
         this.props.set_active_window("wait");

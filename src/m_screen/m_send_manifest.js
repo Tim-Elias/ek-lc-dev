@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import '../screen/send_manifest.css';
 import '../App.css';
-import { Header, Modal, Table, Button } from 'semantic-ui-react';
 import { get_data } from './../common/common_modules';
 
 

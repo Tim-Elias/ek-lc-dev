@@ -24,7 +24,9 @@ class Screen extends React.Component {
         this.props.set_calc_send_city("");
         this.props.set_calc_rec_city("");
         this.props.set_calc_weight("");
-        this.props.set_home_error_mesage("")
+        this.props.set_home_error_mesage("");
+        this.props.set_focus_calc_input_send_city(false);
+        this.props.set_focus_calc_input_rec_city(false);
     }
 
     settings_window = (window) => {

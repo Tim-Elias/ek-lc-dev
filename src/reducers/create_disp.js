@@ -11,12 +11,13 @@ const today = new Date()
 
 
 const initialState = {
-  
+
   Price: '0',
 
   CityList: [],
   CargoInfoType: { label: 'Внести информацию о каждом грузе', value: false },
   PayType: { label: 'Безналичная оплата', value: 'Безналичная оплата' },
+  PayerSelect: {},
   PayerList: [],
   Payer: {name:'', id:''},
   DelMethod: 'Дверь - Дверь',
@@ -90,6 +91,8 @@ export default function dispatch (state = initialState, action) {
   switch (action.type) {
     
     case 'reset_create_disp_data': return  initialState 
+
+    case 'SetPayerSelect': return { ...state, PayerSelect: action.payload }
 
     case 'SetPrice': return { ...state, Price: action.payload }
 

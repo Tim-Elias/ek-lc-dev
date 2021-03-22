@@ -4,7 +4,6 @@ import './mobile.css';
 import { get_data } from '../common/common_modules';
 import './mobile_disp.css';
 import './mobile_finance.css';
-import check from '../common/check.png';
 import Wait from "../screen/wait";
 
 class Screen extends React.Component {

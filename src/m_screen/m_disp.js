@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import './mobile.css';
 import { get_data } from '../common/common_modules';
-import { Table, Button, Icon, Modal, Loader, Dimmer } from 'semantic-ui-react';
 import './mobile_disp.css';
 import Wait from "../screen/wait";
 import { withCookies } from 'react-cookie';
@@ -13,8 +12,7 @@ class Screen extends React.Component {
         this.props.set_active_window(window);
     }
 
-    componentDidMount() {
-
+    loadData = () => {
         this.props.cookies.set('window', 'm_disp', { maxAge: 1000000000000 })
         this.props.cookies.set('num', this.props.store.disp.key.num, { maxAge: 1000000000000 })
         this.props.cookies.set('status', this.props.store.disp.key.status, { maxAge: 1000000000000 })
@@ -34,10 +32,32 @@ class Screen extends React.Component {
                 this.props.set_action("deliver");
                 this.props.set_active_loader(false);
             },
-            (err) => { 
-                console.log(err) 
+            (err) => {
+                console.log(err)
                 alert(err)
                 this.props.set_active_window("m_storage")
+            }
+        );
+    } 
+
+    componentDidMount() {
+        this.loadData();
+    }
+
+    setorderstatus = (stat) => {
+        const data = {
+            userkey: this.props.store.login.userkey,
+            num: this.props.store.disp.data.Number,
+            status: stat,
+        }
+
+        get_data('setorderstatus', data).then (
+            (result) => {
+                this.loadData();
+            },
+            (err) => {
+                console.log(err)
+                alert(err)
             }
         );
     }
@@ -63,13 +83,13 @@ class Screen extends React.Component {
 
                     {this.props.store.disp.data.Type === 'Заявка' && this.props.store.disp.data.Status === 'Подтверждено' ? 
                         (<div className="mobile_disp_button">
-                            <button className="mobile_disp_button_item mobile_disp_button_item--full">Выполнено</button>
+                            <button className="mobile_disp_button_item mobile_disp_button_item--full" onClick={this.setorderstatus.bind(this, "Выполнено")}>Выполнено</button>
                         </div>)
                     : (null)}
 
                     {this.props.store.disp.data.Type === 'Заявка' && this.props.store.disp.data.Status === 'Новая' ? 
                         (<div className="mobile_disp_button">
-                            {/* <button className="mobile_disp_button_item mobile_disp_button_item--full">Подтвердить</button> */}
+                            <button className="mobile_disp_button_item mobile_disp_button_item--full" onClick={this.setorderstatus.bind(this, "Подтверждено")}>Подтвердить</button>
                         </div>)
                     : (null)}
 

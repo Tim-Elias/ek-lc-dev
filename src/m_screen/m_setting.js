@@ -1,8 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { get_data } from './../common/common_modules';
-import Select from 'react-select';
-import { customStyles } from "./../common/common_style";
 import { Button } from 'semantic-ui-react';
 import './mobile_setting.css';
 import '../App.css';

@@ -1,7 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { get_data } from '../common/common_modules';
-import Wait from "../screen/wait";
 import ReactToPrint from 'react-to-print'
 import QRCode from 'qrcode.react';
 import './mobile_check_print.css';

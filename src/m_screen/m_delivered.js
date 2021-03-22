@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import './mobile.css';
 import { get_data } from '../common/common_modules';
-import { Table, Button, Icon, Modal, Loader, Dimmer } from 'semantic-ui-react';
 import './mobile_delivery.css';
 import './mobile_disp.css';
 import './popup.css';

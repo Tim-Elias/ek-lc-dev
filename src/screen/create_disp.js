@@ -317,9 +317,10 @@ RemoveCargo = (index) => {
     this.props.SetOpenModalSendTemplate(false)
   }
 
-  SelectRecTemplate = (value) => {
+  SelectRecTemplate = (value) => {//
     if(value!==null){
-      const city = this.props.store.create_disp.CityList.filter((el)=>el.value === value.City)[0]
+      const city = this.props.store.create_disp.CityList.filter((el) => el.value === value.City)[0];
+      
       //console.log(value)
       this.SelectRecCity(city)
       this.props.SetRecAdress(value.Adress)
@@ -352,6 +353,28 @@ SetTotal = (value) =>{
   }
 }
 
+  PayerSelect = (value) => {
+
+    this.props.SetPayerSelect(value);
+    let template = this.props.store.upload_manifest.disp_template_list.filter((e) => e.Key == value.template)
+
+    this.SelectRecTemplate(template[0]);
+  }
+
+  PayType = (values) => {
+    this.props.SetPayerSelect('');
+    this.props.SetSelectedRecCity('');
+    this.props.SetRecAdress('');
+    this.props.SetRecAdress('');
+    this.props.SetRecPhone('');
+    this.props.SetRecPerson('');
+    this.props.SetRecCompany('');
+    this.props.SetRecAddInfo('');
+
+    this.props.SetPayType(values);
+    // this.SetRecTerminal(false);
+    this.props.SetRecTerminalList([]);
+  }
 
   render() {
     const Q_only = this.props.store.login.Q_only
@@ -370,6 +393,7 @@ SetTotal = (value) =>{
       disabled = true
     }    
 
+
     return (
       
       <div>
@@ -387,17 +411,43 @@ SetTotal = (value) =>{
                     <div className="disp_data_label">Дата заявки:</div>
                     <div className="disp_data_el"><input onChange={e => this.props.SetDispDate(e.target.value)} value={this.props.store.create_disp.DispDate} className="DispDate" type="date"></input></div>
                     <div className="disp_data_label">Тип оплаты:</div>
-                     <div className="disp_data_el ">
-                     <Select
-                          options={PayTypeList}
-                          styles={customStyles}
-                          value={this.props.store.create_disp.PayType}
-                          onChange={(values) => this.props.SetPayType(values)}
-                      /> 
-
-                       
-        </div>
-
+                    <div className="disp_data_el ">
+                    <Select
+                      options={
+                        this.props.store.login.customers.length > 0 ? ([
+                          { label: "Безналичная оплата", value: "БезналичнаяОплата" },
+                          { label: "Оплата наличными при отправлении", value: "ОплатаНаличнымиПриОтправлении" },
+                          { label: "Оплата наличными при получении", value: "ОплатаНаличнымиПриПолучении" },
+                          { label: "Оплата получателем по договору", value: "БезналичнаяОплатаПолучателем" }
+                        ]) : 
+                        ([
+                          { label: "Безналичная оплата", value: "БезналичнаяОплата" },
+                          { label: "Оплата наличными при отправлении", value: "ОплатаНаличнымиПриОтправлении" },
+                          { label: "Оплата наличными при получении", value: "ОплатаНаличнымиПриПолучении" },
+                        ])
+                      }
+                      styles={customStyles}
+                      value={this.props.store.create_disp.PayType}
+                      onChange={(values) => this.PayType(values)}
+                    /> 
+                    </div>
+                    {this.props.store.create_disp.PayType.value === "БезналичнаяОплатаПолучателем" ? (<div className="disp_data_label">Плательщик:</div>) : (null)}
+                    {this.props.store.create_disp.PayType.value === "БезналичнаяОплатаПолучателем" ? (<div className="disp_data_el">
+                      <Select 
+                        options={
+                          this.props.store.login.customers.map((item, index) => {
+                            return{
+                              label: item.customer,
+                              value: item.customerKey,
+                              template: item.template,
+                            }
+                          })
+                        }
+                        styles={customStyles}
+                        value={this.props.store.create_disp.PayerSelect}
+                        onChange={(value) => this.PayerSelect(value)}
+                      />
+                    </div>) : (null)}
                 </div>
 
                 <div className="disp_address_data">
@@ -460,7 +510,7 @@ SetTotal = (value) =>{
                       <div>Данные получателя</div>
                       <div className='create_disp_template_button_container'>
                       <Modal 
-                        trigger={<button onClick={this.OpenRecTemplateModal.bind(this)} className='create_disp_template_button'>Из шаблона</button>}
+                        trigger={ (this.props.store.create_disp.PayType.value !== "БезналичнаяОплатаПолучателем") ? (<button onClick={this.OpenRecTemplateModal.bind(this)} className='create_disp_template_button'>Из шаблона</button>) : (null)}
                         open={this.props.store.create_disp.OpenModalRecTemplate}
                         onClose={this.SelectRecTemplate.bind(this,null)}
                         >
@@ -561,36 +611,45 @@ SetTotal = (value) =>{
                            value={this.props.store.create_disp.SelectedRecCity}
                           options={this.props.store.create_disp.CityList}
                           styles={customStyles}
-                          onChange={(values) => this.SelectRecCity(values)}
+                          onChange={(values) => {
+                              if(this.props.store.create_disp.PayType.value !== "БезналичнаяОплатаПолучателем"){
+                                this.SelectRecCity(values)
+                              }
+                            }}
                           placeholder="Город получателя" /> 
                  
                         </div>
                         
                         {this.props.store.create_disp.RecTerminalList.length === 0 ? (null):(<div className="disp_data_label">Получение на складе</div>)}
-                        {this.props.store.create_disp.RecTerminalList.length === 0 ? (null) : (<div className="disp_data_radio"><input name="rec_type" type="radio"  onChange={this.SetRecTerminal.bind(this,true)} disabled={this.props.store.create_disp.RecTerminalList.length === 0} checked={this.props.store.create_disp.RecTerminal}></input></div>)}
+                        {this.props.store.create_disp.RecTerminalList.length === 0 ? (null) : (<div className="disp_data_radio"><input name="rec_type" type="radio" onChange={(value) => { if (this.props.store.create_disp.PayType.value !== "БезналичнаяОплатаПолучателем") { this.SetRecTerminal.bind(this, true) }}} disabled={this.props.store.create_disp.RecTerminalList.length === 0} checked={this.props.store.create_disp.RecTerminal}></input></div>)}
                         {this.props.store.create_disp.RecTerminalList.length === 0 ? (null):(<div className="disp_data_label">Доставка до адреса</div>)}
-                        {this.props.store.create_disp.RecTerminalList.length === 0 ? (null) : (<div className="disp_data_radio"><input name="rec_type" type="radio" onChange={this.SetRecTerminal.bind(this,false)} checked={!this.props.store.create_disp.RecTerminal}></input></div>)}
+                        {this.props.store.create_disp.RecTerminalList.length === 0 ? (null) : (<div className="disp_data_radio"><input name="rec_type" type="radio" onChange={(value) => { if (this.props.store.create_disp.PayType.value !== "БезналичнаяОплатаПолучателем") { this.SetRecTerminal.bind(this, false) } }} checked={!this.props.store.create_disp.RecTerminal}></input></div>)}
                         
                         {this.props.store.create_disp.RecTerminal? (<div className="disp_data_label"> Терминал:</div>):(<div className="disp_data_label"> Адрес:</div>)}
                         
                         {this.props.store.create_disp.RecTerminal? (
                           <div className="disp_data_el">
                           <Select
+                            disabled = {this.props.store.create_disp.PayType.value == "БезналичнаяОплатаПолучателем"}
                             options={this.props.store.create_disp.RecTerminalList}
                             styles={customStyles}
                             value={this.props.store.create_disp.RecSelectTerminal}
-                            onChange={(values) => this.props.SetRecSelectTerminal(values)}
+                            onChange={(values) => {
+                              if(this.props.store.create_disp.PayType.value !== "БезналичнаяОплатаПолучателем"){
+                                this.props.SetRecSelectTerminal(values)
+                              }
+                            }}
                           /> 
                           </div>
-                        ):(<div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.props.SetRecAdress(e.target.value)} value={this.props.store.create_disp.RecAdress} type="text" placeholder="Адрес получателя" /></div>)}
+                        ):(<div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={(e) => { if (this.props.store.create_disp.PayType.value !== "БезналичнаяОплатаПолучателем") { this.props.SetRecAdress(e.target.value) }}} value={this.props.store.create_disp.RecAdress} type="text" placeholder="Адрес получателя" /></div>)}
                         
                         
                         <div className="disp_data_label"> Компания:</div>
-                        <div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.props.SetRecCompany(e.target.value)} value={this.props.store.create_disp.RecCompany} type="text" placeholder="Компания получателя" /></div>
+                        <div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={(e) => { if (this.props.store.create_disp.PayType.value !== "БезналичнаяОплатаПолучателем") { this.props.SetRecCompany(e.target.value) }}} value={this.props.store.create_disp.RecCompany} type="text" placeholder="Компания получателя" /></div>
                         <div className="disp_data_label"> Телефон:</div>
-                        <div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.props.SetRecPhone(e.target.value)} value={this.props.store.create_disp.RecPhone} type="text" placeholder="Телефон получателя" /></div>
+                        <div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={(e) => { if (this.props.store.create_disp.PayType.value !== "БезналичнаяОплатаПолучателем") { this.props.SetRecPhone(e.target.value) }}} value={this.props.store.create_disp.RecPhone} type="text" placeholder="Телефон получателя" /></div>
                         <div className="disp_data_label"> Контактное лицо:</div>
-                        <div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.props.SetRecPerson(e.target.value)} value={this.props.store.create_disp.RecPerson} type="text" placeholder="Контактное лицо получателя" /></div>
+                        <div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={(e) => { if (this.props.store.create_disp.PayType.value !== "БезналичнаяОплатаПолучателем") { this.props.SetRecPerson(e.target.value) }}} value={this.props.store.create_disp.RecPerson} type="text" placeholder="Контактное лицо получателя" /></div>
                         <div className="disp_data_label"> Доп. информация:</div>
                         <div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.props.SetRecAddInfo(e.target.value)} value={this.props.store.create_disp.RecAddInfo} type="text" placeholder="Доп. информация получателя" /></div>
                     </div>
@@ -745,6 +804,8 @@ export default connect(
     store: state
   }),
   dispatch => ({
+
+    SetPayerSelect: (param) => { dispatch({ type: 'SetPayerSelect', payload: param }) },
 
     SetPrice: (param) => { dispatch({ type:'SetPrice', payload: param }) },
 

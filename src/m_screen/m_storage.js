@@ -6,6 +6,7 @@ import { get_data } from '../common/common_modules';
 import update from '../common/update.png';
 import { withCookies } from 'react-cookie';
 import Wait from "../screen/wait";
+// const socket = new WebSocket('wss://echo.websocket.org');
 
 class Screen extends React.Component {
 
@@ -53,7 +54,27 @@ class Screen extends React.Component {
         return disp_bg;
     }
 
+    showNotification = () => {
+        const notification = new Notification("New message!", {
+            body: "Test message",
+            requireInteraction: true,
+            icon: "../wait.svg",
+        });
+
+        notification.onclick = (e) => {
+            this.settings_window("m_disp")
+        }
+    }
+
     componentDidMount() {
+        // socket.onopen = () => {
+        //     console.log('WebSocket Client Connected');
+        //     console.log(socket)
+        // };
+        // socket.onmessage = (message) => {
+        //     console.log(message);
+        // };
+
         if (this.props.cookies.get('num')) {
             this.props.cookies.remove('num');
         }
@@ -63,6 +84,24 @@ class Screen extends React.Component {
         if (this.props.cookies.get('window')) {
             this.props.cookies.remove('window');
         }
+
+        // if ('serviceWorker' in navigator) {
+        //     navigator.serviceWorker.register('/sw.js').then(function (registration) {
+        //         console.log('ServiceWorker registration successful');
+        //     }, function (err) {
+        //         console.log('ServiceWorker registration failed: ', err);
+        //     });
+        // }
+
+        // if (Notification.permission === "granted") {
+        //     this.showNotification();
+        // } else if (Notification.permission === "denied" || "default") {
+        //     Notification.requestPermission().then(permission => {
+        //         if(permission === "granted") {
+        //             this.showNotification();
+        //         }
+        //     })
+        // }
 
         this.props.set_active_loader(true);
 
@@ -112,7 +151,7 @@ class Screen extends React.Component {
                             
                             <div key={index} onClick={this.tr_click.bind(this, disp)} 
                             className={(disp.Status === 'Отмена') ? "mobile_storage_item mobile_storage_item--canceling" : 
-                                (disp.Type === 'Заявка') ? ('mobile_storage_item mobile_storage_item--applications') : 
+                                (disp.Type === 'Заявка') ? ((disp.Status === 'Новая') ? ('mobile_storage_item mobile_storage_item--new') : ('mobile_storage_item mobile_storage_item--applications')) :
                                     ("mobile_storage_item")}>
                                 <div>
                                     <div className="mobile_storage_field">{disp.Customer}</div>

@@ -1,45 +1,47 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import foto from '../common/foto.png';
-import './mobile.css';
 
-class Screen extends Component {
+const socket = new WebSocket('wss://echo.websocket.org');//EventSource
 
-    // pos = () => {
-    //     navigator.geolocation.getCurrentPosition(
-    //         (position) => {
-    //             alert('Последний раз вас засекали здесь: ' +
-    //                 position.coords.latitude + ", " + position.coords.longitude);
-    //         }
-    //     );
-    // }
+class Screen extends React.Component {
+
+    componentDidMount() {
+
+        if (Notification.permission === "denied" || "default") {
+            Notification.requestPermission();
+        }
+
+        socket.addEventListener('message', function (event) {
+            console.log('Message from server: ', event.data);
+            const notification = new Notification("New message!", {
+                body: 'Message from server: ' + event.data,
+                requireInteraction: true,
+                icon: "../public/1024.png",
+            });
+        });
+
+    }
+
+    mess = () => {
+        socket.send(this.props.store.test.message);
+    }
 
     render() {
-        
-        // window.onbeforeunload = function () { 
-        //     return ( 
-        //         "Your work will be lost."
-        //     )
-        // };
-
-        window.history.pushState(null, "", window.location.href);
-        window.onpopstate = function () {
-            window.history.pushState(null, "", window.location.href);
-        }; 
 
         return (
             <div>
-                {/* <button onClick={this.pos.bind(this)}>Где я?</button> */}
+                <input type="text" value={this.props.store.test.message} onChange={e => this.props.set_message(e.target.value)} />
+                <button onClick={this.mess.bind(this)}>отправить сообщение</button>
             </div>
-            
         )
     }
-}
-
+};
 
 export default connect(
-    (state) => ({ store: state }),
+    state => ({
+        store: state
+    }),
     dispatch => ({
-
+        set_message: (param) => { dispatch({ type: 'set_message', payload: param  }) },
     })
 )(Screen);

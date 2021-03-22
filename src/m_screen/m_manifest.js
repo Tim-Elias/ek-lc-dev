@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Header, Modal, Table, Button } from 'semantic-ui-react';
 import { get_data } from './../common/common_modules';
 import './mobile_disp.css';
 

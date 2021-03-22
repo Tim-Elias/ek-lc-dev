@@ -6,7 +6,7 @@ import { get_data } from '../common/common_modules';
 import md5 from 'md5';
 import { withCookies } from 'react-cookie';
 import logo from './../logo.svg';
-import { Header, Modal, Button } from 'semantic-ui-react';
+import { Header, Modal } from 'semantic-ui-react';
 
 class Screen extends React.Component {
 

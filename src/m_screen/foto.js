@@ -3,7 +3,6 @@ import CameraPhoto, { FACING_MODES } from 'jslib-html5-camera-photo';
 import { connect } from 'react-redux';
 import './mobile.css';
 import foto from '../common/foto.png';
-import { get_data } from './../common/common_modules';
 
 class Screen extends React.Component {
     constructor(props, context) {

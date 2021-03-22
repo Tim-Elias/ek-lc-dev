@@ -21,7 +21,11 @@
 }
 
 .mobile_storage_item--applications {
-    background-color: #dcffdc;
+    background-color: #ecffec;
+}
+
+.mobile_storage_item--new {
+    background-color: #b0ffb0;
 }
 
 .mobile_storage_field {

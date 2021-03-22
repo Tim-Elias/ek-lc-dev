@@ -147,7 +147,7 @@ line-height: 90%;
 .home_service_selector_menu{
     
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
 }
 
 .home_service_selector_menu_element{
@@ -189,7 +189,8 @@ color: white;
 }
 
 .home_service_selector_content_calc{
-    margin: 40px;
+    /* margin: 40px; */
+    margin: 40px 0 40px 0;
     height: 50px;
     display: grid;
     grid-template-columns: 2fr 2fr 1fr 220px;
@@ -203,7 +204,8 @@ color: white;
 }
 
 .home_service_selector_content_track{
-    margin: 40px;
+    /* margin: 40px; */
+    margin: 40px 0 40px 0;
     height: 50px;
     display: grid;
     grid-template-columns: 1fr 150px 1fr;
