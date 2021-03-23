@@ -25,6 +25,9 @@ class ComponentToPrint extends React.Component {
   if (dd<10) {dd = '0' + dd}
         
   const curDate = dd+'.'+mm+'.'+year
+
+        const mvuser = this.props.userkey === "000000001";
+        console.log(mvuser);
         return (
             <div>
                 {this.props.disp.map((disp, index) => {
@@ -53,10 +56,18 @@ class ComponentToPrint extends React.Component {
                                         <div className="disp_print_data_el">{disp.data.SendAdress}</div>
                                         <div className="disp_print_data_label"> Компания:</div>
                                         <div className="disp_print_data_el">{disp.data.SendCompany}</div>
-                                        <div className="disp_print_data_label"> Телефон:</div>
-                                        <div className="disp_print_data_el">{disp.data.SendPhone}</div>
-                                        <div className="disp_print_data_label"> Контактное лицо:</div>
-                                        <div className="disp_print_data_el">{disp.data.SendPerson}</div>
+                                        {mvuser && disp.data.SendPhone == "" ? (null) : (
+                                            <div className="disp_print_data_label"> Телефон:</div>
+                                        )}
+                                        {mvuser && disp.data.SendPhone == "" ? (null) : (
+                                            <div className="disp_print_data_el">{disp.data.SendPhone}</div>
+                                        )}
+                                        {mvuser && disp.data.SendPerson == "" ? (null) : (<div>
+                                            <div className="disp_print_data_label"> Контактное лицо:</div>
+                                        </div>)}
+                                        {mvuser && disp.data.SendPerson == "" ? (null) : (<div>
+                                            <div className="disp_print_data_el">{disp.data.SendPerson}</div>
+                                        </div>)}
                                         <div className="disp_print_data_label"> Доп. информация:</div>
                                         <div className="disp_print_data_el">{disp.data.SendAddInfo}</div>
                                     </div>

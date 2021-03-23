@@ -65,7 +65,7 @@
 
 .disp_print_address_data_el{
     display: grid;
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+    /* grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr; */
     grid-template-columns: 100px 1fr ;
     margin: 2px;
     padding: 2px 0;

@@ -621,7 +621,6 @@ SetTotal = (value) =>{
                               placeholder="Город получателя"
                             />
                           ) : (<input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={(e) => { if (this.props.store.create_disp.PayType.value !== "БезналичнаяОплатаПолучателем") { this.props.SelectRecCity(e.target.value) }}} value={this.props.store.create_disp.RecCity} type="text" placeholder="Город получателя" />)}
-
                           
                         </div>
                         
