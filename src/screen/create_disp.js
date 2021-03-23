@@ -363,7 +363,8 @@ SetTotal = (value) =>{
 
   PayType = (values) => {
     this.props.SetPayerSelect('');
-    this.props.SetSelectedRecCity('');
+    this.props.SetSelectedRecCity(null);
+    this.props.SetRecCity('');
     this.props.SetRecAdress('');
     this.props.SetRecAdress('');
     this.props.SetRecPhone('');
@@ -606,18 +607,18 @@ SetTotal = (value) =>{
 
                     <div className="disp_data_label"> Город:</div>
                         <div className="disp_data_el">
-                        
-                           <Select 
-                           value={this.props.store.create_disp.SelectedRecCity}
-                          options={this.props.store.create_disp.PayType.value !== "БезналичнаяОплатаПолучателем" ? (this.props.store.create_disp.CityList) : ([])}
-                          styles={customStyles}
-                          onChange={(values) => {
-                              if(this.props.store.create_disp.PayType.value !== "БезналичнаяОплатаПолучателем"){
+                          
+                          <Select
+                            value={this.props.store.create_disp.SelectedRecCity}
+                            options={this.props.store.create_disp.PayType.value !== "БезналичнаяОплатаПолучателем" ? (this.props.store.create_disp.CityList) : ([])}
+                            styles={customStyles}
+                            onChange={(values) => {
+                              if (this.props.store.create_disp.PayType.value !== "БезналичнаяОплатаПолучателем") {
                                 this.SelectRecCity(values)
                               }
                             }}
-                          placeholder="Город получателя" /> 
-                 
+                            placeholder="Город получателя"
+                          />
                         </div>
                         
                         {this.props.store.create_disp.RecTerminalList.length === 0 ? (null):(<div className="disp_data_label">Получение на складе</div>)}
