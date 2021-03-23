@@ -209,7 +209,12 @@ RemoveCargo = (index) => {
     
   }
 
-  SetRecTerminal = (param) => {
+  SetRecTerminal = (param, force) => {
+    if (this.props.store.create_disp.PayType.value === "БезналичнаяОплатаПолучателем" && (force !== true) ) {
+
+      return false
+    }
+
     let DelMethod
     if (param){
       if(this.props.store.create_disp.SendTerminal){
@@ -330,7 +335,7 @@ RemoveCargo = (index) => {
       this.props.SetRecCompany(value.Company)
       this.props.SetRecAddInfo(value.AddInfo)
 
-      this.SetRecTerminal(value.Terminal)
+      this.SetRecTerminal(value.Terminal, true)
       
     }
     this.props.SetOpenModalRecTemplate(false)
@@ -362,19 +367,24 @@ SetTotal = (value) =>{
   }
 
   PayType = (values) => {
-    this.props.SetPayerSelect({});
-    this.props.SetSelectedRecCity(null);
-    this.props.SetRecCity('');
-    this.props.SetRecAdress('');
-    this.props.SetRecAdress('');
-    this.props.SetRecPhone('');
-    this.props.SetRecPerson('');
-    this.props.SetRecCompany('');
-    this.props.SetRecAddInfo('');
-
+    if(values.value === "БезналичнаяОплатаПолучателем") {
+      this.props.SetPayerSelect({});
+      this.props.SetSelectedRecCity(null);
+      this.props.SetRecCity('');
+      this.props.SetRecAdress('');
+      this.props.SetRecAdress('');
+      this.props.SetRecPhone('');
+      this.props.SetRecPerson('');
+      this.props.SetRecCompany('');
+      this.props.SetRecAddInfo('');
+      this.SetRecTerminal(false, true);
+      this.props.SetRecTerminalList([]);
+    }
+    
+    
     this.props.SetPayType(values);
-    // this.SetRecTerminal(false);
-    this.props.SetRecTerminalList([]);
+    
+    
   }
 
   componentDidMount() {
