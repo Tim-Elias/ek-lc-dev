@@ -318,11 +318,10 @@ RemoveCargo = (index) => {
     this.props.SetOpenModalSendTemplate(false)
   }
 
-  SelectRecTemplate = (value) => {//
+  SelectRecTemplate = (value) => {
     if (value !== null && value !== undefined){
       const city = this.props.store.create_disp.CityList.filter((el) => el.value === value.City)[0];
       
-      //console.log(value)
       this.SelectRecCity(city)
       this.props.SetRecAdress(value.Adress)
       this.props.SetRecAdress(value.Adress)
@@ -635,9 +634,12 @@ SetTotal = (value) =>{
                         </div>
                         
                         {this.props.store.create_disp.RecTerminalList.length === 0 ? (null):(<div className="disp_data_label">Получение на складе</div>)}
-                        {this.props.store.create_disp.RecTerminalList.length === 0 ? (null) : (<div className="disp_data_radio"><input name="rec_type" type="radio" onChange={(value) => { if (this.props.store.create_disp.PayType.value !== "БезналичнаяОплатаПолучателем") { this.SetRecTerminal.bind(this, true) }}} disabled={this.props.store.create_disp.RecTerminalList.length === 0} checked={this.props.store.create_disp.RecTerminal}></input></div>)}
+                   
+                        {this.props.store.create_disp.RecTerminalList.length === 0 ? (null) : (<div className="disp_data_radio"><input name="rec_type" type="radio" onChange={  this.SetRecTerminal.bind(this, true) } disabled={this.props.store.create_disp.RecTerminalList.length === 0} checked={this.props.store.create_disp.RecTerminal}></input></div>)}
+                        
                         {this.props.store.create_disp.RecTerminalList.length === 0 ? (null):(<div className="disp_data_label">Доставка до адреса</div>)}
-                        {this.props.store.create_disp.RecTerminalList.length === 0 ? (null) : (<div className="disp_data_radio"><input name="rec_type" type="radio" onChange={(value) => { if (this.props.store.create_disp.PayType.value !== "БезналичнаяОплатаПолучателем") { this.SetRecTerminal.bind(this, false) } }} checked={!this.props.store.create_disp.RecTerminal}></input></div>)}
+                        
+                        {this.props.store.create_disp.RecTerminalList.length === 0 ? (null) : (<div className="disp_data_radio"><input name="rec_type" type="radio" onChange={ this.SetRecTerminal.bind(this, false) } checked={!this.props.store.create_disp.RecTerminal}></input></div>)}
                         
                         {this.props.store.create_disp.RecTerminal? (<div className="disp_data_label"> Терминал:</div>):(<div className="disp_data_label"> Адрес:</div>)}
                         
