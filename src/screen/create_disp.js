@@ -268,8 +268,9 @@ RemoveCargo = (index) => {
 
       InsureValue: this.props.store.create_disp.InsureValue,
       COD: this.props.store.create_disp.COD,
-      CargoInfoType: this.props.store.create_disp.CargoInfoType.value
+      CargoInfoType: this.props.store.create_disp.CargoInfoType.value,
 
+      Customer: this.props.store.create_disp.PayerSelect.value,
     }
 
     
@@ -318,7 +319,7 @@ RemoveCargo = (index) => {
   }
 
   SelectRecTemplate = (value) => {//
-    if(value!==null){
+    if (value !== null && value !== undefined){
       const city = this.props.store.create_disp.CityList.filter((el) => el.value === value.City)[0];
       
       //console.log(value)
@@ -362,7 +363,7 @@ SetTotal = (value) =>{
   }
 
   PayType = (values) => {
-    this.props.SetPayerSelect('');
+    this.props.SetPayerSelect({});
     this.props.SetSelectedRecCity(null);
     this.props.SetRecCity('');
     this.props.SetRecAdress('');
@@ -375,6 +376,15 @@ SetTotal = (value) =>{
     this.props.SetPayType(values);
     // this.SetRecTerminal(false);
     this.props.SetRecTerminalList([]);
+  }
+
+  componentDidMount() {
+    get_data('disptemplatelist', { userkey: this.props.store.login.userkey }).then(
+      (result) => {
+        this.props.set_disp_template_list(result);
+      },
+      (err) => { console.log(err) }
+    );
   }
 
   render() {
@@ -811,7 +821,7 @@ export default connect(
 
     SetPayerSelect: (param) => { dispatch({ type: 'SetPayerSelect', payload: param }) },
 
-    SetPrice: (param) => { dispatch({ type:'SetPrice', payload: param }) },
+    SetPrice: (param) => { dispatch({ type: 'SetPrice', payload: param }) }, 
 
     SetSendCity: (param) => { dispatch({ type: 'SetSendCity', payload: param }) },
     SetSendTerminal: (param) => { dispatch({ type: 'SetSendTerminal', payload: param }) },
@@ -872,6 +882,8 @@ export default connect(
 
     SetCOD: (param) => { dispatch({ type: 'SetCOD', payload: param }) },
     SetInsureValue: (param) => { dispatch({ type: 'SetInsureValue', payload: param }) },
+
+    set_disp_template_list: (param) => { dispatch({ type: 'set_disp_template_list', payload: param }) },
    
   })
 )(Screen);

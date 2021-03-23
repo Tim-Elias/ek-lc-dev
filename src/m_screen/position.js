@@ -27,12 +27,9 @@ class Screen extends React.Component {
     }
 
     render() {
-
+        let initialValue = 0
         return (
-            <div>
-                <input type="text" value={this.props.store.test.message} onChange={e => this.props.set_message(e.target.value)} />
-                <button onClick={this.mess.bind(this)}>отправить сообщение</button>
-            </div>
+            <div></div>
         )
     }
 };

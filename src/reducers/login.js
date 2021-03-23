@@ -28,6 +28,8 @@ const initialState = {
   email: '',
   phone: '',
   kkm: false,
+  customers: [],
+  customer_key: "",
 
 
 }
@@ -56,7 +58,7 @@ export default function login (state = initialState, action) {
       kkm: action.payload.kkm,
       disp_map: action.payload.disp_map,
       customers: action.payload.customers,
-
+      customer_key: action.payload.customer_key,
 
       
   }
@@ -90,6 +92,8 @@ export default function login (state = initialState, action) {
       kkm: action.payload.kkm,
       disp_map: action.payload.disp_map,
       customers: action.payload.customers,
+      customer_key: action.payload.customer_key,
+
     }
     case 'LOGOUT': return { ...state, userkey: null, alias: null, logged: false, username: '', pass: '' }
 

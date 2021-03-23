@@ -303,13 +303,27 @@ class Screen extends React.Component {
                     const SelectedSendCity = result.filter((el)=>el.value === current_disp_data.SebdCity)[0]
                     const SelectedRecCity = result.filter((el)=>el.value === current_disp_data.RecCity)[0]
                     
-                    const PayTypeList = [
+                    const PayTypeList = [ //
                         {label:"Безналичная оплата", value:"БезналичнаяОплата"},
                         {label:"Оплата наличными при отправлении", value:"ОплатаНаличнымиПриОтправлении"},
                         {label:"Оплата наличными при получении", value:"ОплатаНаличнымиПриПолучении"}
                       ]
-                    
-                    const PayType = PayTypeList.find(ptel=>ptel.label === current_disp_data.PayType)
+                    let PayType
+                    let PayerSelect;
+                        if (current_disp_data.CustomerKey == this.props.store.login.customer_key) {
+                             PayType = PayTypeList.find(ptel => ptel.label === current_disp_data.PayType)
+                             PayerSelect = {}
+                        } else {
+                             PayType = { label: "Оплата получателем по договору", value: "БезналичнаяОплатаПолучателем" }
+                            console.log(current_disp_data.CustomerKey)
+                            const CurPayer = this.props.store.login.customers.find((e) => e.customerKey == current_disp_data.CustomerKey)
+                            console.log(CurPayer)
+                            PayerSelect = {
+                                label: CurPayer.customer,
+                                value: CurPayer.customerKey,
+                                template: CurPayer.template}
+                        }
+                        
 
                     let RecTerminal = false
                     let SendTerminal = false
@@ -336,6 +350,7 @@ class Screen extends React.Component {
                         RecTerminal: RecTerminal,
                         SendTerminal: SendTerminal,
                         PayType: PayType,
+                        PayerSelect: PayerSelect,
 
                         InsureValue: current_disp_data.InsureValue,
                         COD: current_disp_data.COD,

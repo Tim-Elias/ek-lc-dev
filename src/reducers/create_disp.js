@@ -277,8 +277,10 @@ export default function dispatch (state = initialState, action) {
       {label:"Прочее", value: "Прочее"}
     ]
     console.log(action.payload.Cargo)
+
+
     return { ...state, 
-    
+      PayerSelect: action.payload.PayerSelect,
       Number: action.payload.Number,
       PayType: action.payload.PayType,
       SendAdress: action.payload.SendAdress,
