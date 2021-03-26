@@ -1,7 +1,8 @@
-select {
-    height: 25px;
+.mobile_del_row select {
     font-size: 12px;
     width: calc(100% - 150px);
+    font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+    text-align: left;
 }
 
 .mobile_del_data_label {
@@ -18,6 +19,8 @@ select {
     border-bottom: #c0c0c0 solid 1px;
     /* width: calc(100% - 150px); */
     flex-grow: 100;
+    background-color: white;
+    appearance: none;
 }
 
 .mobile_del_row {

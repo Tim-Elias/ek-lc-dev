@@ -21,6 +21,7 @@ import MScanner from './scanner';
 import MPosition from './position'; 
 import MCheckPrint from './m_check_print';
 import MCalcPrice from './m_calc_price';
+import MCreateDisp from './m_create_disp';
 import { withCookies } from 'react-cookie';
 
 class Screen extends React.Component {
@@ -72,6 +73,7 @@ class Screen extends React.Component {
                 {this.props.store.general.active_window === 'wait' ? (<Wait />) : (null)}
                 {this.props.store.general.active_window === 'm_check_print' ? (<MCheckPrint />) : (null)}
                 {this.props.store.general.active_window === 'scanner' ? (<MScanner />) : (null)}
+                {this.props.store.general.active_window === 'm_create_disp' ? (<MCreateDisp />) : (null)}
                 {this.props.store.general.active_window === 'position' ? (<MPosition />) : (null)}
             </div>
         )

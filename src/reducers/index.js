@@ -21,6 +21,7 @@ import test from './test'
 import storage_reciept from './storage_reciept'
 import movement from './movement'
 import check from './check'
+import m_create_disp from './m_create_disp'
 
 export default combineReducers({
 
@@ -45,5 +46,6 @@ export default combineReducers({
   storage_reciept,
   movement,
   check,
+  m_create_disp,
   
 })
