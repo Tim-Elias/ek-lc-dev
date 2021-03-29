@@ -29,6 +29,7 @@ const initialState = {
   cameraActive: false,
   
   popup: false,
+  popup_message: false,
 
   is_new: false,
   action: null,
@@ -62,6 +63,7 @@ export default function dispatch (state = initialState, action) {
     case 'set_key': return { ...state, key: { ...state.key, num: action.payload.num, status: action.payload.status } }
 
     case 'set_popup': return { ...state, popup: action.payload }
+    case 'set_popup_message': return { ...state, popup_message: action.payload }
     case 'set_qr': return { ...state, qr: action.payload }
     case 'set_print_check_disabled': return { ...state, print_check_disabled: action.payload }
     case 'check_disable': return { ...state, data: { ...state.data, CheckEnabled: false} }

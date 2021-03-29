@@ -27,7 +27,7 @@ class Screen extends React.Component {
             summ: this.props.store.disp.cash_accepted, 
             comment: this.props.store.disp.comment, 
             rec: this.props.store.disp.FIO_Customer, 
-            terminal: this.props.store.disp.type_cash, //
+            terminal: this.props.store.disp.type_cash, 
             img: barcode,
             partially: type,
         }
@@ -41,7 +41,7 @@ class Screen extends React.Component {
                         this.props.cookies.remove('num');
                         this.props.cookies.remove('status');
                         this.props.cookies.remove('window');
-                        alert("Данные отправлены!")
+                        this.props.set_popup_message("Данные отправлены!");
                         this.props.set_active_window("m_storage");
                     },
                     (err) => { 
@@ -85,10 +85,9 @@ class Screen extends React.Component {
                             alert('ККМ Сервер недоступен :(')
                         } else {
                             this.props.check_disable();
-                            this.props.set_print_check_disabled(false)
-                            this.props.set_QR(result)
-                            alert("Чек пробит успешно!");
-                            // get_data()
+                            this.props.set_print_check_disabled(false);
+                            this.props.set_QR(result);
+                            this.props.set_popup_message("Чек пробит успешно!");
 
                             const check_data = {
                                 userkey: this.props.store.login.userkey,
@@ -149,13 +148,19 @@ class Screen extends React.Component {
         const time = H + ':' + M;
         this.props.set_disp_time(time);
 
-        console.log(this.props.store.disp.delivery_time);
+
+        
+        if (this.props.store.check.check_data.num == this.props.store.disp.data.Number) {
+            this.props.set_print_check_disabled(false);
+        } else {
+            this.props.set_print_check_disabled(true);
+        }
     }
 
     componentWillUnmount() {
+        this.props.set_popup_message(false);
         this.props.reset_data();
     }
-
 
     render() {
 
@@ -176,9 +181,15 @@ class Screen extends React.Component {
                         <div>Сумма: {this.props.store.disp.cash_accepted} руб.</div>
                     </div>
                     <div className="PopUp_button_container">
-                        <button className="PopUp_button" onClick={this.createcheck.bind(this)}>Да</button>
+                        {/* <button className="PopUp_button" onClick={this.createcheck.bind(this)}>Да</button> */}
                         <button className="PopUp_button" onClick={this.receipt.bind(this)}>Нет</button>
                     </div>
+                </div>
+
+                <div className={this.props.store.disp.popup_message ? ("PopUp_container") : ("none")} onClick={() => this.props.set_popup_message(false)()}></div>
+                <div className={this.props.store.disp.popup_message ? ("PopUp_window") : ("none")}>
+                    <p>{this.props.store.disp.popup_message}</p>
+                    <button className="PopUp_button_check" onClick={() => this.props.set_popup_message(false)}>Ок</button>
                 </div>
 
                 {this.props.store.general.active_loader ? (<Wait />) : (
@@ -270,6 +281,7 @@ export default withCookies(connect(
         set_disp_type_cash: (param) => { dispatch({ type: 'set_disp_type_cash', payload: param }); }, 
         set_active_window: (param) => { dispatch({ type: 'set_active_window', payload: param }); },
         set_popup: (param) => { dispatch({ type: 'set_popup', payload: param }); }, 
+        set_popup_message: (param) => { dispatch({ type: 'set_popup_message', payload: param }); },
     })
 
 )(Screen));

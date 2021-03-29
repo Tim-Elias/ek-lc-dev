@@ -27,9 +27,10 @@ class Screen extends React.Component {
     }
 
     render() {
-        let initialValue = 0
         return (
-            <div></div>
+            <div>
+                
+            </div>
         )
     }
 };

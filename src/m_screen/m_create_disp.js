@@ -441,7 +441,7 @@ class Screen extends React.Component {
 
                         <div className="mobile_heading">
                             Создать накладную
-                </div>
+                        </div>
 
                         <div className="mobile_container">
 

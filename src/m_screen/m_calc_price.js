@@ -161,7 +161,7 @@ class Screen extends React.Component {
                                     <div key={index} className="mobile_table">
 
                                         <div className="mobile_table_row">
-                                            <div className="mobile_table_el">{el.del_method} {el.del_type}</div>
+                                            <div className="mobile_table_el mobile_table_el--full_row">{el.del_method} {el.del_type}</div>
                                         </div>
 
                                         <div className="mobile_table_row">

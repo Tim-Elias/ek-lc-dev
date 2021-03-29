@@ -1,6 +1,5 @@
 const initialState = {
 
-    
     list: [],
     check_data: {
         qr: "",
@@ -18,6 +17,7 @@ export default function dispatch(state = initialState, action) {
                 inn: '5407478336',
                 organization: 'ООО "Абсолют-Экспресс"',
                 adress: "630007, г. Новосибирск, ул. Коммунистическая. д. 7",}  }
+        case 'reset_check_data': return { ...state, check_data: { qr: "", }}
         
         default: return state
     }

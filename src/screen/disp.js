@@ -315,9 +315,7 @@ class Screen extends React.Component {
                              PayerSelect = {}
                         } else {
                              PayType = { label: "Оплата получателем по договору", value: "БезналичнаяОплатаПолучателем" }
-                            console.log(current_disp_data.CustomerKey)
                             const CurPayer = this.props.store.login.customers.find((e) => e.customerKey == current_disp_data.CustomerKey)
-                            console.log(CurPayer)
                             PayerSelect = {
                                 label: CurPayer.customer,
                                 value: CurPayer.customerKey,

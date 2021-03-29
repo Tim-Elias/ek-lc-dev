@@ -43,6 +43,9 @@ const initialState = {
 
     popup: false,
     popupType: "",
+
+    template_list: [],
+    select_template: {},
 }
 
 export default function dispatch(state = initialState, action) {
@@ -234,6 +237,60 @@ export default function dispatch(state = initialState, action) {
             popup: false,
             popupType: "",
         }
+
+        case 'set_template_list': return { ...state, template_list: action.payload }
+        case 'set_select_template':
+
+            const CargoTypeList = [
+                { label: "Сейф-пакет", value: "СейфПакет" },
+                { label: "Коробка", value: "Коробка" },
+                { label: "Контейнер", value: "Контейнер" },
+                { label: "Мешок под пломбой", value: "МешокПодПломбой" },
+                { label: "Прочее", value: "Прочее" }
+            ]
+
+            let delivery_method = action.payload.data.del_method.split("-");
+            let send_teminal, rec_terminal;
+            if (delivery_method[0] == "Склад") {
+                send_teminal = true;
+            } else {
+                send_teminal = false;
+            }
+
+            if(delivery_method[1] == "Склад") {
+                rec_terminal = true;
+            } else {
+                rec_terminal = false;
+            }
+
+
+
+            return {
+                ...state,
+                DelMethod: action.payload.data.del_method,
+                PayType: action.payload.data.pay_type,
+
+                SendCity: action.payload.send_city,
+                // Number: action.payload.Number,
+                SendAdress: action.payload.data.send_address,
+                SendCompany: action.payload.data.send_company,
+                SendPhone: action.payload.data.send_phone,
+                SendPerson: action.payload.data.send_person,
+                SendAddInfo: action.payload.data.send_addinfo,
+                // SendEmail: action.payload.SendEmail,
+                
+                SendTerminal: send_teminal,
+
+                RecCity: action.payload.rec_city,
+                RecAdress: action.payload.data.rec_address,
+                RecCompany: action.payload.data.rec_company,
+                RecPhone: action.payload.data.rec_phone,
+                RecPerson: action.payload.data.rec_person,
+                RecAddInfo: action.payload.data.rec_addinfo,
+                // RecEmail: action.payload.RecEmail,
+
+                RecTerminal: rec_terminal,
+            }
 
         default: return state
     }

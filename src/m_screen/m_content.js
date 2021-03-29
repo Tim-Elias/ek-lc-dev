@@ -22,6 +22,7 @@ import MPosition from './position';
 import MCheckPrint from './m_check_print';
 import MCalcPrice from './m_calc_price';
 import MCreateDisp from './m_create_disp';
+import MDispTemplate from './m_disp_template';
 import { withCookies } from 'react-cookie';
 
 class Screen extends React.Component {
@@ -58,6 +59,7 @@ class Screen extends React.Component {
                 {this.props.store.general.active_window === 'm_storage' ? (<MStorage />) : (null)}
                 {this.props.store.general.active_window === 'Mmenu' ? (<MMenu />) : (null)}
                 {this.props.store.general.active_window === 'm_disp' ? (<MDisp />) : (null)}
+                {this.props.store.general.active_window === 'm_disp_template' ? (<MDispTemplate />) : (null)}
                 {this.props.store.general.active_window === 'm_delivered' ? (<MDelivered />) : (null)}
                 {this.props.store.general.active_window === 'm_not_delivered' ? (<MNotDelivered />) : (null)}
                 {this.props.store.general.active_window === 'storage_reciept' ? (<MStorageReciept />) : (null)}
