@@ -15,7 +15,7 @@ class Screen extends React.Component {
         order: "",
         num: this.props.store.reciept.search,
       };
-  
+
       get_data('getdispatchdata', search_reciept_data).then(
         (result) => {
           this.props.set_data_disp(result);

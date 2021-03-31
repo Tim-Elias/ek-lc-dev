@@ -1,4 +1,6 @@
 const initialState = {
+    Number: "",
+
     PayType: "БезналичнаяОплата",
     CargoInfoType: false,
     CityList: [],
@@ -25,15 +27,7 @@ const initialState = {
     RecSelectTerminal: {},
     RecTerminalList: [],
 
-    Cargo: [{
-        Weight: 0,
-        L: "",
-        W: "",
-        H: "",
-        Q: 1,
-        Type: "",
-        Comment: "",
-    }],
+    Cargo: [],
 
     Total: "0",
     Weight: "0",
@@ -45,11 +39,26 @@ const initialState = {
     popupType: "",
 
     template_list: [],
-    select_template: {},
+
+    Cargo_list: [],
 }
 
 export default function dispatch(state = initialState, action) {
     switch (action.type) {
+
+        case 'set_Cargo_list_quantity': return {
+            ...state,
+            Cargo_list: state.Cargo_list.map((item, index) => {
+                if (action.payload.name == item.name) {
+                    return { ...item, quantity: action.payload.quantity }
+                } else {
+                    return item
+                }
+            })
+        }
+        
+        case 'set_Cargo_list': return { ...state, Cargo_list: action.payload }
+        case 'set_Number': return { ...state, Number: action.payload }
 
         case 'set_popup': return { ...state, popup: action.payload }
         case 'set_popup_type': return { ...state, popupType: action.payload }
@@ -134,22 +143,25 @@ export default function dispatch(state = initialState, action) {
                 }
             })
         }
+
         case 'AddCargoMobile':
 
             state.Cargo.push({
 
-                Weight: "",
-                L: "",
-                W: "",
-                H: "",
+                Weight: action.payload.Weight,
+                L: action.payload.L,
+                W: action.payload.W,
+                H: action.payload.H,
 
                 Q: 1,
 
-                Type: "",
-                Comment: "",
+                Type: action.payload.Type,
+                Comment: action.payload.Comment,
+                Template: action.payload.Template,
             })
 
             return { ...state, Cargo: state.Cargo }
+
         case 'RemoveCargoMobile': return {
             ...state,
             Cargo: state.Cargo.filter((el, index) => {
@@ -164,9 +176,10 @@ export default function dispatch(state = initialState, action) {
         case 'SetPayTypeMobile': return { ...state, PayType: action.payload }
 
         case 'SetCargoInfoTypeMobile': if (action.payload === "true") {
-            return { ...state, CargoInfoType: true }
+            return {
+                ...state, CargoInfoType: true, Cargo: [], Total: "0", Weight: "0", Volume: "0", COD: "0", InsureValue: "0" }
         } else {
-            return { ...state, CargoInfoType: false }
+            return { ...state, CargoInfoType: false, Total: "0", Weight: "0", Volume: "0", COD: "0", InsureValue: "0" }
         }
 
         case 'SetCityListMobile': return { ...state, CityList: action.payload }
@@ -218,15 +231,7 @@ export default function dispatch(state = initialState, action) {
             RecSelectTerminal: {},
             RecTerminalList: [],
 
-            Cargo: [{
-                Weight: 0,
-                L: "",
-                W: "",
-                H: "",
-                Q: 1,
-                Type: "",
-                Comment: "",
-            }],
+            Cargo: [],
 
             Total: "0",
             Weight: "0",
@@ -236,6 +241,8 @@ export default function dispatch(state = initialState, action) {
 
             popup: false,
             popupType: "",
+
+            Cargo_list: [],
         }
 
         case 'set_template_list': return { ...state, template_list: action.payload }

@@ -82,7 +82,7 @@ class Screen extends React.Component {
                     (result) => {
                         this.props.set_active_loader(false);
                         if(result == '') {
-                            alert('ККМ Сервер недоступен :(')
+                            this.props.set_popup_message('ККМ Сервер недоступен :(');
                         } else {
                             this.props.check_disable();
                             this.props.set_print_check_disabled(false);
@@ -158,7 +158,6 @@ class Screen extends React.Component {
     }
 
     componentWillUnmount() {
-        this.props.set_popup_message(false);
         this.props.reset_data();
     }
 
@@ -186,11 +185,11 @@ class Screen extends React.Component {
                     </div>
                 </div>
 
-                <div className={this.props.store.disp.popup_message ? ("PopUp_container") : ("none")} onClick={() => this.props.set_popup_message(false)()}></div>
+                {/* <div className={this.props.store.disp.popup_message ? ("PopUp_container") : ("none")} onClick={() => this.props.set_popup_message(false)()}></div>
                 <div className={this.props.store.disp.popup_message ? ("PopUp_window") : ("none")}>
                     <p>{this.props.store.disp.popup_message}</p>
                     <button className="PopUp_button_check" onClick={() => this.props.set_popup_message(false)}>Ок</button>
-                </div>
+                </div> */}
 
                 {this.props.store.general.active_loader ? (<Wait />) : (
                 <div>

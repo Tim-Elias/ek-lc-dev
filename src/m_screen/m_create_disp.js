@@ -7,6 +7,7 @@ import Select from 'react-select';
 import { customStyles } from "./m_common_style";
 import { get_data } from './../common/common_modules';
 import Wait from "../screen/wait";
+import Foto from "./foto";
 
 class Screen extends React.Component {
 
@@ -25,6 +26,12 @@ class Screen extends React.Component {
             (err) => { console.log(err) }
         );
         
+        get_data('cargo', { userkey: this.props.store.login.userkey }).then(
+            (result) => {
+                this.props.set_Cargo_list(result);
+            },
+            (err) => { console.log(err) }
+        );
     }
 
     componentWillUnmount() {
@@ -189,6 +196,32 @@ class Screen extends React.Component {
         this.props.SetRecTerminal(data);
     }
 
+    AddCargoTemplate = (item) => {
+        // let data = {
+        //     name: item.name,
+        //     quantity: ++item.quantity,
+        // };
+        // this.props.set_Cargo_list_quantity(data);
+        this.AddCargo(item.weight.replace(",", "."), item.l, item.w, item.h, item.name);
+    }
+    
+    RemoveCargoTemplate = (Template) => {
+        if (Template.quantity > 0) {
+
+            const index = this.props.store.m_create_disp.Cargo.findIndex(el => el.Template == Template.name)
+
+            this.props.RemoveCargo(index);
+
+            // let data = {
+            //     name: Template.name,
+            //     quantity: --Template.quantity,
+            // };
+            // this.props.set_Cargo_list_quantity(data);
+        } else {
+            return false;
+        }
+    }
+
     //<--cargo
     CargoWeight = (value, index) => {
         const data = {
@@ -244,13 +277,33 @@ class Screen extends React.Component {
         }
         this.props.SetCargoComm(data);
     }
-
-    AddCargo = () => {
-        this.props.AddCargo();
+    AddCargo = (Weight = 0, L = "", W = "", H = "", Template = "", Type = "", Comment = "") => {
+        let data = {
+            Weight: Weight,
+            L: L,
+            W: W,
+            H: H,
+            Type: Type,
+            Comment: Comment,
+            Template: Template,
+        }
+        this.props.AddCargo(data);
     }
 
-    RemoveCargo = (index) => {
-        this.props.RemoveCargo(index);
+    RemoveCargo = (index, item) => {
+        if (item.Template !== "") {
+            let template = this.props.store.m_create_disp.Cargo_list.filter(el => (
+                el.name == item.Template
+            ))[0];
+            let data = {
+                name: template.name,
+                quantity: --template.quantity,
+            };
+            this.props.set_Cargo_list_quantity(data);
+            this.props.RemoveCargo(index);
+        } else {
+            this.props.RemoveCargo(index);
+        }
     }
     //Cargo-->
 
@@ -290,7 +343,7 @@ class Screen extends React.Component {
 
         const create_disp_data = {
             userkey: this.props.store.login.userkey,
-            // Number: this.props.store.m_create_disp.Number,
+            Number: this.props.store.m_create_disp.Number,
             PayType: this.props.store.m_create_disp.PayType,
             // DispDate: this.props.store.m_create_disp.DispDate,
             SendCity: this.props.store.m_create_disp.SendCity.value,
@@ -374,9 +427,9 @@ class Screen extends React.Component {
 
         if (this.props.store.m_create_disp.SendCity.value === ""
             || this.props.store.m_create_disp.RecCity.value === ""
-            || (this.props.store.m_create_disp.Total == "0" && this.props.store.m_create_disp.CargoInfoType.value)
-            || (this.props.store.m_create_disp.Weight == "0" && this.props.store.m_create_disp.CargoInfoType.value)
-            || (total_weight == 0 && !this.props.store.m_create_disp.CargoInfoType.value)
+            || (this.props.store.m_create_disp.Total == "0" && this.props.store.m_create_disp.CargoInfoType)
+            || (this.props.store.m_create_disp.Weight == "0" && this.props.store.m_create_disp.CargoInfoType)
+            || (total_weight == 0 && !this.props.store.m_create_disp.CargoInfoType)
         ) {
             disabled = true;
         }
@@ -444,6 +497,11 @@ class Screen extends React.Component {
                         </div>
 
                         <div className="mobile_container">
+
+                            <div className="mobile_del_row">
+                                <div className="mobile_del_data_label">Номер накладной:</div>
+                                <input className="mobile_del_input" type="text" value={this.props.store.m_create_disp.Number} onChange={e => this.props.set_Number(e.target.value)}></input>
+                            </div>
 
                             <div className="mobile_del_row">
                                 <div className="mobile_del_data_label">Заказчик:</div>
@@ -593,7 +651,26 @@ class Screen extends React.Component {
                                 </select>
                             </div>
 
-                            {this.props.store.m_create_disp.CargoInfoType === false ? (
+                            {this.props.store.m_create_disp.CargoInfoType == false && this.props.store.m_create_disp.Cargo_list.length > 0 ? (
+                                <div className="mobile_table">
+
+                                    <div className="mobile_table_header">
+                                        Шаблоны грузов
+                                    </div>
+
+                                    {this.props.store.m_create_disp.Cargo_list.map((item, index) => (
+                                        <div className="mobile_table_row">
+                                            <div className="mobile_table_label">{item.name}</div>
+                                            <button className="mobile_table_cargo_button" onClick={() => this.RemoveCargoTemplate(item)}>-</button>
+                                            <input className="mobile_table_cargo_button" readOnly value={this.props.store.m_create_disp.Cargo.filter((el) => (el.Template == item.name)).length}></input>
+                                            <button className="mobile_table_cargo_button" onClick={() => this.AddCargoTemplate(item)}>+</button>
+                                        </div>
+                                    ))}
+
+                                </div>
+                            ) : (null)}
+
+                            {this.props.store.m_create_disp.CargoInfoType == false ? (
                                 <div>
                                     {this.props.store.m_create_disp.Cargo.map((item, index) =>
                                         <div className="mobile_table" key={index}>
@@ -631,20 +708,20 @@ class Screen extends React.Component {
                                                 <div className="mobile_table_label">Комментарий:</div>
                                                 <input className="mobile_table_el" onChange={e => this.CargoComm(e.target.value, index)} />
                                             </div>
-                                            {this.props.store.m_create_disp.Cargo.length > 1 ? (<br />) : (null)}
-                                            {this.props.store.m_create_disp.Cargo.length > 1 ? (<button onClick={this.RemoveCargo.bind(this, index)} className="mobile_disp_button_item mobile_disp_button_item--full mobile_disp_button_item--yellow">Удалить место</button>) : (null)}
+                                            <br />
+                                            <button onClick={this.RemoveCargo.bind(this, index, item)} className="mobile_disp_button_item mobile_disp_button_item--full mobile_disp_button_item--yellow">Удалить место</button>
                                         </div>
                                     )}
                                 </div>
                             ) : (null)}
-                            {this.props.store.m_create_disp.CargoInfoType === false ? (<button className="mobile_disp_button_item mobile_disp_button_item--blue" onClick={this.AddCargo.bind(this)}>Добавить место</button>) : (null)}
+                            {this.props.store.m_create_disp.CargoInfoType == false ? (<button className="mobile_disp_button_item mobile_disp_button_item--blue" onClick={() => this.AddCargo()}>Добавить место</button>) : (null)}
 
                             <br />
 
-                            {this.props.store.m_create_disp.CargoInfoType === false ? (<div className="mobile_table">
+                            {this.props.store.m_create_disp.CargoInfoType == false ? (<div className="mobile_table">
                                 <div className="mobile_table_header">
                                     Общая информация о грузах
-                        </div>
+                                </div>
 
                                 <div className="mobile_table_row">
                                     <div className="mobile_table_label">Общее количество мест:</div>
@@ -680,7 +757,7 @@ class Screen extends React.Component {
                                 <div className="mobile_table">
                                     <div className="mobile_table_header">
                                         Общая информация о грузах
-                        </div>
+                                    </div>
 
                                     <div className="mobile_table_row">
                                         <div className="mobile_table_label">Общее количество мест:</div>
@@ -715,6 +792,7 @@ class Screen extends React.Component {
                                 </div>
                             )}
 
+                            <Foto />
                             <button className="mobile_disp_button_item--full mobile_disp_button_item--blue" onClick={this.CalcPrice.bind(this, total_weight, total_volume)}>Рассчитать стоимость</button>
 
                             {disabled ? (<button onClick={() => alert("send disp")} className="mobile_disp_button_item--full mobile_disp_button_item--blue_nonactive" disabled={disabled}>Создать накладную</button>)
@@ -735,6 +813,11 @@ export default connect(
     }),
     dispatch => ({
 
+        set_Cargo_list_quantity: (param) => { dispatch({ type: 'set_Cargo_list_quantity', payload: param }) },
+        set_Number: (param) => { dispatch({ type: 'set_Number', payload: param }) },
+
+        set_Cargo_list: (param) => { dispatch({ type: 'set_Cargo_list', payload: param }) },
+
         set_popup: (param) => { dispatch({ type: 'set_popup', payload: param }) },
         set_popup_type: (param) => { dispatch({ type: 'set_popup_type', payload: param }) },
 
@@ -747,7 +830,7 @@ export default connect(
         SetCargoQ: (param) => { dispatch({ type: 'SetCargoQMobile', payload: param }) },
         SetCargoType: (param) => { dispatch({ type: 'SetCargoTypeMobile', payload: param }) },
         SetCargoComm: (param) => { dispatch({ type: 'SetCargoCommMobile', payload: param }) },
-        AddCargo: () => { dispatch({ type: 'AddCargoMobile' }) },
+        AddCargo: (param) => { dispatch({ type: 'AddCargoMobile', payload: param }) },
         RemoveCargo: (param) => { dispatch({ type: 'RemoveCargoMobile', payload: param }) },
 
         SetVolume: (param) => { dispatch({ type: 'SetVolumeMobile', payload: param }) }, 

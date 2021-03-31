@@ -9,25 +9,18 @@ class Screen extends React.Component {
     search_reciept = () => {
         this.props.set_active_window("wait");
 
-        const search_reciept_data = {
+        const data = {
             userkey: this.props.store.login.userkey,
-            order: "",
+            status: "Ожидается",
             num: this.props.store.reciept.search,
         };
 
-        get_data('getdispatchdata', search_reciept_data).then(
-            (result) => {
-                this.props.set_data_disp(result);
-                this.props.set_active_window("disp");
-                this.props.set_last_window("reciept");
-                this.props.set_action("reciept");
-            },
-            (err) => {
-                this.props.set_active_window("reciept");
-                this.props.set_search_error(err)
-            }
-        );
+        this.props.set_key(data);
+        this.props.set_active_window("m_disp");
+    }
 
+    componentWillUnmount() {
+        this.props.set_search_reciept("");
     }
 
     render() {
@@ -57,6 +50,7 @@ export default connect(
         store: state
     }),
     dispatch => ({
+        set_key: (param) => { dispatch({ type: 'set_key', payload: param }) },
         set_active_window: (param) => { dispatch({ type: 'set_active_window', payload: param }) },
         set_search_reciept: (param) => { dispatch({ type: 'set_search_reciept', payload: param }) },
         set_search_error: (param) => { dispatch({ type: 'set_search_error', payload: param }) },

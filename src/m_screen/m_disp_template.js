@@ -13,7 +13,6 @@ class Screen extends React.Component {
         this.props.set_active_loader(true);
         get_data('template', data).then(
             (result) => {
-                this.props.set_active_loader(false);
                 this.props.set_template_list(result);
             },
             (err) => {
@@ -23,6 +22,7 @@ class Screen extends React.Component {
 
         get_data('citylist').then(
             (result) => {
+                this.props.set_active_loader(false);
                 this.props.SetCityList(result);
             },
             (err) => { 

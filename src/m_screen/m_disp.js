@@ -62,6 +62,26 @@ class Screen extends React.Component {
         );
     }
 
+    reciept = () => {
+        this.props.set_active_window("wait");
+        const data = {
+            userkey: this.props.store.login.userkey,
+            num: this.props.store.disp.data.Number,
+        }
+        get_data('getdispatch', data).then(
+            (result) => {
+                this.props.set_popup_message(`Накладная ${this.props.store.disp.data.Number} успешно принята на склад`);
+                this.props.set_active_window("m_reciept");
+            },
+            (err) => {
+                this.props.set_popup_message("Не удалось принять накладную");
+                this.props.set_active_window("m_disp");
+                console.log(err)
+            }
+        );
+
+    }
+
     render() {
         window.history.pushState(null, "", window.location.href);
         window.onpopstate = function () {
@@ -81,24 +101,32 @@ class Screen extends React.Component {
                 {this.props.store.general.active_loader ? (<Wait />) : (
                 <div>
 
-                    {this.props.store.disp.data.Type === 'Заявка' && this.props.store.disp.data.Status === 'Подтверждено' ? 
-                        (<div className="mobile_disp_button">
-                            <button className="mobile_disp_button_item mobile_disp_button_item--full" onClick={this.setorderstatus.bind(this, "Выполнено")}>Выполнено</button>
-                        </div>)
-                    : (null)}
+                    {this.props.store.disp.key.status === "Ожидается" ? (
+                        <div className="mobile_disp_button">
+                            <button className="mobile_disp_button_item mobile_disp_button_item--full" onClick={this.reciept.bind(this)}>Получить от отправителя</button>
+                        </div>
+                    ) : (
+                        <div>
+                            {this.props.store.disp.data.Type === 'Заявка' && this.props.store.disp.data.Status === 'Подтверждено' ?
+                            (<div className="mobile_disp_button">
+                                <button className="mobile_disp_button_item mobile_disp_button_item--full" onClick={this.setorderstatus.bind(this, "Выполнено")}>Выполнено</button>
+                            </div>)
+                            : (null)}
 
-                    {this.props.store.disp.data.Type === 'Заявка' && this.props.store.disp.data.Status === 'Новая' ? 
-                        (<div className="mobile_disp_button">
-                            <button className="mobile_disp_button_item mobile_disp_button_item--full" onClick={this.setorderstatus.bind(this, "Подтверждено")}>Подтвердить</button>
-                        </div>)
-                    : (null)}
+                            {this.props.store.disp.data.Type === 'Заявка' && this.props.store.disp.data.Status === 'Новая' ?
+                                (<div className="mobile_disp_button">
+                                    <button className="mobile_disp_button_item mobile_disp_button_item--full" onClick={this.setorderstatus.bind(this, "Подтверждено")}>Подтвердить</button>
+                                </div>)
+                            : (null)}
 
-                    {this.props.store.disp.data.Type === 'Доставка' ?
-                        (<div className="mobile_disp_button">
-                            <button className="mobile_disp_button_item" onClick={this.settings_window.bind(this, 'm_delivered')}>Доставлено</button>
-                            <button className="mobile_disp_button_item--not mobile_disp_button_item" onClick={this.settings_window.bind(this, 'm_not_delivered')}>Не доставлено</button>
-                        </div>)
-                    : (null)}                    
+                            {this.props.store.disp.data.Type === 'Доставка' ?
+                                (<div className="mobile_disp_button">
+                                    <button className="mobile_disp_button_item" onClick={this.settings_window.bind(this, 'm_delivered')}>Доставлено</button>
+                                    <button className="mobile_disp_button_item--not mobile_disp_button_item" onClick={this.settings_window.bind(this, 'm_not_delivered')}>Не доставлено</button>
+                                </div>)
+                            : (null)}
+                        </div>
+                    )}                   
 
                     <div className="disp_customer_data">
                         <div className="mobile_disp_data_label">Заказчик:</div>
@@ -232,6 +260,7 @@ export default withCookies(connect(
         set_last_window: () => { dispatch({ type: 'set_last_window', payload: "storage" }) },
         set_action: (param) => { dispatch({ type: 'set_action', payload: param }) }, 
         set_active_loader: (param) => { dispatch({ type: 'set_active_loader', payload: param }); },
+        set_popup_message: (param) => { dispatch({ type: 'set_popup_message', payload: param }); },
     })
 
 )(Screen));
