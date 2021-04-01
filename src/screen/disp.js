@@ -161,6 +161,7 @@ class Screen extends React.Component {
         this.props.set_disp_show_history(true)
         get_data('history', { Number: this.props.store.disp.data.Number }).then(
             (result) => {
+                console.log(result)
                 this.props.set_disp_history(result);
                 this.props.set_disp_history_loading(false)
             },

@@ -180,7 +180,7 @@ class Screen extends React.Component {
                         <div>Сумма: {this.props.store.disp.cash_accepted} руб.</div>
                     </div>
                     <div className="PopUp_button_container">
-                        {/* <button className="PopUp_button" onClick={this.createcheck.bind(this)}>Да</button> */}
+                        <button className="PopUp_button" onClick={this.createcheck.bind(this)}>Да</button>
                         <button className="PopUp_button" onClick={this.receipt.bind(this)}>Нет</button>
                     </div>
                 </div>
