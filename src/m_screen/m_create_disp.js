@@ -206,24 +206,17 @@ class Screen extends React.Component {
     }
     
     RemoveCargoTemplate = (Template) => {
-        if (Template.quantity > 0) {
-
-            const index = this.props.store.m_create_disp.Cargo.findIndex(el => el.Template == Template.name)
-
-            this.props.RemoveCargo(index);
-
-            // let data = {
-            //     name: Template.name,
-            //     quantity: --Template.quantity,
-            // };
-            // this.props.set_Cargo_list_quantity(data);
-        } else {
-            return false;
-        }
+        
+        const CargoSelectTemplate = this.props.store.m_create_disp.Cargo.findIndex((item) => (item.Template == Template.name));
+        
+        this.props.RemoveCargo(CargoSelectTemplate);
     }
 
     //<--cargo
     CargoWeight = (value, index) => {
+        if(value < 0) {
+            return false
+        }
         const data = {
             value: value,
             index: index,
@@ -232,6 +225,9 @@ class Screen extends React.Component {
     }
 
     CargoW = (value, index) => {
+        if (value < 0) {
+            return false
+        }
         const data = {
             value: value,
             index: index,
@@ -240,6 +236,9 @@ class Screen extends React.Component {
     }
 
     CargoL = (value, index) => {
+        if (value < 0) {
+            return false
+        }
         const data = {
             value: value,
             index: index,
@@ -248,6 +247,9 @@ class Screen extends React.Component {
     }
 
     CargoH = (value, index) => {
+        if (value < 0) {
+            return false
+        }
         const data = {
             value: value,
             index: index,
@@ -515,17 +517,17 @@ class Screen extends React.Component {
 
                             <div className="mobile_del_row">
                                 <div className="mobile_del_data_label">Тип оплаты:</div>
-                                <select className="mobile_del_input" onChange={(e) => this.props.SetPayType(e.target.value)}>
-                                    <option selected={this.props.store.m_create_disp.PayType === "БезналичнаяОплата"} value="БезналичнаяОплата">Безналичная оплата</option>
-                                    <option selected={this.props.store.m_create_disp.PayType === "ОплатаНаличнымиПриОтправлении"} value="ОплатаНаличнымиПриОтправлении">Оплата наличными при отправлении</option>
-                                    <option selected={this.props.store.m_create_disp.PayType === "ОплатаНаличнымиПриПолучении"} value="ОплатаНаличнымиПриПолучении">Оплата наличными при получении</option>
+                                <select defaultValue={this.props.store.m_create_disp.PayType} className="mobile_del_input" onChange={(e) => this.props.SetPayType(e.target.value)}>
+                                    <option value="БезналичнаяОплата">Безналичная оплата</option>
+                                    <option value="ОплатаНаличнымиПриОтправлении">Оплата наличными при отправлении</option>
+                                    <option value="ОплатаНаличнымиПриПолучении">Оплата наличными при получении</option>
                                 </select>
                             </div>
 
                             <div className="mobile_table">
                                 <div className="mobile_table_header">
                                     Данные отправителя
-                            <button className="mobile_table_header_button" onClick={this.ShowPopUp.bind(this, "send")}>Из шаблона</button>
+                                    <button className="mobile_table_header_button" onClick={this.ShowPopUp.bind(this, "send")}>Из шаблона</button>
                                 </div>
 
                                 <div className="mobile_table_row">
@@ -587,7 +589,7 @@ class Screen extends React.Component {
                             <div className="mobile_table">
                                 <div className="mobile_table_header">
                                     Данные получателя
-                            <button className="mobile_table_header_button" onClick={this.ShowPopUp.bind(this, "Rec")}>Из шаблона</button>
+                                    <button className="mobile_table_header_button" onClick={this.ShowPopUp.bind(this, "Rec")}>Из шаблона</button>
                                 </div>
 
                                 <div className="mobile_table_row">
@@ -603,9 +605,9 @@ class Screen extends React.Component {
 
                                 {this.props.store.m_create_disp.RecTerminalList.length === 0 ? (null) : (<div className="mobile_table_row">
                                     <div className="mobile_table_label">Вид доставки:</div>
-                                    <select className="mobile_table_el" onChange={(e) => this.RecTerminal(e.target.value)}>
-                                        <option selected={this.props.store.m_create_disp.RecTerminal} value={true}>До склада</option>
-                                        <option selected={!this.props.store.m_create_disp.RecTerminal} value={false}>До двери</option>
+                                    <select defaultValue={this.props.store.m_create_disp.RecTerminal} className="mobile_table_el" onChange={(e) => this.RecTerminal(e.target.value)}>
+                                        <option value={true}>До склада</option>
+                                        <option value={false}>До двери</option>
                                     </select>
                                 </div>)}
 
@@ -645,9 +647,9 @@ class Screen extends React.Component {
                             <div className="mobile_heading">Данные о грузах:</div>
                             <div className="mobile_del_row">
                                 <div className="mobile_del_data_label">Метод внесения информации:</div>
-                                <select className="mobile_del_input" onChange={(e) => this.props.SetCargoInfoType(e.target.value)}>
-                                    <option selected={this.props.store.m_create_disp.CargoInfoType === false} value={false}>Внести информацию о каждом грузе</option>
-                                    <option selected={this.props.store.m_create_disp.CargoInfoType === true} value={true}>Указать итоговые значения</option>
+                                <select defaultValue={this.props.store.m_create_disp.CargoInfoType} className="mobile_del_input" onChange={(e) => this.props.SetCargoInfoType(e.target.value)}>
+                                    <option value={false}>Внести информацию о каждом грузе</option>
+                                    <option value={true}>Указать итоговые значения</option>
                                 </select>
                             </div>
 
@@ -659,7 +661,7 @@ class Screen extends React.Component {
                                     </div>
 
                                     {this.props.store.m_create_disp.Cargo_list.map((item, index) => (
-                                        <div className="mobile_table_row">
+                                        <div key={index} className="mobile_table_row">
                                             <div className="mobile_table_label">{item.name}</div>
                                             <button className="mobile_table_cargo_button" onClick={() => this.RemoveCargoTemplate(item)}>-</button>
                                             <input className="mobile_table_cargo_button" readOnly value={this.props.store.m_create_disp.Cargo.filter((el) => (el.Template == item.name)).length}></input>
@@ -694,8 +696,8 @@ class Screen extends React.Component {
 
                                             <div className="mobile_table_row">
                                                 <div className="mobile_table_label">Тип груза:</div>
-                                                <select className="mobile_table_el" onChange={e => this.CargoType(e.target.value, index)}>
-                                                    <option selected disabled>Выберите тип груза</option>
+                                                <select defaultValue="" className="mobile_table_el" onChange={e => this.CargoType(e.target.value, index)}>
+                                                    <option value="" disabled>Выберите тип груза</option>
                                                     <option value="СейфПакет">Сейф-пакет</option>
                                                     <option value="Коробка">Коробка</option>
                                                     <option value="Контейнер">Контейнер</option>

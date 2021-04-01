@@ -23,6 +23,7 @@ import MCheckPrint from './m_check_print';
 import MCalcPrice from './m_calc_price';
 import MCreateDisp from './m_create_disp';
 import MDispTemplate from './m_disp_template';
+import MReceiveFromSender from './m_receive_from_sender';
 import PopUp from './popup';
 import { withCookies } from 'react-cookie';
 
@@ -77,6 +78,7 @@ class Screen extends React.Component {
                 {this.props.store.general.active_window === 'm_check_print' ? (<MCheckPrint />) : (null)}
                 {this.props.store.general.active_window === 'scanner' ? (<MScanner />) : (null)}
                 {this.props.store.general.active_window === 'm_create_disp' ? (<MCreateDisp />) : (null)}
+                {this.props.store.general.active_window === 'm_receiv_from_sender' ? (<MReceiveFromSender />) : (null)}
                 <PopUp />
                 {this.props.store.general.active_window === 'position' ? (<MPosition />) : (null)}
             </div>

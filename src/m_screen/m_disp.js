@@ -62,26 +62,6 @@ class Screen extends React.Component {
         );
     }
 
-    reciept = () => {
-        this.props.set_active_window("wait");
-        const data = {
-            userkey: this.props.store.login.userkey,
-            num: this.props.store.disp.data.Number,
-        }
-        get_data('getdispatch', data).then(
-            (result) => {
-                this.props.set_popup_message(`Накладная ${this.props.store.disp.data.Number} успешно принята на склад`);
-                this.props.set_active_window("m_reciept");
-            },
-            (err) => {
-                this.props.set_popup_message("Не удалось принять накладную");
-                this.props.set_active_window("m_disp");
-                console.log(err)
-            }
-        );
-
-    }
-
     render() {
         window.history.pushState(null, "", window.location.href);
         window.onpopstate = function () {
@@ -103,7 +83,7 @@ class Screen extends React.Component {
 
                     {this.props.store.disp.key.status === "Ожидается" ? (
                         <div className="mobile_disp_button">
-                            <button className="mobile_disp_button_item mobile_disp_button_item--full" onClick={this.reciept.bind(this)}>Получить от отправителя</button>
+                            <button className="mobile_disp_button_item mobile_disp_button_item--full" onClick={this.settings_window.bind(this, "m_receiv_from_sender")}>Получить от отправителя</button>
                         </div>
                     ) : (
                         <div>
@@ -241,7 +221,7 @@ class Screen extends React.Component {
                             </div>
                         </div>
                     ) : (null)}
-                    
+
                 </div>)}
 
             </div>
