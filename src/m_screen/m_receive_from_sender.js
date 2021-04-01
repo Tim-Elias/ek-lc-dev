@@ -48,6 +48,7 @@ class Screen extends React.Component {
 
     reciept = () => {
         this.props.set_active_window("wait");
+        let barcode = this.props.store.disp.foto.split(',').pop();
         const data = {
             userkey: this.props.store.login.userkey,
             num: this.props.store.disp.data.Number,
@@ -55,7 +56,7 @@ class Screen extends React.Component {
             time: this.props.store.disp.delivery_time,
             terminal: this.props.store.disp.type_cash,
             summ: this.props.store.disp.cash_accepted,
-            img: this.props.store.disp.foto,
+            img: barcode,
         }
         get_data('getdispatch', data).then(
             (result) => {
