@@ -45,6 +45,9 @@ const initialState = {
   show_history: false,
   history: [],
   history_loading: false,
+  show_skan: false,
+  skan_loading: false,
+  skan: "",
   show_remove_modal: false,
   text_remove_modal: '',
   remove_modal_loading: false,
@@ -83,6 +86,10 @@ export default function dispatch (state = initialState, action) {
     case 'set_disp_history_loading': return { ...state, history_loading: action.payload }
     case 'set_disp_history': return { ...state, history: action.payload }
     case 'set_disp_show_history': return { ...state, show_history: action.payload }
+
+    case 'set_disp_skan_loading': return { ...state, skan_loading: action.payload }
+    case 'set_disp_skan': return { ...state, skan: action.payload }
+    case 'set_disp_show_skan': return { ...state, show_skan: action.payload }
 
     case 'set_disp_remove_modal_loading': return { ...state, remove_modal_loading: action.payload }
     case 'set_disp_text_remove_modal': return { ...state, text_remove_modal: action.payload }

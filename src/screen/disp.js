@@ -161,7 +161,6 @@ class Screen extends React.Component {
         this.props.set_disp_show_history(true)
         get_data('history', { Number: this.props.store.disp.data.Number }).then(
             (result) => {
-                console.log(result)
                 this.props.set_disp_history(result);
                 this.props.set_disp_history_loading(false)
             },
@@ -172,6 +171,31 @@ class Screen extends React.Component {
     close_history = () => {
         this.props.set_disp_show_history(false)
         this.props.set_disp_history([])
+    }
+
+    open_skan = (DocNumber) => {
+        this.props.set_disp_skan_loading(true);
+        this.props.set_disp_show_skan(true);
+        const data = {
+            num: this.props.store.disp.data.Number,
+            userkey: this.props.store.login.userkey,
+            DocNumber: DocNumber,
+        }
+        console.log(data)
+        get_data('getskan', data).then(
+            (result) => {
+                console.log(result)
+
+                this.props.set_disp_skan("data:image/jpg;base64," + result);
+                this.props.set_disp_skan_loading(false);
+            },
+            (err) => { console.log(err) }
+        );
+    }
+
+    close_skan = () => {
+        this.props.set_disp_show_skan(false);
+        this.props.set_disp_skan("");
     }
 
     remove_disp = () => {
@@ -588,6 +612,9 @@ class Screen extends React.Component {
 
 
             <div>
+
+
+
                 <div className="disp_Number">
 
                     <div><Button compact icon onClick={this.back.bind(this)}>
@@ -641,7 +668,28 @@ class Screen extends React.Component {
 
                                                             <Table.Row className="create_disp_template_list_tr" key={index}>
                                                                 <Table.Cell >{el.Date}</Table.Cell>
-                                                                <Table.Cell>{el.Status}</Table.Cell>
+                                                                <Table.Cell>{el.Status}{el.Skan != 0 ? (
+                                                                    <Modal
+                                                                        trigger={<button className="disp_skan_button" onClick={this.open_skan.bind(this, el.DocNumber)}>(Получить скан)</button>}
+                                                                        open={this.props.store.disp.show_skan}
+                                                                        onClose={this.close_skan.bind(this)}
+                                                                    >
+                                                                        <Modal.Content>
+                                                                            <Modal.Description>
+                                                                                {this.props.store.disp.skan_loading ? (
+                                                                                    <div className="loader_container">
+                                                                                        <Dimmer active inverted>
+                                                                                            <Loader inverted content='Loading' />
+                                                                                        </Dimmer>
+                                                                                    </div>
+                                                                                ) : (
+                                                                                    <img className="disp_skan" src={this.props.store.disp.skan} />
+                                                                                )}
+                                                                            </Modal.Description>
+                                                                        </Modal.Content>
+                                                                    </Modal>
+                                                                ) : (null)}
+                                                                </Table.Cell>
                                                                 <Table.Cell>{el.Comment}</Table.Cell>
                                                             </Table.Row>
                                                         )}
@@ -892,9 +940,15 @@ export default connect(
         set_list_storage: (param) => { dispatch({ type: 'set_list_storage', payload: param }) },
         set_active_window: (param) => { dispatch({ type: 'set_active_window', payload: param }) },
         set_search_error: (param) => { dispatch({ type: 'set_search_error', payload: param }) },
+
         set_disp_history_loading: (param) => { dispatch({ type: 'set_disp_history_loading', payload: param }) },
         set_disp_history: (param) => { dispatch({ type: 'set_disp_history', payload: param }) },
         set_disp_show_history: (param) => { dispatch({ type: 'set_disp_show_history', payload: param }) },
+
+        set_disp_skan_loading: (param) => { dispatch({ type: 'set_disp_skan_loading', payload: param }) },
+        set_disp_skan: (param) => { dispatch({ type: 'set_disp_skan', payload: param }) },
+        set_disp_show_skan: (param) => { dispatch({ type: 'set_disp_show_skan', payload: param }) },
+
         set_my_disp_data: (param) => { dispatch({ type: 'set_my_disp_data', payload: param }) },
 
         set_disp_remove_modal_loading: (param) => { dispatch({ type: 'set_disp_remove_modal_loading', payload: param }) },
