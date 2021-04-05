@@ -18,7 +18,6 @@ class Screen extends React.Component {
         if (window === 'storage_reciept') {
             get_data('storagedata', list_data).then(
                 (result) => {
-                    console.log(result)
                     this.props.storage_reciept_set_storage(result.storage);
                     this.props.storage_reciept_set_zone_list(result.zone_list);
                     this.props.set_active_window(window);

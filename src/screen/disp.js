@@ -181,15 +181,15 @@ class Screen extends React.Component {
             userkey: this.props.store.login.userkey,
             DocNumber: DocNumber,
         }
-        console.log(data)
         get_data('getskan', data).then(
             (result) => {
-                console.log(result)
-
                 this.props.set_disp_skan("data:image/jpg;base64," + result);
                 this.props.set_disp_skan_loading(false);
             },
-            (err) => { console.log(err) }
+            (err) => { 
+                console.log(err);
+                this.props.set_disp_skan_loading(false);
+            }
         );
     }
 
@@ -256,8 +256,6 @@ class Screen extends React.Component {
     }
     
     SelectSendCity = (value) =>{
-    
-        //console.log(value)
     
       this.props.SetSelectedSendCity(value)
     
@@ -328,7 +326,7 @@ class Screen extends React.Component {
                     const SelectedSendCity = result.filter((el)=>el.value === current_disp_data.SebdCity)[0]
                     const SelectedRecCity = result.filter((el)=>el.value === current_disp_data.RecCity)[0]
                     
-                    const PayTypeList = [ //
+                    const PayTypeList = [ 
                         {label:"Безналичная оплата", value:"БезналичнаяОплата"},
                         {label:"Оплата наличными при отправлении", value:"ОплатаНаличнымиПриОтправлении"},
                         {label:"Оплата наличными при получении", value:"ОплатаНаличнымиПриПолучении"}
