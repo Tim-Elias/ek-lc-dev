@@ -11,6 +11,7 @@
 
  
 const initialState = {
+    ySteps: 3,
     data: [],
     date_from: date,
     date_to: date,

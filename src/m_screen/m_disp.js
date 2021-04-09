@@ -96,6 +96,16 @@ class Screen extends React.Component {
                             {this.props.store.disp.data.Type === 'Заявка' && this.props.store.disp.data.Status === 'Новая' ?
                                 (<div className="mobile_disp_button">
                                     <button className="mobile_disp_button_item mobile_disp_button_item--full" onClick={this.setorderstatus.bind(this, "Подтверждено")}>Подтвердить</button>
+                                    {/* <div className="mobile_disp_button">
+                                        <button className={+this.props.store.disp.cash_accepted > 0 && this.props.store.login.kkm && this.props.store.disp.data.CheckEnabled && this.props.store.disp.data.ChangeSumm == false ? ("mobile_disp_button_item mobile_disp_button_item--blue") : ("none")} onClick={this.receipt.bind(this)}>
+                                            Чек
+                                        </button>
+
+                                        <div className="mobile_del_row">
+                                            <div className="mobile_del_data_label">Принятая сумма</div>
+                                            <input className="mobile_del_input" value={this.props.store.disp.cash_accepted} onChange={e => this.props.set_disp_cash(e.target.value)} type="number"></input>
+                                        </div>
+                                    </div> */}
                                 </div>)
                             : (null)}
 
