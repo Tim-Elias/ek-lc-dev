@@ -187,7 +187,7 @@ class Screen extends React.Component {
 
     let ExcelData = [];
     for (let i = 0; i < FilterData.length; i++) {
-      let Price = FilterData[i].Price.replace(/\s+/g, '');
+      let Price = FilterData[i].Price.replace(/\s+/g, '').replace(",", ".");
       ExcelData[i] = [
         { value: FilterData[i].Date, style: CellStyle},
         { value: FilterData[i].Num, style: CellStyle},
