@@ -123,25 +123,6 @@ class Screen extends React.Component {
       } catch (e) { }
     };
 
-    const TitleStyle = {
-      border: {
-        top: { style: "thin", color: { rgb: "000" } },
-        bottom: { style: "thin", color: { rgb: "000" } },
-        left: { style: "thin", color: { rgb: "000" } },
-        right: { style: "thin", color: { rgb: "000" } },
-      },
-      font: {
-        bold: true,
-      },
-    }
-    const CellStyle = {
-      border: { 
-        top: { style: "thin", color: { rgb: "000" } },
-        bottom: { style: "thin", color: { rgb: "000" } },
-        left: { style: "thin", color: { rgb: "000" } },
-        right: { style: "thin", color: { rgb: "000" } },
-      } 
-    }
 
     let FilterData = this.props.store.my_disp.data.filter(
         (el) => {
@@ -184,6 +165,30 @@ class Screen extends React.Component {
           return (FindStatusRes !== undefined)
         }
       )
+
+
+    const TitleStyle = {
+      border: {
+        top: { style: "thin", color: { rgb: "000" } },
+        bottom: { style: "thin", color: { rgb: "000" } },
+        left: { style: "thin", color: { rgb: "000" } },
+        right: { style: "thin", color: { rgb: "000" } },
+      },
+      font: {
+        bold: true,
+      },
+      fill: {
+        fgColor: { rgb: "FFEFEFEF" }
+      }
+    }
+    const CellStyle = {
+      border: {
+        top: { style: "thin", color: { rgb: "000" } },
+        bottom: { style: "thin", color: { rgb: "000" } },
+        left: { style: "thin", color: { rgb: "000" } },
+        right: { style: "thin", color: { rgb: "000" } },
+      }
+    }
 
     let ExcelData = [];
     for (let i = 0; i < FilterData.length; i++) {
@@ -231,7 +236,7 @@ class Screen extends React.Component {
       {
         columns: [
           {
-            title: "Служба доставки Экспресс Кинетика", style: { font: { bold: false } } 
+            title: "Служба доставки Экспресс Кинетика", style: { font: { bold: false } }
           }
         ],
         data: [
