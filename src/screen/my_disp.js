@@ -5,7 +5,11 @@ import { withCookies } from 'react-cookie';
 import { Header, Modal, Table, Button } from 'semantic-ui-react'
 import './disp_map.css';
 import './my_disp.css';
+import ReactExport from "react-data-export";
 
+const ExcelFile = ReactExport.ExcelFile;
+const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
+const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 
 class Screen extends React.Component {
 
@@ -119,6 +123,128 @@ class Screen extends React.Component {
       } catch (e) { }
     };
 
+    const TitleStyle = {
+      border: {
+        top: { style: "thin", color: { rgb: "000" } },
+        bottom: { style: "thin", color: { rgb: "000" } },
+        left: { style: "thin", color: { rgb: "000" } },
+        right: { style: "thin", color: { rgb: "000" } },
+      },
+      font: {
+        bold: true,
+      },
+    }
+    const CellStyle = {
+      border: { 
+        top: { style: "thin", color: { rgb: "000" } },
+        bottom: { style: "thin", color: { rgb: "000" } },
+        left: { style: "thin", color: { rgb: "000" } },
+        right: { style: "thin", color: { rgb: "000" } },
+      } 
+    }
+
+    let FilterData = this.props.store.my_disp.data.filter(
+        (el) => {
+          return (el.Num.indexOf(this.props.store.my_disp.num_filter) > -1 || this.props.store.my_disp.num_filter === "")
+        }
+      ).filter(
+        (el) => {
+          const filter_sender_address = this.props.store.my_disp.sender_address.toUpperCase()
+          const sender_address = el.SendAdress.toUpperCase()
+          return (sender_address.indexOf(filter_sender_address) > -1 || this.props.store.my_disp.sender_address === "")
+        }
+      ).filter(
+        (el) => {
+          const filter_rec_address = this.props.store.my_disp.rec_address.toUpperCase()
+          const rec_address = el.RecAdress.toUpperCase()
+          return (rec_address.indexOf(filter_rec_address) > -1 || this.props.store.my_disp.rec_address === "")
+        }
+      ).filter(
+        (el) => {
+          const selectedRecCities = this.props.store.my_disp.rec_city_filter.filter((el1) => { return (el1.check) })
+          const FindRecCityRes = selectedRecCities.find(el2 => { return el2.name == el.RecCity })
+          return (FindRecCityRes !== undefined)
+        }
+      ).filter(
+        (el) => {
+          const selectedSendCities = this.props.store.my_disp.send_city_filter.filter((el1) => { return (el1.check) })
+          const FindSendCityRes = selectedSendCities.find(el2 => { return el2.name == el.SendCity })
+          return (FindSendCityRes !== undefined)
+        }
+      ).filter(
+        (el) => {
+          const selectedDelMethods = this.props.store.my_disp.del_method_filter.filter((el1) => { return (el1.check) })
+          const FindDelMethodsRes = selectedDelMethods.find(el2 => { return el2.name == el.DelMethod })
+          return (FindDelMethodsRes !== undefined)
+        }
+      ).filter(
+        (el) => {
+          const selectedStatus = this.props.store.my_disp.status_filter.filter((el1) => { return (el1.check) })
+          const FindStatusRes = selectedStatus.find(el2 => { return el2.name == el.Status })
+          return (FindStatusRes !== undefined)
+        }
+      )
+
+    let ExcelData = [];
+    for (let i = 0; i < FilterData.length; i++) {
+      let Price = FilterData[i].Price.replace(/\s+/g, '');
+      ExcelData[i] = [
+        { value: FilterData[i].Date, style: CellStyle},
+        { value: FilterData[i].Num, style: CellStyle},
+        { value: FilterData[i].SendCity, style: CellStyle },
+        { value: FilterData[i].SendAdress, style: CellStyle },
+        { value: FilterData[i].SendCompany, style: CellStyle },
+        { value: FilterData[i].RecCity, style: CellStyle },
+        { value: FilterData[i].RecAdress, style: CellStyle },
+        { value: FilterData[i].RecCompany, style: CellStyle },
+        { value: FilterData[i].Total, style: CellStyle },
+        { value: FilterData[i].Weight, style: CellStyle },
+        { value: FilterData[i].Volume, style: CellStyle },
+        { value: FilterData[i].DelMethod, style: CellStyle },
+        { value: +Price, style: CellStyle },
+        { value: FilterData[i].Status, style: CellStyle },
+        { value: FilterData[i].Recient, style: CellStyle },
+        { value: FilterData[i].RecDate, style: CellStyle },
+      ];
+    }
+
+    let ExcelColumn = [
+      { title: "Дата", style: TitleStyle },
+      { title: "Номер", style: TitleStyle },
+      { title: "Город отправителя", style: TitleStyle },
+      { title: "Адрес отправителя", style: TitleStyle },
+      { title: "Компания отправителя", style: TitleStyle },
+      { title: "Город получателя", style: TitleStyle },
+      { title: "Адрес получателя", style: TitleStyle },
+      { title: "Компания получателя", style: TitleStyle },
+      { title: "Мест", style: TitleStyle },
+      { title: "Вес", style: TitleStyle },
+      { title: "Вес v", style: TitleStyle },
+      { title: "Вид доставкиВид доставки", style: TitleStyle },
+      { title: "Цена", style: TitleStyle },
+      { title: "Статус", style: TitleStyle },
+      { title: "Получатель", style: TitleStyle },
+      { title: "Вручено", style: TitleStyle },
+    ]
+
+    const styledMultiDataSet = [
+      {
+        columns: [
+          {
+            title: "Служба доставки Экспресс Кинетика", style: { font: { bold: false } } 
+          }
+        ],
+        data: [
+          [{ value: "Данные за период с " + this.props.store.my_disp.date_from.replace(/-/g, ":").split(":").reverse().join(":") + " по " + this.props.store.my_disp.date_to.replace(/-/g, ":").split(":").reverse().join(":") }]
+        ],
+      },
+      {
+        ySteps: 1,
+        columns: ExcelColumn,
+        data: ExcelData,
+      }
+    ]
+    
     return (
 
       <div>
@@ -131,6 +257,10 @@ class Screen extends React.Component {
           <div> 
             <Button style={{ marginTop: '-5px' }} size='mini' onClick={this.get_my_disp_data.bind(this)}>Получить данные</Button>
             {/*{<Button style={{ marginTop: '-5px' }} size='mini' onClick={() => this.props.set_my_disp_focus_all_default()}>Сбросить фильтры</Button>*/}
+            
+            <ExcelFile filename={"Накладные Экспресс Кинетика " + this.props.store.my_disp.date_from.replace(/-/g, ".").split(".").reverse().join(".") + " - " + this.props.store.my_disp.date_from.replace(/-/g, ".").split(".").reverse().join(".")} element={this.props.store.my_disp.data.length > 0 ? (<Button style={{ margin: '-5px 0 0 15px' }} size='mini'>Сохранить в Exсel</Button>) : (<Button disabled style={{ margin: '-5px 0 0 15px' }} size='mini'>Сохранить в Exсel</Button>)}>
+              <ExcelSheet dataSet={styledMultiDataSet} name="Список накладных" />
+            </ExcelFile>
           </div>
 
 
