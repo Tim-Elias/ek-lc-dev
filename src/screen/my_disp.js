@@ -191,8 +191,26 @@ class Screen extends React.Component {
     }
 
     let ExcelData = [];
+    let wDate = 0, wNum = 0, wSendCity = 0, wSendAdress = 0, wSendCompany = 0, wRecCity = 0, wRecAdress = 0, wRecCompany = 0, wTotal = 0, wWeight = 0, wVolume = 0, wDelMethod = 0, wPrice = 0, wStatus = 0, wRecient = 0, wRecDate = 0;
     for (let i = 0; i < FilterData.length; i++) {
       let Price = FilterData[i].Price.replace(/\s+/g, '').replace(",", ".");
+
+      wDate = (FilterData[i].Date.length > wDate) ? (FilterData[i].Date.length) : (wDate);
+      wNum = (FilterData[i].Num.length > wNum) ? (FilterData[i].Num.length) : (wNum);
+      wSendCity = (FilterData[i].SendCity.length > wSendCity) ? (FilterData[i].SendCity.length) : (wSendCity);
+      wSendAdress = (FilterData[i].SendAdress.length > wSendAdress) ? (FilterData[i].SendAdress.length) : (wSendAdress);
+      wSendCompany = (FilterData[i].SendCompany.length > wSendCompany) ? (FilterData[i].SendCompany.length) : (wSendCompany);
+      wRecCity = (FilterData[i].RecCity.length > wRecCity) ? (FilterData[i].RecCity.length) : (wRecCity);
+      wRecAdress = (FilterData[i].RecAdress.length > wRecAdress) ? (FilterData[i].RecAdress.length) : (wRecAdress);
+      wRecCompany = (FilterData[i].RecCompany.length > wRecCompany) ? (FilterData[i].RecCompany.length) : (wRecCompany);
+      wTotal = (FilterData[i].Total.length > wTotal) ? (FilterData[i].Total.length) : (wTotal);
+      wWeight = (FilterData[i].Weight.length > wWeight) ? (FilterData[i].Weight.length) : (wWeight);
+      wVolume = (FilterData[i].Volume.length > wVolume) ? (FilterData[i].Volume.length) : (wVolume);
+      wDelMethod = (FilterData[i].DelMethod.length > wDelMethod) ? (FilterData[i].DelMethod.length) : (wDelMethod);
+      wPrice = (FilterData[i].Price.length > wPrice) ? (FilterData[i].Price.length) : (wPrice);
+      wStatus = (FilterData[i].Status.length > wStatus) ? (FilterData[i].Status.length) : (wStatus);
+      wRecient = (FilterData[i].Recient.length > wRecient) ? (FilterData[i].Recient.length) : (wRecient);
+      wRecDate = (FilterData[i].RecDate.length > wRecDate) ? (FilterData[i].RecDate.length) : (wRecDate);
       ExcelData[i] = [
         { value: FilterData[i].Date, style: CellStyle},
         { value: FilterData[i].Num, style: CellStyle},
@@ -214,22 +232,22 @@ class Screen extends React.Component {
     }
 
     let ExcelColumn = [
-      { title: "Дата", style: TitleStyle },
-      { title: "Номер", style: TitleStyle },
-      { title: "Город отправителя", style: TitleStyle },
-      { title: "Адрес отправителя", style: TitleStyle },
-      { title: "Компания отправителя", style: TitleStyle },
-      { title: "Город получателя", style: TitleStyle },
-      { title: "Адрес получателя", style: TitleStyle },
-      { title: "Компания получателя", style: TitleStyle },
-      { title: "Мест", style: TitleStyle },
-      { title: "Вес", style: TitleStyle },
-      { title: "Вес v", style: TitleStyle },
-      { title: "Вид доставкиВид доставки", style: TitleStyle },
-      { title: "Цена", style: TitleStyle },
-      { title: "Статус", style: TitleStyle },
-      { title: "Получатель", style: TitleStyle },
-      { title: "Вручено", style: TitleStyle },
+      { title: "Дата", style: TitleStyle, width: { wch: wDate } },
+      { title: "Номер", style: TitleStyle, width: { wch: wNum } },
+      { title: "Город отправителя", style: TitleStyle, width: { wch: (wSendCity > 18) ? (wSendCity) : (18) } },
+      { title: "Адрес отправителя", style: TitleStyle, width: { wch: (wSendAdress > 18) ? (wSendAdress) : (18) } },
+      { title: "Компания отправителя", style: TitleStyle, width: { wch: (wSendCompany > 21) ? (wSendCompany) : (21) } },
+      { title: "Город получателя", style: TitleStyle, width: { wch: (wRecCity > 17) ? (wRecCity) : (17) } },
+      { title: "Адрес получателя", style: TitleStyle, width: { wch: (wRecAdress > 17) ? (wRecAdress) : (17) } },
+      { title: "Компания получателя", style: TitleStyle, width: { wch: (wSendCompany > 20) ? (wSendCompany) : (20) } },
+      { title: "Мест", style: TitleStyle, width: { wch: (wTotal > 5) ? (wTotal) : (5) } },
+      { title: "Вес", style: TitleStyle, width: { wch: (wWeight > 4) ? (wWeight) : (4) } },
+      { title: "Вес v", style: TitleStyle, width: { wch: (wVolume > 6) ? (wVolume) : (6) } },
+      { title: "Вид доставки", style: TitleStyle, width: { wch: (wDelMethod > 13) ? (wDelMethod) : (13) } },
+      { title: "Цена", style: TitleStyle, width: { wch: (wPrice > 5) ? (wPrice) : (5) } },
+      { title: "Статус", style: TitleStyle, width: { wch: (wStatus > 7) ? (wStatus) : (7) } },
+      { title: "Получатель", style: TitleStyle, width: { wch: (wRecient > 11) ? (wRecient) : (11) } },
+      { title: "Вручено", style: TitleStyle, width: { wch: (wRecDate > 8) ? (wRecDate) : (8) } },
     ]
 
     const styledMultiDataSet = [
@@ -238,7 +256,7 @@ class Screen extends React.Component {
           {
             title: "Служба доставки Экспресс Кинетика", style: { font: { bold: false } }
           }
-        ],
+        ], 
         data: [
           [{ value: "Данные за период с " + this.props.store.my_disp.date_from.replace(/-/g, ":").split(":").reverse().join(":") + " по " + this.props.store.my_disp.date_to.replace(/-/g, ":").split(":").reverse().join(":") }]
         ],
