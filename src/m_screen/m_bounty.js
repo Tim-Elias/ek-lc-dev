@@ -21,16 +21,14 @@ class Screen extends React.Component {
             userkey: this.props.store.login.userkey,
             num: num,
         }
-
+        
         get_data('getcheck', data).then(
             (result) => {
-                console.log(result)
+                this.props.set_select_print_disp(num);
                 this.props.set_check_data(result);
-                this.props.set_active_window("m_check_print")
-                
+                this.props.set_active_window("m_check_print");  
             },
             (err) => {
-                
                 console.log(err)
             }
         );
@@ -92,14 +90,13 @@ class Screen extends React.Component {
                         {this.props.store.movement.disp_list.map((item, index) =>
                             <div key={index} className="cargo_item">
                                 {item.customer} <br/>
-                                {item.doc} <br />
+                                {item.doc} <br/>
                                 {item.date} <br/>
                                 {item.city} {item.address}<br/>
                                 {item.disp}<br/><br/>
-                                {item.check == 1 ? (<button onClick={this.check_print.bind(this,item.disp)}>Чек</button>):(null)}<br/><br/>
+                                {item.check == 1 ? (<div><button onClick={this.check_print.bind(this, item.disp)}>Чек</button><br/><br/></div>):(null)}
 
                                 Начислено: {item.summ} руб.<br/>
-
                             </div>
                         )}
                         </div>
@@ -116,6 +113,7 @@ export default connect(
         store: state
     }),
     dispatch => ({
+        set_select_print_disp: (param) => { dispatch({ type: 'set_select_print_disp', payload: param }); },
         set_active_window: (param) => { dispatch({ type: 'set_active_window', payload: param }); },
         set_check_data: (param) => { dispatch({ type: 'set_check_data', payload: param }); },
         set_active_loader: (param) => { dispatch({ type: 'set_active_loader', payload: param }); },

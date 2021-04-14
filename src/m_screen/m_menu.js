@@ -81,7 +81,7 @@ class Screen extends React.Component {
                         <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'setting')}>Настройки</button></li>
                         <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.mobile_version.bind(this)}>Web Версия</button></li>
                         <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.logout.bind(this)}>Выйти</button></li>
-                        {/* <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'm_create_disp')}>test</button></li> */}
+                        {/* <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'position')}>test</button></li> */}
                     </ul>
                 </div>
             </nav>

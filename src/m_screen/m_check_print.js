@@ -7,10 +7,13 @@ import './mobile_check_print.css';
 
 class Screen extends React.Component {
 
+    componentWillUnmount() {
+        this.props.set_select_print_disp("");
+    }
     
     render() {
     let print_button
-        if( this.props.store.check.check_data.num == this.props.store.disp.data.Number){
+        if (this.props.store.check.check_data.num == this.props.store.disp.data.Number || this.props.store.check.check_data.num == this.props.store.movement.select_print_disp){
             print_button = false;
         } else {
             print_button = true;
@@ -20,7 +23,7 @@ class Screen extends React.Component {
             <div className="mobile_disp_button">
                 <ReactToPrint
 
-                    trigger={() => <button className={this.props.store.check.check_data.num == this.props.store.disp.data.Number ? ("mobile_disp_button_item mobile_disp_button_item--blue") : ("mobile_disp_button_item mobile_disp_button_item--blue_nonactive")} disabled={print_button}>Печать чека</button>}
+                    trigger={() => <button className={(this.props.store.check.check_data.num == this.props.store.disp.data.Number || this.props.store.check.check_data.num == this.props.store.movement.select_print_disp) ? ("mobile_disp_button_item mobile_disp_button_item--blue") : ("mobile_disp_button_item mobile_disp_button_item--blue_nonactive")} disabled={print_button}>Печать чека</button>}
                     content={() => this.componentRef}
                 />
 
@@ -136,6 +139,7 @@ export default connect(
         store: state
     }),
     dispatch => ({
+        set_select_print_disp: (param) => { dispatch({ type: 'set_select_print_disp', payload: param }); },
         set_active_loader: (param) => { dispatch({ type: 'set_active_loader', payload: param }); },
         set_date_start: (param) => { dispatch({ type: 'set_date_start', payload: param }) },
         set_date_end: (param) => { dispatch({ type: 'set_date_end', payload: param }) },

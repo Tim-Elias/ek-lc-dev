@@ -18,6 +18,7 @@ const initialState = {
     balance_end: '',
 
     disp_list: [],
+    select_print_disp: '',
 
     profit: '',
     profit_for_period: '',
@@ -25,6 +26,7 @@ const initialState = {
 
 export default function dispatch(state = initialState, action) {
     switch (action.type) {
+        case 'set_select_print_disp': return { ...state, select_print_disp: action.payload }
         case 'set_date_start': return { ...state, date_start: action.payload }
         case 'set_date_end': return { ...state, date_end: action.payload }
         case 'set_balance': return { ...state, balance: action.payload }
