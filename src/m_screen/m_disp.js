@@ -13,17 +13,17 @@ class Screen extends React.Component {
         this.props.set_active_window(window);
     }
 
-    loadData = () => {
+    loadData = (num = this.props.store.disp.key.num, status = this.props.store.disp.key.status) => {
         this.props.cookies.set('window', 'm_disp', { maxAge: 1000000000000 })
-        this.props.cookies.set('num', this.props.store.disp.key.num, { maxAge: 1000000000000 })
-        this.props.cookies.set('status', this.props.store.disp.key.status, { maxAge: 1000000000000 })
+        this.props.cookies.set('num', num, { maxAge: 1000000000000 })
+        this.props.cookies.set('status', status, { maxAge: 1000000000000 })
 
         this.props.set_active_loader(true);
-
+        
         const data = {
             userkey: this.props.store.login.userkey,
-            status: this.props.store.disp.key.status,
-            num: this.props.store.disp.key.num,
+            status: status,
+            num: num,
         };
 
         get_data('dispatch', data).then(
@@ -63,6 +63,91 @@ class Screen extends React.Component {
         );
     }
 
+    search_reciept = () => {
+        const data = {
+            userkey: this.props.store.login.userkey,
+            status: "Ожидается",
+            num: this.props.store.disp.data.OrdersDisp[0],
+        };
+        this.props.set_key(data);
+
+        this.loadData(this.props.store.disp.data.OrdersDisp[0], "Ожидается");
+    }
+
+    create_disp = () => {
+
+        this.props.set_active_window("wait");
+
+        get_data('citylist').then(
+            (result) => {
+                this.props.SetCityList(result);
+            },
+            (err) => {
+                console.log(err)
+            }
+        );
+
+        const send_city = this.props.store.m_create_disp.CityList.filter((el) => el.value == this.props.store.disp.data.SebdCity);
+        const rec_city = this.props.store.m_create_disp.CityList.filter((el) => el.value == this.props.store.disp.data.RecCity);
+
+        const s_city = {
+            city: this.props.store.disp.data.SebdCity,
+        };
+        const r_city = {
+            city: this.props.store.disp.data.RecCity,
+        };
+
+        get_data('terminallist', s_city).then(
+            (result) => {
+                const data = {
+                    result: result,
+                    terminal: null,
+                }
+                this.props.SetSendTerminalList(data);
+            },
+            (err) => {
+                console.log("err");
+                console.log(err);
+            }
+        );
+
+        get_data('terminallist', r_city).then(
+            (result) => {
+                const data = {
+                    result: result,
+                    terminal: null,
+                }
+                this.props.SetRecTerminalList(data);
+            },
+            (err) => {
+                console.log("err");
+                console.log(err);
+            }
+        );
+        let data = {
+            data: {
+                del_method: this.props.store.disp.data.DelMethod,
+                pay_type: this.props.store.disp.data.PayType,
+                send_address: this.props.store.disp.data.SendAdress,
+                send_company: this.props.store.disp.data.SendCompany,
+                send_phone: this.props.store.disp.data.SendPhone,
+                send_person: this.props.store.disp.data.SendPerson,
+                send_addinfo: this.props.store.disp.data.SendAddInfo,
+                rec_address: this.props.store.disp.data.RecAdress,
+                rec_company: this.props.store.disp.data.RecCompany,
+                rec_phone: this.props.store.disp.data.RecPhone,
+                rec_person: this.props.store.disp.data.RecPerson,
+                rec_addinfo: this.props.store.disp.data.RecAddInfo,
+            },
+            send_city: send_city,
+            rec_city: rec_city,
+        }
+        this.props.set_select_template(data);
+        this.props.set_active_window("m_create_disp");
+
+        
+    }
+
     render() {
         window.history.pushState(null, "", window.location.href);
         window.onpopstate = function () {
@@ -72,7 +157,7 @@ class Screen extends React.Component {
 
         let SendPhoneList = this.props.store.disp.data.SendPhone.split(',');// для нескольких телефонов
         let RecPhoneList = this.props.store.disp.data.RecPhone.split(',');// для нескольких телефонов
-
+        
         return (
             <div>
                 <div className="mobile_heading">
@@ -81,6 +166,12 @@ class Screen extends React.Component {
 
                 {this.props.store.general.active_loader ? (<Wait />) : (
                 <div>
+
+                    {this.props.store.disp.data.Type === "Заявка" ? (
+                        this.props.store.disp.data.OrdersDisp.length > 0 ? (
+                            <div className="mobile_disp_button"><button onClick={this.search_reciept.bind(this)} className="mobile_disp_button_item mobile_disp_button_item--full">Получить накладную от отправителя</button></div>)
+                            : (<div className="mobile_disp_button"><button onClick={this.create_disp.bind(this)} className="mobile_disp_button_item mobile_disp_button_item--full">Создать накладную</button></div>)
+                    ) : (null)}
 
                     {this.props.store.disp.key.status === "Ожидается" ? (
                         <div className="mobile_disp_button">
@@ -233,7 +324,7 @@ class Screen extends React.Component {
                         </div>
                     ) : (null)}
 
-                <DispPrint />
+                {/* <DispPrint /> */}
                 <br />
                 </div>)}
                 
@@ -248,6 +339,11 @@ export default withCookies(connect(
         store: state
     }),
     dispatch => ({
+        set_select_template: (param) => { dispatch({ type: 'set_select_template', payload: param }); },
+        SetSendTerminalList: (param) => { dispatch({ type: 'SetSendTerminalListMobile', payload: param }) },
+        SetRecTerminalList: (param) => { dispatch({ type: 'SetRecTerminalListMobile', payload: param }) },
+        SetCityList: (param) => { dispatch({ type: 'SetCityListMobile', payload: param }) },
+        set_key: (param) => { dispatch({ type: 'set_key', payload: param }) },
         set_active_window: (param) => { dispatch({ type: 'set_active_window', payload: param }); },
         set_data_disp: (param) => { dispatch({ type: 'set_data_disp', payload: param }) },
         set_last_window: () => { dispatch({ type: 'set_last_window', payload: "storage" }) },

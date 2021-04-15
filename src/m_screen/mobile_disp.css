@@ -105,5 +105,5 @@
     font-size: 15px;
     margin: 3px 5px 15px 0;
     border-bottom: #c0c0c0 solid 1px;
-    word-wrap: break-word;
+    word-break: break-all;
 }

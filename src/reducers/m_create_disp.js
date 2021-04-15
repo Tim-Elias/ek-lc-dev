@@ -5,6 +5,7 @@ const initialState = {
     CargoInfoType: false,
     CityList: [],
     DelMethod: 'Дверь - Дверь',
+    Customer: "",
     Price: 0,
 
     SendCity: '',
@@ -45,6 +46,8 @@ const initialState = {
 
 export default function dispatch(state = initialState, action) {
     switch (action.type) {
+
+        case 'set_Customer': return { ...state, Customer: action.payload }
 
         case 'set_Cargo_list_quantity': return {
             ...state,

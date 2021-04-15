@@ -379,13 +379,13 @@ class Screen extends React.Component {
             COD: this.props.store.m_create_disp.COD,
             CargoInfoType: this.props.store.m_create_disp.CargoInfoType,
 
-            // Customer: this.props.store.m_create_disp.PayerSelect.value,
+            Customer: this.props.store.m_create_disp.Customer,
         }
 
 
         this.props.active_window("wait");
 
-        get_data('', create_disp_data).then(
+        get_data('create_disp', create_disp_data).then(
             (result) => {
 
                 const data = {
@@ -432,6 +432,8 @@ class Screen extends React.Component {
             || (this.props.store.m_create_disp.Total == "0" && this.props.store.m_create_disp.CargoInfoType)
             || (this.props.store.m_create_disp.Weight == "0" && this.props.store.m_create_disp.CargoInfoType)
             || (total_weight == 0 && !this.props.store.m_create_disp.CargoInfoType)
+            || this.props.store.m_create_disp.Customer == ""
+            || this.props.store.m_create_disp.Number == ""
         ) {
             disabled = true;
         }
@@ -454,7 +456,7 @@ class Screen extends React.Component {
                         <div className={this.props.store.m_create_disp.popup ? "PopUp_window_template" : "none"}>
                             {this.props.store.m_create_disp.popupType === "send" ? (<p>Заполнить отправителя из шаблона</p>) : (<p>Заполнить получателя из шаблона</p>)}
                             {this.props.store.upload_manifest.disp_template_list.map((el, index) =>
-                                <div className="PopUp_table">
+                                <div key={index} className="PopUp_table">
                                     <div className="PopUp_table_header">
                                         {el.label}
                                     </div>
@@ -507,7 +509,13 @@ class Screen extends React.Component {
 
                             <div className="mobile_del_row">
                                 <div className="mobile_del_data_label">Заказчик:</div>
-                                <input className="mobile_del_input" type="text"></input>
+                                <select defaultValue="" className="mobile_del_input" onChange={(e) => this.props.set_Customer(e.target.value)}>
+                                    <option value="" disabled>Выбрать заказчика</option>
+                                    {this.props.store.login.customers.map((item, index) => 
+                                        <option value={item.customer} key={index}>{item.customer}</option>
+                                    )}
+                                </select>
+                                {/* <input className="mobile_del_input" type="text"></input> */}
                             </div>
 
                             <div className="mobile_del_row">
@@ -814,6 +822,8 @@ export default connect(
         store: state
     }),
     dispatch => ({
+
+        set_Customer: (param) => { dispatch({ type: 'set_Customer', payload: param }) },
 
         set_Cargo_list_quantity: (param) => { dispatch({ type: 'set_Cargo_list_quantity', payload: param }) },
         set_Number: (param) => { dispatch({ type: 'set_Number', payload: param }) },
