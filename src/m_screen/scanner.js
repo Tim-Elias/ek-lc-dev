@@ -3,20 +3,11 @@ import QrReader from 'react-qr-reader';
 import { connect } from 'react-redux';
 
 class Screen extends Component {
-    constructor(props, context) {
-        super(props, context);
-
-        this.state = {
-            result: 'No result'
-        }
-    }
     
     handleScan = data => {
-        console.log(data);
         if (data) {
-            this.setState({
-                result: data
-            })
+            this.props.set_search_storagre(data);
+            this.props.set_scann_active(false);
         }
     }
     
@@ -24,18 +15,19 @@ class Screen extends Component {
         console.error(err)
     }
 
+
+
     render() {
         
         return (
-            <div>
-
+            <div className="scanner_container">
                 <QrReader
                     delay={300}
                     onError={this.handleError}
                     onScan={this.handleScan}
-                    style={{ width: '100%' }}
+                    style={{ width: '100%', margin: " 0 0 10px 0" }}
                 />
-                <p>{this.state.result}</p>
+                <a className="scanner_close" onClick={e => this.props.set_scann_active(false)}></a>
             </div>
         )
     }
@@ -45,6 +37,7 @@ class Screen extends Component {
 export default connect(
     (state) => ({ store: state }),
     dispatch => ({
-        
+        set_scann_active: (param) => { dispatch({ type: 'set_scann_active', payload: param }) },
+        set_search_storagre: (param) => { dispatch({ type: 'set_search_storagre', payload: param }) },
     })
 )(Screen);
