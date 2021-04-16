@@ -15,8 +15,6 @@ class Screen extends Component {
         console.error(err)
     }
 
-
-
     render() {
         
         return (

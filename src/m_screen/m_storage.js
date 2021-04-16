@@ -119,6 +119,10 @@ class Screen extends React.Component {
         );
     }
 
+    componentWillUnmount() {
+        this.props.set_scann_active(false);
+    }
+
     render() {
 
         window.history.pushState(null, "", window.location.href);
