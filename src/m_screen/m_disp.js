@@ -94,7 +94,7 @@ class Screen extends React.Component {
                 const r_city = {
                     city: this.props.store.disp.data.RecCity,
                 };
-                console.log(s_city)
+
                 get_data('terminallist', s_city).then(
                     (result) => {
                         const data = {
@@ -141,7 +141,7 @@ class Screen extends React.Component {
                     rec_city: rec_city,
                 }
                 this.props.set_select_template(data);
-                this.props.set_Customer(this.props.store.m_disp.data.Customer);
+                this.props.set_Customer(this.props.store.disp.data.Customer);
                 this.props.set_active_window("m_create_disp");
 
             },

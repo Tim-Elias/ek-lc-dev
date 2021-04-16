@@ -5,11 +5,11 @@ import { withCookies } from 'react-cookie';
 import { Header, Modal, Table, Button } from 'semantic-ui-react'
 import './disp_map.css';
 import './my_disp.css';
-import ReactExport from "react-data-export";
+// import ReactExport from "react-data-export";
 
-const ExcelFile = ReactExport.ExcelFile;
-const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
-const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
+// const ExcelFile = ReactExport.ExcelFile;
+// const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
+// const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 
 class Screen extends React.Component {
 
@@ -281,9 +281,9 @@ class Screen extends React.Component {
             <Button style={{ marginTop: '-5px' }} size='mini' onClick={this.get_my_disp_data.bind(this)}>Получить данные</Button>
             {/*{<Button style={{ marginTop: '-5px' }} size='mini' onClick={() => this.props.set_my_disp_focus_all_default()}>Сбросить фильтры</Button>*/}
             
-            <ExcelFile filename={"Накладные Экспресс Кинетика " + this.props.store.my_disp.date_from.replace(/-/g, ".").split(".").reverse().join(".") + " - " + this.props.store.my_disp.date_from.replace(/-/g, ".").split(".").reverse().join(".")} element={this.props.store.my_disp.data.length > 0 ? (<Button style={{ margin: '-5px 0 0 15px' }} size='mini'>Сохранить в Exсel</Button>) : (<Button disabled style={{ margin: '-5px 0 0 15px' }} size='mini'>Сохранить в Exсel</Button>)}>
+            {/* <ExcelFile filename={"Накладные Экспресс Кинетика " + this.props.store.my_disp.date_from.replace(/-/g, ".").split(".").reverse().join(".") + " - " + this.props.store.my_disp.date_from.replace(/-/g, ".").split(".").reverse().join(".")} element={this.props.store.my_disp.data.length > 0 ? (<Button style={{ margin: '-5px 0 0 15px' }} size='mini'>Сохранить в Exсel</Button>) : (<Button disabled style={{ margin: '-5px 0 0 15px' }} size='mini'>Сохранить в Exсel</Button>)}>
               <ExcelSheet dataSet={styledMultiDataSet} name="Список накладных" />
-            </ExcelFile>
+            </ExcelFile> */}
           </div>
 
 
