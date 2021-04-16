@@ -48,6 +48,10 @@
     border-bottom: #c0c0c0 solid 1px;
     word-wrap: break-word;
     width: calc(100% - 155px);
+    font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+    font-size: 14px;
+    line-height: 1.4285em;
+    color: rgba(0,0,0,.87);
 }
 
 .mobile_table_el--full_row {

@@ -61,3 +61,33 @@ body {
 .selected {
   opacity: 0.6;
 }
+
+.scanner_container {
+    position: relative;
+}
+
+.scanner_close {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  width: 32px;
+  height: 32px;
+  z-index: 50;
+}
+.scanner_close:hover {
+  opacity: 1;
+}
+.scanner_close:before, .scanner_close:after {
+  position: absolute;
+  left: 15px;
+  content: ' ';
+  height: 33px;
+  width: 5px;
+  background-color: rgb(0, 0, 0);
+}
+.scanner_close:before {
+  transform: rotate(45deg);
+}
+.scanner_close:after {
+  transform: rotate(-45deg);
+}

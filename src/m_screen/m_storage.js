@@ -4,8 +4,10 @@ import './mobile.css';
 import './mobile_storage.css';
 import { get_data } from '../common/common_modules';
 import update from '../common/update.png';
+import scanner from '../common/scanner.png';
 import { withCookies } from 'react-cookie';
 import Wait from "../screen/wait";
+import Scanner from "./scanner";
 // const socket = new WebSocket('wss://echo.websocket.org');
 
 class Screen extends React.Component {
@@ -138,9 +140,14 @@ class Screen extends React.Component {
                             <div className="mobile_search_label">
                                 Поиск:
                             </div>
-                            <input className="mobile_search_input" onChange={(e) => { this.props.set_search_storagre(e.target.value) }} />
+                            <input className="mobile_search_input" value={this.props.store.storage.search} onChange={(e) => { this.props.set_search_storagre(e.target.value) }} />
                             <img src={update} className="update" onClick={this.update.bind(this)} />
+                            <img src={scanner} className="update" onClick={e => this.props.set_scann_active(!this.props.store.storage.scann_active)} />
                         </div>
+
+                        {this.props.store.storage.scann_active ? (
+                            <Scanner />
+                        ) : (null)}
 
                         {this.props.store.storage.list.filter((el) => {
                             const filter_num = el.Number.toUpperCase()
@@ -183,6 +190,7 @@ export default withCookies(connect(
         store: state
     }),
     dispatch => ({
+        set_scann_active: (param) => { dispatch({ type: 'set_scann_active', payload: param }) },
         set_key: (param) => { dispatch({ type: 'set_key', payload: param }) },
         set_data_disp: (param) => { dispatch({ type: 'set_data_disp', payload: param }) },
         set_last_window: () => { dispatch({ type: 'set_last_window', payload: "storage" }) },

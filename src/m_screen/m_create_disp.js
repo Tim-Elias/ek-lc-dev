@@ -202,7 +202,7 @@ class Screen extends React.Component {
         //     quantity: ++item.quantity,
         // };
         // this.props.set_Cargo_list_quantity(data);
-        this.AddCargo(item.weight.replace(",", "."), item.l, item.w, item.h, item.name);
+        this.AddCargo(item.weight.replace(",", "."), item.l.replace(",", "."), item.w.replace(",", "."), item.h.replace(",", "."), item.name);
     }
     
     RemoveCargoTemplate = (Template) => {
@@ -379,6 +379,8 @@ class Screen extends React.Component {
             COD: this.props.store.m_create_disp.COD,
             CargoInfoType: this.props.store.m_create_disp.CargoInfoType,
 
+            Foto: this.props.store.disp.foto,
+
             Customer: this.props.store.m_create_disp.Customer,
         }
 
@@ -511,9 +513,7 @@ class Screen extends React.Component {
                                 <div className="mobile_del_data_label">Заказчик:</div>
                                 
                                 {this.props.store.m_create_disp.Customer != "" ? (
-                                    <select defaultValue={this.props.store.m_create_disp.Customer} className="mobile_del_input" onChange={(e) => this.props.set_Customer(e.target.value)}>
-                                        <option value={this.props.store.m_create_disp.Customer} disabled>{this.props.store.m_create_disp.Customer}</option>
-                                    </select>
+                                    <div className="mobile_del_input">{this.props.store.m_create_disp.Customer}</div>
                                 ) : (
                                     <select defaultValue = "" className = "mobile_del_input" onChange = { (e) => this.props.set_Customer(e.target.value)}>
                                         <option value="" disabled>Выбрать заказчика</option>
@@ -558,9 +558,9 @@ class Screen extends React.Component {
 
                                 {this.props.store.m_create_disp.SendTerminalList.length === 0 ? (null) : (<div className="mobile_table_row">
                                     <div className="mobile_table_label">Вид забора:</div>
-                                    <select className="mobile_table_el" onChange={(e) => this.SendTerminal(e.target.value)}>
-                                        <option selected={this.props.store.m_create_disp.SendTerminal} value={true}>От склада</option>
-                                        <option selected={!this.props.store.m_create_disp.SendTerminal} value={false}>От двери</option>
+                                    <select defaultValue={this.props.store.m_create_disp.SendTerminal} className="mobile_table_el" onChange={(e) => this.SendTerminal(e.target.value)}>
+                                        <option value={true}>От склада</option>
+                                        <option value={false}>От двери</option>
                                     </select>
                                 </div>)}
 
@@ -706,7 +706,7 @@ class Screen extends React.Component {
 
                                             <div className="mobile_table_row">
                                                 <div className="mobile_table_label">Об. вес (кг):</div>
-                                                <div className="mobile_table_el">{item.L * item.W * item.H / 5000}</div>
+                                                <div className="mobile_table_el">{(item.L * item.W * item.H / 5000).toFixed(3)}</div>
                                             </div>
 
                                             <div className="mobile_table_row">
@@ -778,17 +778,17 @@ class Screen extends React.Component {
 
                                     <div className="mobile_table_row">
                                         <div className="mobile_table_label">Общее количество мест:</div>
-                                        <input className="mobile_table_el" value={this.props.store.m_create_disp.Total} onChange={e => this.props.SetTotal(e.target.value)} />
+                                        <input className="mobile_table_el" type="number" value={this.props.store.m_create_disp.Total} onChange={e => this.props.SetTotal(e.target.value)} />
                                     </div>
 
                                     <div className="mobile_table_row">
                                         <div className="mobile_table_label">Общий фактический вес (кг):</div>
-                                        <input className="mobile_table_el" value={this.props.store.m_create_disp.Weight} onChange={e => this.props.SetWeight(e.target.value)} />
+                                        <input className="mobile_table_el" type="number" value={this.props.store.m_create_disp.Weight} onChange={e => this.props.SetWeight(e.target.value)} />
                                     </div>
 
                                     <div className="mobile_table_row">
                                         <div className="mobile_table_label">Общий объемный вес (кг):</div>
-                                        <input className="mobile_table_el" value={this.props.store.m_create_disp.Volume} onChange={e => this.props.SetVolume(e.target.value)} />
+                                        <input className="mobile_table_el" type="number" value={this.props.store.m_create_disp.Volume} onChange={e => this.props.SetVolume(e.target.value)} />
                                     </div>
 
                                     <div className="mobile_table_row">

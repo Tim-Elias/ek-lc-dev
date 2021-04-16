@@ -85,8 +85,8 @@ class Screen extends React.Component {
                 // const send_city = this.props.store.m_create_disp.CityList.filter((el) => el.value == this.props.store.disp.data.SendCity);
                 // const rec_city = this.props.store.m_create_disp.CityList.filter((el) => el.value == this.props.store.disp.data.RecCity);
 
-                const send_city = result.filter((el) => el.value == this.props.store.disp.data.SendCity);
-                const rec_city = result.filter((el) => el.value == this.props.store.disp.data.RecCity);
+                const send_city = result.filter((el) => el.value == this.props.store.disp.data.SendCity)[0];
+                const rec_city = result.filter((el) => el.value == this.props.store.disp.data.RecCity)[0];
 
                 const s_city = {
                     city: this.props.store.disp.data.SendCity,
