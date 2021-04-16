@@ -213,6 +213,7 @@ export default function dispatch(state = initialState, action) {
             CityList: [],
             DelMethod: 'Дверь - Дверь',
             Price: 0,
+            Customer: "",
 
             SendCity: '',
             SendAdress: '',

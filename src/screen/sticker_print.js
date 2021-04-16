@@ -10,7 +10,7 @@ class StikerToPrint extends React.Component {
         for( let i=0;i<disp.data.Total;i++){
             table.push(
         <div className='sticker' key={i}>
-        <div className='sticker_info'>Из: {disp.data.SebdCity}</div> 
+        <div className='sticker_info'>Из: {disp.data.SendCity}</div> 
         <div className='sticker_rec_city'> {disp.data.RecCity}</div> 
         <div className='sticker_info'>{disp.data.RecAdress}</div> 
         <div className='sticker_info'>{disp.data.DelMethod}</div> 

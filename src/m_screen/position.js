@@ -33,7 +33,7 @@ class Screen extends React.Component {
                 <div className="check_print_row check_print_row--center">{this.props.store.disp.data.Number}</div><br />
 
                 <div className="check_print_row check_print_row--center">Данные отправителя</div>
-                <div className="check_print_row">Город: {this.props.store.disp.data.SebdCity}</div>
+                <div className="check_print_row">Город: {this.props.store.disp.data.SendCity}</div>
                 <div className="check_print_row">Адрес: {this.props.store.disp.data.SendAdress}</div>
                 <div className="check_print_row">Компания: {this.props.store.disp.data.SendCompany}</div>
                 <div className="check_print_row">Телефон: {this.props.store.disp.data.SendPhone}</div>

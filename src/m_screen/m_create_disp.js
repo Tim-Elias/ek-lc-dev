@@ -509,13 +509,20 @@ class Screen extends React.Component {
 
                             <div className="mobile_del_row">
                                 <div className="mobile_del_data_label">Заказчик:</div>
-                                <select defaultValue="" className="mobile_del_input" onChange={(e) => this.props.set_Customer(e.target.value)}>
-                                    <option value="" disabled>Выбрать заказчика</option>
-                                    {this.props.store.login.customers.map((item, index) => 
+                                
+                                {this.props.store.m_create_disp.Customer != "" ? (
+                                    <select defaultValue={this.props.store.m_create_disp.Customer} className="mobile_del_input" onChange={(e) => this.props.set_Customer(e.target.value)}>
+                                        <option value={this.props.store.m_create_disp.Customer} disabled>{this.props.store.m_create_disp.Customer}</option>
+                                    </select>
+                                ) : (
+                                    <select defaultValue = "" className = "mobile_del_input" onChange = { (e) => this.props.set_Customer(e.target.value)}>
+                                        <option value="" disabled>Выбрать заказчика</option>
+                                        {this.props.store.login.customers.map((item, index) =>
                                         <option value={item.customer} key={index}>{item.customer}</option>
                                     )}
-                                </select>
-                                {/* <input className="mobile_del_input" type="text"></input> */}
+                                    </select>
+                                )}
+
                             </div>
 
                             <div className="mobile_del_row">

@@ -81,70 +81,76 @@ class Screen extends React.Component {
         get_data('citylist').then(
             (result) => {
                 this.props.SetCityList(result);
+
+                // const send_city = this.props.store.m_create_disp.CityList.filter((el) => el.value == this.props.store.disp.data.SendCity);
+                // const rec_city = this.props.store.m_create_disp.CityList.filter((el) => el.value == this.props.store.disp.data.RecCity);
+
+                const send_city = result.filter((el) => el.value == this.props.store.disp.data.SendCity);
+                const rec_city = result.filter((el) => el.value == this.props.store.disp.data.RecCity);
+
+                const s_city = {
+                    city: this.props.store.disp.data.SendCity,
+                };
+                const r_city = {
+                    city: this.props.store.disp.data.RecCity,
+                };
+                console.log(s_city)
+                get_data('terminallist', s_city).then(
+                    (result) => {
+                        const data = {
+                            result: result,
+                            terminal: null,
+                        }
+                        this.props.SetSendTerminalList(data);
+                    },
+                    (err) => {
+                        console.log("err");
+                        console.log(err);
+                    }
+                );
+
+                get_data('terminallist', r_city).then(
+                    (result) => {
+                        const data = {
+                            result: result,
+                            terminal: null,
+                        }
+                        this.props.SetRecTerminalList(data);
+                    },
+                    (err) => {
+                        console.log("err");
+                        console.log(err);
+                    }
+                );
+                let data = {
+                    data: {
+                        del_method: this.props.store.disp.data.DelMethod,
+                        pay_type: this.props.store.disp.data.PayType,
+                        send_address: this.props.store.disp.data.SendAdress,
+                        send_company: this.props.store.disp.data.SendCompany,
+                        send_phone: this.props.store.disp.data.SendPhone,
+                        send_person: this.props.store.disp.data.SendPerson,
+                        send_addinfo: this.props.store.disp.data.SendAddInfo,
+                        rec_address: this.props.store.disp.data.RecAdress,
+                        rec_company: this.props.store.disp.data.RecCompany,
+                        rec_phone: this.props.store.disp.data.RecPhone,
+                        rec_person: this.props.store.disp.data.RecPerson,
+                        rec_addinfo: this.props.store.disp.data.RecAddInfo,
+                    },
+                    send_city: send_city,
+                    rec_city: rec_city,
+                }
+                this.props.set_select_template(data);
+                this.props.set_Customer(this.props.store.m_disp.data.Customer);
+                this.props.set_active_window("m_create_disp");
+
             },
             (err) => {
                 console.log(err)
             }
         );
 
-        const send_city = this.props.store.m_create_disp.CityList.filter((el) => el.value == this.props.store.disp.data.SebdCity);
-        const rec_city = this.props.store.m_create_disp.CityList.filter((el) => el.value == this.props.store.disp.data.RecCity);
-
-        const s_city = {
-            city: this.props.store.disp.data.SebdCity,
-        };
-        const r_city = {
-            city: this.props.store.disp.data.RecCity,
-        };
-
-        get_data('terminallist', s_city).then(
-            (result) => {
-                const data = {
-                    result: result,
-                    terminal: null,
-                }
-                this.props.SetSendTerminalList(data);
-            },
-            (err) => {
-                console.log("err");
-                console.log(err);
-            }
-        );
-
-        get_data('terminallist', r_city).then(
-            (result) => {
-                const data = {
-                    result: result,
-                    terminal: null,
-                }
-                this.props.SetRecTerminalList(data);
-            },
-            (err) => {
-                console.log("err");
-                console.log(err);
-            }
-        );
-        let data = {
-            data: {
-                del_method: this.props.store.disp.data.DelMethod,
-                pay_type: this.props.store.disp.data.PayType,
-                send_address: this.props.store.disp.data.SendAdress,
-                send_company: this.props.store.disp.data.SendCompany,
-                send_phone: this.props.store.disp.data.SendPhone,
-                send_person: this.props.store.disp.data.SendPerson,
-                send_addinfo: this.props.store.disp.data.SendAddInfo,
-                rec_address: this.props.store.disp.data.RecAdress,
-                rec_company: this.props.store.disp.data.RecCompany,
-                rec_phone: this.props.store.disp.data.RecPhone,
-                rec_person: this.props.store.disp.data.RecPerson,
-                rec_addinfo: this.props.store.disp.data.RecAddInfo,
-            },
-            send_city: send_city,
-            rec_city: rec_city,
-        }
-        this.props.set_select_template(data);
-        this.props.set_active_window("m_create_disp");
-
+       
         
     }
 
@@ -259,7 +265,7 @@ class Screen extends React.Component {
 
                         <div className="disp_address_data_el">
                             <div className="mobile_disp_data_label"> Город:</div>
-                            <div className="mobile_disp_data_el">{this.props.store.disp.data.SebdCity}</div>
+                            <div className="mobile_disp_data_el">{this.props.store.disp.data.SendCity}</div>
                             <div className="mobile_disp_data_label"> Адрес:</div>
                             <div className="mobile_disp_data_el">{this.props.store.disp.data.SendAdress}</div>
                             <div className="mobile_disp_data_label"> Компания:</div>
@@ -339,6 +345,7 @@ export default withCookies(connect(
         store: state
     }),
     dispatch => ({
+        set_Customer: (param) => { dispatch({ type: 'set_Customer', payload: param }) },
         set_select_template: (param) => { dispatch({ type: 'set_select_template', payload: param }); },
         SetSendTerminalList: (param) => { dispatch({ type: 'SetSendTerminalListMobile', payload: param }) },
         SetRecTerminalList: (param) => { dispatch({ type: 'SetRecTerminalListMobile', payload: param }) },

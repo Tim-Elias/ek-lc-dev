@@ -323,7 +323,7 @@ class Screen extends React.Component {
                     }
 
 
-                    const SelectedSendCity = result.filter((el)=>el.value === current_disp_data.SebdCity)[0]
+                    const SelectedSendCity = result.filter((el)=>el.value === current_disp_data.SendCity)[0]
                     const SelectedRecCity = result.filter((el)=>el.value === current_disp_data.RecCity)[0]
                     
                     const PayTypeList = [ 
@@ -769,7 +769,7 @@ class Screen extends React.Component {
                     <div className="disp_address_data_el">
 
                         <div className="disp_data_label"> Город:</div>
-                        <div className="disp_data_el">{this.props.store.disp.data.SebdCity}</div>
+                        <div className="disp_data_el">{this.props.store.disp.data.SendCity}</div>
                         <div className="disp_data_label"> Адрес:</div>
                         <div className="disp_data_el">{this.props.store.disp.data.SendAdress}</div>
                         <div className="disp_data_label"> Компания:</div>

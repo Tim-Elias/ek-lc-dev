@@ -50,7 +50,7 @@ class ComponentToPrint extends React.Component {
                                     <div className="disp_print_address_data_el">
 
                                         <div className="disp_print_data_label"> Город:</div>
-                                        <div className="disp_print_data_el">{disp.data.SebdCity}</div>
+                                        <div className="disp_print_data_el">{disp.data.SendCity}</div>
                                         <div className="disp_print_data_label"> Адрес:</div>
                                         <div className="disp_print_data_el">{disp.data.SendAdress}</div>
                                         <div className="disp_print_data_label"> Компания:</div>
