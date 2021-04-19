@@ -262,6 +262,7 @@ class Screen extends React.Component {
             value: value,
             index: index,
         }
+        console.log(data)
         this.props.SetCargoType(data);
     }
     CargoComm = (value, index) => {
@@ -704,7 +705,7 @@ class Screen extends React.Component {
 
                                             <div className="mobile_table_row">
                                                 <div className="mobile_table_label">Тип груза:</div>
-                                                <select defaultValue="" className="mobile_table_el" onChange={e => this.CargoType(e.target.value, index)}>
+                                                <select defaultValue="" className="mobile_table_el" value={item.Type} onChange={e => this.CargoType(e.target.value, index)}>
                                                     <option value="" disabled>Выберите тип груза</option>
                                                     <option value="СейфПакет">Сейф-пакет</option>
                                                     <option value="Коробка">Коробка</option>
