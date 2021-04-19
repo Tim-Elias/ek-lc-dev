@@ -65,3 +65,9 @@
     height: 25px;
     margin: 0 0 0 10px;
 }
+
+.mobile_storage_checkbox {
+    margin: auto 15px auto 0px;
+    width: 40px;
+    height: 40px;
+}
