@@ -208,6 +208,7 @@ export default function dispatch(state = initialState, action) {
         case 'SetRecSelectTerminalMobile': return { ...state, RecSelectTerminal: action.payload }
 
         case 'DischargeData': return { ...state, 
+            Number: "",
             PayType: "БезналичнаяОплата",
             CargoInfoType: false,
             CityList: [],
