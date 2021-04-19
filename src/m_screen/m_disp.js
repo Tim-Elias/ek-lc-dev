@@ -150,8 +150,6 @@ class Screen extends React.Component {
             }
         );
 
-       
-        
     }
 
     render() {

@@ -381,8 +381,8 @@ class Screen extends React.Component {
   }
 
   upload_data = () => {
-    if (this.props.store.upload_manifest.disp_data.filter(el => el.Status === 'Не загружено').length > 0) {
-      this.upload_disp(this.props.store.upload_manifest.disp_data.filter(el => el.Status === 'Не загружено')[0])
+    if (this.props.store.upload_manifest.disp_data.filter(el => el.Status === 'Не загружено' && el.Total > 0).length > 0) {
+      this.upload_disp(this.props.store.upload_manifest.disp_data.filter(el => el.Status === 'Не загружено' && el.Total > 0)[0])
     }
   }
 
@@ -424,14 +424,10 @@ class Screen extends React.Component {
 
     }
 
-    console.log(disp)
-
     new Promise((resolve, reject) => {
-      console.log(create_disp_data)
       //resolve(this.props.set_disp_status({Key:disp.Key, Status:"Загружено"}))
       get_data('createcustomerdisp', create_disp_data).then(
         (result) => {
-          console.log(result)
 
           const data = {
             userkey: this.props.store.login.userkey,
@@ -442,13 +438,10 @@ class Screen extends React.Component {
           get_data('dispatch', data).then(
             (result_print_data) => {
 
-
-
               resolve(this.props.set_disp_status({ Key: disp.Key, Status: "Загружено", Num: result.Number, print_data: result_print_data }))
             },
             (err) => { console.log(err) }
           );
-
 
         },
         (err) => { console.log(err) }
