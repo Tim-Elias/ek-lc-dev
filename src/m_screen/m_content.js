@@ -24,6 +24,7 @@ import MCalcPrice from './m_calc_price';
 import MCreateDisp from './m_create_disp';
 import MDispTemplate from './m_disp_template';
 import MReceiveFromSender from './m_receive_from_sender';
+import MSendPartner from './m_send_partner';
 import PopUp from './popup';
 import { withCookies } from 'react-cookie';
 
@@ -66,6 +67,7 @@ class Screen extends React.Component {
                 {this.props.store.general.active_window === 'm_not_delivered' ? (<MNotDelivered />) : (null)}
                 {this.props.store.general.active_window === 'storage_reciept' ? (<MStorageReciept />) : (null)}
                 {this.props.store.general.active_window === 'reciept' ? (<MReciept />) : (null)}
+                {this.props.store.general.active_window === 'm_send_partner' ? (<MSendPartner />) : (null)}
                 {this.props.store.general.active_window === 'm_send_manifest' ? (<MSend />) : (null)}
                 {this.props.store.general.active_window === 'm_get_manifest' ? (<MGet />) : (null)}
                 {this.props.store.general.active_window === 'm_manifest' ? (<MManifest />) : (null)}

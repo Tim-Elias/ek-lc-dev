@@ -1,8 +1,9 @@
 const initialState = {
   storehouse: '00000001',
   error: '',
-  search: ''
+  search: '',
 
+  select_customer: '',
 }
 
 export default function dispatch (state = initialState, action) {
@@ -10,6 +11,7 @@ export default function dispatch (state = initialState, action) {
     case 'set_search_send_manifest_error': return { ...state, error: action.payload }
     case 'set_send_manifest_storehouse': return { ...state, storehouse: action.payload }
     case 'set_search_send_manifest': return { ...state, search: action.payload }
+    case 'set_select_customer': return { ...state, select_customer: action.payload }
     default: return state
   }
 }
