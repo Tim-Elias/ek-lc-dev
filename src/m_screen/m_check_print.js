@@ -23,7 +23,7 @@ class Screen extends React.Component {
             <div className="mobile_disp_button">
                 <ReactToPrint
 
-                    trigger={() => <button className={(this.props.store.check.check_data.num == this.props.store.disp.data.Number || this.props.store.check.check_data.num == this.props.store.movement.select_print_disp) ? ("mobile_disp_button_item mobile_disp_button_item--blue") : ("mobile_disp_button_item mobile_disp_button_item--blue_nonactive")} disabled={print_button}>Печать чека</button>}
+                    trigger={() => <button className={(this.props.store.check.check_data.num == this.props.store.disp.data.Number || this.props.store.check.check_data.num == this.props.store.movement.select_print_disp) ? ("mobile_disp_button_item mobile_disp_button_item--blue") : ("none")} disabled={print_button}>Печать чека</button>}
                     content={() => this.componentRef}
                 />
 

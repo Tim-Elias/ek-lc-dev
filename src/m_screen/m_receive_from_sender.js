@@ -72,6 +72,71 @@ class Screen extends React.Component {
 
     }
 
+    receipt = () => {
+        this.props.set_popup(!(this.props.store.disp.popup));
+    }
+
+    createcheck = () => {
+        this.props.set_popup(false);
+        this.props.set_active_loader(true);
+
+        const data =
+        {
+            userkey: this.props.store.login.userkey,
+            summ: this.props.store.disp.cash_accepted,
+            terminal: this.props.store.disp.type_cash,
+            num: this.props.store.disp.data.Number,
+        }
+        get_data('createcheck', data).then(
+            (result) => {
+
+                const list_data = { userkey: this.props.store.login.userkey };
+
+                get_data('list', list_data).then(
+                    (result) => {
+                        this.props.set_active_loader(false);
+                        if (result == '') {
+                            this.props.set_popup_message('ККМ Сервер недоступен :(');
+                        } else {
+                            this.props.check_disable();
+                            this.props.set_print_check_disabled(false);
+                            this.props.set_QR(result);
+                            this.props.set_popup_message("Чек пробит успешно!");
+
+                            const check_data = {
+                                userkey: this.props.store.login.userkey,
+                                num: this.props.store.disp.data.Number,
+
+                            }
+
+                            get_data('getcheck', check_data).then(
+                                (result) => {
+                                    console.log(result)
+                                    this.props.set_check_data(result);
+                                },
+                                (err) => {
+
+                                    console.log(err)
+                                }
+                            );
+                        }
+
+                    },
+                    (err) => {
+                        this.props.set_active_loader(false);
+                        console.log(err);
+                        alert(err);
+                    }
+                );
+            },
+            (err) => {
+                this.props.set_active_window("m_disp");
+                alert(err);
+                console.log(err)
+            }
+        );
+    }
+
     render() {
 
         window.history.pushState(null, "", window.location.href);
@@ -83,11 +148,33 @@ class Screen extends React.Component {
         return (
             <div>
 
+                <div className={this.props.store.disp.popup ? "PopUp_container" : "none"} onClick={this.receipt.bind(this)}></div>
+                <div className={this.props.store.disp.popup ? "PopUp_window" : "none"}>
+                    <p>Вы точно хотите распечатать чек?</p>
+                    <div className="PopUp_date">
+                        <div>Номер накладной: {this.props.store.disp.data.Number}</div>
+                        <div>Тип оплаты: {this.props.store.disp.type_cash ? "Безналичные" : "Наличные"}</div>
+                        <div>Сумма: {this.props.store.disp.cash_accepted} руб.</div>
+                    </div>
+                    <div className="PopUp_button_container">
+                        <button className="PopUp_button" onClick={this.createcheck.bind(this)}>Да</button>
+                        <button className="PopUp_button" onClick={this.receipt.bind(this)}>Нет</button>
+                    </div>
+                </div>
+
                 {this.props.store.general.active_loader ? (<Wait />) : (
                     <div>
                         <div className="mobile_disp_button">
                             <button className="mobile_disp_button_item mobile_disp_button_item--full" onClick={this.reciept.bind(this)}>Получить от отправителя</button>
                         </div>
+
+                        <div className="mobile_disp_button">
+                            <button className={+this.props.store.disp.cash_accepted > 0 && this.props.store.login.kkm && this.props.store.disp.data.CheckEnabled && this.props.store.disp.data.ChangeSumm == false ? ("mobile_disp_button_item mobile_disp_button_item--blue") : ("none")} onClick={this.receipt.bind(this)}>
+                                Чек
+                            </button>
+                        </div>
+
+                        {this.props.store.disp.data.ChangeSumm === false ? (<CheckPrint />) : (null)}
 
                         <div className="mobile_container">
                             <div className="mobile_del_row">

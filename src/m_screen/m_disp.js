@@ -218,16 +218,16 @@ class Screen extends React.Component {
                         <div className="mobile_disp_data_label">Заказчик:</div>
                         <div className="mobile_disp_data_el">{this.props.store.disp.data.Customer}</div>
                         {this.props.store.disp.data.Type === 'Доставка' ? (null) : (
-                            <div>
-                                <div className="mobile_disp_data_label">Срочность:</div>
-                                <div className="mobile_disp_data_el">{this.props.store.disp.data.DelType}</div>
-                            </div>
+                            <div className="mobile_disp_data_label">Срочность:</div>
                         )}
                         {this.props.store.disp.data.Type === 'Доставка' ? (null) : (
-                            <div>
-                                <div className="mobile_disp_data_label">Тип оплаты:</div>
-                                <div className="mobile_disp_data_el">{this.props.store.disp.data.PayType}</div>
-                            </div>
+                            <div className="mobile_disp_data_el">{this.props.store.disp.data.DelType}</div>
+                        )}
+                        {this.props.store.disp.data.Type === 'Доставка' ? (null) : (
+                            <div className="mobile_disp_data_label">Тип оплаты:</div>
+                        )}
+                        {this.props.store.disp.data.Type === 'Доставка' ? (null) : (
+                            <div className="mobile_disp_data_el">{this.props.store.disp.data.PayType}</div>
                         )}
                         <div className="mobile_disp_data_label">К оплате:</div>
                         <div className="mobile_disp_data_el">{this.props.store.disp.data.COD}</div>

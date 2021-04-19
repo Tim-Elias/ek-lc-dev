@@ -205,9 +205,8 @@ class Screen extends React.Component {
                         </button>
                     </div>
 
-                    <div className={this.props.store.disp.data.ChangeSumm === false ? ("") : ("none")}>
-                        <CheckPrint /> 
-                    </div>
+                    {this.props.store.disp.data.ChangeSumm === false ? (<CheckPrint /> ) : (null)}
+                    
                     {/* <button className="mobile_disp_button_item mobile_disp_button_item--blue" disabled={this.props.store.disp.print_check_disabled}>Печать чека</button> */}
 
                     <div className="mobile_container">

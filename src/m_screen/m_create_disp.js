@@ -257,14 +257,6 @@ class Screen extends React.Component {
         this.props.SetCargoH(data);
     }
 
-    CargoComment = (value, index) => {
-        const data = {
-            value: value,
-            index: index,
-        }
-        this.props.SetCargoComment(data);
-    }
-
     CargoType = (value, index) => {
         const data = {
             value: value,
@@ -341,12 +333,15 @@ class Screen extends React.Component {
         this.receipt();
     }
 
-    sent_disp = () => {
+    create_disp = () => {
 
         const create_disp_data = {
             userkey: this.props.store.login.userkey,
-            Number: this.props.store.m_create_disp.Number,
+            Num: this.props.store.m_create_disp.Number,
+            Order: this.props.store.disp.key.num,
             PayType: this.props.store.m_create_disp.PayType,
+            DelType: this.props.store.disp.data.DelType,
+            DelMethod: this.props.store.m_create_disp.DelMethod,
             // DispDate: this.props.store.m_create_disp.DispDate,
             SendCity: this.props.store.m_create_disp.SendCity.value,
             SendAdress: this.props.store.m_create_disp.SendAdress,
@@ -387,24 +382,22 @@ class Screen extends React.Component {
 
         this.props.active_window("wait");
 
-        get_data('create_disp', create_disp_data).then(
+        get_data('createdisp', create_disp_data).then(
             (result) => {
 
+                console.log(result)
                 const data = {
-                    userkey: this.props.store.login.userkey,
-                    status: "Накладная",
-                    num: result.Number,
+                    num: result,
+                    status: "Ожидается",
                 };
 
-                get_data('', data).then(
-                    (result) => {
-                        this.props.set_key(result);
-                        this.props.active_window("m_disp");
-                    },
-                    (err) => { console.log(err) }
-                );
+                this.props.set_key(data);
+                this.props.active_window("m_disp");
             },
-            (err) => { console.log(err) }
+            (err) => { 
+                alert(err);
+                console.log(err);
+            }
         );
     }
 
@@ -723,7 +716,7 @@ class Screen extends React.Component {
 
                                             <div className="mobile_table_row">
                                                 <div className="mobile_table_label">Комментарий:</div>
-                                                <input className="mobile_table_el" onChange={e => this.CargoComm(e.target.value, index)} />
+                                                <input className="mobile_table_el" value={item.Comment} onChange={e => this.CargoComm(e.target.value, index)} />
                                             </div>
                                             <br />
                                             <button onClick={this.RemoveCargo.bind(this, index, item)} className="mobile_disp_button_item mobile_disp_button_item--full mobile_disp_button_item--yellow">Удалить место</button>
@@ -812,8 +805,8 @@ class Screen extends React.Component {
                             <Foto />
                             <button className="mobile_disp_button_item--full mobile_disp_button_item--blue" onClick={this.CalcPrice.bind(this, total_weight, total_volume)}>Рассчитать стоимость</button>
 
-                            {disabled ? (<button onClick={() => alert("send disp")} className="mobile_disp_button_item--full mobile_disp_button_item--blue_nonactive" disabled={disabled}>Создать накладную</button>)
-                                : (<button onClick={() => alert("send disp")} className="mobile_disp_button_item--full mobile_disp_button_item--blue" disabled={disabled}>Создать накладную</button>)}
+                            {disabled ? (<button onClick={this.create_disp.bind(this)} className="mobile_disp_button_item--full mobile_disp_button_item--blue_nonactive" disabled={disabled}>Создать накладную</button>)
+                                : (<button onClick={this.create_disp.bind(this)} className="mobile_disp_button_item--full mobile_disp_button_item--blue" disabled={disabled}>Создать накладную</button>)}
 
                         </div>
                     </div>

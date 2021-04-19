@@ -20,7 +20,7 @@ class Screen extends Component {
         return (
             <div className="scanner_container">
                 <QrReader
-                    delay={300}
+                    delay={100}
                     onError={this.handleError}
                     onScan={this.handleScan}
                     style={{ width: '100%', margin: " 0 0 10px 0" }}
