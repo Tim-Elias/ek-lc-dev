@@ -25,7 +25,6 @@ class Screen extends React.Component {
         };
 
         this.props.set_key(data);
-
         this.props.set_active_window("m_disp");
 
     };
@@ -121,6 +120,7 @@ class Screen extends React.Component {
 
     componentWillUnmount() {
         this.props.set_scann_active(false);
+        this.props.set_last_window("m_storage");
     }
 
     render() {

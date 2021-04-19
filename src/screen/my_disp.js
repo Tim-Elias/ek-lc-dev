@@ -5,6 +5,7 @@ import { withCookies } from 'react-cookie';
 import { Header, Modal, Table, Button } from 'semantic-ui-react'
 import './disp_map.css';
 import './my_disp.css';
+import Scanner from "../m_screen/scanner";
 // import ReactExport from "react-data-export";
 
 // const ExcelFile = ReactExport.ExcelFile;
@@ -24,9 +25,9 @@ class Screen extends React.Component {
     const data = {
       userkey: this.props.store.login.userkey,
       date_from: this.props.store.my_disp.date_from,
-      date_to: this.props.store.my_disp.date_to
+      date_to: this.props.store.my_disp.date_to,
+      searchNum: this.props.store.my_disp.search,
     }
-
     get_data('mydisplist', data).then(
       (result) => {
         this.props.set_active_window("my_disp");
@@ -272,24 +273,31 @@ class Screen extends React.Component {
 
       <div>
 
-        <div className='my_disp_control_panel'>
-          <div>Период:</div>
-          <div><input onChange={e => this.props.set_my_disp_date_from(e.target.value)} value={this.props.store.my_disp.date_from} className="pod_input" type="date"></input></div>
-          <div>-</div>
-          <div><input onChange={e => this.props.set_my_disp_date_to(e.target.value)} value={this.props.store.my_disp.date_to} className="pod_input" type="date"></input></div>
+        <div className={this.props.store.my_disp.type_search ? ('my_disp_control_panel') : ('my_disp_control_panel my_disp_control_panel--small')}>
+          <select defaultValue={this.props.store.my_disp.type_search} onChange={e => this.props.set_type_search(e.target.value)} className="my_disp_select">
+            <option value={true}>Период: </option>
+            <option value={false}>По номеру: </option>
+          </select>
+          {this.props.store.my_disp.type_search ? (
+            <div><input onChange={e => this.props.set_my_disp_date_from(e.target.value)} value={this.props.store.my_disp.date_from} className="pod_input" type="date"></input></div>
+          ) : (<input className="pod_input" value={this.props.store.my_disp.search} onChange={e => this.props.set_search(e.target.value)}></input>)}
+          {this.props.store.my_disp.type_search ? (
+            <div>-</div>
+          ) : (null)}
+          {this.props.store.my_disp.type_search ? (
+            <div><input onChange={e => this.props.set_my_disp_date_to(e.target.value)} value={this.props.store.my_disp.date_to} className="pod_input" type="date"></input></div>
+          ) : (null)}
+          
           <div> 
             <Button style={{ marginTop: '-5px' }} size='mini' onClick={this.get_my_disp_data.bind(this)}>Получить данные</Button>
+            
             {/*{<Button style={{ marginTop: '-5px' }} size='mini' onClick={() => this.props.set_my_disp_focus_all_default()}>Сбросить фильтры</Button>*/}
             
             {/* <ExcelFile filename={"Накладные Экспресс Кинетика " + this.props.store.my_disp.date_from.replace(/-/g, ".").split(".").reverse().join(".") + " - " + this.props.store.my_disp.date_from.replace(/-/g, ".").split(".").reverse().join(".")} element={this.props.store.my_disp.data.length > 0 ? (<Button style={{ margin: '-5px 0 0 15px' }} size='mini'>Сохранить в Exсel</Button>) : (<Button disabled style={{ margin: '-5px 0 0 15px' }} size='mini'>Сохранить в Exсel</Button>)}>
               <ExcelSheet dataSet={styledMultiDataSet} name="Список накладных" />
             </ExcelFile> */}
           </div>
-
-
         </div>
-
-
 
         <div>
           {this.props.store.my_disp.data.length === 0 ? (null) : (
@@ -686,6 +694,8 @@ export default withCookies(connect(
   (state, ownProps) => ({ store: state, cookies: ownProps.cookies }),
   dispatch => ({
 
+    set_type_search: (param) => { dispatch({ type: 'set_type_search', payload: param }) },
+    set_search: (param) => { dispatch({ type: 'set_search', payload: param }) },
     set_my_disp_data: (param) => { dispatch({ type: 'set_my_disp_data', payload: param }) },
     set_my_disp_date_from: (param) => { dispatch({ type: 'set_my_disp_date_from', payload: param }) },
     set_my_disp_date_to: (param) => { dispatch({ type: 'set_my_disp_date_to', payload: param }) },

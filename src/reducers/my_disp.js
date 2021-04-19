@@ -11,6 +11,9 @@
 
  
 const initialState = {
+    type_search: 'true',
+    search: "",
+
     ySteps: 3,
     data: [],
     date_from: date,
@@ -35,6 +38,16 @@ const initialState = {
   
   export default function dispatch (state = initialState, action) {
     switch (action.type) {
+
+      case 'set_type_search': if(action.payload == "true") {
+        const type = true;
+        return { ...state, type_search: type, search: "" }
+      } else {
+        const type = false;
+        return { ...state, type_search: type, search: "" }
+      }
+
+      case 'set_search': return { ...state, search: action.payload }
 
       case 'set_my_disp_data':
 

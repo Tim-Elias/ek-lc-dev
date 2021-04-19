@@ -16,6 +16,7 @@ class Screen extends React.Component {
         };
 
         this.props.set_key(data);
+        this.props.set_last_window("reciept");
         this.props.set_active_window("m_disp");
     }
 

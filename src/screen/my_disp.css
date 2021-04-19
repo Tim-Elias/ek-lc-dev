@@ -51,3 +51,7 @@
 .on_bottom{
     bottom: 100px;
 }
+
+.my_disp_select {
+    margin: 0 10px 0 0;
+}

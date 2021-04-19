@@ -36,13 +36,17 @@ class Screen extends React.Component {
             (err) => {
                 console.log(err)
                 alert(err)
-                this.props.set_active_window("m_storage")
+                this.settings_window(this.props.store.general.last_window[this.props.store.general.last_window.length - 1]);
             }
         );
     } 
 
     componentDidMount() {
         this.loadData();
+    }
+
+    componentWillUnmount() {
+        this.props.set_last_window("m_disp");
     }
 
     setorderstatus = (stat) => {
@@ -143,7 +147,6 @@ class Screen extends React.Component {
                 this.props.set_select_template(data);
                 this.props.set_Customer(this.props.store.disp.data.Customer);
                 this.props.set_active_window("m_create_disp");
-
             },
             (err) => {
                 console.log(err)
@@ -155,7 +158,7 @@ class Screen extends React.Component {
     render() {
         window.history.pushState(null, "", window.location.href);
         window.onpopstate = function () {
-            this.settings_window('m_storage')
+            this.settings_window(this.props.store.general.last_window[this.props.store.general.last_window.length-1]);
             window.history.pushState(null, "", window.location.href);
         }.bind(this);
 
