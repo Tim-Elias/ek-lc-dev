@@ -280,6 +280,7 @@ export default function dispatch(state = initialState, action) {
                 ...state,
                 DelMethod: action.payload.data.del_method,
                 PayType: action.payload.data.pay_type,
+                Customer: action.payload.data.customer,
 
                 SendCity: action.payload.send_city,
                 // Number: action.payload.Number,
