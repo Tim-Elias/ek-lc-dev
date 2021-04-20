@@ -6,6 +6,7 @@ class Screen extends Component {
     
     handleScan = data => {
         if (data) {
+            this.props.set_search_reciept(data);
             this.props.set_search_storagre(data);
             this.props.set_scann_active(false);
         }
@@ -37,5 +38,6 @@ export default connect(
     dispatch => ({
         set_scann_active: (param) => { dispatch({ type: 'set_scann_active', payload: param }) },
         set_search_storagre: (param) => { dispatch({ type: 'set_search_storagre', payload: param }) },
+        set_search_reciept: (param) => { dispatch({ type: 'set_search_reciept', payload: param }) },
     })
 )(Screen);
