@@ -85,7 +85,7 @@ class Screen extends React.Component {
                             <div onClick={e => this.props.select_m_disp(disp.Number)} key={index}
                                 className="mobile_storage_item">
                                 <input type="checkbox" className="mobile_storage_checkbox" checked={disp.selected} />
-                                <div style={{ width: "100%" }}>
+                                <div className="mobile_storage_data" style={{ width: "100%" }}>
                                     <div className="mobile_storage_field">{disp.Customer}</div>
                                     <div className="mobile_storage_field">{disp.Date}</div>
                                     <div className="mobile_storage_field">{disp.Type} {disp.Number}</div>

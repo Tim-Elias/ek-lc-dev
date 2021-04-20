@@ -120,6 +120,7 @@ class Screen extends React.Component {
 
     componentWillUnmount() {
         this.props.set_scann_active(false);
+        this.props.set_search_reciept("");
         this.props.set_last_window("m_storage");
     }
 
@@ -164,7 +165,7 @@ class Screen extends React.Component {
                             className={(disp.Status === 'Отмена') ? "mobile_storage_item mobile_storage_item--canceling" : 
                                 (disp.Type === 'Заявка') ? ((disp.Status === 'Новая') ? ('mobile_storage_item mobile_storage_item--new') : ('mobile_storage_item mobile_storage_item--applications')) :
                                     ("mobile_storage_item")}>
-                                <div>
+                                <div className="mobile_storage_data">
                                     <div className="mobile_storage_field">{disp.Customer}</div>
                                     <div className="mobile_storage_field">{disp.Date}</div>
                                     <div className="mobile_storage_field">{disp.Type} {disp.Number}</div>
@@ -202,6 +203,7 @@ export default withCookies(connect(
         set_action: (param) => { dispatch({ type: 'set_action', payload: param }) }, 
         set_search_storagre: (param) => { dispatch({ type: 'set_search_storagre', payload: param }) }, 
         set_list_storage: (param) => { dispatch({ type: 'set_list_storage', payload: param }) },
-        set_active_loader: (param) => { dispatch({ type: 'set_active_loader', payload: param }); },
+        set_active_loader: (param) => { dispatch({ type: 'set_active_loader', payload: param }) },
+        set_search_reciept: (param) => { dispatch({ type: 'set_search_reciept', payload: param }) },
     })
 )(Screen));

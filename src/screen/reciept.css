@@ -35,6 +35,11 @@
   
   @media (max-width: 1000px) {
 
+    .search_reciept {
+      grid-template-columns: 135px 170px 1fr;
+      align-items: center;
+    }
+
     #search_reciept_button{
         height: 30px;
         margin: 20px 0 0 5px;
@@ -43,9 +48,14 @@
     }
 
     .search_reciept_label {
+      margin: 0;
       font-size: 16px;
     }
 
+    .search_reciept_data {
+      margin: 0;
+    }
+    
     .search_reciept_data_input {
       font-size: 16px;
     }

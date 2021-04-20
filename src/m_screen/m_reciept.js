@@ -2,7 +2,8 @@ import React from 'react';
 import '../screen/reciept.css';
 import { connect } from 'react-redux';
 import { get_data } from '../common/common_modules';
-
+import Scanner from "./scanner";
+import scanner from '../common/scanner.png';
 
 class Screen extends React.Component {
 
@@ -22,10 +23,12 @@ class Screen extends React.Component {
 
     componentWillUnmount() {
         this.props.set_search_reciept("");
+        this.props.set_scann_active(false);
+        this.props.set_search_storagre("");
     }
 
     render() {
-        document.onkeydown = function (event) { }
+        
         return (
             <div>
                 <div className="mobile_heading">
@@ -35,7 +38,11 @@ class Screen extends React.Component {
                     <div className="search_reciept">
                         <div className="search_reciept_label">Поиск по номеру:</div>
                         <div className="search_reciept_data"><input value={this.props.store.reciept.search} className="search_reciept_data_input" onChange={e => this.props.set_search_reciept(e.target.value)}></input></div>
+                        <img src={scanner} className="update" onClick={e => this.props.set_scann_active(!this.props.store.storage.scann_active)} />
                     </div>
+                    {this.props.store.storage.scann_active ? (
+                        <Scanner />
+                    ) : (null)}
                     <div className="search_reciept_button_area">
                         <button id="search_reciept_button" onClick={this.search_reciept.bind(this)} className="send_pod">Найти</button>
                     </div>
@@ -51,6 +58,7 @@ export default connect(
         store: state
     }),
     dispatch => ({
+        set_scann_active: (param) => { dispatch({ type: 'set_scann_active', payload: param }) },
         set_key: (param) => { dispatch({ type: 'set_key', payload: param }) },
         set_active_window: (param) => { dispatch({ type: 'set_active_window', payload: param }) },
         set_search_reciept: (param) => { dispatch({ type: 'set_search_reciept', payload: param }) },
@@ -58,5 +66,6 @@ export default connect(
         set_action: (param) => { dispatch({ type: 'set_action', payload: param }) },
         set_last_window: (param) => { dispatch({ type: 'set_last_window', payload: param }) },
         set_data_disp: (param) => { dispatch({ type: 'set_data_disp', payload: param }) },
+        set_search_storagre: (param) => { dispatch({ type: 'set_search_storagre', payload: param }) },
     })
 )(Screen);
