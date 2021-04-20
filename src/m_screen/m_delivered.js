@@ -8,7 +8,8 @@ import './popup.css';
 import Foto from './foto';
 import Wait from "../screen/wait";
 import { withCookies } from 'react-cookie';
-import CheckPrint from './m_check_print'
+import CheckPrint from './m_check_print';
+import DispPrint from './m_disp_print';
 
 class Screen extends React.Component {
 
@@ -205,7 +206,8 @@ class Screen extends React.Component {
                         </button>
                     </div>
 
-                    {this.props.store.disp.data.ChangeSumm === false ? (<CheckPrint /> ) : (null)}
+                    {this.props.store.disp.data.ChangeSumm === false ? (<CheckPrint />) : (null)}
+                    {this.props.store.login.original_data.print_ticket ? (<DispPrint />) : (null)}
                     
                     {/* <button className="mobile_disp_button_item mobile_disp_button_item--blue" disabled={this.props.store.disp.print_check_disabled}>Печать чека</button> */}
 

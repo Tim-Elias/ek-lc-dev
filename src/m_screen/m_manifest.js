@@ -13,8 +13,6 @@ class Screen extends React.Component {
             dispatches: this.props.store.manifest.data.dispatches.filter((el) => { return el.selected }).map((el) => { return el.num })
         };
 
-        console.log(getmanifest_data)
-
         get_data('getmanifest', getmanifest_data).then(
             (result) => {
 
@@ -84,9 +82,6 @@ class Screen extends React.Component {
 
                     </div>
                 </div>) : (<div className="manifest_complited">Манифест принят полностью</div>)}
-
-
-
 
             </div>
         )

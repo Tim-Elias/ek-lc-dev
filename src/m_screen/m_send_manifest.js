@@ -79,6 +79,7 @@ class Screen extends React.Component {
                             <option value="000000009">Барнаул, Молодежная 111</option>
                             <option value="000000008">Омск, Потанина 15</option>
                             <option value="000000007">Томск, Герцена 13а</option>
+                            <option value="000000010">Новокузнецк, Циолковского 13, оф 11</option>
                         </select>
 
                         {this.props.store.storage.list.filter((el) => {

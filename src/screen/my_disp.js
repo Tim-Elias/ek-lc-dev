@@ -18,6 +18,12 @@ class Screen extends React.Component {
     super(props)
   }
 
+  handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      this.get_my_disp_data();
+    }
+  }
+
   get_my_disp_data = () => {
 
     this.props.set_active_window("wait");
@@ -273,7 +279,7 @@ class Screen extends React.Component {
 
       <div>
 
-        <div className={this.props.store.my_disp.type_search ? ('my_disp_control_panel') : ('my_disp_control_panel my_disp_control_panel--small')}>
+        <div onKeyDown={this.handleKeyDown.bind(this)} className={this.props.store.my_disp.type_search ? ('my_disp_control_panel') : ('my_disp_control_panel my_disp_control_panel--small')}>
           <select defaultValue={this.props.store.my_disp.type_search} onChange={e => this.props.set_type_search(e.target.value)} className="my_disp_select">
             <option value={true}>Период: </option>
             <option value={false}>По номеру: </option>

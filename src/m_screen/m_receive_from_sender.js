@@ -8,7 +8,8 @@ import './popup.css';
 import Foto from './foto';
 import Wait from "../screen/wait";
 import { withCookies } from 'react-cookie';
-import CheckPrint from './m_check_print'
+import CheckPrint from './m_check_print';
+import DispPrint from './m_disp_print_signature';
 
 class Screen extends React.Component {
 
@@ -168,13 +169,16 @@ class Screen extends React.Component {
                             <button className="mobile_disp_button_item mobile_disp_button_item--full" onClick={this.reciept.bind(this)}>Получить от отправителя</button>
                         </div>
 
-                        <div className="mobile_disp_button">
-                            <button className={+this.props.store.disp.cash_accepted > 0 && this.props.store.login.kkm && this.props.store.disp.data.CheckEnabled && this.props.store.disp.data.ChangeSumm == false ? ("mobile_disp_button_item mobile_disp_button_item--blue") : ("none")} onClick={this.receipt.bind(this)}>
-                                Чек
-                            </button>
-                        </div>
+                        {+this.props.store.disp.cash_accepted > 0 && this.props.store.login.kkm && this.props.store.disp.data.CheckEnabled && this.props.store.disp.data.ChangeSumm == false ? (
+                            <div className="mobile_disp_button">
+                                <button className="mobile_disp_button_item mobile_disp_button_item--blue" onClick={this.receipt.bind(this)}>
+                                    Чек
+                                </button>
+                            </div>
+                        ) : (null)}
 
                         {this.props.store.disp.data.ChangeSumm === false ? (<CheckPrint />) : (null)}
+                        {this.props.store.login.original_data.print_ticket ? (<DispPrint />) : (null)}
 
                         <div className="mobile_container">
                             <div className="mobile_del_row">

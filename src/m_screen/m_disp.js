@@ -29,7 +29,6 @@ class Screen extends React.Component {
         get_data('dispatch', data).then(
             (result) => {
                 this.props.set_data_disp(result);
-                this.props.set_last_window("storage");
                 this.props.set_action("deliver");
                 this.props.set_active_loader(false);
             },
@@ -59,6 +58,9 @@ class Screen extends React.Component {
         get_data('setorderstatus', data).then (
             (result) => {
                 this.loadData();
+                if(stat === "Выполнено") {
+                    this.settings_window("m_storage");
+                }
             },
             (err) => {
                 console.log(err)
