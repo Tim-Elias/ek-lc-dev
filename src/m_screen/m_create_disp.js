@@ -803,7 +803,7 @@ class Screen extends React.Component {
                                 </div>
                             )}
 
-                            <Foto />
+                            {/* <Foto /> */}
                             <button className="mobile_disp_button_item--full mobile_disp_button_item--blue" onClick={this.CalcPrice.bind(this, total_weight, total_volume)}>Рассчитать стоимость</button>
 
                             {disabled ? (<button onClick={this.create_disp.bind(this)} className="mobile_disp_button_item--full mobile_disp_button_item--blue_nonactive" disabled={disabled}>Создать накладную</button>)
