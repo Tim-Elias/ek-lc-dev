@@ -246,6 +246,7 @@ export default withCookies(connect(
         store: state
     }),
     dispatch => ({
+        take_foto: (param) => { dispatch({ type: 'set_disp_foto', payload: param }) },
         reset_data: (param) => { dispatch({ type: 'reset_data', payload: param }); },
         set_print_check_disabled: (param) => { dispatch({ type: 'set_print_check_disabled', payload: param }); },
         set_QR: (param) => { dispatch({ type: 'set_QR', payload: param }); },
