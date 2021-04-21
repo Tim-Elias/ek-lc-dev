@@ -210,8 +210,17 @@ class Screen extends React.Component {
                             </div>
 
                         </div>
-
-                        <Foto />
+                        <div className="mobile_container">
+                            <label className="camera_button">
+                                <span>Добавить фото</span>
+                                <input className="file" type="file" onChange={e => this._handleImageChange(e)} />
+                            </label>
+                            <img
+                                className="foto"
+                                src={this.props.store.disp.foto}
+                            />
+                        </div>
+                        {/* <Foto /> */}
                     </div>
                 )}
             </div>

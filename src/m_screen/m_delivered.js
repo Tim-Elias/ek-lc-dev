@@ -124,6 +124,18 @@ class Screen extends React.Component {
         );
     }
 
+    _handleImageChange(e) {
+        e.preventDefault();
+
+        let reader = new FileReader();
+        let file = e.target.files[0];
+        console.log(file);
+        reader.onloadend = () => {
+            this.props.take_foto(reader.result);
+        }
+        reader.readAsDataURL(file);
+    }
+
     componentDidMount() {
         this.props.set_disp_cash(this.props.store.disp.data.COD);
         this.props.reset_check_data();
@@ -252,7 +264,17 @@ class Screen extends React.Component {
                         </div>
                     </div>
 
-                    <Foto />
+                    {/* <Foto /> */}
+                    <div className="mobile_container">
+                        <label className="camera_button">
+                            <span>Добавить фото</span>
+                            <input className="file" type="file" onChange={e => this._handleImageChange(e)} />
+                        </label>
+                        <img
+                            className="foto"
+                            src={this.props.store.disp.foto}
+                        />
+                    </div>
                 </div>
                 )}
             </div>
@@ -266,6 +288,7 @@ export default withCookies(connect(
         store: state
     }),
     dispatch => ({
+        take_foto: (param) => { dispatch({ type: 'set_disp_foto', payload: param }) },
         reset_data: (param) => { dispatch({ type: 'reset_data', payload: param }); },
         set_print_check_disabled: (param) => { dispatch({ type: 'set_print_check_disabled', payload: param }); },
         set_QR: (param) => { dispatch({ type: 'set_QR', payload: param }); }, 

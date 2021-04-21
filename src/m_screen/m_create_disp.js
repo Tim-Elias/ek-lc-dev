@@ -427,7 +427,7 @@ class Screen extends React.Component {
             || this.props.store.m_create_disp.RecCity.value === ""
             || (this.props.store.m_create_disp.Total == "0" && this.props.store.m_create_disp.CargoInfoType)
             || (this.props.store.m_create_disp.Weight == "0" && this.props.store.m_create_disp.CargoInfoType)
-            || (total_weight == 0 && !this.props.store.m_create_disp.CargoInfoType)
+            || ((total_weight == 0 && !this.props.store.m_create_disp.CargoInfoType) && !this.props.store.login.original_data.nullable)
             || this.props.store.m_create_disp.Customer == ""
             || this.props.store.m_create_disp.Number == ""
         ) {
