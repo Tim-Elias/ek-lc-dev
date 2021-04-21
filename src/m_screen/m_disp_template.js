@@ -31,6 +31,10 @@ class Screen extends React.Component {
         );
     }
 
+    componentWillUnmount() {
+        this.props.set_last_window("m_disp_template");
+    }
+
     defult_disp = () => {
         this.props.set_active_window("m_create_disp");
     }
@@ -85,6 +89,12 @@ class Screen extends React.Component {
 
     render() {
 
+        window.history.pushState(null, "", window.location.href);
+        window.onpopstate = function () {
+            this.props.set_active_window('Mmenu');
+            window.history.pushState(null, "", window.location.href);
+        }.bind(this);
+
         return (
             <div>
                 {this.props.store.general.active_loader ? (<Wait />) : (
@@ -117,6 +127,7 @@ export default connect(
         store: state
     }),
     dispatch => ({
+        set_last_window: (param) => { dispatch({ type: 'set_last_window', payload: param }) },
         SetCityList: (param) => { dispatch({ type: 'SetCityListMobile', payload: param }) },
         set_active_window: (param) => { dispatch({ type: 'set_active_window', payload: param }); },
         set_active_loader: (param) => { dispatch({ type: 'set_active_loader', payload: param }); },

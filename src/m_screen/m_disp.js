@@ -356,7 +356,7 @@ export default withCookies(connect(
         set_key: (param) => { dispatch({ type: 'set_key', payload: param }) },
         set_active_window: (param) => { dispatch({ type: 'set_active_window', payload: param }); },
         set_data_disp: (param) => { dispatch({ type: 'set_data_disp', payload: param }) },
-        set_last_window: () => { dispatch({ type: 'set_last_window', payload: "storage" }) },
+        set_last_window: (param) => { dispatch({ type: 'set_last_window', payload: param }) },
         set_action: (param) => { dispatch({ type: 'set_action', payload: param }) }, 
         set_active_loader: (param) => { dispatch({ type: 'set_active_loader', payload: param }); },
         set_popup_message: (param) => { dispatch({ type: 'set_popup_message', payload: param }); },

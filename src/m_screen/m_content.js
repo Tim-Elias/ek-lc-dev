@@ -37,18 +37,18 @@ class Screen extends React.Component {
             if (wind == undefined){
                 this.props.set_active_window("m_storage")
             }else{
-            this.props.set_active_window(wind)
-            if(wind === 'm_disp') {
+                this.props.set_active_window(wind)
+                if(wind === 'm_disp') {
 
-                const data = {
-                    userkey: this.props.store.login.userkey,
-                    status: this.props.cookies.get('status'),
-                    num: this.props.cookies.get('num'),
-                };
+                    const data = {
+                        userkey: this.props.store.login.userkey,
+                        status: this.props.cookies.get('status'),
+                        num: this.props.cookies.get('num'),
+                    };
 
-                this.props.set_key(data);
+                    this.props.set_key(data);
+                }
             }
-        }
         }
     }
 

@@ -16,10 +16,6 @@ class Screen extends React.Component {
         this.update();
     }
 
-    componentWillUnmount() {
-        this.props.set_last_window("m_bounty");
-    }
-
     check_print = (num) => {
         const data = {
             userkey: this.props.store.login.userkey,

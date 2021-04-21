@@ -198,7 +198,7 @@ export default withCookies(connect(
         set_scann_active: (param) => { dispatch({ type: 'set_scann_active', payload: param }) },
         set_key: (param) => { dispatch({ type: 'set_key', payload: param }) },
         set_data_disp: (param) => { dispatch({ type: 'set_data_disp', payload: param }) },
-        set_last_window: () => { dispatch({ type: 'set_last_window', payload: "storage" }) },
+        set_last_window: (param) => { dispatch({ type: 'set_last_window', payload: param }) },
         set_active_window: (param) => { dispatch({ type: 'set_active_window', payload: param }) },
         set_action: (param) => { dispatch({ type: 'set_action', payload: param }) }, 
         set_search_storagre: (param) => { dispatch({ type: 'set_search_storagre', payload: param }) }, 

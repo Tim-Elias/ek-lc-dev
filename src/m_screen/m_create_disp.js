@@ -425,8 +425,8 @@ class Screen extends React.Component {
 
         if (this.props.store.m_create_disp.SendCity.value === ""
             || this.props.store.m_create_disp.RecCity.value === ""
-            || (this.props.store.m_create_disp.Total == "0" && this.props.store.m_create_disp.CargoInfoType)
-            || (this.props.store.m_create_disp.Weight == "0" && this.props.store.m_create_disp.CargoInfoType)
+            || ((this.props.store.m_create_disp.Total == "0" && this.props.store.m_create_disp.CargoInfoType) && !this.props.store.login.original_data.nullablex)
+            || ((this.props.store.m_create_disp.Weight == "0" && this.props.store.m_create_disp.CargoInfoType) && !this.props.store.login.original_data.nullable)
             || ((total_weight == 0 && !this.props.store.m_create_disp.CargoInfoType) && !this.props.store.login.original_data.nullable)
             || this.props.store.m_create_disp.Customer == ""
             || this.props.store.m_create_disp.Number == ""
@@ -439,7 +439,7 @@ class Screen extends React.Component {
             if(this.props.store.m_create_disp.popup) {
                 this.receipt();
             } else {
-                this.props.active_window('Mmenu');
+                this.props.active_window(this.props.store.general.last_window[this.props.store.general.last_window.length - 1]);
                 window.history.pushState(null, "", window.location.href);
             }
         }.bind(this);
@@ -879,7 +879,8 @@ export default connect(
         set_disp_template_list: (param) => { dispatch({ type: 'set_disp_template_list', payload: param }) },
 
         set_key: (param) => { dispatch({ type: 'set_key', payload: param }) },
-        active_window: (param) => { dispatch({ type: 'set_active_window', payload: param }); },
+        active_window: (param) => { dispatch({ type: 'set_active_window', payload: param }) },
+        set_last_window: (param) => { dispatch({ type: 'set_last_window', payload: param }) },
 
         DischargeData: (param) => { dispatch({ type: 'DischargeData', payload: param }) },
     })
