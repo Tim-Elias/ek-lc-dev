@@ -225,7 +225,7 @@ class Screen extends React.Component {
                         <div className="mobile_container">
                             <label className="camera_button">
                                 <span>Добавить фото</span>
-                                <input className="file" type="file" onChange={e => this._handleImageChange(e)} />
+                                <input className="file" type="file" accept="image/jpeg" onChange={e => this._handleImageChange(e)} />
                             </label>
                             <img
                                 className="foto"
