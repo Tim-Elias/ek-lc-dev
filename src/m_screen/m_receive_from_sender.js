@@ -138,6 +138,18 @@ class Screen extends React.Component {
         );
     }
 
+    _handleImageChange(e) {
+        e.preventDefault();
+
+        let reader = new FileReader();
+        let file = e.target.files[0];
+        console.log(file);
+        reader.onloadend = () => {
+            this.props.take_foto(reader.result);
+        }
+        reader.readAsDataURL(file);
+    }
+
     render() {
 
         window.history.pushState(null, "", window.location.href);
