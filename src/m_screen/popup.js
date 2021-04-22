@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { get_data } from './../common/common_modules';
 
 class Screen extends React.Component {
 

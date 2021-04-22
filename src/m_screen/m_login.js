@@ -72,7 +72,7 @@ class Screen extends React.Component {
 
 
                 <div className="mobile_login_container">
-                    <img className="header_mobile_logo login_logo" src={logo} />
+                    <img className="header_mobile_logo login_logo" src={logo} alt="" />
                     <input className="mobile_login_item" onKeyDown={this.handleKeyDown} onChange={e => this.props.set_login(e.target.value)} value={this.props.store.login.username} type="text" placeholder="Логин" name="username" />
                     <input className="mobile_login_item" onKeyDown={this.handleKeyDown} onChange={e => this.props.set_password(e.target.value)} value={this.props.store.login.pass} type="password" placeholder="Пароль" name="psw" />
                     <button onClick={this.login.bind(this)} className="mobile_logout mobile_login_item">

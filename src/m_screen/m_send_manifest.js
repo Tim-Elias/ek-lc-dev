@@ -4,7 +4,6 @@ import '../screen/send_manifest.css';
 import '../App.css';
 import { get_data } from './../common/common_modules';
 import Wait from "../screen/wait";
-import { Item } from 'semantic-ui-react';
 
 class Screen extends React.Component {
 

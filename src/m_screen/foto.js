@@ -83,12 +83,13 @@ class Screen extends React.Component {
                 <div className={this.props.store.disp.cameraActive ? "video_container" : "none"}>
                     <video className={this.props.store.disp.cameraActive ? "foto" : "none"} ref={this.videoRef} autoPlay = {true}/>
                     
-                    <img className={this.props.store.disp.cameraActive ? "video_button" : "none"} src={foto} onClick={() => {this.takePhoto()}} />
+                    <img className={this.props.store.disp.cameraActive ? "video_button" : "none"} src={foto} onClick={() => {this.takePhoto()}} alt="" />
 
                 </div>
                 <img
                     className="foto"
                     src={this.props.store.disp.foto}
+                    alt=""
                 />
 
             </div>

@@ -10,6 +10,7 @@ import Wait from "../screen/wait";
 import { withCookies } from 'react-cookie';
 import CheckPrint from './m_check_print';
 import DispPrint from './m_disp_print_signature';
+import MFoto from './m_foto';
 
 class Screen extends React.Component {
 
@@ -62,7 +63,7 @@ class Screen extends React.Component {
         get_data('getdispatch', data).then(
             (result) => {
                 this.props.set_popup_message(`Накладная ${this.props.store.disp.data.Number} успешно принята от отправителя`);
-                this.props.set_active_window("reciept");
+                this.props.set_active_window("m_reciept");
             },
             (err) => {
                 this.props.set_popup_message("Не удалось принять накладную");
@@ -222,16 +223,7 @@ class Screen extends React.Component {
                             </div>
 
                         </div>
-                        <div className="mobile_container">
-                            <label className="camera_button">
-                                <span>Добавить фото</span>
-                                <input className="file" type="file" accept="image/jpeg" onChange={e => this._handleImageChange(e)} />
-                            </label>
-                            <img
-                                className="foto"
-                                src={this.props.store.disp.foto}
-                            />
-                        </div>
+                        <MFoto />
                         {/* <Foto /> */}
                     </div>
                 )}

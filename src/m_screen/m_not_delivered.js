@@ -5,6 +5,7 @@ import { get_data } from '../common/common_modules';
 import './mobile_disp.css';
 import Foto from './foto';
 import { withCookies } from 'react-cookie';
+import MFoto from './m_foto';
 
 class Screen extends React.Component {
 
@@ -83,8 +84,8 @@ class Screen extends React.Component {
                     <button className="mobile_disp_button_item--full mobile_disp_button_item" onClick={this.sendpod.bind(this, "Перенос")}>Перенос</button>
                     <button className="mobile_disp_button_item--full mobile_disp_button_item--not" onClick={this.sendpod.bind(this, "НетПолучателя")}>Нет получателя/Неверный адрес</button>
                 </div>
-
-                <Foto />
+                <MFoto />
+                {/* <Foto /> */}
             </div>
         )
     }

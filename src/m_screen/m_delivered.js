@@ -5,11 +5,12 @@ import { get_data } from '../common/common_modules';
 import './mobile_delivery.css';
 import './mobile_disp.css';
 import './popup.css';
-import Foto from './foto';
+// import Foto from './foto';
 import Wait from "../screen/wait";
 import { withCookies } from 'react-cookie';
 import CheckPrint from './m_check_print';
 import DispPrint from './m_disp_print';
+import MFoto from './m_foto';
 
 class Screen extends React.Component {
 
@@ -98,7 +99,6 @@ class Screen extends React.Component {
 
                             get_data('getcheck', check_data).then(
                                 (result) => {
-                                    console.log(result)
                                     this.props.set_check_data(result);
                                 },
                                 (err) => {
@@ -265,16 +265,7 @@ class Screen extends React.Component {
                     </div>
 
                     {/* <Foto /> */}
-                    <div className="mobile_container">
-                        <label className="camera_button">
-                            <span>Добавить фото</span>
-                            <input className="file" type="file" accept="image/jpeg" onChange={e => this._handleImageChange(e)} />
-                        </label>
-                        <img
-                            className="foto"
-                            src={this.props.store.disp.foto}
-                        />
-                    </div>
+                    <MFoto />
                 </div>
                 )}
             </div>

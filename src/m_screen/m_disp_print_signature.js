@@ -26,7 +26,7 @@ class Screen extends React.Component {
 
                         <div className="check_print_qr">
                             <br />
-                            <img src={logo} /><br /><br />
+                            <img src={logo} alt="" /><br /><br />
 
                             {this.props.store.disp.data.Number ? (<QRCode className="qr" value={this.props.store.disp.data.Number} level="H" />) : (null)}<br />
 

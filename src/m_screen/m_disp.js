@@ -5,7 +5,6 @@ import { get_data } from '../common/common_modules';
 import './mobile_disp.css';
 import Wait from "../screen/wait";
 import { withCookies } from 'react-cookie';
-import DispPrint from './m_disp_print';
 
 class Screen extends React.Component {
 
@@ -333,7 +332,6 @@ class Screen extends React.Component {
                         </div>
                     ) : (null)}
 
-                {/* <DispPrint /> */}
                 <br />
                 </div>)}
                 

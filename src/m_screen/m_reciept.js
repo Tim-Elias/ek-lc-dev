@@ -1,7 +1,6 @@
 import React from 'react';
 import '../screen/reciept.css';
 import { connect } from 'react-redux';
-import { get_data } from '../common/common_modules';
 import Scanner from "./scanner";
 import scanner from '../common/scanner.png';
 
@@ -17,7 +16,7 @@ class Screen extends React.Component {
         };
 
         this.props.set_key(data);
-        this.props.set_last_window("reciept");
+        this.props.set_last_window("m_reciept");
         this.props.set_active_window("m_disp");
     }
 
@@ -38,7 +37,7 @@ class Screen extends React.Component {
                     <div className="search_reciept">
                         <div className="search_reciept_label">Поиск по номеру:</div>
                         <div className="search_reciept_data"><input value={this.props.store.reciept.search} className="search_reciept_data_input" onChange={e => this.props.set_search_reciept(e.target.value)}></input></div>
-                        <img src={scanner} className="update" onClick={e => this.props.set_scann_active(!this.props.store.storage.scann_active)} />
+                        <img src={scanner} className="update" onClick={e => this.props.set_scann_active(!this.props.store.storage.scann_active)} alt="" />
                     </div>
                     {this.props.store.storage.scann_active ? (
                         <Scanner />

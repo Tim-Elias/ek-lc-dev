@@ -72,7 +72,7 @@ class Screen extends React.Component {
                     <ul>
                         <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'm_storage')}>Доставки и Заявки</button></li>
                         {this.props.store.login.create_disp ? (<li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'm_disp_template')}>Создать накладную</button></li>) : (null)}
-                        <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'reciept')}>Получить от отправителя</button></li>
+                        <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'm_reciept')}>Получить от отправителя</button></li>
                         {this.props.store.login.original_data.courier || this.props.store.login.disp_map ? (null) : (<li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'm_get_manifest')}>Входящие манифесты</button></li>) }
                         {this.props.store.login.original_data.courier || this.props.store.login.disp_map ? (null) : (<li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'm_send_manifest')}>Отправка манифеста</button></li>) }
                         {this.props.store.login.original_data.driverexpeditor ? (<li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'm_send_partner')}>Передать партнеру</button></li>) : (null)}

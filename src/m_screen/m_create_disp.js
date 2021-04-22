@@ -7,7 +7,7 @@ import Select from 'react-select';
 import { customStyles } from "./m_common_style";
 import { get_data } from './../common/common_modules';
 import Wait from "../screen/wait";
-import Foto from "./foto";
+// import Foto from "./foto";
 
 class Screen extends React.Component {
 
