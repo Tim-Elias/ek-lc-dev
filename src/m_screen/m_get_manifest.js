@@ -1,19 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { get_data } from './../common/common_modules';
-
+import Wait from "../screen/wait";
 
 class Screen extends React.Component {
 
     update = () => {
-        this.props.set_active_window("wait");
+        this.props.set_active_loader(true);
         const list_data = { userkey: this.props.store.login.userkey };
 
         get_data('enroute', list_data).then(
             (result) => {
                 this.props.set_list_get_manifest(result);
+                this.props.set_active_loader(false);
             },
-            (err) => { console.log(err) }
+            (err) => { 
+                console.log(err);
+                alert(err);
+            }
         );
 
     };
@@ -35,10 +39,17 @@ class Screen extends React.Component {
                 this.props.set_active_window("m_manifest");
                 this.props.set_action_manifest("get");
             },
-            (err) => { console.log(err) }
+            (err) => { 
+                console.log(err);
+                alert(err);
+            }
         );
 
     };
+
+    componentDidMount() {
+        this.update();
+    }
 
     render() {
 
@@ -55,7 +66,7 @@ class Screen extends React.Component {
         return (
             <div>
                 <div className="mobile_heading">Входящие манифесты</div>
-
+                {this.props.store.general.active_loader ? (<Wait />) : (
                 <div className="mobile_container">
                     <button className="send_pod" onClick={this.update.bind(this)} >Обновить данные</button>
 
@@ -83,7 +94,7 @@ class Screen extends React.Component {
                             )}
                         </div>) : ("Нет ожидаемых входящих манифестов")}
                             
-                </div>
+                </div>)}
             </div>
         );
     }
@@ -100,5 +111,6 @@ export default connect(
 
         set_action_manifest: (param) => { dispatch({ type: 'set_action_manifest', payload: param }) },
         set_data_manifest: (param) => { dispatch({ type: 'set_data_manifest', payload: param }) },
+        set_active_loader: (param) => { dispatch({ type: 'set_active_loader', payload: param }) },
     })
 )(Screen);

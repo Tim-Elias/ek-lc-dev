@@ -40,17 +40,6 @@ class Screen extends React.Component {
                 },
                 (err) => { console.log(err) }
             );
-        } else if (window === 'm_get_manifest') {
-            this.props.set_active_window("wait");
-            const list_data = { userkey: this.props.store.login.userkey };
-
-            get_data('enroute', list_data).then(
-                (result) => {
-                    this.props.set_list_get_manifest(result);
-                    this.props.set_active_window(window);
-                },
-                (err) => { console.log(err) }
-            );
         } else if (window === 'm_storage') {
             this.props.set_active_window("m_storage");
             
