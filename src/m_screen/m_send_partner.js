@@ -72,7 +72,7 @@ class Screen extends React.Component {
                 <div className="mobile_heading">Передать партнеру</div>
                 {this.props.store.general.active_loader ? (<Wait />) : (
                     <div className="mobile_container">
-                        <select className="mobile_select" defaultValue={this.props.store.send_manifest.select_customer} value={this.props.store.send_manifest.select_customer_key} onChange={e => this.props.set_select_customer_key(e.target.value)}>
+                        <select className="mobile_select" defaultValue={this.props.store.send_manifest.select_customer} value={this.props.store.send_manifest.select_customer} onChange={e => this.props.set_select_customer(e.target.value)}>
                             {this.props.store.login.customers.map((item) => (<option value={item.customerKey}>{item.customer}</option>))}
                         </select>
 
