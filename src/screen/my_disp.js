@@ -305,7 +305,7 @@ class Screen extends React.Component {
           </div>
         </div>
 
-        <div>
+        <div className="my_disp_table">
           {this.props.store.my_disp.data.length === 0 ? (null) : (
             <Table celled size='small' compact='very'>
               <Table.Header>

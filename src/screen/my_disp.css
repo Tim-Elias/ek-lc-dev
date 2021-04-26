@@ -55,3 +55,8 @@
 .my_disp_select {
     margin: 0 10px 0 0;
 }
+
+.my_disp_table {
+    height: calc(100vh - 187px);
+    overflow-y: scroll;
+}
