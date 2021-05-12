@@ -244,13 +244,15 @@ class Screen extends React.Component {
                             <input onChange={e => this.props.set_disp_FIO(e.target.value)} value={this.props.store.disp.FIO_Customer} className="mobile_del_input" type="text"></input>
                         </div>
 
-                        <div className="mobile_del_row">
-                            <div className="mobile_del_data_label">Тип оплаты</div>
-                            <select onChange={e => { this.props.set_disp_type_cash(e.target.value)}}>
-                                <option value={false}>Наличные</option>
-                                <option value={true}>Безналичный</option>
-                            </select>
-                        </div>
+                        {this.props.store.disp.cash_accepted > 0 ? (
+                            <div className="mobile_del_row">
+                                <div className="mobile_del_data_label">Тип оплаты</div>
+                                <select onChange={e => { this.props.set_disp_type_cash(e.target.value)}}>
+                                    <option value={false}>Наличные</option>
+                                    <option value={true}>Безналичный</option>
+                                </select>
+                            </div>
+                        ) : (null)}
 
                         <div className="mobile_del_row">
                             <div className="mobile_del_data_label">Принятая сумма</div>
