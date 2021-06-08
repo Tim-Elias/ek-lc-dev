@@ -9,7 +9,11 @@ import 'semantic-ui-css/semantic.min.css'
 import './upload_manifest.css'
 import ComponentToPrint from './disp_print'
 import StickerToPrint from './sticker_print'
+import ReactExport from "react-data-export";
 
+const ExcelFile = ReactExport.ExcelFile;
+const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
+const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 
 // import { get_data } from './../common/common_modules'
 
@@ -615,15 +619,119 @@ class Screen extends React.Component {
 
   }
 
-
-
   render() {
     document.onkeydown = function (event) { }
 
     this.componentRef = []
     this.stickerRef = []
 
-    const complited = this.props.store.upload_manifest.disp_data.filter((el) => el.Status === 'Загружено')
+    const complited = this.props.store.upload_manifest.disp_data.filter((el) => el.Status === 'Загружено');
+    const complitedData = this.props.store.upload_manifest.disp_data.filter((el) => el.Status === 'Загружено');
+
+    let wNumber = 0, wSendCity = 0, wRecCity = 0, wTotal = 0, wSendAdress = 0, wRecAdress = 0, wWeight = 0, wSendCompany = 0, wRecCompany = 0, wVolume = 0, wSendPerson = 0, wRecPerson = 0, wInsureValue = 0, wSendPhone = 0, wRecPhone = 0, wCOD = 0, wSendAddInfo = 0, wRecAddInfo = 0;
+    const styledMultiDataSet = complitedData.map((item) => {
+
+      wNumber = ((item.Number ? (item.Number.length) : (0)) > wNumber) ? (item.Number.length) : (wNumber);
+      wSendCity = ((item.SendCity ? (item.SendCity.length) : (0)) > wSendCity) ? (item.SendCity.length) : (wSendCity);
+      wRecCity = ((item.RecCity ? (item.RecCity.length) : (0)) > wRecCity) ? (item.RecCity.length) : (wRecCity);
+      wTotal = ((item.Total ? (item.Total.length) : (0)) > wTotal) ? (item.Total.length) : (wTotal);
+      wSendAdress = ((item.SendAdress ? (item.SendAdress.length) : (0)) > wSendAdress) ? (item.SendAdress.length) : (wSendAdress);
+      wRecAdress = ((item.RecAdress ? (item.RecAdress.length) : (0)) > wRecAdress) ? (item.RecAdress.length) : (wRecAdress);
+      
+      wWeight = ((item.Weight ? (item.Weight.length) : (0)) > wWeight) ? (item.Weight.length) : (wWeight);
+      wSendCompany = ((item.SendCompany ? (item.SendCompany.length) : (0)) > wSendCompany) ? (item.SendCompany.length) : (wSendCompany);
+      wRecCompany = ((item.RecCompany ? (item.RecCompany.length) : (0)) > wRecCompany) ? (item.RecCompany.length) : (wRecCompany);
+      wVolume = ((item.Volume ? (item.Volume.length) : (0)) > wVolume) ? (item.Volume.length) : (wVolume);
+      wSendPerson = ((item.SendPerson ? (item.SendPerson.length) : (0)) > wSendPerson) ? (item.SendPerson.length) : (wSendPerson);
+      wRecPerson = ((item.RecPerson ? (item.RecPerson.length) : (0)) > wRecPerson) ? (item.RecPerson.length) : (wRecPerson);
+
+      wInsureValue = ((item.InsureValue ? (item.InsureValue.length) : (0)) > wInsureValue) ? (item.InsureValue.length) : (wInsureValue);
+      wSendPhone = ((item.SendPhone ? (item.SendPhone.length) : (0)) > wSendPhone) ? (item.SendPhone.length) : (wSendPhone);
+      wRecPhone = ((item.RecPhone ? (item.RecPhone.length) : (0)) > wRecPhone) ? (item.RecPhone.length) : (wRecPhone);
+      wCOD = ((item.COD ? (item.COD.length) : (0)) > wCOD) ? (item.COD.length) : (wCOD);
+      wSendAddInfo = ((item.SendAddInfo ? (item.SendAddInfo.length) : (0)) > wSendAddInfo) ? (item.SendAddInfo.length) : (wSendAddInfo);
+      wRecAddInfo = ((item.RecAddInfo ? (item.RecAddInfo.length) : (0)) > wRecAddInfo) ? (item.RecAddInfo.length) : (wRecAddInfo);
+
+      const widthFirst = Math.max(wNumber, wTotal, wWeight, wVolume, wInsureValue, wCOD);
+      const widthSecond = Math.max(wSendCity, wSendAdress, wSendCompany, wSendPerson, wSendPhone);
+      const widthThird = Math.max(wRecCity, wRecAdress, wRecCompany, wRecPerson, wRecPhone, wRecAddInfo);
+      
+      return {
+        columns: [
+          { title: "", width: { wch: widthFirst + 20 } },
+          { title: "", width: { wch: widthSecond + 9 } },
+          { title: "", width: { wch: widthThird + 9 } },
+        ],
+        data: [
+          [
+            { value: "Номер накладной: " + (item.Number || ""), style: { border: { top: { style: "thick", color: { rgb: "000" } }, bottom: { style: "thin", color: { rgb: "000" } }, left: { style: "thick", color: { rgb: "000" } }, right: { style: "thin", color: { rgb: "000" } } } } },
+            { value: "Город: " + (item.SendCity || ""), style: { border: { top: { style: "thick", color: { rgb: "000" } }, bottom: { style: "thin", color: { rgb: "000" } }, left: { style: "thin", color: { rgb: "000" } }, right: { style: "thin", color: { rgb: "000" } } } } },
+            { value: "Город: " + (item.RecCity || ""), style: { border: { top: { style: "thick", color: { rgb: "000" } }, bottom: { style: "thin", color: { rgb: "000" } }, left: { style: "thin", color: { rgb: "000" } }, right: { style: "thick", color: { rgb: "000" } } } } },
+          ],
+          [
+            { value: "Итого мест: " + (item.Total || ""), style: { border: { top: { style: "thin", color: { rgb: "000" } }, bottom: { style: "thin", color: { rgb: "000" } }, left: { style: "thick", color: { rgb: "000" } }, right: { style: "thin", color: { rgb: "000" } } } } },
+            { value: "Адрес: " + (item.SendAdress || ""), style: { border: { top: { style: "thin", color: { rgb: "000" } }, bottom: { style: "thin", color: { rgb: "000" } }, left: { style: "thin", color: { rgb: "000" } }, right: { style: "thin", color: { rgb: "000" } } } } },
+            { value: "Адрес: " + (item.RecAdress || ""), style: { border: { top: { style: "thin", color: { rgb: "000" } }, bottom: { style: "thin", color: { rgb: "000" } }, left: { style: "thin", color: { rgb: "000" } }, right: { style: "thick", color: { rgb: "000" } } } } },
+          ],
+          [
+            { value: "Фактически вес: " + (item.Weight || ""), style: { border: { top: { style: "thin", color: { rgb: "000" } }, bottom: { style: "thin", color: { rgb: "000" } }, left: { style: "thick", color: { rgb: "000" } }, right: { style: "thin", color: { rgb: "000" } } } } },
+            { value: "Компания: " + (item.SendCompany || ""), style: { border: { top: { style: "thin", color: { rgb: "000" } }, bottom: { style: "thin", color: { rgb: "000" } }, left: { style: "thin", color: { rgb: "000" } }, right: { style: "thin", color: { rgb: "000" } } } } },
+            { value: "Компания: " + (item.RecCompany || ""), style: { border: { top: { style: "thin", color: { rgb: "000" } }, bottom: { style: "thin", color: { rgb: "000" } }, left: { style: "thin", color: { rgb: "000" } }, right: { style: "thick", color: { rgb: "000" } } } } },
+          ],
+          [
+            { value: "Объемный вес: " + (item.Volume || ""), style: { border: { top: { style: "thin", color: { rgb: "000" } }, bottom: { style: "thin", color: { rgb: "000" } }, left: { style: "thick", color: { rgb: "000" } }, right: { style: "thin", color: { rgb: "000" } } } } },
+            { value: "Конт.лицо: " + (item.SendPerson || ""), style: { border: { top: { style: "thin", color: { rgb: "000" } }, bottom: { style: "thin", color: { rgb: "000" } }, left: { style: "thin", color: { rgb: "000" } }, right: { style: "thin", color: { rgb: "000" } } } } },
+            { value: "Конт.лицо: " + (item.RecPerson || ""), style: { border: { top: { style: "thin", color: { rgb: "000" } }, bottom: { style: "thin", color: { rgb: "000" } }, left: { style: "thin", color: { rgb: "000" } }, right: { style: "thick", color: { rgb: "000" } } } } },
+          ],
+          [
+            { value: "Страховая стоимость: " + (item.InsureValue || ""), style: { border: { top: { style: "thin", color: { rgb: "000" } }, bottom: { style: "thin", color: { rgb: "000" } }, left: { style: "thick", color: { rgb: "000" } }, right: { style: "thin", color: { rgb: "000" } } } } },
+            { value: "Телефон: " + (item.SendPhone || ""), style: { border: { top: { style: "thin", color: { rgb: "000" } }, bottom: { style: "thin", color: { rgb: "000" } }, left: { style: "thin", color: { rgb: "000" } }, right: { style: "thin", color: { rgb: "000" } } } } },
+            { value: "Телефон: " + (item.RecPhone || ""), style: { border: { top: { style: "thin", color: { rgb: "000" } }, bottom: { style: "thin", color: { rgb: "000" } }, left: { style: "thin", color: { rgb: "000" } }, right: { style: "thick", color: { rgb: "000" } } } } },
+          ],
+          [
+            { value: "Налож. платеж: " + (item.COD || ""), style: { border: { top: { style: "thin", color: { rgb: "000" } }, bottom: { style: "thick", color: { rgb: "000" } }, left: { style: "thick", color: { rgb: "000" } }, right: { style: "thin", color: { rgb: "000" } } } } },
+            { value: "Доп.инфо: ", style: { border: { top: { style: "thin", color: { rgb: "000" } }, bottom: { style: "thick", color: { rgb: "000" } }, left: { style: "thin", color: { rgb: "000" } }, right: { style: "thin", color: { rgb: "000" } } } } },
+            { value: "Доп.инфо: " + (item.RecAddInfo || ""), style: { border: { top: { style: "thin", color: { rgb: "000" } }, bottom: { style: "thick", color: { rgb: "000" } }, left: { style: "thin", color: { rgb: "000" } }, right: { style: "thick", color: { rgb: "000" } } } } },
+          ]
+        ]
+      }
+
+      })
+    
+      styledMultiDataSet.unshift(
+        {
+          columns: [{ title: "Акт приема-передачи курьерских отправлений" }],
+          data: [],
+        },
+      )
+
+    styledMultiDataSet.push(
+      {
+        columns: [],
+        data: [
+          [
+            { value: "Получатель: " },
+            { value: "", style: { border: { bottom: { style: "thin", color: { rgb: "000" } } } } },
+            { value: "/", style: { border: { bottom: { style: "thin", color: { rgb: "000" } } } } }
+          ]
+        ],
+      },
+    )
+
+    styledMultiDataSet.push(
+      {
+        ySteps: 1,
+        columns: [],
+        data: [
+          [
+            { value: "Курьер: " },
+            { value: "", style: { border: { bottom: { style: "thin", color: { rgb: "000" } } } } },
+            { value: "/", style: { border: { bottom: { style: "thin", color: { rgb: "000" } } } } }
+          ]
+        ],
+      },
+    )
+
     return (
 
       <div>
@@ -635,6 +743,11 @@ class Screen extends React.Component {
           <button className="ui button mini" onClick={this.read_text.bind(this)}>Прочитать</button>
           <button className="ui button mini" disabled={this.props.store.upload_manifest.data.length == 0} onClick={this.convert_data.bind(this)}>Преобразовать</button>
           <button className="ui button mini" disabled={this.props.store.upload_manifest.disp_data.length == 0 || this.props.store.upload_manifest.disp_data.filter(el => el.RecCity == "").length !== 0} onClick={this.upload_data.bind(this)}>Загрузить данные</button>
+
+          <ExcelFile filename={"Акт ПП"} element={this.props.store.upload_manifest.disp_data.some(item => item.Status === "Загружено") ? (<Button style={{ margin: '-5px 0 0 15px' }} size='mini'>Сохранить в Exсel</Button>) : (<Button disabled style={{ margin: '-5px 0 0 15px' }} size='mini'>Сохранить в Exсel</Button>)}>
+          {/* <ExcelFile filename={"Акт ПП"} element={<Button style={{ margin: '-5px 0 0 15px' }} size='mini'>Сохранить в Exсel</Button>}> */}
+            <ExcelSheet dataSet={styledMultiDataSet} name="Лист1" />
+          </ExcelFile>
 
           {complited.length !== 0 ? (<ReactToPrint
             trigger={() => <button className="ui button mini"><Icon name='print'></Icon> Печать всех накладных</button>}
