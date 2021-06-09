@@ -628,10 +628,10 @@ class Screen extends React.Component {
     const complited = this.props.store.upload_manifest.disp_data.filter((el) => el.Status === 'Загружено');
     const complitedData = this.props.store.upload_manifest.disp_data.filter((el) => el.Status === 'Загружено');
 
-    let wNumber = 0, wSendCity = 0, wRecCity = 0, wTotal = 0, wSendAdress = 0, wRecAdress = 0, wWeight = 0, wSendCompany = 0, wRecCompany = 0, wVolume = 0, wSendPerson = 0, wRecPerson = 0, wInsureValue = 0, wSendPhone = 0, wRecPhone = 0, wCOD = 0, wSendAddInfo = 0, wRecAddInfo = 0;
+    let wNum = 0, wSendCity = 0, wRecCity = 0, wTotal = 0, wSendAdress = 0, wRecAdress = 0, wWeight = 0, wSendCompany = 0, wRecCompany = 0, wVolume = 0, wSendPerson = 0, wRecPerson = 0, wInsureValue = 0, wSendPhone = 0, wRecPhone = 0, wCOD = 0, wSendAddInfo = 0, wRecAddInfo = 0;
     const styledMultiDataSet = complitedData.map((item) => {
 
-      wNumber = ((item.Number ? (item.Number.length) : (0)) > wNumber) ? (item.Number.length) : (wNumber);
+      wNum = ((item.Num ? (item.Num.length) : (0)) > wNum) ? (item.Num.length) : (wNum);
       wSendCity = ((item.SendCity ? (item.SendCity.length) : (0)) > wSendCity) ? (item.SendCity.length) : (wSendCity);
       wRecCity = ((item.RecCity ? (item.RecCity.length) : (0)) > wRecCity) ? (item.RecCity.length) : (wRecCity);
       wTotal = ((item.Total ? (item.Total.length) : (0)) > wTotal) ? (item.Total.length) : (wTotal);
@@ -652,7 +652,7 @@ class Screen extends React.Component {
       wSendAddInfo = ((item.SendAddInfo ? (item.SendAddInfo.length) : (0)) > wSendAddInfo) ? (item.SendAddInfo.length) : (wSendAddInfo);
       wRecAddInfo = ((item.RecAddInfo ? (item.RecAddInfo.length) : (0)) > wRecAddInfo) ? (item.RecAddInfo.length) : (wRecAddInfo);
 
-      const widthFirst = Math.max(wNumber, wTotal, wWeight, wVolume, wInsureValue, wCOD);
+      const widthFirst = Math.max(wNum, wTotal, wWeight, wVolume, wInsureValue, wCOD);
       const widthSecond = Math.max(wSendCity, wSendAdress, wSendCompany, wSendPerson, wSendPhone);
       const widthThird = Math.max(wRecCity, wRecAdress, wRecCompany, wRecPerson, wRecPhone, wRecAddInfo);
       
@@ -664,7 +664,7 @@ class Screen extends React.Component {
         ],
         data: [
           [
-            { value: "Номер накладной: " + (item.Number || ""), style: { border: { top: { style: "thick", color: { rgb: "000" } }, bottom: { style: "thin", color: { rgb: "000" } }, left: { style: "thick", color: { rgb: "000" } }, right: { style: "thin", color: { rgb: "000" } } } } },
+            { value: "Номер накладной: " + (item.Num || ""), style: { border: { top: { style: "thick", color: { rgb: "000" } }, bottom: { style: "thin", color: { rgb: "000" } }, left: { style: "thick", color: { rgb: "000" } }, right: { style: "thin", color: { rgb: "000" } } } } },
             { value: "Город: " + (item.SendCity || ""), style: { border: { top: { style: "thick", color: { rgb: "000" } }, bottom: { style: "thin", color: { rgb: "000" } }, left: { style: "thin", color: { rgb: "000" } }, right: { style: "thin", color: { rgb: "000" } } } } },
             { value: "Город: " + (item.RecCity || ""), style: { border: { top: { style: "thick", color: { rgb: "000" } }, bottom: { style: "thin", color: { rgb: "000" } }, left: { style: "thin", color: { rgb: "000" } }, right: { style: "thick", color: { rgb: "000" } } } } },
           ],
@@ -705,7 +705,34 @@ class Screen extends React.Component {
         },
       )
 
+    const totalPlace = this.props.store.upload_manifest.disp_data.reduce((summ, item) => {
+      let elem = item.Total;
+      if (typeof item.Total === "string") {
+        elem = elem.replace(",", ".");
+        elem = parseFloat(elem);
+      }
+      return summ + elem
+    }, 0);
+    const totalWeight = this.props.store.upload_manifest.disp_data.reduce((summ, item) => {
+      let elem = item.Weight;
+      if (typeof item.Weight === "string") {
+        elem = elem.replace(",",".");
+        elem = parseFloat(elem);
+      }
+      return summ + elem
+    }, 0);
+
     styledMultiDataSet.push(
+      {
+        columns: [],
+        data: [
+          [
+            { value: "Итого накладных: " + this.props.store.upload_manifest.disp_data.length },
+            { value: "Итого мест: " + totalPlace },
+            { value: "Итого фактический вес: " + totalWeight },
+          ]
+        ],
+      },
       {
         columns: [],
         data: [
@@ -745,7 +772,6 @@ class Screen extends React.Component {
           <button className="ui button mini" disabled={this.props.store.upload_manifest.disp_data.length == 0 || this.props.store.upload_manifest.disp_data.filter(el => el.RecCity == "").length !== 0} onClick={this.upload_data.bind(this)}>Загрузить данные</button>
 
           <ExcelFile filename={"Акт ПП"} element={this.props.store.upload_manifest.disp_data.some(item => item.Status === "Загружено") ? (<Button style={{ margin: '-5px 0 0 15px' }} size='mini'>Сохранить в Exсel</Button>) : (<Button disabled style={{ margin: '-5px 0 0 15px' }} size='mini'>Сохранить в Exсel</Button>)}>
-          {/* <ExcelFile filename={"Акт ПП"} element={<Button style={{ margin: '-5px 0 0 15px' }} size='mini'>Сохранить в Exсel</Button>}> */}
             <ExcelSheet dataSet={styledMultiDataSet} name="Лист1" />
           </ExcelFile>
 
