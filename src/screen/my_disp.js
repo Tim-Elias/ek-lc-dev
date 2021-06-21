@@ -274,7 +274,7 @@ class Screen extends React.Component {
         data: ExcelData,
       }
     ]
-    
+  
     return (
 
       <div>

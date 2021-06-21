@@ -13,7 +13,6 @@ import ReactExport from "react-data-export";
 
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
-const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 
 // import { get_data } from './../common/common_modules'
 
@@ -622,142 +621,123 @@ class Screen extends React.Component {
   render() {
     document.onkeydown = function (event) { }
 
+    const TitleStyle = {
+      border: {
+        top: { style: "thin", color: { rgb: "000" } },
+        bottom: { style: "thin", color: { rgb: "000" } },
+        left: { style: "thin", color: { rgb: "000" } },
+        right: { style: "thin", color: { rgb: "000" } },
+      },
+      font: {
+        name: "Arial",
+        bold: true,
+        sz: "8",
+      },
+      alignment: {
+        horizontal: "center",
+      }
+    }
+    const CellStyle = {
+      border: {
+        top: { style: "thin", color: { rgb: "000" } },
+        bottom: { style: "thin", color: { rgb: "000" } },
+        left: { style: "thin", color: { rgb: "000" } },
+        right: { style: "thin", color: { rgb: "000" } },
+      },
+      font: {
+        name: "Arial",
+        sz: "8",
+      },
+      alignment: {
+        horizontal: "left",
+      }
+    }
+    const CellStyle2 = {
+      border: {
+        top: { style: "thin", color: { rgb: "000" } },
+        bottom: { style: "thin", color: { rgb: "000" } },
+        left: { style: "thin", color: { rgb: "000" } },
+        right: { style: "thin", color: { rgb: "000" } },
+      },
+      font: {
+        name: "Arial",
+        sz: "8",
+      },
+      alignment: {
+        horizontal: "left",
+        wrapText: true,
+      }
+    }
+
     this.componentRef = []
     this.stickerRef = []
 
     const complited = this.props.store.upload_manifest.disp_data.filter((el) => el.Status === 'Загружено');
-    const complitedData = this.props.store.upload_manifest.disp_data.filter((el) => el.Status === 'Загружено');
+    const complitedData = this.props.store.upload_manifest.disp_data.filter((el) => el.Status !== 'Загружено');
 
-    let wNum = 0, wSendCity = 0, wRecCity = 0, wTotal = 0, wSendAdress = 0, wRecAdress = 0, wWeight = 0, wSendCompany = 0, wRecCompany = 0, wVolume = 0, wSendPerson = 0, wRecPerson = 0, wInsureValue = 0, wSendPhone = 0, wRecPhone = 0, wCOD = 0, wSendAddInfo = 0, wRecAddInfo = 0;
-    const styledMultiDataSet = complitedData.map((item) => {
+    let ExcelData = [];
+    let wNum = 0, wSendAddInfo = 0, wTotal = 0, wWeight = 0, wVolume = 0, wRecAddInfo = 0, wSendCompany = 0, wSendAdress = 0, wRecCompany = 0, wRecAdress = 0;
+    for (let i = 0; i < complitedData.length; i++) {
+      wSendAddInfo = (complitedData[i].SendAddInfo.length > wSendAddInfo) ? (complitedData[i].SendAddInfo.length) : (wSendAddInfo);
+      wTotal = (complitedData[i].Total.length > wTotal) ? (complitedData[i].Total.length) : (wTotal);
+      wWeight = (complitedData[i].Weight.length > wWeight) ? (complitedData[i].Weight.length) : (wWeight);
+      wVolume = (complitedData[i].Volume.length > wVolume) ? (complitedData[i].Volume.length) : (wVolume);
+      wRecAddInfo = (complitedData[i].RecAddInfo.length > wRecAddInfo) ? (complitedData[i].RecAddInfo.length) : (wRecAddInfo);
+      wSendCompany = (complitedData[i].SendCompany.length > wSendCompany) ? (complitedData[i].SendCompany.length) : (wSendCompany);
+      wSendAdress = (complitedData[i].SendAdress.length > wTotal) ? (complitedData[i].SendAdress.length) : (wSendAdress);
+      wRecCompany = (complitedData[i].RecCompany.length > wRecCompany) ? (complitedData[i].RecCompany.length) : (wRecCompany);
+      wRecAdress = (complitedData[i].RecAdress.length > wRecAdress) ? (complitedData[i].RecAdress.length) : (wRecAdress);
 
-      wNum = ((item.Num ? (item.Num.length) : (0)) > wNum) ? (item.Num.length) : (wNum);
-      wSendCity = ((item.SendCity ? (item.SendCity.length) : (0)) > wSendCity) ? (item.SendCity.length) : (wSendCity);
-      wRecCity = ((item.RecCity ? (item.RecCity.length) : (0)) > wRecCity) ? (item.RecCity.length) : (wRecCity);
-      wTotal = ((item.Total ? (item.Total.length) : (0)) > wTotal) ? (item.Total.length) : (wTotal);
-      wSendAdress = ((item.SendAdress ? (item.SendAdress.length) : (0)) > wSendAdress) ? (item.SendAdress.length) : (wSendAdress);
-      wRecAdress = ((item.RecAdress ? (item.RecAdress.length) : (0)) > wRecAdress) ? (item.RecAdress.length) : (wRecAdress);
-      
-      wWeight = ((item.Weight ? (item.Weight.length) : (0)) > wWeight) ? (item.Weight.length) : (wWeight);
-      wSendCompany = ((item.SendCompany ? (item.SendCompany.length) : (0)) > wSendCompany) ? (item.SendCompany.length) : (wSendCompany);
-      wRecCompany = ((item.RecCompany ? (item.RecCompany.length) : (0)) > wRecCompany) ? (item.RecCompany.length) : (wRecCompany);
-      wVolume = ((item.Volume ? (item.Volume.length) : (0)) > wVolume) ? (item.Volume.length) : (wVolume);
-      wSendPerson = ((item.SendPerson ? (item.SendPerson.length) : (0)) > wSendPerson) ? (item.SendPerson.length) : (wSendPerson);
-      wRecPerson = ((item.RecPerson ? (item.RecPerson.length) : (0)) > wRecPerson) ? (item.RecPerson.length) : (wRecPerson);
+      let sendAddInfo = complitedData[i].SendAddInfo.replace(/\/s/g, '').replace(/\r?\n/g, " ");
 
-      wInsureValue = ((item.InsureValue ? (item.InsureValue.length) : (0)) > wInsureValue) ? (item.InsureValue.length) : (wInsureValue);
-      wSendPhone = ((item.SendPhone ? (item.SendPhone.length) : (0)) > wSendPhone) ? (item.SendPhone.length) : (wSendPhone);
-      wRecPhone = ((item.RecPhone ? (item.RecPhone.length) : (0)) > wRecPhone) ? (item.RecPhone.length) : (wRecPhone);
-      wCOD = ((item.COD ? (item.COD.length) : (0)) > wCOD) ? (item.COD.length) : (wCOD);
-      wSendAddInfo = ((item.SendAddInfo ? (item.SendAddInfo.length) : (0)) > wSendAddInfo) ? (item.SendAddInfo.length) : (wSendAddInfo);
-      wRecAddInfo = ((item.RecAddInfo ? (item.RecAddInfo.length) : (0)) > wRecAddInfo) ? (item.RecAddInfo.length) : (wRecAddInfo);
+      ExcelData[i] = [
+        { value: (complitedData[i].Num || ""), style: CellStyle },
+        { value: sendAddInfo, style: CellStyle2 },
+        { value: complitedData[i].Total, style: CellStyle },
+        { value: complitedData[i].Weight, style: CellStyle },
+        { value: complitedData[i].Volume, style: CellStyle },
+        { value: complitedData[i].RecAddInfo, style: CellStyle },
+        { value: complitedData[i].SendCompany, style: CellStyle },
+        { value: complitedData[i].SendAdress, style: CellStyle },
+        { value: complitedData[i].RecCompany, style: CellStyle },
+        { value: complitedData[i].RecAdress, style: CellStyle },
+      ];
+    }
 
-      const widthFirst = Math.max(wNum, wTotal, wWeight, wVolume, wInsureValue, wCOD);
-      const widthSecond = Math.max(wSendCity, wSendAdress, wSendCompany, wSendPerson, wSendPhone);
-      const widthThird = Math.max(wRecCity, wRecAdress, wRecCompany, wRecPerson, wRecPhone, wRecAddInfo);
-      
-      return {
+    let ExcelColumn = [
+      { title: "Номер накладной", style: TitleStyle, width: { wch: 16 } },
+      { title: "Доп. информация", style: TitleStyle, width: { wch: 15 } },
+      { title: "Кол-во мест", style: TitleStyle, width: { wch: 10 } },
+      { title: "Факт. Вес", style: TitleStyle, width: { wch: 8 } },
+      { title: "Объем", style: TitleStyle, width: { wch: 5 } },
+      { title: "Температурный режим", style: TitleStyle, width: { wch: 18 } },
+      { title: "Грузоотправитель", style: TitleStyle, width: { wch: (wSendCompany / 1.5 > 15) ? (wSendCompany/1.5) : (15) } },
+      { title: "Адрес грузоотправителя", style: TitleStyle, width: { wch: (wSendAdress / 1.5 > 20) ? (wSendAdress/1.5) : (20) } },
+      { title: "Грузополучатель", style: TitleStyle, width: { wch: (wRecCompany / 1.5 > 15) ? (wRecCompany/1.5) : (15) } },
+      { title: "Адрес доставки", style: TitleStyle, width: { wch: (wRecAdress / 1.5 > 14) ? (wRecAdress/1.5) : (14) } },
+    ]
+
+    const currentDate = new Date();
+
+    const styledMultiDataSet = [
+      {
         columns: [
-          { title: "", width: { wch: widthFirst + 20 } },
-          { title: "", width: { wch: widthSecond + 9 } },
-          { title: "", width: { wch: widthThird + 9 } },
+          { title: "Название Отправителя:", style: CellStyle },
+          { title: "ИНВИТРО-Сибирь ООО", style: CellStyle },
         ],
         data: [
           [
-            { value: "Номер накладной: " + (item.Num || ""), style: { border: { top: { style: "thick", color: { rgb: "000" } }, bottom: { style: "thin", color: { rgb: "000" } }, left: { style: "thick", color: { rgb: "000" } }, right: { style: "thin", color: { rgb: "000" } } } } },
-            { value: "Город: " + (item.SendCity || ""), style: { border: { top: { style: "thick", color: { rgb: "000" } }, bottom: { style: "thin", color: { rgb: "000" } }, left: { style: "thin", color: { rgb: "000" } }, right: { style: "thin", color: { rgb: "000" } } } } },
-            { value: "Город: " + (item.RecCity || ""), style: { border: { top: { style: "thick", color: { rgb: "000" } }, bottom: { style: "thin", color: { rgb: "000" } }, left: { style: "thin", color: { rgb: "000" } }, right: { style: "thick", color: { rgb: "000" } } } } },
+            { value: "Дата забора груза:", style: CellStyle },
+            { value: currentDate.getDate() + "." + (currentDate.getMonth() + 1) + "." + currentDate.getFullYear(), style: CellStyle },
           ],
-          [
-            { value: "Итого мест: " + (item.Total || ""), style: { border: { top: { style: "thin", color: { rgb: "000" } }, bottom: { style: "thin", color: { rgb: "000" } }, left: { style: "thick", color: { rgb: "000" } }, right: { style: "thin", color: { rgb: "000" } } } } },
-            { value: "Адрес: " + (item.SendAdress || ""), style: { border: { top: { style: "thin", color: { rgb: "000" } }, bottom: { style: "thin", color: { rgb: "000" } }, left: { style: "thin", color: { rgb: "000" } }, right: { style: "thin", color: { rgb: "000" } } } } },
-            { value: "Адрес: " + (item.RecAdress || ""), style: { border: { top: { style: "thin", color: { rgb: "000" } }, bottom: { style: "thin", color: { rgb: "000" } }, left: { style: "thin", color: { rgb: "000" } }, right: { style: "thick", color: { rgb: "000" } } } } },
-          ],
-          [
-            { value: "Фактически вес: " + (item.Weight || ""), style: { border: { top: { style: "thin", color: { rgb: "000" } }, bottom: { style: "thin", color: { rgb: "000" } }, left: { style: "thick", color: { rgb: "000" } }, right: { style: "thin", color: { rgb: "000" } } } } },
-            { value: "Компания: " + (item.SendCompany || ""), style: { border: { top: { style: "thin", color: { rgb: "000" } }, bottom: { style: "thin", color: { rgb: "000" } }, left: { style: "thin", color: { rgb: "000" } }, right: { style: "thin", color: { rgb: "000" } } } } },
-            { value: "Компания: " + (item.RecCompany || ""), style: { border: { top: { style: "thin", color: { rgb: "000" } }, bottom: { style: "thin", color: { rgb: "000" } }, left: { style: "thin", color: { rgb: "000" } }, right: { style: "thick", color: { rgb: "000" } } } } },
-          ],
-          [
-            { value: "Объемный вес: " + (item.Volume || ""), style: { border: { top: { style: "thin", color: { rgb: "000" } }, bottom: { style: "thin", color: { rgb: "000" } }, left: { style: "thick", color: { rgb: "000" } }, right: { style: "thin", color: { rgb: "000" } } } } },
-            { value: "Конт.лицо: " + (item.SendPerson || ""), style: { border: { top: { style: "thin", color: { rgb: "000" } }, bottom: { style: "thin", color: { rgb: "000" } }, left: { style: "thin", color: { rgb: "000" } }, right: { style: "thin", color: { rgb: "000" } } } } },
-            { value: "Конт.лицо: " + (item.RecPerson || ""), style: { border: { top: { style: "thin", color: { rgb: "000" } }, bottom: { style: "thin", color: { rgb: "000" } }, left: { style: "thin", color: { rgb: "000" } }, right: { style: "thick", color: { rgb: "000" } } } } },
-          ],
-          [
-            { value: "Страховая стоимость: " + (item.InsureValue || ""), style: { border: { top: { style: "thin", color: { rgb: "000" } }, bottom: { style: "thin", color: { rgb: "000" } }, left: { style: "thick", color: { rgb: "000" } }, right: { style: "thin", color: { rgb: "000" } } } } },
-            { value: "Телефон: " + (item.SendPhone || ""), style: { border: { top: { style: "thin", color: { rgb: "000" } }, bottom: { style: "thin", color: { rgb: "000" } }, left: { style: "thin", color: { rgb: "000" } }, right: { style: "thin", color: { rgb: "000" } } } } },
-            { value: "Телефон: " + (item.RecPhone || ""), style: { border: { top: { style: "thin", color: { rgb: "000" } }, bottom: { style: "thin", color: { rgb: "000" } }, left: { style: "thin", color: { rgb: "000" } }, right: { style: "thick", color: { rgb: "000" } } } } },
-          ],
-          [
-            { value: "Налож. платеж: " + (item.COD || ""), style: { border: { top: { style: "thin", color: { rgb: "000" } }, bottom: { style: "thick", color: { rgb: "000" } }, left: { style: "thick", color: { rgb: "000" } }, right: { style: "thin", color: { rgb: "000" } } } } },
-            { value: "Доп.инфо: ", style: { border: { top: { style: "thin", color: { rgb: "000" } }, bottom: { style: "thick", color: { rgb: "000" } }, left: { style: "thin", color: { rgb: "000" } }, right: { style: "thin", color: { rgb: "000" } } } } },
-            { value: "Доп.инфо: " + (item.RecAddInfo || ""), style: { border: { top: { style: "thin", color: { rgb: "000" } }, bottom: { style: "thick", color: { rgb: "000" } }, left: { style: "thin", color: { rgb: "000" } }, right: { style: "thick", color: { rgb: "000" } } } } },
-          ]
-        ]
-      }
-
-      })
-    
-      styledMultiDataSet.unshift(
-        {
-          columns: [{ title: "Акт приема-передачи курьерских отправлений" }],
-          data: [],
-        },
-      )
-
-    const totalPlace = this.props.store.upload_manifest.disp_data.reduce((summ, item) => {
-      let elem = item.Total;
-      if (typeof item.Total === "string") {
-        elem = elem.replace(",", ".");
-        elem = parseFloat(elem);
-      }
-      return summ + elem
-    }, 0);
-    const totalWeight = this.props.store.upload_manifest.disp_data.reduce((summ, item) => {
-      let elem = item.Weight;
-      if (typeof item.Weight === "string") {
-        elem = elem.replace(",",".");
-        elem = parseFloat(elem);
-      }
-      return summ + elem
-    }, 0);
-
-    styledMultiDataSet.push(
-      {
-        columns: [],
-        data: [
-          [
-            { value: "Итого накладных: " + this.props.store.upload_manifest.disp_data.length },
-            { value: "Итого мест: " + totalPlace },
-            { value: "Итого фактический вес: " + totalWeight },
-          ]
         ],
       },
-      {
-        columns: [],
-        data: [
-          [
-            { value: "Получатель: " },
-            { value: "", style: { border: { bottom: { style: "thin", color: { rgb: "000" } } } } },
-            { value: "/", style: { border: { bottom: { style: "thin", color: { rgb: "000" } } } } }
-          ]
-        ],
-      },
-    )
-
-    styledMultiDataSet.push(
       {
         ySteps: 1,
-        columns: [],
-        data: [
-          [
-            { value: "Курьер: " },
-            { value: "", style: { border: { bottom: { style: "thin", color: { rgb: "000" } } } } },
-            { value: "/", style: { border: { bottom: { style: "thin", color: { rgb: "000" } } } } }
-          ]
-        ],
-      },
-    )
+        columns: ExcelColumn,
+        data: ExcelData,
+      }
+    ]
 
     return (
 
@@ -771,7 +751,7 @@ class Screen extends React.Component {
           <button className="ui button mini" disabled={this.props.store.upload_manifest.data.length == 0} onClick={this.convert_data.bind(this)}>Преобразовать</button>
           <button className="ui button mini" disabled={this.props.store.upload_manifest.disp_data.length == 0 || this.props.store.upload_manifest.disp_data.filter(el => el.RecCity == "").length !== 0} onClick={this.upload_data.bind(this)}>Загрузить данные</button>
 
-          <ExcelFile filename={"Акт ПП"} element={this.props.store.upload_manifest.disp_data.some(item => item.Status === "Загружено") ? (<Button style={{ margin: '-5px 0 0 15px' }} size='mini'>Сохранить в Exсel</Button>) : (<Button disabled style={{ margin: '-5px 0 0 15px' }} size='mini'>Сохранить в Exсel</Button>)}>
+          <ExcelFile filename={"Акт ПП"} element={this.props.store.upload_manifest.disp_data.some(item => item.Status !== "Загружено") ? (<Button style={{ margin: '-5px 0 0 15px' }} size='mini'>Сохранить в Exсel</Button>) : (<Button disabled style={{ margin: '-5px 0 0 15px' }} size='mini'>Сохранить в Exсel</Button>)}>
             <ExcelSheet dataSet={styledMultiDataSet} name="Лист1" />
           </ExcelFile>
 
