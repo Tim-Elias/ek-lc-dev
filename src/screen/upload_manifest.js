@@ -673,7 +673,7 @@ class Screen extends React.Component {
     this.stickerRef = []
 
     const complited = this.props.store.upload_manifest.disp_data.filter((el) => el.Status === 'Загружено');
-    const complitedData = this.props.store.upload_manifest.disp_data.filter((el) => el.Status !== 'Загружено');
+    const complitedData = this.props.store.upload_manifest.disp_data.filter((el) => el.Status === 'Загружено');
 
     let ExcelData = [];
     let wNum = 0, wSendAddInfo = 0, wTotal = 0, wWeight = 0, wVolume = 0, wRecAddInfo = 0, wSendCompany = 0, wSendAdress = 0, wRecCompany = 0, wRecAdress = 0;
@@ -751,7 +751,7 @@ class Screen extends React.Component {
           <button className="ui button mini" disabled={this.props.store.upload_manifest.data.length == 0} onClick={this.convert_data.bind(this)}>Преобразовать</button>
           <button className="ui button mini" disabled={this.props.store.upload_manifest.disp_data.length == 0 || this.props.store.upload_manifest.disp_data.filter(el => el.RecCity == "").length !== 0} onClick={this.upload_data.bind(this)}>Загрузить данные</button>
 
-          <ExcelFile filename={"Акт ПП"} element={this.props.store.upload_manifest.disp_data.some(item => item.Status !== "Загружено") ? (<Button style={{ margin: '-5px 0 0 15px' }} size='mini'>Сохранить в Exсel</Button>) : (<Button disabled style={{ margin: '-5px 0 0 15px' }} size='mini'>Сохранить в Exсel</Button>)}>
+          <ExcelFile filename={"Акт ПП"} element={this.props.store.upload_manifest.disp_data.some(item => item.Status === "Загружено") ? (<Button style={{ margin: '-5px 0 0 15px' }} size='mini'>Сохранить в Exсel</Button>) : (<Button disabled style={{ margin: '-5px 0 0 15px' }} size='mini'>Сохранить в Exсel</Button>)}>
             <ExcelSheet dataSet={styledMultiDataSet} name="Лист1" />
           </ExcelFile>
 
