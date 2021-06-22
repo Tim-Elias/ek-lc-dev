@@ -57,7 +57,7 @@ class Screen extends Component {
 
                     this.props.login(result);
                     
-                    this.get_list(result.userkey); //
+                    this.get_list(result.userkey); 
 
                     this.props.cookies.set('username', this.props.store.login.username)
                     this.props.cookies.set('userkey', result.userkey)
@@ -65,8 +65,12 @@ class Screen extends Component {
 
                 },
                 (err) => {
+                    if (err === undefined || err === '') {
+                        this.props.set_modal_text('Ошибка авторизации!')
+                    } else {
+                        this.props.set_modal_text(err)
+                    }
                     this.props.set_modal_show(true)
-                    this.props.set_modal_text(err)
                     this.props.set_modal_header('Ошибка')
 
                     console.log(err)

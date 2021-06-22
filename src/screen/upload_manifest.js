@@ -676,7 +676,7 @@ class Screen extends React.Component {
     const complitedData = this.props.store.upload_manifest.disp_data.filter((el) => el.Status === 'Загружено');
 
     let ExcelData = [];
-    let wNum = 0, wSendAddInfo = 0, wTotal = 0, wWeight = 0, wVolume = 0, wRecAddInfo = 0, wSendCompany = 0, wSendAdress = 0, wRecCompany = 0, wRecAdress = 0;
+    let wSendAddInfo = 0, wTotal = 0, wWeight = 0, wVolume = 0, wRecAddInfo = 0, wSendCompany = 0, wSendAdress = 0, wRecCompany = 0, wRecAdress = 0;
     for (let i = 0; i < complitedData.length; i++) {
       wSendAddInfo = (complitedData[i].SendAddInfo.length > wSendAddInfo) ? (complitedData[i].SendAddInfo.length) : (wSendAddInfo);
       wTotal = (complitedData[i].Total.length > wTotal) ? (complitedData[i].Total.length) : (wTotal);
@@ -684,9 +684,9 @@ class Screen extends React.Component {
       wVolume = (complitedData[i].Volume.length > wVolume) ? (complitedData[i].Volume.length) : (wVolume);
       wRecAddInfo = (complitedData[i].RecAddInfo.length > wRecAddInfo) ? (complitedData[i].RecAddInfo.length) : (wRecAddInfo);
       wSendCompany = (complitedData[i].SendCompany.length > wSendCompany) ? (complitedData[i].SendCompany.length) : (wSendCompany);
-      wSendAdress = (complitedData[i].SendAdress.length > wTotal) ? (complitedData[i].SendAdress.length) : (wSendAdress);
+      wSendAdress = ((complitedData[i].SendAdress.length + complitedData[i].SendCity.length) > wSendAdress) ? (complitedData[i].SendAdress.length + complitedData[i].SendCity.length) : (wSendAdress);
       wRecCompany = (complitedData[i].RecCompany.length > wRecCompany) ? (complitedData[i].RecCompany.length) : (wRecCompany);
-      wRecAdress = (complitedData[i].RecAdress.length > wRecAdress) ? (complitedData[i].RecAdress.length) : (wRecAdress);
+      wRecAdress = (complitedData[i].RecAdress.length + complitedData[i].RecCity.length > wRecAdress) ? (complitedData[i].RecAdress.length + complitedData[i].RecCity.length) : (wRecAdress);
 
       let sendAddInfo = complitedData[i].SendAddInfo.replace(/\/s/g, '').replace(/\r?\n/g, " ");
 
@@ -698,9 +698,9 @@ class Screen extends React.Component {
         { value: complitedData[i].Volume, style: CellStyle },
         { value: complitedData[i].RecAddInfo, style: CellStyle },
         { value: complitedData[i].SendCompany, style: CellStyle },
-        { value: complitedData[i].SendAdress, style: CellStyle },
+        { value: complitedData[i].SendCity + " " + complitedData[i].SendAdress, style: CellStyle },
         { value: complitedData[i].RecCompany, style: CellStyle },
-        { value: complitedData[i].RecAdress, style: CellStyle },
+        { value: complitedData[i].RecCity + " " + complitedData[i].RecAdress, style: CellStyle },
       ];
     }
 

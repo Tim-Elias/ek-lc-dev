@@ -42,6 +42,11 @@
  margin: 5px;
 }
 
+.calc_city_input--height {
+    height: 40px;
+    border: 1px solid black;
+}
+
 .calc_city_reset_button{
     margin-right: -35px;
 }
@@ -194,6 +199,10 @@ color: white;
     height: 50px;
     display: grid;
     grid-template-columns: 2fr 2fr 1fr 220px;
+}
+
+.calc_price_container {
+    
 }
 
 .home_service_selector_content_order{
@@ -551,6 +560,10 @@ margin-left: 15px;
     z-index: 4;
 }
 
+.dropdown_rec_city_list--absolute {
+    position: absolute;
+    z-index: 50;
+}
 
 @media (max-width: 1000px) {
 

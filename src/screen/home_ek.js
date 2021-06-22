@@ -189,7 +189,6 @@ class Screen extends React.Component {
 
     render() {
 
-
         if(this.props.store.create_disp.CityList.length === 0){
             console.log("2")
 

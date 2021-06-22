@@ -275,6 +275,114 @@ class Screen extends React.Component {
       }
     ]
   
+
+    /////////////////////////////////////////////////////////////////
+    const TitleStylePP = {
+      border: {
+        top: { style: "thin", color: { rgb: "000" } },
+        bottom: { style: "thin", color: { rgb: "000" } },
+        left: { style: "thin", color: { rgb: "000" } },
+        right: { style: "thin", color: { rgb: "000" } },
+      },
+      font: {
+        name: "Arial",
+        bold: true,
+        sz: "8",
+      },
+      alignment: {
+        horizontal: "center",
+      }
+    }
+    const CellStylePP = {
+      border: {
+        top: { style: "thin", color: { rgb: "000" } },
+        bottom: { style: "thin", color: { rgb: "000" } },
+        left: { style: "thin", color: { rgb: "000" } },
+        right: { style: "thin", color: { rgb: "000" } },
+      },
+      font: {
+        name: "Arial",
+        sz: "8",
+      },
+      alignment: {
+        horizontal: "left",
+      }
+    }
+    const CellStyle2PP = {
+      border: {
+        top: { style: "thin", color: { rgb: "000" } },
+        bottom: { style: "thin", color: { rgb: "000" } },
+        left: { style: "thin", color: { rgb: "000" } },
+        right: { style: "thin", color: { rgb: "000" } },
+      },
+      font: {
+        name: "Arial",
+        sz: "8",
+      },
+      alignment: {
+        horizontal: "left",
+        wrapText: true,
+      }
+    }
+
+    const complitedData = FilterData.filter((el) => el.Status === 'Ожидается от отправителя');
+
+    let ExcelDataPP = [];
+    let wSendAddInfoPP = 0, wTotalPP = 0, wWeightPP = 0, wVolumePP = 0, wRecAddInfoPP = 0, wSendCompanyPP = 0, wSendAdressPP = 0, wRecCompanyPP = 0, wRecAdressPP = 0;
+    for (let i = 0; i < complitedData.length; i++) {
+      wTotalPP = (complitedData[i].Total.length > wTotalPP) ? (complitedData[i].Total.length) : (wTotalPP);
+      wWeightPP = (complitedData[i].Weight.length > wWeightPP) ? (complitedData[i].Weight.length) : (wWeightPP);
+      wVolumePP = (complitedData[i].Volume.length > wVolumePP) ? (complitedData[i].Volume.length) : (wVolumePP);
+      wSendCompanyPP = (complitedData[i].SendCompany.length > wSendCompanyPP) ? (complitedData[i].SendCompany.length) : (wSendCompanyPP);
+      wSendAdressPP = ((complitedData[i].SendAdress.length + complitedData[i].SendCity.length) > wSendAdressPP) ? (complitedData[i].SendAdress.length + complitedData[i].SendCity.length) : (wSendAdressPP);
+      wRecCompanyPP = (complitedData[i].RecCompany.length > wRecCompanyPP) ? (complitedData[i].RecCompany.length) : (wRecCompanyPP);
+      wRecAdressPP = (complitedData[i].RecAdress.length + complitedData[i].RecCity.length > wRecAdressPP) ? (complitedData[i].RecAdress.length + complitedData[i].RecCity.length) : (wRecAdressPP);
+
+      ExcelDataPP[i] = [
+        { value: (complitedData[i].Num || ""), style: CellStylePP },
+        { value: complitedData[i].Total, style: CellStylePP },
+        { value: complitedData[i].Weight, style: CellStylePP },
+        { value: complitedData[i].Volume, style: CellStylePP },
+        { value: complitedData[i].SendCompany, style: CellStylePP },
+        { value: complitedData[i].SendCity + " " + complitedData[i].SendAdress, style: CellStylePP },
+        { value: complitedData[i].RecCompany, style: CellStylePP },
+        { value: complitedData[i].RecCity + " " + complitedData[i].RecAdress, style: CellStylePP },
+      ];
+    }
+
+    let ExcelColumnPP = [
+      { title: "Номер накладной", style: TitleStylePP, width: { wch: 16 } },
+      { title: "Кол-во мест", style: TitleStylePP, width: { wch: 10 } },
+      { title: "Факт. Вес", style: TitleStylePP, width: { wch: 8 } },
+      { title: "Объем", style: TitleStylePP, width: { wch: 5 } },
+      { title: "Грузоотправитель", style: TitleStylePP, width: { wch: (wSendCompanyPP / 1.5 > 15) ? (wSendCompanyPP / 1.5) : (15) } },
+      { title: "Адрес грузоотправителя", style: TitleStylePP, width: { wch: (wSendAdressPP / 1.5 > 20) ? (wSendAdressPP / 1.5) : (20) } },
+      { title: "Грузополучатель", style: TitleStylePP, width: { wch: (wRecCompanyPP / 1.5 > 15) ? (wRecCompanyPP / 1.5) : (15) } },
+      { title: "Адрес доставки", style: TitleStylePP, width: { wch: (wRecAdressPP / 1.5 > 14) ? (wRecAdressPP / 1.5) : (14) } },
+    ]
+
+    const currentDate = new Date();
+
+    const styledMultiDataSetPP = [
+      {
+        columns: [
+          { title: "Название Отправителя:", style: CellStylePP },
+          { title: "ИНВИТРО-Сибирь ООО", style: CellStylePP },
+        ],
+        data: [
+          [
+            { value: "Дата забора груза:", style: CellStylePP },
+            { value: currentDate.getDate() + "." + (currentDate.getMonth() + 1) + "." + currentDate.getFullYear(), style: CellStylePP },
+          ],
+        ],
+      },
+      {
+        ySteps: 1,
+        columns: ExcelColumnPP,
+        data: ExcelDataPP,
+      }
+    ]
+
     return (
 
       <div>
@@ -302,6 +410,12 @@ class Screen extends React.Component {
             <ExcelFile filename={"Накладные Экспресс Кинетика " + this.props.store.my_disp.date_from.replace(/-/g, ".").split(".").reverse().join(".") + " - " + this.props.store.my_disp.date_from.replace(/-/g, ".").split(".").reverse().join(".")} element={this.props.store.my_disp.data.length > 0 ? (<Button style={{ margin: '-5px 0 0 15px' }} size='mini'>Сохранить в Exсel</Button>) : (<Button disabled style={{ margin: '-5px 0 0 15px' }} size='mini'>Сохранить в Exсel</Button>)}>
               <ExcelSheet dataSet={styledMultiDataSet} name="Список накладных" />
             </ExcelFile>
+            
+            {this.props.store.login.upload_manifest ? (
+              <ExcelFile filename={"Акт ПП"} element={this.props.store.my_disp.data.some(item => item.Status === "Ожидается от отправителя") ? (<Button style={{ margin: '-5px 0 0 15px' }} size='mini'>Акт ПП</Button>) : (<Button disabled style={{ margin: '-5px 0 0 15px' }} size='mini'>Акт ПП</Button>)}>
+                <ExcelSheet dataSet={styledMultiDataSetPP} name="Лист1" />
+              </ExcelFile>
+            ) : (null)}
           </div>
         </div>
 
