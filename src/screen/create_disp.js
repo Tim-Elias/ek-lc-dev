@@ -51,7 +51,7 @@ CalcPrice = (total_weight, total_volume) => {
     Volume: volume, 
     Weight: weight, 
   }
-  console.log(create_disp_data)
+
   get_data('customercalc', create_disp_data).then(
     (result) => {
       this.props.SetPrice(result);

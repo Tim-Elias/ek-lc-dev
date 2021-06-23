@@ -500,6 +500,10 @@ margin: auto;
   grid-template-columns: 130px 150px 1fr ;
 }
 
+.my_disp_control_panel--s {
+  grid-template-columns: 150px 1fr ;
+}
+
 .login-container {
   display: grid;
   grid-template-columns: 1fr 100px ;

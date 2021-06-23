@@ -328,7 +328,7 @@ class Screen extends React.Component {
     const complitedData = FilterData.filter((el) => el.Status === 'Ожидается от отправителя');
 
     let ExcelDataPP = [];
-    let wSendAddInfoPP = 0, wTotalPP = 0, wWeightPP = 0, wVolumePP = 0, wRecAddInfoPP = 0, wSendCompanyPP = 0, wSendAdressPP = 0, wRecCompanyPP = 0, wRecAdressPP = 0;
+    let wSendAddInfoPP = 0, wTotalPP = 0, wWeightPP = 0, wVolumePP = 0, wRecAddInfoPP = 0, wSendCompanyPP = 0, wSendAdressPP = 0, wRecCompanyPP = 0, wRecAdressPP = 0, totalPlacePP = 0, totalWeightPP = 0;
     for (let i = 0; i < complitedData.length; i++) {
       wTotalPP = (complitedData[i].Total.length > wTotalPP) ? (complitedData[i].Total.length) : (wTotalPP);
       wWeightPP = (complitedData[i].Weight.length > wWeightPP) ? (complitedData[i].Weight.length) : (wWeightPP);
@@ -348,6 +348,19 @@ class Screen extends React.Component {
         { value: complitedData[i].RecCompany, style: CellStylePP },
         { value: complitedData[i].RecCity + " " + complitedData[i].RecAdress, style: CellStylePP },
       ];
+
+      if (typeof (complitedData[i].Total) === "string") {
+        complitedData[i].Total = complitedData[i].Total.replace(",", ".");
+        complitedData[i].Total = Number(complitedData[i].Total);
+      }
+
+      if (typeof (complitedData[i].Weight) === "string") {
+        complitedData[i].Weight = complitedData[i].Weight.replace(",", ".");
+        complitedData[i].Weight = Number(complitedData[i].Weight);
+      }
+
+      totalPlacePP += complitedData[i].Total;
+      totalWeightPP += complitedData[i].Weight;
     }
 
     let ExcelColumnPP = [
@@ -361,18 +374,23 @@ class Screen extends React.Component {
       { title: "Адрес доставки", style: TitleStylePP, width: { wch: (wRecAdressPP / 1.5 > 14) ? (wRecAdressPP / 1.5) : (14) } },
     ]
 
+    ExcelDataPP.push([{ value: " ", style: { font: { name: "Arial", sz: "8" } } }]);
+    ExcelDataPP.push([{ value: "Итого накладных: " + complitedData.length, style: { font: { name: "Arial", sz: "8" } } }]);
+    ExcelDataPP.push([{ value: "Итого мест: " + totalPlacePP, style: { font: { name: "Arial", sz: "8" } } }]);
+    ExcelDataPP.push([{ value: "Общий факт. вес: " + totalWeightPP, style: { font: { name: "Arial", sz: "8" } } }]);
+
     const currentDate = new Date();
 
     const styledMultiDataSetPP = [
       {
         columns: [
-          { title: "Название Отправителя:", style: CellStylePP },
-          { title: "ИНВИТРО-Сибирь ООО", style: CellStylePP },
+          { title: "Название Отправителя:", style: { font: { name: "Arial", sz: "8" } } },
+          { title: "ИНВИТРО-Сибирь ООО", style: { font: { name: "Arial", sz: "8" } } },
         ],
         data: [
           [
-            { value: "Дата забора груза:", style: CellStylePP },
-            { value: currentDate.getDate() + "." + (currentDate.getMonth() + 1) + "." + currentDate.getFullYear(), style: CellStylePP },
+            { value: "Дата забора груза:", style: { font: { name: "Arial", sz: "8" } } },
+            { value: currentDate.getDate() + "." + (currentDate.getMonth() + 1) + "." + currentDate.getFullYear(), style: { font: { name: "Arial", sz: "8" } } },
           ],
         ],
       },
@@ -380,6 +398,28 @@ class Screen extends React.Component {
         ySteps: 1,
         columns: ExcelColumnPP,
         data: ExcelDataPP,
+      },
+      {
+        columns: [],
+        data: [
+          [
+            { value: "Получатель:", style: { font: { name: "Arial", sz: "8" } } },
+            { value: "", style: { border: { bottom: { style: "thin", color: { rgb: "000" } } } } },
+            { value: "/", style: { border: { bottom: { style: "thin", color: { rgb: "000" } } } } },
+            { value: "", style: { border: { bottom: { style: "thin", color: { rgb: "000" } } } } },
+          ]
+        ]
+      },
+      {
+        columns: [],
+        data: [
+          [
+            { value: "Курьер:", style: { font: { name: "Arial", sz: "8" } } },
+            { value: "", style: { border: { bottom: { style: "thin", color: { rgb: "000" } } } } },
+            { value: "/", style: { border: { bottom: { style: "thin", color: { rgb: "000" } } } } },
+            { value: "", style: { border: { bottom: { style: "thin", color: { rgb: "000" } } } } },
+          ]
+        ]
       }
     ]
 
@@ -410,7 +450,7 @@ class Screen extends React.Component {
             <ExcelFile filename={"Накладные Экспресс Кинетика " + this.props.store.my_disp.date_from.replace(/-/g, ".").split(".").reverse().join(".") + " - " + this.props.store.my_disp.date_from.replace(/-/g, ".").split(".").reverse().join(".")} element={this.props.store.my_disp.data.length > 0 ? (<Button style={{ margin: '-5px 0 0 15px' }} size='mini'>Сохранить в Exсel</Button>) : (<Button disabled style={{ margin: '-5px 0 0 15px' }} size='mini'>Сохранить в Exсel</Button>)}>
               <ExcelSheet dataSet={styledMultiDataSet} name="Список накладных" />
             </ExcelFile>
-            
+
             {this.props.store.login.upload_manifest ? (
               <ExcelFile filename={"Акт ПП"} element={this.props.store.my_disp.data.some(item => item.Status === "Ожидается от отправителя") ? (<Button style={{ margin: '-5px 0 0 15px' }} size='mini'>Акт ПП</Button>) : (<Button disabled style={{ margin: '-5px 0 0 15px' }} size='mini'>Акт ПП</Button>)}>
                 <ExcelSheet dataSet={styledMultiDataSetPP} name="Лист1" />

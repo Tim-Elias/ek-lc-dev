@@ -222,6 +222,14 @@ class Screen extends Component {
                 this.props.set_my_disp_data([]);
                 break
 
+            case 'calc_price':
+                this.props.set_active_window(target);
+                break
+
+            case 'disp_number':
+                this.props.set_active_window(target);
+                break
+
             case 'disp_map':
 
             console.log ('map')
@@ -394,12 +402,14 @@ class Screen extends Component {
                                 </Button>
                             </div>
                             <div onClick={this.button_click.bind(this, "my_disp")} className="leftmenuel"><Icon name='list' /> Мои накладные</div>
+                            <div onClick={this.button_click.bind(this, "disp_number")} className="leftmenuel">Найти по номеру</div>
                             {this.props.store.login.create_disp ? (<div onClick={this.button_click.bind(this, "create_disp")} className="leftmenuel"><Icon name='edit outline' /> Создать накладную</div>) : (null)}
+                            <div onClick={this.button_click.bind(this, "calc_price")} className="leftmenuel"><Icon name='calculator' />Расчитать стоимость</div>
                             {this.props.store.login.upload_manifest ? (<div onClick={this.button_click.bind(this, "upload_manifest")} className="leftmenuel"><Icon name='upload' /> Загрузить манифест</div>) : (null)}
                             {this.props.store.login.agent ? (<div onClick={this.storage.bind(this)} className="leftmenuel">Доставки и Заявки</div>) : ( null)}
-                    {this.props.store.login.agent ? (<div onClick={this.reciept.bind(this)} className="leftmenuel">Принять от отправителя</div>) : ( null)}
-                    {this.props.store.login.agent ? (<div onClick={this.send_manifest.bind(this)} className="leftmenuel">Отправка манифеста</div>) : ( null)}
-                    {this.props.store.login.agent ? (<div onClick={this.get_manifest.bind(this)} className="leftmenuel">Прием манифеста</div>) : ( null)}
+                            {this.props.store.login.agent ? (<div onClick={this.reciept.bind(this)} className="leftmenuel">Принять от отправителя</div>) : ( null)}
+                            {this.props.store.login.agent ? (<div onClick={this.send_manifest.bind(this)} className="leftmenuel">Отправка манифеста</div>) : ( null)}
+                            {this.props.store.login.agent ? (<div onClick={this.get_manifest.bind(this)} className="leftmenuel">Прием манифеста</div>) : ( null)}
                             {this.props.store.login.mutual ? (<div onClick={this.button_click.bind(this, "mutual")} className="leftmenuel"><Icon name='money' /> Взаиморасчеты</div>) : (null)}
 
                             {this.props.store.login.setting ? (

@@ -676,7 +676,8 @@ class Screen extends React.Component {
     const complitedData = this.props.store.upload_manifest.disp_data.filter((el) => el.Status === 'Загружено');
 
     let ExcelData = [];
-    let wSendAddInfo = 0, wTotal = 0, wWeight = 0, wVolume = 0, wRecAddInfo = 0, wSendCompany = 0, wSendAdress = 0, wRecCompany = 0, wRecAdress = 0;
+    let wSendAddInfo = 0, wTotal = 0, wWeight = 0, wVolume = 0, wRecAddInfo = 0, wSendCompany = 0, wSendAdress = 0, wRecCompany = 0, wRecAdress = 0, totalPlace = 0, totalWeight = 0;
+
     for (let i = 0; i < complitedData.length; i++) {
       wSendAddInfo = (complitedData[i].SendAddInfo.length > wSendAddInfo) ? (complitedData[i].SendAddInfo.length) : (wSendAddInfo);
       wTotal = (complitedData[i].Total.length > wTotal) ? (complitedData[i].Total.length) : (wTotal);
@@ -686,8 +687,8 @@ class Screen extends React.Component {
       wSendCompany = (complitedData[i].SendCompany.length > wSendCompany) ? (complitedData[i].SendCompany.length) : (wSendCompany);
       wSendAdress = ((complitedData[i].SendAdress.length + complitedData[i].SendCity.length) > wSendAdress) ? (complitedData[i].SendAdress.length + complitedData[i].SendCity.length) : (wSendAdress);
       wRecCompany = (complitedData[i].RecCompany.length > wRecCompany) ? (complitedData[i].RecCompany.length) : (wRecCompany);
-      wRecAdress = (complitedData[i].RecAdress.length + complitedData[i].RecCity.length > wRecAdress) ? (complitedData[i].RecAdress.length + complitedData[i].RecCity.length) : (wRecAdress);
-
+      wRecAdress = ((complitedData[i].RecAdress.length + complitedData[i].RecCity.length) > wRecAdress) ? (complitedData[i].RecAdress.length + complitedData[i].RecCity.length) : (wRecAdress);
+      
       let sendAddInfo = complitedData[i].SendAddInfo.replace(/\/s/g, '').replace(/\r?\n/g, " ");
 
       ExcelData[i] = [
@@ -698,37 +699,55 @@ class Screen extends React.Component {
         { value: complitedData[i].Volume, style: CellStyle },
         { value: complitedData[i].RecAddInfo, style: CellStyle },
         { value: complitedData[i].SendCompany, style: CellStyle },
-        { value: complitedData[i].SendCity + " " + complitedData[i].SendAdress, style: CellStyle },
+        { value: complitedData[i].SendCity + ", " + complitedData[i].SendAdress, style: CellStyle },
         { value: complitedData[i].RecCompany, style: CellStyle },
-        { value: complitedData[i].RecCity + " " + complitedData[i].RecAdress, style: CellStyle },
+        { value: complitedData[i].RecCity + ", " + complitedData[i].RecAdress, style: CellStyle },
       ];
+      
+      if (typeof(complitedData[i].Total) === "string") {
+        complitedData[i].Total = complitedData[i].Total.replace(",", ".");
+        complitedData[i].Total = Number(complitedData[i].Total);
+      }
+      
+      if (typeof (complitedData[i].Weight) === "string") {
+        complitedData[i].Weight = complitedData[i].Weight.replace(",", ".");
+        complitedData[i].Weight = Number(complitedData[i].Weight);
+      }
+
+      totalPlace += complitedData[i].Total;
+      totalWeight += complitedData[i].Weight;
     }
 
     let ExcelColumn = [
       { title: "Номер накладной", style: TitleStyle, width: { wch: 16 } },
-      { title: "Доп. информация", style: TitleStyle, width: { wch: 15 } },
+      { title: "Доп. информация", style: TitleStyle, width: { wch: 20 } },
       { title: "Кол-во мест", style: TitleStyle, width: { wch: 10 } },
       { title: "Факт. Вес", style: TitleStyle, width: { wch: 8 } },
       { title: "Объем", style: TitleStyle, width: { wch: 5 } },
       { title: "Температурный режим", style: TitleStyle, width: { wch: 18 } },
-      { title: "Грузоотправитель", style: TitleStyle, width: { wch: (wSendCompany / 1.5 > 15) ? (wSendCompany/1.5) : (15) } },
-      { title: "Адрес грузоотправителя", style: TitleStyle, width: { wch: (wSendAdress / 1.5 > 20) ? (wSendAdress/1.5) : (20) } },
-      { title: "Грузополучатель", style: TitleStyle, width: { wch: (wRecCompany / 1.5 > 15) ? (wRecCompany/1.5) : (15) } },
-      { title: "Адрес доставки", style: TitleStyle, width: { wch: (wRecAdress / 1.5 > 14) ? (wRecAdress/1.5) : (14) } },
+      { title: "Грузоотправитель", style: TitleStyle, width: { wch: (wSendCompany / 1.5 > 18) ? (wSendCompany / 1.5) : (18) } },
+      { title: "Адрес грузоотправителя", style: TitleStyle, width: { wch: (wSendAdress / 1.5 > 20) ? (wSendAdress / 1.5) : (20) } },
+      { title: "Грузополучатель", style: TitleStyle, width: { wch: (wRecCompany / 1.5 > 15) ? (wRecCompany / 1.5) : (15) } },
+      { title: "Адрес доставки", style: TitleStyle, width: { wch: (wRecAdress / 1.5 > 14) ? (wRecAdress / 1.5) : (14) } },
     ]
+
+    ExcelData.push([{ value: "", style: { font: { name: "Arial", sz: "8" } } }]);
+    ExcelData.push([{ value: "Итого накладных: " + complitedData.length, style: { font: { name: "Arial", sz: "8" } } }]);
+    ExcelData.push([{ value: "Итого мест: " + totalPlace, style: { font: { name: "Arial", sz: "8" } } }]);
+    ExcelData.push([{ value: "Общий факт. вес: " + totalWeight, style: { font: { name: "Arial", sz: "8" } } }]);
 
     const currentDate = new Date();
 
     const styledMultiDataSet = [
       {
         columns: [
-          { title: "Название Отправителя:", style: CellStyle },
-          { title: "ИНВИТРО-Сибирь ООО", style: CellStyle },
+          { title: "Название Отправителя:", style: { font: { name: "Arial", sz: "8" } } },
+          { title: "ИНВИТРО-Сибирь ООО", style: { font: { name: "Arial", sz: "8" } } },
         ],
         data: [
           [
-            { value: "Дата забора груза:", style: CellStyle },
-            { value: currentDate.getDate() + "." + (currentDate.getMonth() + 1) + "." + currentDate.getFullYear(), style: CellStyle },
+            { value: "Дата забора груза:", style: { font: { name: "Arial", sz: "8" } } },
+            { value: currentDate.getDate() + "." + (currentDate.getMonth() + 1) + "." + currentDate.getFullYear(), style: { font: { name: "Arial", sz: "8" } } },
           ],
         ],
       },
@@ -736,6 +755,28 @@ class Screen extends React.Component {
         ySteps: 1,
         columns: ExcelColumn,
         data: ExcelData,
+      },
+      {
+        columns: [],
+        data: [
+          [
+            { value: "Получатель:", style: { font: { name: "Arial", sz: "8" } } },
+            { value: "", style: { border: { bottom: { style: "thin", color: { rgb: "000" } } } } },
+            { value: "/", style: { border: { bottom: { style: "thin", color: { rgb: "000" } } } } },
+            { value: "", style: { border: { bottom: { style: "thin", color: { rgb: "000" } } } } },
+          ]
+        ]
+      },
+      {
+        columns: [],
+        data: [
+          [
+            { value: "Курьер:", style: { font: { name: "Arial", sz: "8" } } },
+            { value: "", style: { border: { bottom: { style: "thin", color: { rgb: "000" } } } } },
+            { value: "/", style: { border: { bottom: { style: "thin", color: { rgb: "000" } } } } },
+            { value: "", style: { border: { bottom: { style: "thin", color: { rgb: "000" } } } } },
+          ]
+        ]
       }
     ]
 

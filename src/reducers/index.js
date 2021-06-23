@@ -22,6 +22,7 @@ import storage_reciept from './storage_reciept'
 import movement from './movement'
 import check from './check'
 import m_create_disp from './m_create_disp'
+import calc_price from './calc_price'
 
 export default combineReducers({
 
@@ -47,5 +48,6 @@ export default combineReducers({
   movement,
   check,
   m_create_disp,
+  calc_price,
   
 })

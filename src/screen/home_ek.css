@@ -42,10 +42,7 @@
  margin: 5px;
 }
 
-.calc_city_input--height {
-    height: 40px;
-    border: 1px solid black;
-}
+
 
 .calc_city_reset_button{
     margin-right: -35px;
@@ -199,10 +196,6 @@ color: white;
     height: 50px;
     display: grid;
     grid-template-columns: 2fr 2fr 1fr 220px;
-}
-
-.calc_price_container {
-    
 }
 
 .home_service_selector_content_order{
@@ -547,8 +540,6 @@ margin-left: 15px;
     color: #333;
     margin: 5px;
     width: 340px;
-    
-   
 }
 
 .dropdown_rec_city_element{
@@ -560,9 +551,69 @@ margin-left: 15px;
     z-index: 4;
 }
 
+
+
 .dropdown_rec_city_list--absolute {
     position: absolute;
+    left: 175px;
+    top: 40px;
     z-index: 50;
+}
+
+.calc_price_container {
+    display: flex;
+    flex-direction: column;
+}
+
+.calc_price_row {
+    display: flex;
+    position: relative;
+    margin: 5px;
+}
+
+.calc_price_label {
+    width: 180px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 16px;
+}
+
+.calc_price_input {
+    height: 40px;
+    width: 340px;
+    padding: 0 5px;
+    border: 2px solid #727272;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+}
+
+.calc_price_input--checkbox {
+    max-width: 25px;
+}
+
+.calc_price_dimensions_container {
+    height: 40px;
+    line-height: 40px;
+}
+
+.calc_price_dimensions {
+    margin: 0 5px 0 0;
+    padding: 0 5px;
+    height: 40px;
+    width: 110px;
+    border: 2px solid #727272;
+    font-size: 16px;
+}
+
+.calc_price_button {
+    margin: 0px 20px 0px 0px;
+    height: 40px;
+    width: 160px;
+    background-color: #2444B5;
+    border: #FFF solid 2px;
+    color: #FFF;
+    cursor: pointer;
 }
 
 @media (max-width: 1000px) {
