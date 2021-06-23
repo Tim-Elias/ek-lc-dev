@@ -27,7 +27,8 @@ class Screen extends React.Component {
     }
 
     SelectSendCity = (value) => {
-
+        this.props.set_calc_price_send_terminal_city(false)
+        this.props.set_calc_price_send_terminal(false)
         this.props.set_calc_price_send_city(value)
 
         const city = value.label
@@ -53,7 +54,8 @@ class Screen extends React.Component {
     }
 
     SelectRecCity = (value) => {
-
+        this.props.set_calc_price_rec_terminal_city(false)
+        this.props.set_calc_price_rec_terminal(false)
         this.props.set_calc_price_rec_city(value)
 
         const city = value.label
