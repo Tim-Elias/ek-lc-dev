@@ -56,7 +56,7 @@ class Screen extends React.Component {
             },
             (err) => {
                 console.log(err) 
-                this.props.set_erroe_mesage("Не удалось найти накладную")
+                this.props.set_erroe_mesage("Не удалось найти накладную " + this.props.store.my_disp.search)
             }
         );
 
