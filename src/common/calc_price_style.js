@@ -3,13 +3,16 @@ const calcPriceStyle = {
         ...base,
 
         width: '340px',
-        height: '40px',
+        height: '28px',
+        minHeight: '28px',
         padding: '0 5px',
-        border: '2px solid #727272',
+        border: '0',
+        borderBottom: '#c0c0c0 solid 1px',
         borderRadius: '0',
         boxShadow: 'none',
         '&:hover': {
-            border: '2px solid #727272',
+            border: '0',
+            borderBottom: '#c0c0c0 solid 1px',
             cursor: "text",
         }
     }),
@@ -27,12 +30,12 @@ const calcPriceStyle = {
         ...base,
         marginLeft: '0px',
         color: 'black',
-        fontSize: '16px',
+        fontSize: '13px',
     }),
 
     input: (base) => ({
         ...base,
-        fontSize: '16px',
+        fontSize: '13px',
     }),
 
 }

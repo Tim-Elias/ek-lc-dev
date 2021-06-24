@@ -402,7 +402,7 @@ class Screen extends Component {
                                 </Button>
                             </div>
                             <div onClick={this.button_click.bind(this, "my_disp")} className="leftmenuel"><Icon name='list' /> Мои накладные</div>
-                            <div onClick={this.button_click.bind(this, "disp_number")} className="leftmenuel">Найти по номеру</div>
+                            <div onClick={this.button_click.bind(this, "disp_number")} className="leftmenuel"><Icon name='search' />Найти по номеру</div>
                             {this.props.store.login.create_disp ? (<div onClick={this.button_click.bind(this, "create_disp")} className="leftmenuel"><Icon name='edit outline' /> Создать накладную</div>) : (null)}
                             <div onClick={this.button_click.bind(this, "calc_price")} className="leftmenuel"><Icon name='calculator' />Расчитать стоимость</div>
                             {this.props.store.login.upload_manifest ? (<div onClick={this.button_click.bind(this, "upload_manifest")} className="leftmenuel"><Icon name='upload' /> Загрузить манифест</div>) : (null)}

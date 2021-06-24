@@ -33,8 +33,8 @@ class Screen extends React.Component {
             },
             (err) => {
                 console.log(err)
-                alert(err)
-                this.settings_window(this.props.store.general.last_window[this.props.store.general.last_window.length - 1]);
+                // alert(err)
+                this.settings_window("m_storage");
             }
         );
     } 
@@ -216,7 +216,7 @@ class Screen extends React.Component {
                                 </div>)
                             : (null)}
                         </div>
-                    )}                   
+                    )}
 
                     <div className="disp_customer_data">
                         <div className="mobile_disp_data_label">Заказчик:</div>

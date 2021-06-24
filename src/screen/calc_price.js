@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { get_data } from './../common/common_modules';
-import Select from 'react-select'
+import { Button } from 'semantic-ui-react';
+import Select from 'react-select';
 import './home_ek.css';
 import { calcPriceStyle } from "./../common/calc_price_style";
 import Wait from "./wait";
@@ -89,12 +90,15 @@ class Screen extends React.Component {
             RecCity: this.props.store.calc_price.calc_price_rec_city.label,
             RecTerminal: this.props.store.calc_price.calc_price_rec_terminal,
             Volume: (this.props.store.calc_price.calc_price_l * this.props.store.calc_price.calc_price_w * this.props.store.calc_price.calc_price_h / 5000),
-            Weight: this.props.store.calc_price.calc_price_weight,
+            Weight: this.props.store.calc_price.calc_price_weight === "" ? (0) : (this.props.store.calc_price.calc_price_weight),
         }
 
         get_data('customercalc', calcPriceData).then(
             (result) => {
                 this.props.set_calc_price_result(result);
+            },
+            (err) => {
+                this.props.set_calc_price_result("Не удалось рассчитать");
             }
         );
     }
@@ -179,11 +183,9 @@ class Screen extends React.Component {
                     <div className="calc_price_row">
                         <div className="calc_price_label">Габариты:</div>
 
-                        <div className="calc_price_dimensions_container">
-                            <input type="number" placeholder="Длина" className="calc_price_dimensions" value={this.props.store.calc_price.calc_price_l} onChange={(e) => { this.props.set_calc_price_length(e.target.value) }} />
-                            <input type="number" placeholder="Ширина" className="calc_price_dimensions" value={this.props.store.calc_price.calc_price_w} onChange={(e) => { this.props.set_calc_price_width(e.target.value) }} />
-                            <input type="number" placeholder="Высота" className="calc_price_dimensions" value={this.props.store.calc_price.calc_price_h} onChange={(e) => { this.props.set_calc_price_height(e.target.value) }} />
-                        </div>
+                        <input type="number" placeholder="Длина" className="calc_price_dimensions" value={this.props.store.calc_price.calc_price_l} onChange={(e) => { this.props.set_calc_price_length(e.target.value) }} />
+                        <input type="number" placeholder="Ширина" className="calc_price_dimensions" value={this.props.store.calc_price.calc_price_w} onChange={(e) => { this.props.set_calc_price_width(e.target.value) }} />
+                        <input type="number" placeholder="Высота" className="calc_price_dimensions" value={this.props.store.calc_price.calc_price_h} onChange={(e) => { this.props.set_calc_price_height(e.target.value) }} />
                     </div>
 
                 </div>
@@ -222,8 +224,7 @@ export default connect(
     dispatch => ({
         set_calc_price_send_city: (param) => { dispatch({ type: 'set_calc_price_send_city', payload: param }) },
         set_calc_price_rec_city: (param) => { dispatch({ type: 'set_calc_price_rec_city', payload: param }) },
-        set_focus_calc_price_input_send_city: (param) => { dispatch({ type: 'set_focus_calc_price_input_send_city', payload: param }) },
-        set_focus_calc_price_input_rec_city: (param) => { dispatch({ type: 'set_focus_calc_price_input_rec_city', payload: param }) },
+
         set_calc_price_height: (param) => { dispatch({ type: 'set_calc_price_height', payload: param }) },
         set_calc_price_width: (param) => { dispatch({ type: 'set_calc_price_width', payload: param }) },
         set_calc_price_length: (param) => { dispatch({ type: 'set_calc_price_length', payload: param }) },

@@ -571,49 +571,64 @@ margin-left: 15px;
     margin: 5px;
 }
 
+.calc_price_row input:disabled {
+    background-color: #fff;
+}
+
 .calc_price_label {
-    width: 180px;
-    height: 40px;
-    line-height: 40px;
-    font-size: 16px;
+    width: 140px;
+    height: 28px;
+    margin: 0 15px 0 0;
+    line-height: 28px;
+    font-size: 13px;
+    border: 0;
+    border-bottom: #c0c0c0 solid 1px;
 }
 
 .calc_price_input {
-    height: 40px;
+    height: 28px;
     width: 340px;
     padding: 0 5px;
-    border: 2px solid #727272;
-    font-size: 16px;
+    border: 0;
+    border-bottom: #c0c0c0 solid 1px;
+    font-size: 13px;
     display: flex;
     align-items: center;
 }
 
 .calc_price_input--checkbox {
-    max-width: 25px;
-}
-
-.calc_price_dimensions_container {
-    height: 40px;
-    line-height: 40px;
+    max-width: 20px;
 }
 
 .calc_price_dimensions {
     margin: 0 5px 0 0;
     padding: 0 5px;
-    height: 40px;
+    height: 28px;
     width: 110px;
-    border: 2px solid #727272;
-    font-size: 16px;
+    border: 0;
+    border-bottom: #c0c0c0 solid 1px;
+    font-size: 13px;
 }
 
 .calc_price_button {
-    margin: 0px 20px 0px 0px;
-    height: 40px;
-    width: 160px;
-    background-color: #2444B5;
-    border: #FFF solid 2px;
-    color: #FFF;
+    margin: 0px 15px 0px 0px;
+    height: 30px;
+    width: 140px;
+    background-color: #e0e1e2;
     cursor: pointer;
+    border: 0;
+    color: rgba(0,0,0,.6);
+    font-weight: 700;
+    line-height: 1em;
+    font-style: normal;
+    border-radius: 3px;
+}
+
+.calc_price_button:hover {
+    background-color: #cacbcd;
+    background-image: none;
+    box-shadow: 0 0 0 1px transparent inset, 0 0 0 0 rgb(34 36 38 / 15%) inset;
+    color: rgba(0,0,0,.8);
 }
 
 @media (max-width: 1000px) {
