@@ -367,9 +367,19 @@ class Screen extends Component {
                                 <div className='leftmenubuttonicon'><Icon name='list' /></div>
                             </Button>
                         </div>
+                        <div className="leftmenubutton">
+                            <Button compact icon onClick={this.button_click.bind(this, "disp_number")}>
+                                <div className='leftmenubuttonicon'><Icon name='search' /></div>
+                            </Button>
+                        </div>
                         {this.props.store.login.create_disp ? (<div className="leftmenubutton">
                             <Button compact icon onClick={this.button_click.bind(this, "create_disp")}>
                                 <div className='leftmenubuttonicon'><Icon name='edit outline' /></div>
+                            </Button>
+                        </div>) : (null)}
+                        {this.props.store.login.create_disp ? (<div className="leftmenubutton">
+                            <Button compact icon onClick={this.button_click.bind(this, "calc_price")}>
+                                <div className='leftmenubuttonicon'><Icon name='calculator' /></div>
                             </Button>
                         </div>) : (null)}
                         {this.props.store.login.upload_manifest ? (
@@ -404,7 +414,7 @@ class Screen extends Component {
                             <div onClick={this.button_click.bind(this, "my_disp")} className="leftmenuel"><Icon name='list' /> Мои накладные</div>
                             <div onClick={this.button_click.bind(this, "disp_number")} className="leftmenuel"><Icon name='search' />Найти по номеру</div>
                             {this.props.store.login.create_disp ? (<div onClick={this.button_click.bind(this, "create_disp")} className="leftmenuel"><Icon name='edit outline' /> Создать накладную</div>) : (null)}
-                            <div onClick={this.button_click.bind(this, "calc_price")} className="leftmenuel"><Icon name='calculator' />Расчитать стоимость</div>
+                            {this.props.store.login.mutual ? (<div onClick={this.button_click.bind(this, "calc_price")} className="leftmenuel"><Icon name='calculator' />Расчитать стоимость</div>) : (null)}
                             {this.props.store.login.upload_manifest ? (<div onClick={this.button_click.bind(this, "upload_manifest")} className="leftmenuel"><Icon name='upload' /> Загрузить манифест</div>) : (null)}
                             {this.props.store.login.agent ? (<div onClick={this.storage.bind(this)} className="leftmenuel">Доставки и Заявки</div>) : ( null)}
                             {this.props.store.login.agent ? (<div onClick={this.reciept.bind(this)} className="leftmenuel">Принять от отправителя</div>) : ( null)}
