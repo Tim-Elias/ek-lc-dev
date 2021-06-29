@@ -11,12 +11,21 @@ const get_data = (url, data) => {
     ).then((result) => {
       // console.log(result)
       if (result.data.status === 'error') {
+        alert(result.data)
+        console.log(result.data)
         reject(result.data.data)
       } else if (result.data.status === 'ok') {
         resolve(result.data.data)
       } else { reject(result.data) }
     }).catch((error) => {
-      console.log(error)
+      if (typeof (error.response) !== "undefined") {
+        console.log(error.response.data)
+        alert(error.response.data)
+      } else {
+        console.log(error)
+        alert(error)
+      }
+      
       reject(error.response)
     })
   })

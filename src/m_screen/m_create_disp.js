@@ -262,7 +262,7 @@ class Screen extends React.Component {
             value: value,
             index: index,
         }
-        console.log(data)
+        // console.log(data)
         this.props.SetCargoType(data);
     }
     CargoComm = (value, index) => {
@@ -386,7 +386,6 @@ class Screen extends React.Component {
         get_data('createdisp', create_disp_data).then(
             (result) => {
 
-                console.log(result)
                 const data = {
                     num: result,
                     status: "Ожидается",
@@ -512,8 +511,8 @@ class Screen extends React.Component {
                                     <select defaultValue = "" className = "mobile_del_input" onChange = { (e) => this.props.set_Customer(e.target.value)}>
                                         <option value="" disabled>Выбрать заказчика</option>
                                         {this.props.store.login.customers.map((item, index) =>
-                                        <option value={item.customer} key={index}>{item.customer}</option>
-                                    )}
+                                            <option value={item.customer} key={index}>{item.customer}</option>
+                                        )}
                                     </select>
                                 )}
 
@@ -705,8 +704,8 @@ class Screen extends React.Component {
 
                                             <div className="mobile_table_row">
                                                 <div className="mobile_table_label">Тип груза:</div>
-                                                <select defaultValue="" className="mobile_table_el" value={item.Type} onChange={e => this.CargoType(e.target.value, index)}>
-                                                    <option value="" disabled>Выберите тип груза</option>
+                                                <select defaultValue="" className="mobile_table_el" onChange={e => this.CargoType(e.target.value, index)}>
+                                                    <option value="" disabled >Выберите тип груза</option>
                                                     <option value="СейфПакет">Сейф-пакет</option>
                                                     <option value="Коробка">Коробка</option>
                                                     <option value="Контейнер">Контейнер</option>

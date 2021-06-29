@@ -55,6 +55,11 @@ CalcPrice = (total_weight, total_volume) => {
   get_data('customercalc', create_disp_data).then(
     (result) => {
       this.props.SetPrice(result);
+    },
+    (err) => {
+      console.log(err)
+      this.props.set_last_window("create_disp");
+      this.props.set_active_window("");
     }
   );
 }
@@ -156,8 +161,9 @@ RemoveCargo = (index) => {
             
           },
           (err) => { 
-              console.log("err")  
-              console.log(err) 
+              console.log("err", err)  
+              this.props.set_last_window("create_disp");
+              this.props.set_active_window("");
           }
       );
   }
@@ -177,8 +183,9 @@ RemoveCargo = (index) => {
             }
           },
           (err) => { 
-              console.log("err")  
-              console.log(err) 
+              console.log("err", err)  
+              this.props.set_last_window("create_disp");
+              this.props.set_active_window("");
           }
       );
   }
@@ -292,16 +299,22 @@ RemoveCargo = (index) => {
           
               get_data('dispatch', data).then(
                 (result) => {
-                 
                   this.props.set_data_disp(result);
                   this.props.set_active_window("disp");
                   this.props.set_last_window("create_disp");
-                  
                 },
-                (err) => { console.log(err) }
+                (err) => { 
+                  console.log(err);
+                  this.props.set_last_window("create_disp");
+                  this.props.set_active_window("");
+                }
               );
         },
-        (err) => { console.log(err) }
+        (err) => { 
+          console.log(err);
+          this.props.set_last_window("create_disp");
+          this.props.set_active_window("");
+        }
       );
   }
 
@@ -389,7 +402,11 @@ SetTotal = (value) =>{
       (result) => {
         this.props.set_disp_template_list(result);
       },
-      (err) => { console.log(err) }
+      (err) => { 
+        console.log(err) 
+        this.props.set_last_window("create_disp");
+        this.props.set_active_window("");
+      }
     );
   }
 

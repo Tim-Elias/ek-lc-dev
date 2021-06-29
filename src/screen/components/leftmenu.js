@@ -232,7 +232,7 @@ class Screen extends Component {
 
             case 'disp_map':
 
-            console.log ('map')
+            // console.log ('map')
             get_data('courierlist', { userkey: this.props.store.login.userkey }).then(
                 (result) => {
                     this.props.set_courier_list(result);
