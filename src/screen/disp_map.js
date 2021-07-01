@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import GoogleMapReact from 'google-map-react';
 import Select from 'react-select'
 import { customStyles } from "./../common/common_style";
-import { Card, Input, Button,Popup, Dropdown, List, Icon } from 'semantic-ui-react'
+import { Card, Input, Button,Popup, Dropdown, List, Icon, ItemContent } from 'semantic-ui-react'
 import logo from './../common/1024.png'
 import './disp_map.css';
 import { get_data } from './../common/common_modules'
@@ -17,6 +17,13 @@ let shift = false
 
 
 class Screen extends React.Component {
+
+    componentWillUnmount() {
+        this.props.set_disp_map_showButton(false)
+        this.props.set_disp_map_loading(false)
+        this.props.set_disp_map_errorMass_clear()
+        this.props.set_disp_map_loadingData(false)
+    }
 
     set_input_customer = async (value) =>{
 
@@ -41,8 +48,8 @@ class Screen extends React.Component {
     }
 
     render_markers = (arr,hard) => {
-        console.log(arr)
-        console.log(hard)
+        // console.log(arr)
+        // console.log(hard)
         arr.filter((disp_el)=>{return disp_el.modify || hard}).map(el=>{
             
             markers.filter((marker_el)=>{return marker_el.title === el.Num}).forEach((el_1)=>{
@@ -165,14 +172,19 @@ class Screen extends React.Component {
         
     }
 
+    map_data = (not_modify) => {
+        this.props.set_disp_map_loadingData(true)
+        this.props.set_disp_map_errorMass_clear()
+        this.get_map_data(not_modify)
+    }
+
     get_map_data = (not_modify) =>{
-        
-        console.log(not_modify)
+        // console.log(not_modify)
 
         markers.forEach((el_1)=>{
             const search = not_modify.indexOf(el_1.title)
             if (search === -1){
-            el_1.setMap(null)
+                el_1.setMap(null)
             }
         })
 
@@ -182,22 +194,20 @@ class Screen extends React.Component {
             date: this.props.store.disp_map.date,
             not_modify: not_modify
         }
-        console.log(data)
+        // console.log(data)
         get_data('dispfordel', data).then(
             (result) => {
-                console.log(result)
+                // console.log(result)
                 this.props.set_disp_map_disp_for_del(result)
                 this.render_markers(result)
-                
+                this.props.set_disp_map_loadingData(false)
             },
             (err) => { 
                 this.props.set_disp_map_disp_for_del([])
                 console.log(err)
-                 
+                this.props.set_disp_map_loadingData(false)
             }
         );
-
-
     }
 
     set_disp_map_assignment_mode = (checked) =>{
@@ -208,7 +218,7 @@ class Screen extends React.Component {
 
     geocode = (Num,Address) =>{
 
-        console.log(Address)
+        // console.log(Address)
         let geocoder = new g_maps.Geocoder();
         let position
         const userkey = this.props.store.login.userkey
@@ -216,8 +226,7 @@ class Screen extends React.Component {
         const reset = this.reset
         const not_modify = this.props.store.disp_map.disp_for_del.filter(el=>el.Num!==Num).map(el=>{return(el.Num)})
         geocoder.geocode( { 'address': Address}, function(results, status) {
-            console.log(results)
-            console.log(status)
+
             if (status == 'OK') {
                 position = results[0].geometry.location
 
@@ -243,43 +252,59 @@ class Screen extends React.Component {
 
     geocode_all = async () =>{
 
+        this.props.set_disp_map_errorMass_clear();
+
         let geocoder = new g_maps.Geocoder();
         const userkey = this.props.store.login.userkey
-        const array = this.props.store.disp_map.disp_for_del.filter(el=>el.RecLat==="" || el.RecLng==="")
-        const not_modify = this.props.store.disp_map.disp_for_del.filter(el=>el.RecLat!=="" && el.RecLng!=="").map(el=>{return(el.Num)})
-        for(const el of array){
-            
-            if(el.RecAddress !== ""){
-                await geocoder.geocode( { 'address': el.RecCity + el.RecAddress}, function(results, status) {
-                
-                if (status == 'OK') {
-                    const position = results[0].geometry.location
-    
-                    const lat_lng_data = {
-                        userkey: userkey,
-                        dispatch: el.Num,
-                        lat: position.lat(),
-                        lng: position.lng()
-                    }
-    
-                    get_data('setreclatlng', lat_lng_data).then(
-                        (result) => {
-                            console.log(result);
-                        },
-                        (err) => { console.log(err) }
-                    );
-                    
+        const array = this.props.store.disp_map.disp_for_del.filter(el => el.RecLat === "" || el.RecLng === "")
+        const not_modify = this.props.store.disp_map.disp_for_del.filter(el => el.RecLat !== "" && el.RecLng !== "").map(el => { return (el.Num) })
+        const loadingNumber = () => {
+            this.props.set_disp_map_loadingNumber(this.props.store.disp_map.loadingNumber--)
+        }
+
+        this.props.set_disp_map_loading(true)
+
+        for (const el of array) {
+
+            try {
+                if (el.RecAddress !== "") {
+                    await geocoder.geocode({ 'address': el.RecCity + el.RecAddress }, function (results, status) {
+
+                        if (status == 'OK') {
+
+                            const position = results[0].geometry.location
+
+                            const lat_lng_data = {
+                                userkey: userkey,
+                                dispatch: el.Num,
+                                lat: position.lat(),
+                                lng: position.lng()
+                            }
+
+                            get_data('setreclatlng', lat_lng_data).then(
+                                (result) => {
+                                    console.log(result);
+                                },
+                                (err) => { console.log(err) }
+                            );
+                        }
+                    })
+                    loadingNumber()
                 }
-            })
-        }
+            } catch (err) {
+                this.props.set_disp_map_errorMass(el)
+                console.log(err)
+                console.log(el)
+            }
+
         }
 
-        this.get_map_data (not_modify)
-        this.reset ()
-
+        this.props.set_disp_map_loading(false)
+        this.get_map_data(not_modify)
+        this.reset()
         
     }
-    
+
     open_disp = async (Num) => {
         this.props.set_active_window("wait");
     
@@ -288,7 +313,7 @@ class Screen extends React.Component {
           status: "Накладная",
           num: Num
         };
-    
+        
         get_data('dispatch', data).then(
           (result) => {
     
@@ -297,16 +322,15 @@ class Screen extends React.Component {
             this.props.set_last_window("disp_map");
     
           },
-          (err) => { console.log(err) }
+          (err) => {
+              console.log(err) 
+            }
         );
     
     
       };
 
     render() {
-        
-        
-
         
         //var polygon_point = this.props.store.disp_map.polygon
 
@@ -352,6 +376,7 @@ class Screen extends React.Component {
         const render_markers = this.render_markers
         const arr = this.props.store.disp_map.disp_for_del
         const onGoogleApiLoaded = (map, maps) => {
+            
             g_map = map
             g_maps = maps  
 
@@ -374,10 +399,6 @@ class Screen extends React.Component {
                 map_clck(e.latLng)
                 
             })
-
-            
-                
-
             
         }
        
@@ -416,7 +437,28 @@ class Screen extends React.Component {
                     this.props.set_full_screen()
                     this.render_markers.bind(this,this.props.store.disp_map.disp_for_del,true)
                 }}>Полноэкранный режим</button></div>
-                <div className='disp_map_button'><button className='ui button mini'  onClick={this.geocode_all.bind(this)}>Получить все координаты ({this.props.store.disp_map.disp_for_del.filter(el=>el.RecLat==="" || el.RecLng==="").filter(el=>el.RecAddress!=="").length})</button></div>
+                
+                <div className="disp_map_button disp_map_button--flex">
+                    {this.props.store.disp_map.loading ? (
+                        <Button className="ui button mini" loading>Получить все координаты ({this.props.store.disp_map.disp_for_del.filter(el => el.RecLat === "" || el.RecLng === "").filter(el => el.RecAddress !== "").length})</Button>
+                    ) : (
+                        <button className='ui button mini' onClick={this.geocode_all.bind(this)}>Получить все координаты ({this.props.store.disp_map.disp_for_del.filter(el => el.RecLat === "" || el.RecLng === "").filter(el => el.RecAddress !== "").length})</button>
+                    )}
+                    
+                    {/* {this.props.store.disp_map.loading ? (<div className="disp_map_loader"></div>) : (null)} */}
+                </div>
+
+                <div className="disp_map_button">{this.props.store.disp_map.showButton ? (
+                    <Button className='ui button mini' style={{width: "190px"}} onClick={() => this.props.set_disp_map_showButton(false)}>Скрыть</Button>
+                ) : (
+                    <Button className='ui button mini' style={{width: "190px"}} onClick={() => this.props.set_disp_map_showButton(true)}>Показать</Button>
+                )}</div>
+            
+                    {this.props.store.disp_map.showButton ? (this.props.store.disp_map.disp_for_del.filter(el => el.RecLat === "" || el.RecLng === "").filter(el => el.RecAddress !== "").map((item, index) => 
+                        <div key={index} className="disp_map_disp_num" onClick={() => this.open_disp(item.Num)}>
+                            {item.Num}
+                        </div>)) : (null)}
+
             {this.props.store.disp_map.courier_filter !== ''?( <div>
                 <a style={{margin:"0 5px"}}>{this.props.store.disp_map.courier_filter} </a>
                 <button onClick={this.set_courier_filter.bind(this,'')}>x</button>
@@ -524,9 +566,12 @@ class Screen extends React.Component {
                     </List>
 
 
-
+                    {this.props.store.disp_map.errorMass.length > 0 ? (
+                        <div className="disp_map_error">{this.props.store.disp_map.errorMass.map((item, index) => <div key={index}>{item.Num}</div>)}</div>
+                    ) : (null)}
                 </div>
-                <div>
+
+            <div>
                 <div className="disp_map_panel">
               
               <div className='disp_map_panel_element'><input onChange={e => this.props.set_disp_map_date(e.target.value)} value={this.props.store.disp_map.date}  type="date"></input></div> 
@@ -572,8 +617,16 @@ class Screen extends React.Component {
                     
                     
                 </div> 
-             
-                <div className='disp_map_button'><button className='ui button mini' onClick={this.get_map_data.bind(this,[])}>Получить данные</button></div>
+                        
+                {this.props.store.disp_map.loadingData ? (
+                    <div className='disp_map_button'>
+                        <Button className="ui button mini" loading>
+                            Получить данные
+                        </Button>
+                    </div>
+                ) : (
+                    <div className='disp_map_button'><button className='ui button mini' onClick={this.map_data.bind(this,[])}>Получить данные</button></div>
+                )}
                 <div className='disp_map_button'><button className='ui button mini' onClick={this.reset.bind(this)}>Сброс</button></div>
                 <div className='disp_map_button'><button className='ui button mini' onClick={this.set_courier.bind(this)}>Назначить</button></div>
              {this.props.store.disp_map.assignment_mode ? (
@@ -683,6 +736,12 @@ export default connect(
         set_customer_filter: (param) => { dispatch({ type: 'set_customer_filter', payload: param }) },
 
         set_num_filter: (param) => { dispatch({ type: 'set_num_filter', payload: param }) },
-        
+
+        set_disp_map_loading: (param) => { dispatch({ type: 'set_disp_map_loading', payload: param }) },
+        set_disp_map_loadingData: (param) => { dispatch({ type: 'set_disp_map_loadingData', payload: param }) },
+        set_disp_map_loadingNumber: (param) => { dispatch({ type: 'set_disp_map_loadingNumber', payload: param }) },
+        set_disp_map_showButton: (param) => { dispatch({ type: 'set_disp_map_showButton', payload: param }) },
+        set_disp_map_errorMass: (param) => { dispatch({ type: 'set_disp_map_errorMass', payload: param }) },
+        set_disp_map_errorMass_clear: (param) => { dispatch({ type: 'set_disp_map_errorMass_clear', payload: param }) },
     })
 )(Screen);
