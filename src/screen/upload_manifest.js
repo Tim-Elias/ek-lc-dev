@@ -673,12 +673,14 @@ class Screen extends React.Component {
     this.stickerRef = []
 
     const complited = this.props.store.upload_manifest.disp_data.filter((el) => el.Status === 'Загружено');
-    const complitedData = this.props.store.upload_manifest.disp_data.filter((el) => el.Status === 'Загружено');
 
+    const complitedData = this.props.store.upload_manifest.disp_data.filter((el) => el.Status === 'Загружено');
+    
     let ExcelData = [];
     let wSendAddInfo = 0, wTotal = 0, wWeight = 0, wVolume = 0, wRecAddInfo = 0, wSendCompany = 0, wSendAdress = 0, wRecCompany = 0, wRecAdress = 0, totalPlace = 0, totalWeight = 0;
 
     for (let i = 0; i < complitedData.length; i++) {
+
       wSendAddInfo = (complitedData[i].SendAddInfo.length > wSendAddInfo) ? (complitedData[i].SendAddInfo.length) : (wSendAddInfo);
       wTotal = (complitedData[i].Total.length > wTotal) ? (complitedData[i].Total.length) : (wTotal);
       wWeight = (complitedData[i].Weight.length > wWeight) ? (complitedData[i].Weight.length) : (wWeight);

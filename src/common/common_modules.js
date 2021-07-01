@@ -11,7 +11,7 @@ const get_data = (url, data) => {
     ).then((result) => {
       // console.log(result)
       if (result.data.status === 'error') {
-        alert(result.data)
+        alert(result.data.data)
         console.log(result.data)
         reject(result.data.data)
       } else if (result.data.status === 'ok') {

@@ -7,10 +7,33 @@
     margin-bottom: 5px;
   }
 
+  .disp_map_button--flex {
+    display: flex;
+    align-items: center;
+  }
+
+  .disp_map_loader {
+    border: 6px solid #e0e1e2;
+    border-top: 6px solid #2444b5;
+    border-radius: 50%;
+    width: 23px;
+    height: 23px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
 
 .disp_map_window{
  display: grid;
   grid-template-columns: 250px 1fr;
+}
+
+.disp_map_left_menu {
+  display: flex;
+  flex-direction: column;
 }
 
   .disp_map_panel{
@@ -62,6 +85,18 @@
     border: 1px solid;
     border-radius: 50%;
   }
+
+.disp_map_error {
+  margin: auto 0 0 0;
+}
+
+.disp_map_disp_num {
+  margin: 5px 0;
+  font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  color: #4183c4!important;
+}
 
   @keyframes blinkingBackground{
 		0% 		{ background-color: #FFF; border-color: #FFF}

@@ -29,12 +29,28 @@ const initialState = {
 
     num_filter: "",
 
-
-
+    loading: false,
+    loadingData: false,
+    loadingNumber: "",
+    errorMass: [],
+    showButton: false,
 }
 
 export default function dispatch(state = initialState, action) {
     switch (action.type) {
+
+        case 'set_disp_map_errorMass': return { ...state, errorMass: [...state.errorMass, action.payload] }
+
+        case 'set_disp_map_errorMass_clear': return { ...state, errorMass: [] }
+
+        case 'set_disp_map_loadingNumber': return { ...state, loadingNumber: action.payload }
+
+        case 'set_disp_map_showButton': return { ...state, showButton: action.payload }
+        
+        case 'set_disp_map_loading': return { ...state, loading: action.payload }
+
+        case 'set_disp_map_loadingData': return { ...state, loadingData: action.payload }
+
         case 'set_disp_map_date': return { ...state, date: action.payload }
         case 'set_input_courier': 
         if (action.payload.courier === undefined) {
@@ -50,7 +66,7 @@ export default function dispatch(state = initialState, action) {
 
         case 'set_focus_input_courier': return { ...state, focus_input_courier: action.payload }
         case 'set_courier_filter': return { ...state, courier_filter: action.payload }
-        case 'set_disp_map_disp_for_del': return { ...state, disp_for_del: action.payload }
+        case 'set_disp_map_disp_for_del': return { ...state, disp_for_del: action.payload}
         
         case 'select_disp_map_disp_for_del': 
         if(action.payload.shift){
