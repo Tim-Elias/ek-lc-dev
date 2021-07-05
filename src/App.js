@@ -13,9 +13,7 @@ import HomeContainer from './home_container'
 class App extends Component {
 
   render() {
-    console.log(window.location.href)
     if (window.location.href == 'https://e-kinetika.ru/' || window.location.href == 'http://e-kinetika.ru/') {
-
       window.location.href = 'https://express-kinetika.ru'
     }
     

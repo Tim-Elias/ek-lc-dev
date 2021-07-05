@@ -65,7 +65,7 @@ class Screen extends Component {
 
             <div id="pageFooter" className="footer">
                 <div className="footerleftel">© 2006-2020 ООО "Экспресс Кинетика"</div> 
-                <div className="footercenterel">г. Новосибирск, ул Коммунистическая 7, склад 1</div> 
+                <div className="footercenterel">г. Новосибирск, ул. Фабричная 31, корпус 3</div>
                 <div className="footerrightel">
                     Разработка сайта: ООО "Экспресс Кинетика"
                     <button onClick={ this.mobile_version.bind(this) } className="mobile_version">Мобильная Версия</button>
