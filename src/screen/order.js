@@ -16,13 +16,18 @@ class Screen extends React.Component {
     
         get_data('dispatch', data).then(
           (result) => {
-            
             this.props.set_data_disp(result);
             this.props.set_active_window("disp");
             this.props.set_last_window("order");
             
           },
-          (err) => { console.log(err) }
+          (err) => { 
+            console.log(err) 
+          
+            this.props.modules.set_modal_show(true)
+            this.props.modules.set_modal_header('Ошибка')
+            this.props.modules.set_modal_text(err)
+          }
         );
     
     

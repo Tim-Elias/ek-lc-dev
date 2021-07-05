@@ -61,6 +61,10 @@ class Screen extends React.Component {
             }
           },
           (err) => { 
+            this.props.modules.set_modal_show(true)
+            this.props.modules.set_modal_header('Ошибка')
+            this.props.modules.set_modal_text(err)
+
             this.props.modules.set_active_window("storage_reciept");
             this.props.storage_reciept_set_result({
               status_type: 'err',

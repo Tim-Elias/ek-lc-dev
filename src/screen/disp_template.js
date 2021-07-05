@@ -23,13 +23,22 @@ class Screen extends React.Component {
                         this.props.set_disp_template_list(result);
                         this.props.modules.back()
                     },
-                    (err) => { console.log(err) }
+                    (err) => { 
+                        console.log(err) 
+                    
+                        this.props.modules.set_modal_show(true)
+                        this.props.modules.set_modal_header('Ошибка')
+                        this.props.modules.set_modal_text(err)
+                    }
                 );
               
             },
             (err) => { 
-                console.log("err")  
-                console.log(err) 
+                console.log("err", err)  
+                
+                this.props.modules.set_modal_show(true)
+                this.props.modules.set_modal_header('Ошибка')
+                this.props.modules.set_modal_text(err)
             }
         );
     }
@@ -54,8 +63,11 @@ class Screen extends React.Component {
               
             },
             (err) => { 
-                console.log("err")  
-                console.log(err) 
+                console.log("err", err)  
+
+                this.props.modules.set_modal_show(true)
+                this.props.modules.set_modal_header('Ошибка')
+                this.props.modules.set_modal_text(err)
             }
         );
     }
@@ -85,13 +97,22 @@ class Screen extends React.Component {
                         this.props.set_disp_template_list(result);
                         this.props.modules.back()
                     },
-                    (err) => { console.log(err) }
+                    (err) => { 
+                        console.log(err) 
+                    
+                        this.props.modules.set_modal_show(true)
+                        this.props.modules.set_modal_header('Ошибка')
+                        this.props.modules.set_modal_text(err)
+                    }
                 );
               
             },
             (err) => { 
-                console.log("err")  
-                console.log(err) 
+                console.log("err", err)  
+                
+                this.props.modules.set_modal_show(true)
+                this.props.modules.set_modal_header('Ошибка')
+                this.props.modules.set_modal_text(err)
             }
         );
     }

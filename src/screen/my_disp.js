@@ -39,7 +39,13 @@ class Screen extends React.Component {
         this.props.set_active_window("my_disp");
         this.props.set_my_disp_data(result);
       },
-      (err) => { console.log(err) }
+      (err) => { 
+        console.log(err) 
+      
+        this.props.modules.set_modal_show(true)
+        this.props.modules.set_modal_header('Ошибка')
+        this.props.modules.set_modal_text(err)
+      }
     );
 
   }
@@ -61,7 +67,13 @@ class Screen extends React.Component {
         this.props.set_last_window("my_disp");
 
       },
-      (err) => { console.log(err) }
+      (err) => { 
+        console.log(err) 
+      
+        this.props.modules.set_modal_show(true)
+        this.props.modules.set_modal_header('Ошибка')
+        this.props.modules.set_modal_text(err)
+      }
     );
 
 

@@ -25,6 +25,10 @@ class Screen extends React.Component {
 
       },
       (err) => {
+        this.props.modules.set_modal_show(true)
+        this.props.modules.set_modal_header('Ошибка')
+        this.props.modules.set_modal_text(err)
+
         this.props.set_active_window("mutual");
         console.log(err)
         // this.props.set_mutual_error(err) 

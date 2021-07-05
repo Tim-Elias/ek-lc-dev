@@ -24,6 +24,10 @@ class Screen extends React.Component {
           this.props.set_action("reciept");
         },
         (err) => { 
+          this.props.modules.set_modal_show(true)
+          this.props.modules.set_modal_header('Ошибка')
+          this.props.modules.set_modal_text(err)
+
           this.props.set_active_window("reciept");
           this.props.set_search_error(err) 
         }

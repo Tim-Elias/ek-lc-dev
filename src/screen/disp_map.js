@@ -167,7 +167,12 @@ class Screen extends React.Component {
                 this.get_map_data(this.props.store.disp_map.disp_for_del.filter(el=>!el.selected).map(el=>{return(el.Num)}) );
                 this.reset()
             },
-            (err) => { console.log(err) }
+            (err) => { 
+                console.log(err) 
+                this.props.modules.set_modal_show(true)
+                this.props.modules.set_modal_header('Ошибка')
+                this.props.modules.set_modal_text(err)
+            }
         );
         
     }
@@ -206,6 +211,10 @@ class Screen extends React.Component {
                 this.props.set_disp_map_disp_for_del([])
                 console.log(err)
                 this.props.set_disp_map_loadingData(false)
+
+                this.props.modules.set_modal_show(true)
+                this.props.modules.set_modal_header('Ошибка')
+                this.props.modules.set_modal_text(err)
             }
         );
     }
@@ -243,7 +252,13 @@ class Screen extends React.Component {
                         get_map_data(not_modify);
                         reset()
                     },
-                    (err) => { console.log(err) }
+                    (err) => { 
+                        console.log(err) 
+                    
+                        this.props.modules.set_modal_show(true)
+                        this.props.modules.set_modal_header('Ошибка')
+                        this.props.modules.set_modal_text(err)
+                    }
                 );
                 
             }
@@ -285,7 +300,13 @@ class Screen extends React.Component {
                                 (result) => {
                                     console.log(result);
                                 },
-                                (err) => { console.log(err) }
+                                (err) => { 
+                                    console.log(err) 
+                                
+                                    this.props.modules.set_modal_show(true)
+                                    this.props.modules.set_modal_header('Ошибка')
+                                    this.props.modules.set_modal_text(err)
+                                }
                             );
                         }
                     })
@@ -294,7 +315,6 @@ class Screen extends React.Component {
             } catch (err) {
                 this.props.set_disp_map_errorMass(el)
                 console.log(err)
-                console.log(el)
             }
 
         }
@@ -324,6 +344,10 @@ class Screen extends React.Component {
           },
           (err) => {
               console.log(err) 
+
+              this.props.modules.set_modal_show(true)
+              this.props.modules.set_modal_header('Ошибка')
+              this.props.modules.set_modal_text(err)
             }
         );
     

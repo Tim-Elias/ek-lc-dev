@@ -78,7 +78,7 @@ class Screen extends Component {
             );
         }
         else {
-            this.props.set_error('Необходимо ввести Имя пользователя и Пароль.')
+            this.props.set_modal_text('Необходимо ввести Имя пользователя и Пароль.')
         }
     };
 

@@ -60,6 +60,10 @@ CalcPrice = (total_weight, total_volume) => {
       console.log(err)
       this.props.set_last_window("create_disp");
       this.props.set_active_window("");
+
+      this.props.modules.set_modal_show(true)
+      this.props.modules.set_modal_header('Ошибка')
+      this.props.modules.set_modal_text(err)
     }
   );
 }
@@ -161,9 +165,13 @@ RemoveCargo = (index) => {
             
           },
           (err) => { 
-              console.log("err", err)  
-              this.props.set_last_window("create_disp");
-              this.props.set_active_window("");
+            console.log("err", err)  
+            this.props.set_last_window("create_disp");
+            this.props.set_active_window("");
+
+            this.props.modules.set_modal_show(true)
+            this.props.modules.set_modal_header('Ошибка')
+            this.props.modules.set_modal_text(err)
           }
       );
   }
@@ -183,9 +191,13 @@ RemoveCargo = (index) => {
             }
           },
           (err) => { 
-              console.log("err", err)  
-              this.props.set_last_window("create_disp");
-              this.props.set_active_window("");
+            console.log("err", err)  
+            this.props.set_last_window("create_disp");
+            this.props.set_active_window("");
+
+            this.props.modules.set_modal_show(true)
+            this.props.modules.set_modal_header('Ошибка')
+            this.props.modules.set_modal_text(err)
           }
       );
   }
@@ -307,6 +319,10 @@ RemoveCargo = (index) => {
                   console.log(err);
                   this.props.set_last_window("create_disp");
                   this.props.set_active_window("");
+
+                  this.props.modules.set_modal_show(true)
+                  this.props.modules.set_modal_header('Ошибка')
+                  this.props.modules.set_modal_text(err)
                 }
               );
         },
@@ -314,6 +330,10 @@ RemoveCargo = (index) => {
           console.log(err);
           this.props.set_last_window("create_disp");
           this.props.set_active_window("");
+
+          this.props.modules.set_modal_show(true)
+          this.props.modules.set_modal_header('Ошибка')
+          this.props.modules.set_modal_text(err)
         }
       );
   }
@@ -406,6 +426,10 @@ SetTotal = (value) =>{
         console.log(err) 
         this.props.set_last_window("create_disp");
         this.props.set_active_window("");
+
+        this.props.modules.set_modal_show(true)
+        this.props.modules.set_modal_header('Ошибка')
+        this.props.modules.set_modal_text(err)
       }
     );
   }

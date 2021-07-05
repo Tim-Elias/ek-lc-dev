@@ -118,8 +118,12 @@ class Screen extends React.Component {
               console.log(result)
             },
             (err) => {
-                this.props.set_active_window("test");
-                console.log(err)
+              this.props.modules.set_modal_show(true)
+              this.props.modules.set_modal_header('Ошибка')
+              this.props.modules.set_modal_text(err)
+
+              this.props.set_active_window("test");
+              console.log(err)
             }
         );
 

@@ -14,6 +14,7 @@ class Screen extends React.Component {
 
     componentWillUnmount() {
         this.props.set_search("")
+        this.props.set_erroe_mesage("")
     }
 
     handleKeyDown = (e) => {
@@ -57,6 +58,12 @@ class Screen extends React.Component {
             (err) => {
                 console.log(err) 
                 this.props.set_erroe_mesage("Не удалось найти накладную номер " + this.props.store.my_disp.search)
+            
+                this.props.modules.set_modal_show(true)
+                this.props.modules.set_modal_header('Ошибка')
+                this.props.modules.set_modal_text(err)
+
+                this.props.set_active_window("disp_number");
             }
         );
 
@@ -65,9 +72,7 @@ class Screen extends React.Component {
     render() {
 
         return (
-
             <div>
-
                 <div onKeyDown={this.handleKeyDown.bind(this)} className="my_disp_control_panel my_disp_control_panel--s">
                     
                     <input className="pod_input" value={this.props.store.my_disp.search} onChange={e => this.props.set_search(e.target.value)}></input>

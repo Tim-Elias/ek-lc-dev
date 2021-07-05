@@ -38,36 +38,41 @@ class Screen extends React.Component {
                 console.log(result);
                 this.props.set_active_window("wait");
     
-        const data = {
-          userkey: this.props.store.login.userkey,
-          status: "Накладная",
-          num: this.props.store.disp.data.Number
-        };
+                const data = {
+                userkey: this.props.store.login.userkey,
+                status: "Накладная",
+                num: this.props.store.disp.data.Number
+                };
     
-        get_data('dispatch', data).then(
-          (result) => {
-    
-            this.props.set_data_disp(result);
-            this.props.set_active_window("disp");
-            
-    
-          },
-          (err) => { 
-              console.log(err) 
-              this.props.set_active_window("disp");
-            }
-          
-        );
+                get_data('dispatch', data).then(
+                    (result) => {
+                        this.props.set_data_disp(result);
+                        this.props.set_active_window("disp");
+                    },
+                    (err) => { 
+                        console.log(err) 
+
+                        this.props.modules.set_modal_show(true)
+                        this.props.modules.set_modal_header('Ошибка')
+                        this.props.modules.set_modal_text(err)
+
+                        this.props.set_active_window("disp");
+                    }
+                );
             },
             (err) => { 
                 console.log(err) 
+
+                this.props.modules.set_modal_show(true)
+                this.props.modules.set_modal_header('Ошибка')
+                this.props.modules.set_modal_text(err)
+
                 this.props.set_active_window("disp");
             }
         );
     }
 
     render_markers = () => {
-        
         let lat
         let lng
 
@@ -75,25 +80,20 @@ class Screen extends React.Component {
             lat = parseFloat(this.props.store.disp.lat.replace(/,/, '.'))
             lng = parseFloat(this.props.store.disp.lng.replace(/,/, '.'))
    
-   
-   
-               if(marker !== undefined){
-                   marker.setMap(null)
-               }
-                   
-   
-                   marker = new g_maps.Marker({
-                       position: {lat:lat, lng:lng},
-                       map: g_map,
-                       
-                     });
-   
-                     marker.addListener('click', function() {
-                       //marker_onClick(el.Num) 
-                     });
-        }
-         
+            if(marker !== undefined){
+               marker.setMap(null)
             }
+                   
+            marker = new g_maps.Marker({
+                position: {lat:lat, lng:lng},
+                map: g_map,           
+            });
+   
+            marker.addListener('click', function() {
+                //marker_onClick(el.Num) 
+            });
+        }
+    }
     
 
     // print = () =>{
@@ -126,10 +126,20 @@ class Screen extends React.Component {
                         this.props.set_list_storage(result);
                         this.props.set_active_window("storage");
                     },
-                    (err) => { console.log(err) }
+                    (err) => { 
+                        console.log(err)
+
+                        this.props.modules.set_modal_show(true)
+                        this.props.modules.set_modal_header('Ошибка')
+                        this.props.modules.set_modal_text(err)
+                    }
                 );
             },
             (err) => {
+                this.props.modules.set_modal_show(true)
+                this.props.modules.set_modal_header('Ошибка')
+                this.props.modules.set_modal_text(err)
+
                 this.props.set_active_window("disp");
                 console.log(err)
             }
@@ -149,6 +159,10 @@ class Screen extends React.Component {
 
             },
             (err) => {
+                this.props.modules.set_modal_show(true)
+                this.props.modules.set_modal_header('Ошибка')
+                this.props.modules.set_modal_text(err)
+
                 this.props.set_active_window("disp");
                 console.log(err)
             }
@@ -164,7 +178,13 @@ class Screen extends React.Component {
                 this.props.set_disp_history(result);
                 this.props.set_disp_history_loading(false)
             },
-            (err) => { console.log(err) }
+            (err) => { 
+                console.log(err) 
+            
+                this.props.modules.set_modal_show(true)
+                this.props.modules.set_modal_header('Ошибка')
+                this.props.modules.set_modal_text(err)
+            }
         );
     }
 
@@ -187,6 +207,10 @@ class Screen extends React.Component {
                 this.props.set_disp_skan_loading(false);
             },
             (err) => { 
+                this.props.modules.set_modal_show(true)
+                this.props.modules.set_modal_header('Ошибка')
+                this.props.modules.set_modal_text(err)
+
                 console.log(err);
                 this.props.set_disp_skan_loading(false);
             }
@@ -221,7 +245,13 @@ class Screen extends React.Component {
                         this.props.set_active_window("my_disp");
                         this.props.set_my_disp_data(result);
                     },
-                    (err) => { console.log(err) }
+                    (err) => { 
+                        console.log(err) 
+                    
+                        this.props.modules.set_modal_show(true)
+                        this.props.modules.set_modal_header('Ошибка')
+                        this.props.modules.set_modal_text(err)
+                    }
                 );
             } else {
                 this.back()
@@ -251,7 +281,13 @@ class Screen extends React.Component {
 
                 this.props.set_disp_remove_modal_loading(false)
             },
-            (err) => { console.log(err) }
+            (err) => { 
+                console.log(err) 
+            
+                this.props.modules.set_modal_show(true)
+                this.props.modules.set_modal_header('Ошибка')
+                this.props.modules.set_modal_text(err)
+            }
         );
     }
     
@@ -270,15 +306,18 @@ class Screen extends React.Component {
                   this.SetSendTerminal(false)
                 }
                 
-              },
-              (err) => { 
-                  console.log("err")  
-                  console.log(err) 
-              }
-          );
-      }
+            },
+            (err) => { 
+                console.log("err", err)  
+                  
+                this.props.modules.set_modal_show(true)
+                this.props.modules.set_modal_header('Ошибка')
+                this.props.modules.set_modal_text(err)
+            }
+        );
+    }
     
-      SelectRecCity = (value) =>{
+    SelectRecCity = (value) =>{
     
         this.props.SetSelectedRecCity(value)
     
@@ -286,16 +325,19 @@ class Screen extends React.Component {
         this.props.SetRecCity(city)
         
         get_data('terminallist', {city}).then(
-              (result) => {
+            (result) => {
                 
                 this.props.SetRecTerminalList(result)
                 if (result.length === 0) {
-                  this.SetRecTerminal(false)
+                    this.SetRecTerminal(false)
                 }
-              },
+            },
               (err) => { 
-                  console.log("err")  
-                  console.log(err) 
+                  console.log("err", err)  
+                  
+                  this.props.modules.set_modal_show(true)
+                  this.props.modules.set_modal_header('Ошибка')
+                  this.props.modules.set_modal_text(err)
               }
           );
       }
@@ -330,7 +372,7 @@ class Screen extends React.Component {
                         {label:"Безналичная оплата", value:"БезналичнаяОплата"},
                         {label:"Оплата наличными при отправлении", value:"ОплатаНаличнымиПриОтправлении"},
                         {label:"Оплата наличными при получении", value:"ОплатаНаличнымиПриПолучении"}
-                      ]
+                    ]
                     let PayType
                     let PayerSelect;
                         if (current_disp_data.CustomerKey == this.props.store.login.customer_key) {
@@ -413,16 +455,16 @@ class Screen extends React.Component {
 
 
                 },
-                (err) => { console.log(err) }
+                (err) => { 
+                    console.log(err) 
+                
+                    this.props.modules.set_modal_show(true)
+                    this.props.modules.set_modal_header('Ошибка')
+                    this.props.modules.set_modal_text(err)
+                }
             );
-
-
-            
-        
-
-
-
     }
+
     SetSendTerminal = (param) => {
         let DelMethod
       
@@ -605,14 +647,7 @@ class Screen extends React.Component {
         const center = {lat:lat,lng:lng}
         return (
 
-
-            
-
-
             <div>
-
-
-
                 <div className="disp_Number">
 
                     <div><Button compact icon onClick={this.back.bind(this)}>

@@ -5,8 +5,6 @@ import Select from 'react-select'
 import { customStyles } from "./../common/common_style";
 import { Button } from 'semantic-ui-react'
 
-
-
 class Screen extends React.Component {
 
 
@@ -37,8 +35,11 @@ class Screen extends React.Component {
         this.props.modules.set_modal_header('Успешно')
       },
       (err) => { 
-          console.log("err")  
-          console.log(err) 
+        console.log("err", err)  
+          
+        this.props.modules.set_modal_show(true)
+        this.props.modules.set_modal_header('Ошибка')
+        this.props.modules.set_modal_text(err)
       }
   );
 

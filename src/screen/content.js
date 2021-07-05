@@ -28,6 +28,7 @@ import DispNumber from './disp_number'
 import HomeEk from './home_ek'
 import Test from './test'
 
+import { Header, Modal } from 'semantic-ui-react'
 
 
 class Screen extends React.Component {
@@ -39,8 +40,6 @@ class Screen extends React.Component {
 }
 
   render () {
-
-    
 
     const modules = {
       set_modal_show: this.props.set_modal_show,
@@ -59,6 +58,16 @@ class Screen extends React.Component {
     return (
 
       <div className={className}>
+
+        <Modal closeIcon
+          open={this.props.store.general.modal_show}
+          onClose={() => this.props.set_modal_show(false)}
+        >
+          <Header>{this.props.store.general.modal_header}</Header>
+          <Modal.Content>
+            <p>{this.props.store.general.modal_text}</p>
+          </Modal.Content>
+        </Modal>
 
         {this.props.store.general.active_window === 'home' && !this.props.store.login.logged ? (<HomeEk modules={modules}/>) : (null)}
         {this.props.store.general.active_window === 'my_disp' ? (<MyDisp modules={modules}/>) : (null)}

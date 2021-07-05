@@ -17,7 +17,9 @@ class Screen extends React.Component {
             },
             (err) => { 
                 console.log(err) 
-                this.props.set_calc_price_error_mesage("Ошибка, не удалось загрузить данные!")
+                this.props.modules.set_modal_show(true)
+                this.props.modules.set_modal_header('Ошибка')
+                this.props.modules.set_modal_text(err)
             }
             
         );
@@ -48,8 +50,10 @@ class Screen extends React.Component {
 
             },
             (err) => {
-                console.log("err")
-                console.log(err)
+                console.log("err", err)
+                this.props.modules.set_modal_show(true)
+                this.props.modules.set_modal_header('Ошибка')
+                this.props.modules.set_modal_text(err)
             }
         );
     }
@@ -75,8 +79,10 @@ class Screen extends React.Component {
 
             },
             (err) => {
-                console.log("err")
-                console.log(err)
+                console.log("err", err)
+                this.props.modules.set_modal_show(true)
+                this.props.modules.set_modal_header('Ошибка')
+                this.props.modules.set_modal_text(err)
             }
         );
     }
@@ -99,6 +105,11 @@ class Screen extends React.Component {
             },
             (err) => {
                 this.props.set_calc_price_result("Не удалось рассчитать");
+                this.props.modules.set_modal_show(true)
+                this.props.modules.set_modal_header('Ошибка')
+                
+                console.log(err)
+                this.props.modules.set_modal_text(err)
             }
         );
     }

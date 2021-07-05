@@ -29,11 +29,16 @@ class Screen extends React.Component {
         this.props.set_list_storage(result);
         this.props.set_active_window("storage");
       },
-      (err) => { console.log(err) }
+      (err) => { 
+        console.log(err) 
+      
+        this.props.modules.set_modal_show(true)
+        this.props.modules.set_modal_header('Ошибка')
+        this.props.modules.set_modal_text(err)
+      }
     );
 
   };
-
 
   tr_click(num) {
     console.log('num is ', num);
@@ -57,10 +62,14 @@ class Screen extends React.Component {
         this.props.set_last_window("storage");
         this.props.set_action("deliver");
       },
-      (err) => { console.log(err) }
+      (err) => { 
+        console.log(err) 
+      
+        this.props.modules.set_modal_show(true)
+        this.props.modules.set_modal_header('Ошибка')
+        this.props.modules.set_modal_text(err)
+      }
     );
-
-
   };
 
   render() {

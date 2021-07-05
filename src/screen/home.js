@@ -27,7 +27,13 @@ class Screen extends React.Component {
         (result) => {
             this.props.SetCityList(result);
           },
-          (err) => { console.log(err) }
+          (err) => { 
+            console.log(err) 
+          
+            this.props.modules.set_modal_show(true)
+            this.props.modules.set_modal_header('Ошибка')
+            this.props.modules.set_modal_text(err)
+          }
       );
     }
     

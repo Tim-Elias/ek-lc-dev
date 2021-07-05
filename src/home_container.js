@@ -14,8 +14,6 @@ class Screen extends Component {
 
     
   render() {
-    
-
 
     if(!this.props.store.login.logged){
        const username = this.props.cookies.get('username') 
@@ -85,24 +83,27 @@ class Screen extends Component {
           ):(<div>
 
             {this.props.store.general.full_screen ? (<Content />):(
-            <div className="grid-container">
+              <div className={this.props.store.login.logged ? ("grid-container") : ("grid-container--login")}>
             
-            <Header />
-            {this.props.store.login.logged ? (<div>
-              {this.props.store.general.hidemenu ?(
-            <div className="logged_main_compact">
-            <LeftMenu />
-            <Content />
-            </div>):( <div className="logged_main">
-            <LeftMenu />
-            <Content />
-            </div>)}
-            </div>) : ( <div className="not_logged_main">
-              <Content />
-              </div>)}
-            <Footer />
+                {this.props.store.login.logged ? (
+                  <Header />
+                ) : (null)}
 
-            </div>
+                {this.props.store.login.logged ? (<div>
+                  {this.props.store.general.hidemenu ?(
+                <div className="logged_main_compact">
+                <LeftMenu />
+                <Content />
+                </div>):( <div className="logged_main">
+                <LeftMenu />
+                <Content />
+                </div>)}
+                </div>) : ( <div className="not_logged_main">
+                  <Content />
+                  </div>)}
+                <Footer />
+
+              </div>
             )}
 
           </div>)}

@@ -31,19 +31,32 @@ class Screen extends React.Component {
                       this.props.set_data_manifest(result);
                       this.props.set_action_manifest("get");
                     },
-                    (err) => { console.log(err) }
+                    (err) => { 
+                        console.log(err) 
+                    
+                        this.props.modules.set_modal_show(true)
+                        this.props.modules.set_modal_header('Ошибка')
+                        this.props.modules.set_modal_text(err)
+                    }
                   );
 
                 // this.props.set_list_storage(result);
                 // this.props.set_active_window("storage");
             },
-            (err) => { console.log(err) }
+            (err) => { 
+                console.log(err) 
+            
+                this.props.modules.set_modal_show(true)
+                this.props.modules.set_modal_header('Ошибка')
+                this.props.modules.set_modal_text(err)
+            }
         );
     }
 
     check = (num) => {
         this.props.check_manifest_disp(num)
     }
+    
     render() {
 
         document.onkeydown = function (event) {}

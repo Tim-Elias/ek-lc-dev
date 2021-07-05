@@ -5,13 +5,11 @@ const get_data = (url, data) => {
     axios.post(`https://kinetika-server.tw1.su/http/hs/agent/${url}/post`,
       JSON.stringify(data),
       {
-        headers: { 'Content-Type': 'text/plain' } 
+        headers: { 'Content-Type': 'text/plain' }
       }
 
     ).then((result) => {
-      // console.log(result)
       if (result.data.status === 'error') {
-        alert(result.data.data)
         console.log(result.data)
         reject(result.data.data)
       } else if (result.data.status === 'ok') {
@@ -20,13 +18,11 @@ const get_data = (url, data) => {
     }).catch((error) => {
       if (typeof (error.response) !== "undefined") {
         console.log(error.response.data)
-        alert(error.response.data)
+        reject(error.response.data)
       } else {
-        console.log(error)
-        alert(error)
+        reject(error.toString())
       }
       
-      reject(error.response)
     })
   })
 }

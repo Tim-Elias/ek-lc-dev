@@ -18,7 +18,13 @@ class Screen extends React.Component {
       (result) => {
         this.props.set_list_get_manifest(result);
       },
-      (err) => { console.log(err) }
+      (err) => { 
+        console.log(err) 
+      
+        this.props.modules.set_modal_show(true)
+        this.props.modules.set_modal_header('Ошибка')
+        this.props.modules.set_modal_text(err)
+      }
     );
 
   };
@@ -43,7 +49,13 @@ class Screen extends React.Component {
         this.props.set_active_window("manifest");
         this.props.set_action_manifest("get");
       },
-      (err) => { console.log(err) }
+      (err) => { 
+        console.log(err) 
+      
+        this.props.modules.set_modal_show(true)
+        this.props.modules.set_modal_header('Ошибка')
+        this.props.modules.set_modal_text(err)
+      }
     );
 
   };
