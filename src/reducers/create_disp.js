@@ -24,6 +24,11 @@ const initialState = {
   CustomerEmailInformer: false,
 
   Number: 0,
+  customNumber: false,
+  customNumberLoader: false,
+  availableNumber: null,
+
+  isNew: true,
 
   OpenModalSendTemplate: false,
   OpenModalRecTemplate: false,
@@ -93,6 +98,13 @@ export default function dispatch (state = initialState, action) {
     case 'reset_create_disp_data': return  initialState 
 
     case 'SetPayerSelect': return { ...state, PayerSelect: action.payload }
+
+    case 'SetIsNew': return { ...state, isNew: action.payload }
+
+    case 'SetNumber': return { ...state, Number: action.payload }
+    case 'SetCustomNumber': return { ...state, customNumber: action.payload }
+    case 'SetAvailableNumber': return { ...state, availableNumber: action.payload }
+    case 'SetCustomNumberLoader': return { ...state, customNumberLoader: action.payload }
 
     case 'SetPrice': return { ...state, Price: action.payload }
 

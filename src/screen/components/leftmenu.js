@@ -171,6 +171,7 @@ class Screen extends Component {
                 get_data('citylist').then(
                     (result) => {
                         this.props.SetCityList(result);
+                        this.props.SetIsNew(true);
                         this.props.set_active_window(target);
                         get_data('disptemplatelist', { userkey: this.props.store.login.userkey }).then(
                             (result) => {
@@ -462,6 +463,7 @@ export default connect(
         reset_upload_manifest_data: () => { dispatch({ type: 'reset_upload_manifest_data' }) },
         set_upload_in_one: (param) => { dispatch({ type: 'set_upload_in_one', payload: param }) },
 
+        SetIsNew: (param) => { dispatch({ type: 'SetIsNew', payload: param }) },
 
         SetSendCity: (param) => { dispatch({ type: 'SetSendCity', payload: param }) },
         SetSendTerminal: (param) => { dispatch({ type: 'SetSendTerminal', payload: param }) },

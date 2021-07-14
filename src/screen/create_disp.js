@@ -261,6 +261,7 @@ RemoveCargo = (index) => {
     const create_disp_data = {
       userkey: this.props.store.login.userkey, 
       Number: this.props.store.create_disp.Number,
+      isNew: this.props.store.create_disp.isNew,
       PayType: this.props.store.create_disp.PayType.value,
       DispDate: this.props.store.create_disp.DispDate,
       SendCity: this.props.store.create_disp.SendCity, 
@@ -295,6 +296,8 @@ RemoveCargo = (index) => {
       CargoInfoType: this.props.store.create_disp.CargoInfoType.value,
 
       Customer: this.props.store.create_disp.PayerSelect.value,
+
+      
     }
 
     
@@ -421,6 +424,8 @@ SetTotal = (value) =>{
     get_data('disptemplatelist', { userkey: this.props.store.login.userkey }).then(
       (result) => {
         this.props.set_disp_template_list(result);
+        this.props.SetCustomNumber(false);
+        this.props.SetAvailableNumber(null);
       },
       (err) => { 
         console.log(err) 
@@ -430,6 +435,27 @@ SetTotal = (value) =>{
         this.props.modules.set_modal_show(true)
         this.props.modules.set_modal_header('Ошибка')
         this.props.modules.set_modal_text(err)
+      }
+    );
+  }
+
+  checkNumber = () => {
+    this.props.SetCustomNumberLoader(true);
+    get_data('history', { Number: this.props.store.create_disp.Number }).then(
+      (result) => {
+        this.props.SetAvailableNumber(false);
+        this.props.SetCustomNumberLoader(false);
+      },
+      (err) => {
+        if (err === "disp not found") {
+          this.props.SetAvailableNumber(true);
+        } else {
+          console.log(err)
+          this.props.modules.set_modal_show(true)
+          this.props.modules.set_modal_header('Ошибка')
+          this.props.modules.set_modal_text(err)
+        }
+        this.props.SetCustomNumberLoader(false);
       }
     );
   }
@@ -447,23 +473,47 @@ SetTotal = (value) =>{
       || (this.props.store.create_disp.Total==0 && this.props.store.create_disp.CargoInfoType.value)
       || (this.props.store.create_disp.Weight==0 && this.props.store.create_disp.CargoInfoType.value)
       || (total_weight==0 && ! this.props.store.create_disp.CargoInfoType.value)
+      || (this.props.store.create_disp.customNumber === true ? (this.props.store.create_disp.availableNumber === true) : (true)) === false
       ){
       disabled = true
     }    
-
 
     return (
       
       <div>
                 <div className="disp_Number">
-                <Button compact icon onClick={this.props.modules.back}>
-                        <Icon name='arrow left' />
-                    </Button>
-                {this.props.store.create_disp.Number === 0 ? (<b>Создание новой накладной</b>):(<b>Редактирование накладной {this.props.store.create_disp.Number}</b>)}
+                  <Button compact icon onClick={this.props.modules.back}>
+                    <Icon name='arrow left' />
+                  </Button>
+                {/* {this.props.store.create_disp.Number === 0 ? (<b>Создание новой накладной</b>):(<b>Редактирование накладной {this.props.store.create_disp.Number}</b>)} */}
+                {this.props.store.create_disp.isNew ? (<b>Создание новой накладной</b>) : (<b>Редактирование накладной {this.props.store.create_disp.Number}</b>)}
                 </div>
                 <div className="disp_customer_data">
                     <div className="disp_data_label">Заказчик:</div>
                     <div className="disp_data_el">{this.props.store.login.alias}</div>
+                    {this.props.store.create_disp.isNew ? (
+                      <div className="disp_data_label">Номер накладной:</div>
+                    ) : (null)}
+                    {this.props.store.create_disp.isNew ? (
+                      <div style={{ display: "flex", alignItems: "flex-end", height: "23px" }}>
+                        {this.props.store.create_disp.customNumber ? (null) : (
+                          <button onClick={() => this.props.SetCustomNumber(true)} style={{ height: "16px", fontSize: "13px", padding: "0" }}>
+                            Ввести номер
+                          </button>
+                        )}
+                        {this.props.store.create_disp.customNumber ? (
+                          <div className="disp_data_el" style={{ margin: "0 0 0 5px", width: "200px" }}>
+                            <input autoFocus className="create_disp_data_input" style={this.props.store.create_disp.availableNumber === true ? ({ backgroundColor: "#e0ffe0" }) : this.props.store.create_disp.availableNumber === false ? ({ backgroundColor: "#ffe0e0" }) : ({ backgroundColor: "#fff" })} value={this.props.store.create_disp.Number} onChange={(e) => this.props.SetNumber(e.target.value)} onBlur={() => this.checkNumber()} />
+                          </div>
+                        ) : (null)}
+                        {this.props.store.create_disp.customNumberLoader ? (
+                          <div className="loader"></div>
+                        ) : (null)}
+                        {this.props.store.create_disp.availableNumber === false ? (
+                          <div style={{fontSize: "11px", margin: "0 0 0 5px"}}>Накладная с таким номером уже существует!</div>
+                        ) : (null)}
+                      </div>
+                    ) : (null)}
                     <div className="disp_data_label">Вид доставки:</div>
                     <div className="disp_data_el">{this.props.store.create_disp.DelMethod}</div>
                     <div className="disp_data_label">Дата заявки:</div>
@@ -818,7 +868,7 @@ SetTotal = (value) =>{
                 <div className="disp_cargo_table_data">
                   <button onClick={this.CalcPrice.bind(this, total_weight, total_volume)}>Рассчитать стоимость</button>
                 </div>
-                {this.props.store.create_disp.Number === 0 ? ( <Button disabled={disabled} onClick={this.sent_disp.bind(this)}>Создать накладную</Button>):( <Button disabled={disabled} onClick={this.sent_disp.bind(this)}>Сохранить изменения</Button>)}
+                {this.props.store.create_disp.isNew ? ( <Button disabled={disabled} onClick={this.sent_disp.bind(this)}>Создать накладную</Button>):( <Button disabled={disabled} onClick={this.sent_disp.bind(this)}>Сохранить изменения</Button>)}
 
                 </div>
                 
@@ -871,7 +921,12 @@ export default connect(
 
     SetPayerSelect: (param) => { dispatch({ type: 'SetPayerSelect', payload: param }) },
 
-    SetPrice: (param) => { dispatch({ type: 'SetPrice', payload: param }) }, 
+    SetPrice: (param) => { dispatch({ type: 'SetPrice', payload: param }) },
+    
+    SetNumber: (param) => { dispatch({ type: 'SetNumber', payload: param }) },
+    SetCustomNumber: (param) => { dispatch({ type: 'SetCustomNumber', payload: param }) },
+    SetAvailableNumber: (param) => { dispatch({ type: 'SetAvailableNumber', payload: param }) },
+    SetCustomNumberLoader: (param) => { dispatch({ type: 'SetCustomNumberLoader', payload: param }) },
 
     SetSendCity: (param) => { dispatch({ type: 'SetSendCity', payload: param }) },
     SetSendTerminal: (param) => { dispatch({ type: 'SetSendTerminal', payload: param }) },

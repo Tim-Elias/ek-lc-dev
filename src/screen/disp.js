@@ -451,6 +451,7 @@ class Screen extends React.Component {
                     if (SelectedRecCity !== undefined) {this.SelectRecCity(SelectedRecCity)}
                     
                     this.props.modules.set_last_window('disp');
+                    this.props.SetIsNew(false);
                     this.props.set_active_window('create_disp');
 
 
@@ -1007,5 +1008,7 @@ export default connect(
         set_data_disp: (param) => { dispatch({ type: 'set_data_disp', payload: param }) },
         set_disp_search_box: (param) => { dispatch({ type: 'set_disp_search_box', payload: param }) },
         set_test_sound: (param) => { dispatch({ type: 'set_test_sound', payload: param }) },
+
+        SetIsNew: (param) => { dispatch({ type: 'SetIsNew', payload: param }) },
     })
 )(Screen);
