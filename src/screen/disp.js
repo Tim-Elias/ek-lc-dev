@@ -346,7 +346,7 @@ class Screen extends React.Component {
         let number = 0
         this.props.set_active_window('wait')
         const current_disp_data = this.props.store.disp.data
-        //console.log(current_disp_data)
+
         const copy_disp_cargo = this.props.store.disp.cargo
         let CargoInfoType 
         this.props.reset_create_disp_data()
@@ -356,6 +356,7 @@ class Screen extends React.Component {
 
                     if(edit){
                         number = this.props.store.disp.data.Number
+                        this.props.SetIsNew(false);
                     }
 
                     if(this.props.store.disp.cargo.reduce((accum, el) => accum + parseInt(el.Q), 0) === parseInt(this.props.store.disp.data.Total)){
@@ -363,7 +364,6 @@ class Screen extends React.Component {
                     } else {
                         CargoInfoType = {label:"Указать итогвые значения", value: true}
                     }
-
 
                     const SelectedSendCity = result.filter((el)=>el.value === current_disp_data.SendCity)[0]
                     const SelectedRecCity = result.filter((el)=>el.value === current_disp_data.RecCity)[0]
@@ -386,7 +386,6 @@ class Screen extends React.Component {
                                 value: CurPayer.customerKey,
                                 template: CurPayer.template}
                         }
-                        
 
                     let RecTerminal = false
                     let SendTerminal = false
@@ -431,7 +430,6 @@ class Screen extends React.Component {
                         RecPerson: current_disp_data. RecPerson,
                         RecAddInfo: current_disp_data.RecAddInfo,
                         RecEmail: current_disp_data.RecEmail,
-                        
 
                         CargoInfoType: CargoInfoType,
                         
@@ -443,15 +441,12 @@ class Screen extends React.Component {
 
                     }
 
-                  
-
-                    //console.log(copy_disp_data)
                     this.props.set_copy_disp_data(copy_disp_data)
                     if (SelectedSendCity !== undefined) {this.SelectSendCity(SelectedSendCity)}
                     if (SelectedRecCity !== undefined) {this.SelectRecCity(SelectedRecCity)}
                     
                     this.props.modules.set_last_window('disp');
-                    this.props.SetIsNew(false);
+                    
                     this.props.set_active_window('create_disp');
 
 
@@ -462,7 +457,7 @@ class Screen extends React.Component {
                     this.props.modules.set_modal_show(true)
                     this.props.modules.set_modal_header('Ошибка')
                     this.props.modules.set_modal_text(err)
-                }
+                } 
             );
     }
 
