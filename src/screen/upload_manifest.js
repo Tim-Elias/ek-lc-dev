@@ -120,13 +120,9 @@ class Screen extends React.Component {
 
     //   }
 
-
-
     // } else {
     //   sourse_data = this.props.store.upload_manifest.data
     // }
-
-
 
     sourse_data = this.props.store.upload_manifest.data
     sourse_data.forEach((el, index, arr) => {
@@ -162,8 +158,6 @@ class Screen extends React.Component {
       let Total = 0
       let Weight = 0
       let Volume = 0
-
-
 
       //console.log(dt)
 
@@ -219,7 +213,7 @@ class Screen extends React.Component {
         if (it.Weight !== "0") { Weight = el[it.Weight - 1] }
         if (it.Volume !== "0") { Volume = el[it.Volume - 1] }
         if (it.SendAddInfo !== "0") { SendAddInfo = el[it.SendAddInfo - 1] } else { SendAddInfo = dt.SendAddInfo }
-      }////
+      }
 
       if (it.InsureValue !== "0") { InsureValue = el[it.InsureValue - 1] }
       if (it.COD !== "0") { COD = el[it.COD - 1] }
@@ -282,12 +276,7 @@ class Screen extends React.Component {
       if (push_it) {
         data.push(disp)
       } 
-
-
-
     })
-
-
 
     this.props.set_disp_data(data)
 
@@ -317,7 +306,7 @@ class Screen extends React.Component {
 
     //console.log(newData)
     const ObjVal = Object.values(newData)
-
+    // console.log(this.props.store.upload_manifest.import_template, ObjVal)
     if (ObjVal.length > 0) {
 
       const Parseint = ObjVal.map((el) => { return parseInt(el) })
@@ -443,11 +432,23 @@ class Screen extends React.Component {
 
               resolve(this.props.set_disp_status({ Key: disp.Key, Status: "Загружено", Num: result.Number, print_data: result_print_data }))
             },
-            (err) => { console.log(err) }
+            (err) => { 
+              console.log(err) 
+            
+              this.props.modules.set_modal_show(true)
+              this.props.modules.set_modal_header('Ошибка')
+              this.props.modules.set_modal_text(err)
+            }
           );
 
         },
-        (err) => { console.log(err) }
+        (err) => { 
+          console.log(err) 
+        
+          this.props.modules.set_modal_show(true)
+          this.props.modules.set_modal_header('Ошибка')
+          this.props.modules.set_modal_text(err)
+        }
       );
 
     }).then((result) => {
@@ -612,10 +613,6 @@ class Screen extends React.Component {
     this.props.set_disp_data(data)
     this.props.set_upload_manifest_open_modal_dt(false)
     this.props.upload_manifest_reset_template_checkbox()
-
-
-
-
   }
 
   render() {

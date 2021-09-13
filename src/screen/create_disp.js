@@ -256,6 +256,21 @@ RemoveCargo = (index) => {
     this.props.SetRecTerminal(data)
   }
 
+  dataСhecking = () => {
+    if (this.props.store.create_disp.RecAdress.length < 2) {
+      this.props.SetWarningMessage("адрес");
+      this.props.SetWarningAlert(true);
+    } else if (this.props.store.create_disp.RecPhone.length < 6) {
+      this.props.SetWarningMessage("телефон");
+      this.props.SetWarningAlert(true);
+    } else if (this.props.store.create_disp.RecPerson.length < 2) {
+      this.props.SetWarningMessage("контактное лицо");
+      this.props.SetWarningAlert(true);
+    } else {
+      this.sent_disp();
+    }
+  }
+
   sent_disp = () => {
 
     const create_disp_data = {
@@ -296,29 +311,26 @@ RemoveCargo = (index) => {
       CargoInfoType: this.props.store.create_disp.CargoInfoType.value,
 
       Customer: this.props.store.create_disp.PayerSelect.value,
-
-      
     }
 
-    
       this.props.set_active_window("wait");
-  
-      get_data('createcustomerdisp', create_disp_data).then(
-        (result) => {
+
+          get_data('createcustomerdisp', create_disp_data).then(
+            (result) => {
 
               const data = {
                 userkey: this.props.store.login.userkey,
                 status: "Накладная",
                 num: result.Number
               };
-          
+
               get_data('dispatch', data).then(
                 (result) => {
                   this.props.set_data_disp(result);
                   this.props.set_active_window("disp");
                   this.props.set_last_window("create_disp");
                 },
-                (err) => { 
+                (err) => {
                   console.log(err);
                   this.props.set_last_window("create_disp");
                   this.props.set_active_window("");
@@ -328,17 +340,17 @@ RemoveCargo = (index) => {
                   this.props.modules.set_modal_text(err)
                 }
               );
-        },
-        (err) => { 
-          console.log(err);
-          this.props.set_last_window("create_disp");
-          this.props.set_active_window("");
+            },
+            (err) => {
+              console.log(err);
+              this.props.set_last_window("create_disp");
+              this.props.set_active_window("");
 
-          this.props.modules.set_modal_show(true)
-          this.props.modules.set_modal_header('Ошибка')
-          this.props.modules.set_modal_text(err)
-        }
-      );
+              this.props.modules.set_modal_show(true)
+              this.props.modules.set_modal_header('Ошибка')
+              this.props.modules.set_modal_text(err)
+            }
+          );
   }
 
   SelectSendTemplate = (value) => {
@@ -868,11 +880,25 @@ SetTotal = (value) =>{
                 <div className="disp_cargo_table_data">
                   <button onClick={this.CalcPrice.bind(this, total_weight, total_volume)}>Рассчитать стоимость</button>
                 </div>
-                {this.props.store.create_disp.isNew ? ( <Button disabled={disabled} onClick={this.sent_disp.bind(this)}>Создать накладную</Button>):( <Button disabled={disabled} onClick={this.sent_disp.bind(this)}>Сохранить изменения</Button>)}
-
+                
+                {this.props.store.create_disp.isNew ? (<Button disabled={disabled} onClick={this.dataСhecking.bind(this)}>Создать накладную</Button>) : (<Button disabled={disabled} onClick={this.dataСhecking.bind(this)}>Сохранить изменения</Button>)}
                 </div>
                 
-                
+                <Modal
+                  onClose={() => this.props.SetWarningAlert(false)}
+                  open={this.props.store.create_disp.warningAlert}
+                  size='mini'
+                >
+                <Modal.Header>Вы не ввели {this.props.store.create_disp.warningMessage} получателя!</Modal.Header>
+                  <Modal.Actions>
+                    <Button onClick={() => { this.props.SetWarningAlert(false); this.sent_disp()}}>
+                      Продолжить
+                    </Button>
+                    <Button onClick={() => this.props.SetWarningAlert(false)}>
+                      Отмена
+                    </Button>
+                  </Modal.Actions>
+                </Modal>
                 {/* {this.props.store.disp.action === "deliver"  && this.props.store.disp.data.Type === "Доставка" ? (<div>
                 <div className="pod_header">Внести данные о доставке:</div>
                 <div className="pod_data">
@@ -918,6 +944,9 @@ export default connect(
     store: state
   }),
   dispatch => ({
+
+    SetWarningAlert: (param) => { dispatch({ type: 'SetWarningAlert', payload: param }) },
+    SetWarningMessage: (param) => { dispatch({ type: 'SetWarningMessage', payload: param }) },
 
     SetPayerSelect: (param) => { dispatch({ type: 'SetPayerSelect', payload: param }) },
 

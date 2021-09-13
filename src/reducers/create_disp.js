@@ -12,6 +12,9 @@ const today = new Date()
 
 const initialState = {
 
+  warningAlert: false,
+  warningMessage: "",
+
   Price: '0',
 
   CityList: [],
@@ -96,6 +99,9 @@ export default function dispatch (state = initialState, action) {
   switch (action.type) {
     
     case 'reset_create_disp_data': return  initialState 
+
+    case 'SetWarningAlert': return { ...state, warningAlert: action.payload }
+    case 'SetWarningMessage': return { ...state, warningMessage: action.payload }
 
     case 'SetPayerSelect': return { ...state, PayerSelect: action.payload }
 
