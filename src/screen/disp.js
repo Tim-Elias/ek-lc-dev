@@ -679,7 +679,7 @@ class Screen extends React.Component {
                                         {this.props.store.disp.history_loading ? (
                                             <div>
                                                 <Dimmer active inverted>
-                                                    <Loader inverted content='Loading' />
+                                                    <Loader inverted content='Загрузка' />
                                                 </Dimmer>
                                             </div>
                                         ) : (
@@ -708,7 +708,7 @@ class Screen extends React.Component {
                                                                                 {this.props.store.disp.skan_loading ? (
                                                                                     <div className="loader_container">
                                                                                         <Dimmer active inverted>
-                                                                                            <Loader inverted content='Loading' />
+                                                                                            <Loader size='large'>Загрузка</Loader>
                                                                                         </Dimmer>
                                                                                     </div>
                                                                                 ) : (
@@ -748,7 +748,7 @@ class Screen extends React.Component {
                                         {this.props.store.disp.history_loading ? (
                                             <div>
                                                 <Dimmer active inverted>
-                                                    <Loader inverted content='Loading' />
+                                                    <Loader inverted content='Загрузка' />
                                                 </Dimmer>
                                             </div>
                                         ) : (

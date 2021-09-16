@@ -2,11 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { get_data } from './../common/common_modules'
 import { withCookies } from 'react-cookie';
-import { Header, Modal, Table, Button } from 'semantic-ui-react'
+import { Header, Modal, Table, Button, Icon, TableRow, Dimmer, Loader, Image } from 'semantic-ui-react'
 import './disp_map.css';
 import './my_disp.css';
+import './disp.css';
 import Scanner from "../m_screen/scanner";
 import ReactExport from "react-data-export";
+import dispatch from '../reducers/my_disp';
 
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
@@ -101,8 +103,88 @@ class Screen extends React.Component {
 
   click_enter = () => {
     const disp = this.props.store.my_disp.data.filter((el, index) => index == this.props.store.my_disp.active_row)[0]
-    //console.log(disp)
     if (disp) { this.tr_double_click(disp) }
+  }
+
+  show_history = (Number) => {
+    const dispatch = this.props.store.my_disp.data.find(disp => disp.Num === Number);
+
+    if (dispatch.history) {
+      if (dispatch.showHistory) {
+        this.props.set_show_my_disp_history({ Num: Number, value: false });
+      } else {
+        this.props.set_show_my_disp_history({ Num: Number, value: true });
+      }
+    } else {
+      
+        get_data('history', { Number: Number }).then(
+          (result) => {
+            this.props.set_my_disp_history({ Num: Number, history: result });
+          },
+          (err) => {
+            console.log(err)
+            this.props.modules.set_modal_show(true)
+            this.props.modules.set_modal_header('Ошибка')
+            this.props.modules.set_modal_text(err)
+          }
+        );
+    }
+  }
+
+  open_skan = (DocNumber, dispNumber) => {
+    this.props.set_my_disp_skan_loading(true);
+    this.props.set_my_disp_show_skan(true);
+    const data = {
+      num: dispNumber,
+      userkey: this.props.store.login.userkey,
+      DocNumber: DocNumber,
+    }
+    get_data('getskan', data).then(
+      (result) => {
+        this.props.set_my_disp_skan("data:image/jpg;base64," + result);
+        this.props.set_my_disp_skan_loading(false);
+      },
+      (err) => {
+        this.props.modules.set_modal_show(true);
+        this.props.modules.set_modal_header('Ошибка');
+        this.props.modules.set_modal_text(err);
+
+        console.log(err);
+        this.props.set_my_disp_skan_loading(false);
+      }
+    );
+  }
+
+  close_skan = () => {
+    this.props.set_my_disp_show_skan(false);
+    this.props.set_my_disp_skan("");
+  }
+
+  show_all = () => {
+    if (this.props.store.my_disp.show_all) {
+      this.props.store.my_disp.data.map((item, index) => {
+        this.props.set_show_my_disp_history({ Num: item.Num, value: false });
+      })
+      this.props.set_my_disp_show_all(false);
+    } else {
+      const data = this.props.store.my_disp.data.map(item => item = item.Num)
+      
+      get_data('historymass', { data: data }).then(
+        (result) => {
+          result.map(item => this.props.set_my_disp_history({ Num: item.Disp, history: item.Data }))
+
+          this.props.set_my_disp_show_all(true);
+        },
+        (err) => {
+          this.props.modules.set_modal_show(true);
+          this.props.modules.set_modal_header('Ошибка');
+          this.props.modules.set_modal_text(err);
+
+          console.log(err);
+          this.props.set_my_disp_skan_loading(false);
+        }
+      );
+    }
   }
 
   render() {
@@ -723,7 +805,10 @@ class Screen extends React.Component {
                       Статус
                       <button className = 'my_disp_button' type="text" onClick={() => this.props.set_my_disp_focus_input_status()} >
                         Фильтр
-                        </button>
+                      </button>
+                      <button className='my_disp_button' type="text" onClick={() => this.show_all()}>
+                        {this.props.store.my_disp.show_all ? ("Скрыть") : ("Показать у всех")}
+                      </button>
                     </div>
                     {(this.props.store.my_disp.focus_input_status) ?
                       (<div id="myDropdownStatus" className="dropdown-content">
@@ -824,10 +909,7 @@ class Screen extends React.Component {
                     row_className = 'active'
                   }
                 
-                
-
-                  //console.log(row_className)
-                  return (
+                  return ([
                     <Table.Row
                       className={row_className}
                       key={index}
@@ -847,10 +929,71 @@ class Screen extends React.Component {
                       <Table.Cell><div className='small_table_data'>{el.Volume}</div></Table.Cell>
                       <Table.Cell><div className='small_table_data'>{el.DelMethod}</div></Table.Cell>
                       <Table.Cell><div className='small_table_data'>{el.Price}</div></Table.Cell>
-                      <Table.Cell><div className='small_table_data'>{el.Status}</div></Table.Cell>
+                      <Table.Cell>
+                        <div className='small_table_data' style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                          {el.Status}
+                          <div className={el.showHistory ? ("open my_disp_button_more"): ("my_disp_button_more")} onClick={() => this.show_history(el.Num)}>
+                            <span className="my_disp_button_more-left"></span>
+                            <span className="my_disp_button_more-right"></span>
+                          </div>
+                        </div>
+                      </Table.Cell>
                       <Table.Cell><div className='small_table_data'>{el.Recient}</div></Table.Cell>
                       <Table.Cell><div className='small_table_data'>{el.RecDate}</div></Table.Cell>
-                    </Table.Row>)
+                    </Table.Row>,
+                    (el.history && el.showHistory) ? (
+                       <Table.Row  key={index + "history"}>
+
+                        <Table.Cell colSpan='16'>
+                          <Table style={{ width: "calc(100% - 80px)", margin: "0 auto" }}>
+                            <Table.Header>
+                              <Table.Row>
+                                <Table.HeaderCell>Дата</Table.HeaderCell>
+                                <Table.HeaderCell>Статус</Table.HeaderCell>
+                                <Table.HeaderCell>Комментарий</Table.HeaderCell>
+                              </Table.Row>
+                            </Table.Header>
+                            <Table.Body>
+                              
+                              {el.history.map((historyEl, historyElIndex) =>
+                                <Table.Row key={historyElIndex}>
+                                  <Table.Cell><div className='small_table_data'>{historyEl.Date}</div></Table.Cell>
+                                  <Table.Cell>
+                                    <div className='small_table_data'>
+                                      {historyEl.Status}
+                                      {historyEl.Skan != 0 ? (
+                                        <Modal
+                                          trigger={<button className="disp_skan_button" onClick={() => this.open_skan(historyEl.DocNumber, el.Num)}>(Получить скан)</button>}
+                                          open={this.props.store.my_disp.show_skan}
+                                          onClose={this.close_skan.bind(this)}
+                                        >
+                                          <Modal.Content>
+                                            <Modal.Description>
+                                              {this.props.store.my_disp.skan_loading ? (
+                                                <div className="loader_container">
+                                                  <Dimmer active inverted>
+                                                    <Loader size='large' content='Загрузка'></Loader>
+                                                  </Dimmer>
+                                                </div>
+                                              ) : (
+                                                <img className="disp_skan" src={this.props.store.my_disp.skan} />
+                                              )}
+                                            </Modal.Description>
+                                          </Modal.Content>
+                                        </Modal>
+                                      ) : (null)}
+                                    </div>
+                                  </Table.Cell>
+                                  <Table.Cell><div className='small_table_data'>{historyEl.Comment}</div></Table.Cell>
+                                </Table.Row>)}
+
+                            </Table.Body>
+                          </Table>
+                          </Table.Cell>
+
+                       </Table.Row>
+                    ) : (null)
+                  ])
                 }
                 )}
               </Table.Body>
@@ -865,6 +1008,14 @@ class Screen extends React.Component {
 export default withCookies(connect(
   (state, ownProps) => ({ store: state, cookies: ownProps.cookies }),
   dispatch => ({
+
+    set_my_disp_show_skan: (param) => { dispatch({ type: 'set_my_disp_show_skan', payload: param }) },
+    set_my_disp_skan_loading: (param) => { dispatch({ type: 'set_my_disp_skan_loading', payload: param }) },
+    set_my_disp_skan: (param) => { dispatch({ type: 'set_my_disp_skan', payload: param }) },
+    set_my_disp_show_all: (param) => { dispatch({ type: 'set_my_disp_show_all', payload: param }) },
+
+    set_show_my_disp_history: (param) => { dispatch({ type: 'set_show_my_disp_history', payload: param }) },
+    set_my_disp_history: (param) => { dispatch({ type: 'set_my_disp_history', payload: param }) },
 
     set_type_search: (param) => { dispatch({ type: 'set_type_search', payload: param }) },
     set_search: (param) => { dispatch({ type: 'set_search', payload: param }) },

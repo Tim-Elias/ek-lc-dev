@@ -257,7 +257,7 @@ RemoveCargo = (index) => {
   }
 
   dataСhecking = () => {
-    if (this.props.store.create_disp.RecAdress.length < 2) {
+    if (this.props.store.create_disp.RecAdress.length < 2 && this.props.store.create_disp.RecTerminal === false) {
       this.props.SetWarningMessage("адрес");
       this.props.SetWarningAlert(true);
     } else if (this.props.store.create_disp.RecPhone.length < 6) {
@@ -519,7 +519,7 @@ SetTotal = (value) =>{
                           </div>
                         ) : (null)}
                         {this.props.store.create_disp.customNumberLoader ? (
-                          <div className="loader"></div>
+                          <div className="loader_custom"></div>
                         ) : (null)}
                         {this.props.store.create_disp.availableNumber === false ? (
                           <div style={{fontSize: "11px", margin: "0 0 0 5px"}}>Накладная с таким номером уже существует!</div>
@@ -875,7 +875,6 @@ SetTotal = (value) =>{
 
                 {/* <div className="disp_cargo_table_data">
                   <input value={this.props.store.create_disp.Price} />
-                  
                 </div> */}
                 <div className="disp_cargo_table_data">
                   <button onClick={this.CalcPrice.bind(this, total_weight, total_volume)}>Рассчитать стоимость</button>

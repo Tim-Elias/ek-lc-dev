@@ -33,6 +33,11 @@ const initialState = {
     del_method_filter: [],
     status_filter: [],
 
+    show_skan: false,
+    skan_loading: false,
+    skan: "",
+    show_all: false,
+
     error_mesage: "",
     
     //send_city_filter: [{id:0,check:true,name:"Новосибирск"},{id:1,check:false,name:"Томск"},{id:2,check:true,name:"Бийск"}]
@@ -40,6 +45,29 @@ const initialState = {
   
   export default function dispatch (state = initialState, action) {
     switch (action.type) {
+
+      case 'set_my_disp_skan_loading': return { ...state, skan_loading: action.payload }
+      case 'set_my_disp_show_skan': return { ...state, show_skan: action.payload }
+      case 'set_my_disp_skan': return { ...state, skan: action.payload }
+      case 'set_my_disp_show_all': return { ...state, show_all: action.payload }
+
+      case 'set_show_my_disp_history': return {
+        ...state, data: state.data.map((item, index) => {
+          if (item.Num === action.payload.Num) {
+            return { ...item, showHistory: action.payload.value }
+          } else {
+            return { ...item }
+          }
+        })
+      }
+
+      case 'set_my_disp_history': return { ...state, data: state.data.map((item, index) => {
+        if (item.Num === action.payload.Num) {
+          return { ...item, showHistory: true, history: action.payload.history }
+        } else {
+          return { ...item }
+        }
+      }) }
 
       case 'set_erroe_mesage': return { ...state, error_mesage: action.payload }
 
