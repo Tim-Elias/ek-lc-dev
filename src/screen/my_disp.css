@@ -60,3 +60,61 @@
     height: calc(100vh - 187px);
     overflow-y: scroll;
 }
+
+
+.my_disp_button_more {
+    position: relative;
+    cursor: pointer;
+    margin-right: 5px;
+}
+.my_disp_button_more-left {
+    background-color: transparent;
+    width: 10px;
+    height: 3px;
+    display: block;
+    transform: rotate(35deg);
+    float: right;
+    border-radius: 2px;
+}
+.my_disp_button_more-left:after {
+    content: "";
+    background-color: #2443B5;
+    width: 10px;
+    height: 3px;
+    display: block;
+    float: right;
+    border-radius: 6px 10px 10px 6px;
+    transition: all 0.5s cubic-bezier(0.25, 1.7, 0.35, 0.8);
+    z-index: -1;
+}
+ 
+.my_disp_button_more-right {
+    position: absolute;
+    background-color: transparent;
+    left: 7px;
+    width: 10px;
+    height: 3px;
+    display: block;
+    transform: rotate(-35deg);
+    float: right;
+    border-radius: 2px;
+}
+.my_disp_button_more-right:after {
+    content: "";
+    background-color: #2443B5;
+    width: 10px;
+    height: 3px;
+    display: block;
+    float: right;
+    border-radius: 10px 6px 6px 10px;
+    transition: all 0.5s cubic-bezier(0.25, 1.7, 0.35, 0.8);
+    z-index: -1;
+}
+.open .my_disp_button_more-left:after {
+    transform-origin: center center;
+    transform: rotate(-70deg);
+}
+.open .my_disp_button_more-right:after {
+    transform-origin: center center;
+    transform: rotate(70deg);
+}
