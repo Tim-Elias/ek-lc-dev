@@ -298,7 +298,7 @@ RemoveCargo = (index) => {
       RecAddInfo: this.props.store.create_disp.RecAddInfo,
       RecEmail: this.props.store.create_disp.RecEmail,
       RecTerminal: this.props.store.create_disp.RecTerminal, 
-      RecSelectTerminal: this.props.store.create_disp.RecSelectTerminal,
+      RecSelectTerminal: this.props.store.create_disp.RecSelectTerminal.value,
       RecEmailInformer: this.props.store.create_disp.RecEmailInformer,
 
       Cargo: this.props.store.create_disp.Cargo,

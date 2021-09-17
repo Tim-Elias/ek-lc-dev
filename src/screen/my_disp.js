@@ -63,7 +63,6 @@ class Screen extends React.Component {
 
     get_data('dispatch', data).then(
       (result) => {
-
         this.props.set_data_disp(result);
         this.props.set_active_window("disp");
         this.props.set_last_window("my_disp");
