@@ -195,7 +195,7 @@ td {
 .disp_data_input{
   margin: 3px;
   font-size: 13px;
-  border-bottom: #c0c0c0 solid 1px;
+  /* border-bottom: #c0c0c0 solid 1px; */
 }
 
 .disp_cargo_table{
