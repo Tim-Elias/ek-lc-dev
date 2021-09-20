@@ -314,7 +314,7 @@ RemoveCargo = (index) => {
     }
 
       this.props.set_active_window("wait");
-
+      
           get_data('createcustomerdisp', create_disp_data).then(
             (result) => {
 
@@ -528,8 +528,14 @@ SetTotal = (value) =>{
                     ) : (null)}
                     <div className="disp_data_label">Вид доставки:</div>
                     <div className="disp_data_el">{this.props.store.create_disp.DelMethod}</div>
-                    <div className="disp_data_label">Дата заявки:</div>
-                    <div className="disp_data_el"><input onChange={e => this.props.SetDispDate(e.target.value)} value={this.props.store.create_disp.DispDate} className="DispDate" type="date"></input></div>
+                    {(this.props.store.create_disp.DelMethod === "Дверь - Дверь" || this.props.store.create_disp.DelMethod === "Дверь - Склад") ? (
+                      <div className="disp_data_label">Дата заявки:</div>
+                    ) : (null)}
+                    {(this.props.store.create_disp.DelMethod === "Дверь - Дверь" || this.props.store.create_disp.DelMethod === "Дверь - Склад") ? (
+                      <div className="disp_data_el">
+                        <input onChange={e => this.props.SetDispDate(e.target.value)} value={this.props.store.create_disp.DispDate} className="DispDate" type="date"></input>
+                      </div>
+                    ) : (null)}
                     <div className="disp_data_label">Тип оплаты:</div>
                     <div className="disp_data_el ">
                     <Select

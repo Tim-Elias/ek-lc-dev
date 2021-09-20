@@ -269,7 +269,11 @@ export default function dispatch (state = initialState, action) {
       return { ...state, Cargo: state.Cargo }
 
     case 'SetCargoInfoType': return { ...state, CargoInfoType: action.payload }
-    case 'SetDispDate': return { ...state, DispDate: action.payload }
+    case 'SetDispDate': if(action.payload < date) {
+      return { ...state }
+    } else {
+      return { ...state, DispDate: action.payload }
+    }
     case 'SetTotal': return { ...state, Total: action.payload }
     case 'SetWeight': return { ...state, Weight: action.payload }
     case 'SetVolume': return { ...state, Volume: action.payload }
