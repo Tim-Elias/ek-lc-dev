@@ -39,9 +39,9 @@ class Screen extends React.Component {
 
                     this.get_list(result.userkey);
 
-                    this.props.cookies.set('username', this.props.store.login.username)
-                    this.props.cookies.set('userkey', result.userkey)
-                    this.props.cookies.set('passkey', md5(this.props.store.login.pass))
+                    localStorage.setItem('username', this.props.store.login.username)
+                    localStorage.setItem('userkey', result.userkey)
+                    localStorage.setItem('passkey', md5(this.props.store.login.pass))
 
                 },
                 (err) => {
