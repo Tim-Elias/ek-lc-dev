@@ -16,28 +16,25 @@ class Screen extends Component {
   render() {
 
     if(!this.props.store.login.logged){
-       const username = this.props.cookies.get('username') 
+      const username = localStorage.getItem('username')
 
         if(username!==undefined){
-            //console.log('un')
             const authdata = {
-                username: this.props.cookies.get('username'),
-                pass: this.props.cookies.get('passkey') 
+              username: localStorage.getItem('username'),
+              pass: localStorage.getItem('passkey')
             };
 
-            //console.log(authdata)
             get_data('autorization', authdata).then(
                 (result) => {
-                  //console.log(result)
                   this.props.login(result);
                   //this.get_list(result.userkey);
-                  this.props.cookies.set('userkey', result.userkey, { maxAge: 30 })
+                  localStorage.setItem('userkey', result.userkey);
                 },
                 (err) => { 
-                    console.log(err)
-                    this.props.cookies.remove('username')
-                    this.props.cookies.remove('passkey')
-                 }
+                  console.log(err)
+                  localStorage.removeItem('username');
+                  localStorage.removeItem('passkey');
+                }
             );
         } 
         

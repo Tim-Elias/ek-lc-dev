@@ -33,7 +33,7 @@ class Screen extends React.Component {
     componentDidMount() {
         if (this.props.store.general.active_window === "home") {
             
-            const wind = this.props.cookies.get('window')
+            const wind = localStorage.getItem('window')
             if (wind == undefined){
                 this.props.set_active_window("m_storage")
             }else{
@@ -42,8 +42,8 @@ class Screen extends React.Component {
 
                     const data = {
                         userkey: this.props.store.login.userkey,
-                        status: this.props.cookies.get('status'),
-                        num: this.props.cookies.get('num'),
+                        status: localStorage.getItem('status'),
+                        num: localStorage.getItem('num'),
                     };
 
                     this.props.set_key(data);

@@ -30,9 +30,9 @@ class Screen extends React.Component {
 
                 get_data('list', list_data).then(
                     (result) => {
-                        this.props.cookies.remove('num');
-                        this.props.cookies.remove('status');
-                        this.props.cookies.remove('window');
+                        localStorage.removeItem('num');
+                        localStorage.removeItem('status');
+                        localStorage.removeItem('window');
                         console.log(result);
                         alert("Данные отправлены!")
                         this.props.set_active_window("m_storage");
