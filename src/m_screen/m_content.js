@@ -33,7 +33,13 @@ class Screen extends React.Component {
     componentDidMount() {
         if (this.props.store.general.active_window === "home") {
             
-            const wind = localStorage.getItem('window')
+            let wind;
+            try {
+                wind = localStorage.getItem('window')
+            } catch (error) {
+                wind = undefined;
+            }
+
             if (wind == undefined){
                 this.props.set_active_window("m_storage")
             }else{

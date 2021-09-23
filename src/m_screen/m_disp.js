@@ -13,9 +13,14 @@ class Screen extends React.Component {
     }
 
     loadData = (num = this.props.store.disp.key.num, status = this.props.store.disp.key.status) => {
-        localStorage.setItem('window', 'm_disp')
-        localStorage.setItem('num', num)
-        localStorage.setItem('status', status)
+        
+        try {
+            localStorage.setItem('window', 'm_disp');
+            localStorage.setItem('num', num);
+            localStorage.setItem('status', status);
+        } catch (error) {
+            
+        }
 
         this.props.set_active_loader(true);
         

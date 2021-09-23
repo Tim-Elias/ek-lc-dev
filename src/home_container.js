@@ -16,7 +16,13 @@ class Screen extends Component {
   render() {
 
     if(!this.props.store.login.logged){
-      const username = localStorage.getItem('username')
+      let username;
+      try {
+        username = localStorage.getItem('username');
+      } catch (error) {
+        username = undefined;
+      }
+      
 
         if(username!==undefined){
             const authdata = {
