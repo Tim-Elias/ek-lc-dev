@@ -27,6 +27,17 @@ const CargoTypeList = [
   {label:"Прочее", value: "Прочее"}
 ]
 
+const today = new Date();
+let mm = today.getMonth() + 1;
+let dd = today.getDate();
+
+const y = today.getFullYear();
+
+if (mm < 10) { mm = '0' + mm }
+if (dd < 10) { dd = '0' + dd }
+
+const date = y + '-' + mm + '-' + dd;
+
 class Screen extends React.Component {
 
 CalcPrice = (total_weight, total_volume) => {
@@ -438,6 +449,8 @@ SetTotal = (value) =>{
         this.props.set_disp_template_list(result);
         this.props.SetCustomNumber(false);
         this.props.SetAvailableNumber(null);
+
+        this.props.SetDispDate(date);
       },
       (err) => { 
         console.log(err) 
@@ -533,7 +546,7 @@ SetTotal = (value) =>{
                     ) : (null)}
                     {(this.props.store.create_disp.DelMethod === "Дверь - Дверь" || this.props.store.create_disp.DelMethod === "Дверь - Склад") ? (
                       <div className="disp_data_el">
-                        <input onChange={e => this.props.SetDispDate(e.target.value)} value={this.props.store.create_disp.DispDate} className="DispDate" type="date"></input>
+                        <input onChange={e =>  e.target.value < date ? (null) : (this.props.SetDispDate(e.target.value)) } value={this.props.store.create_disp.DispDate} className="DispDate" type="date"></input>
                       </div>
                     ) : (null)}
                     <div className="disp_data_label">Тип оплаты:</div>
