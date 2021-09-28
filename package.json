@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@opuscapita/react-icons": "^4.0.12",
-    "axios": "^0.21.1",
+    "axios": "^0.21.2",
     "google-map-react": "^1.1.7",
     "jslib-html5-camera-photo": "^3.1.6",
     "md5": "^2.2.1",
