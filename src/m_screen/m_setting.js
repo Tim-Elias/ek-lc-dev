@@ -40,7 +40,7 @@ class Screen extends React.Component {
     }
 
     cookie = () => {
-        this.props.cookies.set('test', "cookie", { maxAge: 30 })
+        this.props.cookies.set('test', "привет ааа", { maxAge: 300000 })
     }
 
     cookieShow = () => {
@@ -101,8 +101,8 @@ class Screen extends React.Component {
                         </div>
                     </div>
 
-                    <button onClick={() => this.cookie()}>Записать куки</button>
-                    <button onClick={() => this.cookieShow()}>Проверить куки</button>
+                    {/* <button onClick={() => this.cookie()}>Записать куки</button>
+                    <button onClick={() => this.cookieShow()}>Проверить куки</button> */}
                 </div>
         );
     }
