@@ -5,6 +5,7 @@ import { Button } from 'semantic-ui-react';
 import './mobile_setting.css';
 import '../App.css';
 import ReactToPrint from 'react-to-print';
+import { withCookies } from 'react-cookie';
 
 class Screen extends React.Component {
 
@@ -38,6 +39,14 @@ class Screen extends React.Component {
 
     }
 
+    cookie = () => {
+        this.props.cookies.set('test', "cookie", { maxAge: 30 })
+    }
+
+    cookieShow = () => {
+        alert(this.props.cookies.get('test'))
+    }
+
     render() {
 
         window.history.pushState(null, "", window.location.href);
@@ -59,45 +68,47 @@ class Screen extends React.Component {
         }
 
         return (
+                <div className="mobile_setting">
+                    <div className="mobile_heading">Настройки</div>
+                    <div className="disp_Number">
+                        <div>{this.props.store.login.email !== this.props.store.login.original_data.email
+                            || this.props.store.login.alias !== this.props.store.login.original_data.username
+                            || this.props.store.login.default_send !== this.props.store.login.original_data.default_send
+                            || this.props.store.login.default_rec !== this.props.store.login.original_data.default_rec
+                            || this.props.store.login.phone !== this.props.store.login.original_data.phone ? (
+                                <Button style={{ margin: '0 10px' }} onClick={this.save_changes_user_data.bind(this)}>Сохранить изменения</Button>
+                            ) : (
+                                <Button style={{ margin: '0 10px' }} disabled>Сохранить изменения</Button>
+                        )}</div>
+                    </div>
+                    <div className="setting_general_data setting_general_data_mobile">
+                        <div className="mobile_disp_data_label">Код пользователя:</div>
+                        <div className="mobile_disp_data_el">{this.props.store.login.userkey}</div>
+                        <div className="mobile_disp_data_label">Имя пользователя:</div>
+                        <div className="mobile_disp_data_el"><input maxLength="100" className="create_disp_data_input" onChange={e => this.props.set_user_name(e.target.value)} value={this.props.store.login.alias} type="text" placeholder="введите имя пользователя..." /></div>
+                    </div>
 
-            <div className="mobile_setting">
-                <div className="mobile_heading">Настройки</div>
-                <div className="disp_Number">
-                    <div>{this.props.store.login.email !== this.props.store.login.original_data.email
-                        || this.props.store.login.alias !== this.props.store.login.original_data.username
-                        || this.props.store.login.default_send !== this.props.store.login.original_data.default_send
-                        || this.props.store.login.default_rec !== this.props.store.login.original_data.default_rec
-                        || this.props.store.login.phone !== this.props.store.login.original_data.phone ? (
-                            <Button style={{ margin: '0 10px' }} onClick={this.save_changes_user_data.bind(this)}>Сохранить изменения</Button>
-                        ) : (
-                            <Button style={{ margin: '0 10px' }} disabled>Сохранить изменения</Button>
-                    )}</div>
-                </div>
-                <div className="setting_general_data setting_general_data_mobile">
-                    <div className="mobile_disp_data_label">Код пользователя:</div>
-                    <div className="mobile_disp_data_el">{this.props.store.login.userkey}</div>
-                    <div className="mobile_disp_data_label">Имя пользователя:</div>
-                    <div className="mobile_disp_data_el"><input maxLength="100" className="create_disp_data_input" onChange={e => this.props.set_user_name(e.target.value)} value={this.props.store.login.alias} type="text" placeholder="введите имя пользователя..." /></div>
-                </div>
+                    <div className="mobile_disp_button">
+                        <ReactToPrint
+                            trigger={() => <Button>Тестовая печать</Button>}
+                            content={() => this.componentRef}
+                        />
 
-                <div className="mobile_disp_button">
-                    <ReactToPrint
-                        trigger={() => <Button>Тестовая печать</Button>}
-                        content={() => this.componentRef}
-                    />
-
-                    <div style={{ display: "none" }}>
-                        <div ref={el => (this.componentRef = el)}>
-                            Test message.
+                        <div style={{ display: "none" }}>
+                            <div ref={el => (this.componentRef = el)}>
+                                Test message.
+                            </div>
                         </div>
                     </div>
+
+                    <button onClick={() => this.cookie()}>Записать куки</button>
+                    <button onClick={() => this.cookieShow()}>Проверить куки</button>
                 </div>
-            </div>
         );
     }
 };
 
-export default connect(
+export default withCookies(connect(
     (state) => ({ store: state }),
     dispatch => ({
         set_user_email: (param) => { dispatch({ type: 'set_user_email', payload: param }) },
@@ -108,4 +119,4 @@ export default connect(
         save_changes_user_data: (param) => { dispatch({ type: 'save_changes_user_data', payload: param }) },
         set_active_window: (param) => { dispatch({ type: 'set_active_window', payload: param }) },
     })
-)(Screen);
+)(Screen));

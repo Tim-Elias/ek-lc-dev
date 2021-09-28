@@ -15,9 +15,12 @@ class Screen extends React.Component {
     loadData = (num = this.props.store.disp.key.num, status = this.props.store.disp.key.status) => {
         
         try {
-            localStorage.setItem('window', 'm_disp');
-            localStorage.setItem('num', num);
-            localStorage.setItem('status', status);
+            // localStorage.setItem('window', 'm_disp');
+            // localStorage.setItem('num', num);
+            // localStorage.setItem('status', status);
+            this.props.cookies.set('window', 'm_disp', { maxAge: 1000000000000 })
+            this.props.cookies.set('num', num, { maxAge: 1000000000000 })
+            this.props.cookies.set('status', status, { maxAge: 1000000000000 })
         } catch (error) {
             
         }

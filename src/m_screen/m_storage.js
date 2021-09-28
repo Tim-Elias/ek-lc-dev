@@ -76,14 +76,23 @@ class Screen extends React.Component {
         //     console.log(message);
         // };
 
-        if (localStorage.getItem('num')) {
-            localStorage.removeItem('num');
+        // if (localStorage.getItem('num')) {
+        //     localStorage.removeItem('num');
+        // }
+        if (this.props.cookies.get('num')) {
+            this.props.cookies.remove('num');
         }
-        if (localStorage.getItem('status')) {
-            localStorage.removeItem('status');
+        // if (localStorage.getItem('status')) {
+        //     localStorage.removeItem('status');
+        // }
+        if (this.props.cookies.get('status')) {
+            this.props.cookies.remove('status');
         }
-        if (localStorage.getItem('window')) {
-            localStorage.removeItem('window');
+        // if (localStorage.getItem('window')) {
+        //     localStorage.removeItem('window');
+        // }
+        if (this.props.cookies.get('window')) {
+            this.props.cookies.remove('window');
         }
 
         // if ('serviceWorker' in navigator) {

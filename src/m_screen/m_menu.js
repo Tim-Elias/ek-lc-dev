@@ -48,8 +48,10 @@ class Screen extends React.Component {
 
     logout = () => {
         try {
-            localStorage.removeItem('username')
-            localStorage.removeItem('passkey')
+            // localStorage.removeItem('username')
+            // localStorage.removeItem('passkey')
+            this.props.cookies.remove('username')
+            this.props.cookies.remove('passkey')
         } catch (error) {
             
         }

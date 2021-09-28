@@ -35,7 +35,8 @@ class Screen extends React.Component {
             
             let wind;
             try {
-                wind = localStorage.getItem('window')
+                // wind = localStorage.getItem('window')
+                wind = this.props.cookies.get('window')
             } catch (error) {
                 wind = undefined;
             }
@@ -48,8 +49,10 @@ class Screen extends React.Component {
 
                     const data = {
                         userkey: this.props.store.login.userkey,
-                        status: localStorage.getItem('status'),
-                        num: localStorage.getItem('num'),
+                        // status: localStorage.getItem('status'),
+                        // num: localStorage.getItem('num'),
+                        status: this.props.cookies.get('status'),
+                        num: this.props.cookies.get('num'),
                     };
 
                     this.props.set_key(data);

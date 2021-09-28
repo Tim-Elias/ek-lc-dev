@@ -18,7 +18,8 @@ class Screen extends Component {
     if(!this.props.store.login.logged){
       let username;
       try {
-        username = localStorage.getItem('username');
+        // username = localStorage.getItem('username');
+        username = this.props.cookies.get('username');
       } catch (error) {
         username = undefined;
       }
@@ -26,20 +27,25 @@ class Screen extends Component {
 
         if(username!==undefined){
             const authdata = {
-              username: localStorage.getItem('username'),
-              pass: localStorage.getItem('passkey')
+              // username: localStorage.getItem('username'),
+              // pass: localStorage.getItem('passkey')
+              username: this.props.cookies.get('username'),
+              pass: this.props.cookies.get('passkey')
             };
 
             get_data('autorization', authdata).then(
                 (result) => {
                   this.props.login(result);
                   //this.get_list(result.userkey);
-                  localStorage.setItem('userkey', result.userkey);
+                  // localStorage.setItem('userkey', result.userkey);
+                  this.props.cookies.set('userkey', result.userkey, { maxAge: 30 })
                 },
                 (err) => { 
                   console.log(err)
-                  localStorage.removeItem('username');
-                  localStorage.removeItem('passkey');
+                  // localStorage.removeItem('username');
+                  // localStorage.removeItem('passkey');
+                  this.props.cookies.remove('username')
+                  this.props.cookies.remove('passkey')
                 }
             );
         } 

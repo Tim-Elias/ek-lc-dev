@@ -31,9 +31,12 @@ class Screen extends React.Component {
                 get_data('list', list_data).then(
                     (result) => {
                         try {
-                            localStorage.removeItem('num');
-                            localStorage.removeItem('status');
-                            localStorage.removeItem('window');
+                            // localStorage.removeItem('num');
+                            // localStorage.removeItem('status');
+                            // localStorage.removeItem('window');
+                            this.props.cookies.remove('num');
+                            this.props.cookies.remove('status');
+                            this.props.cookies.remove('window');
                         } catch (error) {
                             
                         }
