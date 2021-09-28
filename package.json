@@ -12,7 +12,7 @@
     "qrcode.react": "^1.0.0",
     "react": "^16.12.0",
     "react-barcode": "^1.4.0",
-    "react-cookie": "^3.1.2",
+    "react-cookie": "^4.1.1",
     "react-data-export": "^0.6.0",
     "react-dom": "^16.12.0",
     "react-dropdown-select": "^4.0.0",
@@ -27,7 +27,7 @@
     "redux-devtools-extension": "^2.13.8",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.88.2",
-    "xlsx": "^0.16.9"
+    "xlsx": "^0.17.2"
   },
   "scripts": {
     "start": "react-scripts start",
