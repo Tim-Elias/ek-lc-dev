@@ -38,8 +38,10 @@ class Screen extends Component {
     };
 
     logout = () => {
-        localStorage.removeItem('username')
-        localStorage.removeItem('passkey')
+        // localStorage.removeItem('username')
+        // localStorage.removeItem('passkey')
+        this.props.cookies.remove('username')
+        this.props.cookies.remove('passkey')
         this.props.logout();
         this.props.set_active_window("home");
     };
@@ -59,9 +61,12 @@ class Screen extends Component {
                     
                     this.get_list(result.userkey); 
 
-                    localStorage.setItem('username', this.props.store.login.username)
-                    localStorage.setItem('userkey', result.userkey)
-                    localStorage.setItem('passkey', md5(this.props.store.login.pass))
+                    // localStorage.setItem('username', this.props.store.login.username)
+                    // localStorage.setItem('userkey', result.userkey)
+                    // localStorage.setItem('passkey', md5(this.props.store.login.pass))
+                    this.props.cookies.set('username', this.props.store.login.username)
+                    this.props.cookies.set('userkey', result.userkey)
+                    this.props.cookies.set('passkey', md5(this.props.store.login.pass))
 
                 },
                 (err) => {
