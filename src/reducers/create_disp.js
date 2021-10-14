@@ -265,7 +265,7 @@ export default function dispatch (state = initialState, action) {
     case 'SetTermo': return { ...state, PayType: action.payload }
     case 'SetIRR': return { ...state, PayType: action.payload }
     case 'SetFragile': return { ...state, PayType: action.payload }
-    case 'SetDelType': return { ...state, PayType: action.payload }
+    case 'SetDelType': return { ...state, DelType: action.payload.value }
 
     case 'SetCustomerEmailInformer': return { ...state, CustomerEmailInformer: action.payload }
 
@@ -282,7 +282,6 @@ export default function dispatch (state = initialState, action) {
       {label:"Мешок под пломбой", value: "МешокПодПломбой"},
       {label:"Прочее", value: "Прочее"}
     ]
-    console.log(action.payload.Cargo)
 
 
     return { ...state, 

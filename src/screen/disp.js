@@ -781,7 +781,6 @@ class Screen extends React.Component {
                         ):(null)}
 
                     </div>
-                    {/* ////////////////////// */}
 
                 </div>
                 <div className="disp_customer_data">
@@ -791,7 +790,13 @@ class Screen extends React.Component {
                     <div className="disp_data_el">{this.props.store.disp.data.DelMethod}</div>
                     <div className="disp_data_label">Тип оплаты:</div>
                     <div className="disp_data_el">{this.props.store.disp.data.PayType}</div>
-
+                    {this.props.store.login.userkey === "000000093" ? (
+                        <div className="disp_data_label">Срочность:</div>
+                    ) : (null)}
+                    {this.props.store.login.userkey === "000000093" ? (
+                        <div className="disp_data_el">{this.props.store.disp.data.DelType}</div>
+                    ) : (null)}
+                    
                 </div>
 
                 <div className="disp_address_data">

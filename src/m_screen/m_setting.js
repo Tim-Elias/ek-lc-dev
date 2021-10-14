@@ -40,7 +40,7 @@ class Screen extends React.Component {
     }
 
     cookie = () => {
-        this.props.cookies.set('test', "привет ааа", { maxAge: 300000 })
+        this.props.cookies.set('test', "Сookies work", { maxAge: 1000000000000 })
     }
 
     cookieShow = () => {
@@ -101,8 +101,10 @@ class Screen extends React.Component {
                         </div>
                     </div>
 
-                    {/* <button onClick={() => this.cookie()}>Записать куки</button>
-                    <button onClick={() => this.cookieShow()}>Проверить куки</button> */}
+                    <div className="mobile_disp_button" style={{ justifyContent: "left" }}>
+                        <Button onClick={() => this.cookie()}>Записать куки</Button>
+                        <Button onClick={() => this.cookieShow()}>Проверить куки</Button>
+                    </div>
                 </div>
         );
     }

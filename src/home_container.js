@@ -12,7 +12,6 @@ import MLogin from './m_screen/m_login';
 
 class Screen extends Component {
 
-    
   render() {
 
     if(!this.props.store.login.logged){
@@ -23,7 +22,6 @@ class Screen extends Component {
       } catch (error) {
         username = undefined;
       }
-      
 
         if(username!==undefined){
             const authdata = {
@@ -38,14 +36,14 @@ class Screen extends Component {
                   this.props.login(result);
                   //this.get_list(result.userkey);
                   // localStorage.setItem('userkey', result.userkey);
-                  this.props.cookies.set('userkey', result.userkey, { maxAge: 30 })
+                this.props.cookies.set('userkey', result.userkey, { maxAge: 1000000000000 });
                 },
-                (err) => { 
+                (err) => {
                   console.log(err)
                   // localStorage.removeItem('username');
                   // localStorage.removeItem('passkey');
-                  this.props.cookies.remove('username')
-                  this.props.cookies.remove('passkey')
+                  this.props.cookies.remove('username');
+                  this.props.cookies.remove('passkey');
                 }
             );
         } 

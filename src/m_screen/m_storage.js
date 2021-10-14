@@ -155,7 +155,7 @@ class Screen extends React.Component {
                                 Поиск:
                             </div>
                             <input className="mobile_search_input" value={this.props.store.storage.search} onChange={(e) => { this.props.set_search_storagre(e.target.value) }} />
-                            <img src={update} className="update" onClick={this.update.bind(this)} />
+                            <img src={update} className="update" onClick={this.update.bind(this)} alt="" />
                             <img src={scanner} className="update" onClick={e => this.props.set_scann_active(!this.props.store.storage.scann_active)} />
                         </div>
 

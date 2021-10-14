@@ -290,6 +290,8 @@ RemoveCargo = (index) => {
       isNew: this.props.store.create_disp.isNew,
       PayType: this.props.store.create_disp.PayType.value,
       DispDate: this.props.store.create_disp.DispDate,
+      DelType: this.props.store.create_disp.DelType,
+
       SendCity: this.props.store.create_disp.SendCity, 
       SendAdress: this.props.store.create_disp.SendAdress,
       SendCompany: this.props.store.create_disp.SendCompany,
@@ -451,8 +453,10 @@ SetTotal = (value) =>{
         this.props.SetAvailableNumber(null);
 
         this.props.SetDispDate(date);
+
+        this.props.SetDelType({ label: "Стандарт", value: "Стандарт" });
       },
-      (err) => { 
+      (err) => {
         console.log(err) 
         this.props.set_last_window("create_disp");
         this.props.set_active_window("");
@@ -587,6 +591,28 @@ SetTotal = (value) =>{
                         onChange={(value) => this.PayerSelect(value)}
                       />
                     </div>) : (null)}
+
+                    {this.props.store.login.userkey === "000000093" ? (
+                      <div className="disp_data_label">Срочность:</div>
+                    ) : (null)}
+                    
+                    {this.props.store.login.userkey === "000000093" ? (
+                      <div className="disp_data_el ">
+                        <Select
+                          options={
+                            [
+                              { label: "Стандарт", value: "Стандарт" },
+                              { label: "Экспресс", value: "Экспресс" },
+                              { label: "СуперЭкспресс", value: "СуперЭкспресс" }
+                            ]
+                          }
+                          styles={customStyles}
+                          value={{ label: this.props.store.create_disp.DelType, value: this.props.store.create_disp.DelType }}
+                          onChange={(value) => this.props.SetDelType(value)}
+                        />
+                      </div>
+                    ) : (null)}
+                    
                 </div>
 
                 <div className="disp_address_data">
@@ -962,6 +988,8 @@ export default connect(
     store: state
   }),
   dispatch => ({
+
+    SetDelType: (param) => { dispatch({ type: 'SetDelType', payload: param }) },
 
     SetWarningAlert: (param) => { dispatch({ type: 'SetWarningAlert', payload: param }) },
     SetWarningMessage: (param) => { dispatch({ type: 'SetWarningMessage', payload: param }) },

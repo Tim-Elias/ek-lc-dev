@@ -42,7 +42,6 @@ class Screen extends React.Component {
             );
         } else if (window === 'm_storage') {
             this.props.set_active_window("m_storage");
-            
         }
     }
 
