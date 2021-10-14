@@ -592,11 +592,11 @@ SetTotal = (value) =>{
                       />
                     </div>) : (null)}
 
-                    {this.props.store.login.userkey === "000000093" ? (
+                    {this.props.store.login.userkey === "000000187" ? (
                       <div className="disp_data_label">Срочность:</div>
                     ) : (null)}
                     
-                    {this.props.store.login.userkey === "000000093" ? (
+                    {this.props.store.login.userkey === "000000187" ? (
                       <div className="disp_data_el ">
                         <Select
                           options={

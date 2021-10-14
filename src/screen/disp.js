@@ -790,10 +790,10 @@ class Screen extends React.Component {
                     <div className="disp_data_el">{this.props.store.disp.data.DelMethod}</div>
                     <div className="disp_data_label">Тип оплаты:</div>
                     <div className="disp_data_el">{this.props.store.disp.data.PayType}</div>
-                    {this.props.store.login.userkey === "000000093" ? (
+                    {this.props.store.login.userkey === "000000187" ? (
                         <div className="disp_data_label">Срочность:</div>
                     ) : (null)}
-                    {this.props.store.login.userkey === "000000093" ? (
+                    {this.props.store.login.userkey === "000000187" ? (
                         <div className="disp_data_el">{this.props.store.disp.data.DelType}</div>
                     ) : (null)}
                     
