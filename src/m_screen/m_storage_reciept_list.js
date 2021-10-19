@@ -15,37 +15,59 @@ class Screen extends React.Component {
         this.props.storage_reciept_set_barcode("");
         this.props.storage_reciept_sound(false);
         this.props.storage_reciept_qr(false);
+
+        document.addEventListener('keydown', this.enter);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('keydown', this.enter);
+    }
+
+    enter = (e) => {
+        if (e.keyCode === 13) {
+            this.add_disp(this.props.store.storage_reciept.barcode);
+        }
+    }
+
+    focus_input = () => {
+        if (!this.props.store.storage_reciept.qr) {
+            document.getElementById("storage_reciept_input").focus();
+        }
     }
 
     add_disp = (disp) => {
-        get_data('storage_chek', {userkey: this.props.store.login.userkey, disp: disp}).then(
-            (result) => {
-                if(this.props.store.storage_reciept.disp_list.find(item => item.num === result.num) === undefined) {
-                    this.props.storage_reciept_add_disp_list(result);
-                    this.props.storage_reciept_set_barcode('');
-                    if(this.props.store.storage_reciept.sound) {
-                        const audio = new Audio(done_sound);
-                        audio.type = 'audio/ogg';
-                        var playPromise = audio.play();
+        if(this.props.store.storage_reciept.barcode !== "") {
+            get_data('storage_chek', { userkey: this.props.store.login.userkey, disp: disp }).then(
+                (result) => {
+                    if (this.props.store.storage_reciept.disp_list.find(item => item.num === result.num) === undefined) {
+                        this.props.storage_reciept_add_disp_list(result);
+
+                        if (!this.props.store.storage_reciept.qr) {
+                            this.props.storage_reciept_set_barcode('');
+                        }
+                        if (this.props.store.storage_reciept.sound) {
+                            const audio = new Audio(done_sound);
+                            audio.type = 'audio/ogg';
+                            var playPromise = audio.play();
+                        }
+                    } else {
+                        if (this.props.store.storage_reciept.sound) {
+                            const audio = new Audio(err_sound);
+                            audio.type = 'audio/ogg';
+                            var playPromise = audio.play();
+                        }
+                        this.props.set_popup_message('Накладная уже добавлена!');
                     }
-                } else {
-                    if (this.props.store.storage_reciept.sound) {
-                        const audio = new Audio(err_sound);
-                        audio.type = 'audio/ogg';
-                        var playPromise = audio.play();
-                    }
-                    this.props.set_popup_message('Накладная уже добавлена!');
+                },
+                (err) => {
+                    this.props.set_popup_message('Накладной не существует!');
+                    console.log(err);
+                    this.err_sound_play();
                 }
-            },
-            (err) => {
-                this.props.set_popup_message('Накладной не существует!');
-                console.log(err);
-                this.err_sound_play();
-            }
-        );
-        if(!this.props.store.storage_reciept.qr) {
-            document.getElementById("storage_reciept_input").focus();
+            );
+            
         }
+        this.focus_input();
     }
 
     send_req = () => {
@@ -61,6 +83,21 @@ class Screen extends React.Component {
 
     handleError = err => {
         console.error(err);
+    }
+
+    sound = () => {
+        this.props.storage_reciept_sound(!this.props.store.storage_reciept.sound); 
+        this.focus_input();
+        
+        if(this.props.store.storage_reciept.sound) {
+            const audio = new Audio(funk_sound);
+            audio.type = 'audio/ogg';
+            var playPromise = audio.play();
+        } else {
+            const audio = new Audio(done_sound);
+            audio.type = 'audio/ogg';
+            var playPromise = audio.play();
+        }
     }
 
     render() {
@@ -81,7 +118,7 @@ class Screen extends React.Component {
                         <div style={{ display: "flex" }}>
                             Звук:
                             <label className="switch">
-                                <input type="checkbox" value={this.props.store.storage_reciept.Sound} onChange={() => this.props.storage_reciept_sound(!this.props.store.storage_reciept.sound)} />
+                                <input type="checkbox" value={this.props.store.storage_reciept.Sound} onChange={() => this.sound()} />
                                 <span className="slider round"></span>
                             </label>
                         </div>
@@ -133,7 +170,7 @@ class Screen extends React.Component {
                                     <div className="storage_reciept_list_label">Адрес:</div>
                                     <div className="storage_reciept_list_value">{item.rec_adress}</div>
                                 </div>
-                                <button className="storage_reciept_button_delete" onClick={() => this.props.storage_reciept_delete_list_item(index)}>Удалить</button>
+                                <button className="storage_reciept_button_delete" onClick={() => { this.props.storage_reciept_delete_list_item(index); this.focus_input()}}>Удалить</button>
                             </div>
                         ))}
                     </div>
