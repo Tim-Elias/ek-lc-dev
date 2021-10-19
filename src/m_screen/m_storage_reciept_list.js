@@ -66,6 +66,27 @@ class Screen extends React.Component {
 
     render() {
 
+        let done_sound_status
+        if (this.props.store.storage_reciept.done_sound === undefined) {
+            done_sound_status = Sound.status.STOPPED
+        } else {
+            done_sound_status = this.props.store.storage_reciept.done_sound
+        }
+
+        let funk_sound_status
+        if (this.props.store.storage_reciept.funk_sound === undefined) {
+            funk_sound_status = Sound.status.STOPPED
+        } else {
+            funk_sound_status = this.props.store.storage_reciept.funk_sound
+        }
+
+        let err_sound_status
+        if (this.props.store.storage_reciept.err_sound === undefined) {
+            err_sound_status = Sound.status.STOPPED
+        } else {
+            err_sound_status = this.props.store.storage_reciept.err_sound
+        }
+
         return (
             <div>
                 <div className="mobile_heading">
@@ -145,9 +166,9 @@ class Screen extends React.Component {
                         </div>
                     ) : (null)}
 
-                    <Sound url={done_sound} playStatus={this.props.store.storage_reciept.done_sound} />
-                    <Sound url={err_sound} playStatus={this.props.store.storage_reciept.err_sound} />
-                    <Sound url={funk_sound} playStatus={this.props.store.storage_reciept.funk_sound} />
+                    <Sound volume={100} url={done_sound} playStatus={done_sound_status} />
+                    <Sound volume={100} url={err_sound} playStatus={err_sound_status} />
+                    <Sound volume={100} url={funk_sound} playStatus={funk_sound_status} />
                 </div>
             </div>
         )
