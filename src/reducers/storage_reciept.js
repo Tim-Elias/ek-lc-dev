@@ -34,11 +34,26 @@ const initialState = {
   err_sound: undefined,
   funk_sound: undefined,
 
-  
+  sound: false,
+  qr: false,
+
+  disp_list: [],
 }
 
 export default function dispatch (state = initialState, action) {
   switch (action.type) {
+    case 'storage_reciept_add_disp_list': 
+      action.payload.task_date = action.payload.task_date.substr(0,10)
+      return { ...state, disp_list: [...state.disp_list, action.payload] }
+
+    case 'storage_reciept_delete_list_item': return { ...state, disp_list: state.disp_list.filter((item, index) => index !== action.payload) }
+
+    case 'storage_reciept_clear_list': return { ...state, disp_list: [] }
+
+    case 'storage_reciept_sound': return { ...state, sound: action.payload }
+
+    case 'storage_reciept_qr': return { ...state, qr: action.payload }
+
     case 'storage_reciept_set_barcode': return { ...state, barcode: action.payload, done_sound:undefined, err_sound: undefined, funk_sound:undefined }
     case 'storage_reciept_set_task_type': return { ...state, task_type: action.payload }
     case 'storage_reciept_set_task_date': return { ...state, task_date: action.payload }

@@ -21,6 +21,6 @@ class Screen extends React.Component {
 export default connect(
     (state) => ({ store: state }),
     dispatch => ({
-        set_popup_message: (param) => { dispatch({ type: 'set_popup_message', payload: param }); },
+        set_popup_message: (param) => { dispatch({ type: 'set_popup_message', payload: param }) },
     })
 )(Screen);

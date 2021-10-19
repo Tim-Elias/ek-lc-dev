@@ -15,7 +15,7 @@ class Screen extends React.Component {
     settings_window = (window) => {
         const list_data = { userkey: this.props.store.login.userkey }
         this.props.set_active_window(window);
-        if (window === 'storage_reciept') {
+        if (window === 'storage_reciept' || window === 'm_storage_reciept_list') {
             get_data('storagedata', list_data).then(
                 (result) => {
                     this.props.storage_reciept_set_storage(result.storage);
@@ -72,6 +72,7 @@ class Screen extends React.Component {
                         {this.props.store.login.original_data.courier || this.props.store.login.disp_map ? (null) : (<li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'm_send_manifest')}>Отправка манифеста</button></li>) }
                         {this.props.store.login.original_data.driverexpeditor ? (<li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'm_send_partner')}>Передать партнеру</button></li>) : (null)}
                         {this.props.store.login.original_data.courier || !this.props.store.login.disp_map ? (null) : (<li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'storage_reciept')}>Приемка на склад</button></li>)}
+                        {this.props.store.login.userkey === "000000234" ? (null) : (<li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'm_storage_reciept_list')}>Приемка на склад несколько</button></li>)}
                         {this.props.store.login.disp_map ? (<li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'm_finance')}>Финансы</button></li>) : (null)}
                         <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'm_calc_price')}>Рассчитать стоимость</button></li>
                         <li className="mobile_menu_item"><button className="mobile_menu_button" onClick={this.settings_window.bind(this, 'setting')}>Настройки</button></li>
