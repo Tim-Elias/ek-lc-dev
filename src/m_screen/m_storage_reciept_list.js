@@ -19,9 +19,21 @@ class Screen extends React.Component {
     }
 
     componentWillUnmount() {
-        this.props.storage_reciept_set_done_sound(Sound.status.STOPPED);
-        this.props.storage_reciept_set_err_sound(Sound.status.STOPPED);
-        this.props.storage_reciept_set_funk_sound(Sound.status.STOPPED);
+        this.done_sound_play();
+        this.storage_reciept_set_err_sound();
+        this.storage_reciept_set_funk_sound();
+    }
+
+    done_sound_play = () => {
+        this.props.storage_reciept_set_done_sound(Sound.status.PLAYING)
+    }
+
+    err_sound_play = () => {
+        this.props.storage_reciept_set_err_sound(Sound.status.PLAYING)
+    }
+
+    funk_sound_play = () => {
+        this.props.storage_reciept_set_funk_sound(Sound.status.PLAYING)
     }
 
     add_disp = (disp) => {
@@ -31,7 +43,7 @@ class Screen extends React.Component {
                     this.props.storage_reciept_add_disp_list(result);
                     this.props.storage_reciept_set_barcode('');
                     if(this.props.store.storage_reciept.sound) {
-                        this.props.storage_reciept_set_done_sound(Sound.status.PLAYING);
+                        this.done_sound_play();
                     }
                 } else {
                     if (this.props.store.storage_reciept.sound) {
