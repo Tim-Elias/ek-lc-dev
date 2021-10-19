@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Sound from 'react-sound';
 import done_sound from './../common/ping.mp3';
 import err_sound from './../common/err.mp3';
 import funk_sound from './../common/funk.mp3';
@@ -18,24 +17,6 @@ class Screen extends React.Component {
         this.props.storage_reciept_qr(false);
     }
 
-    componentWillUnmount() {
-        this.done_sound_play();
-        this.storage_reciept_set_err_sound();
-        this.storage_reciept_set_funk_sound();
-    }
-
-    done_sound_play = () => {
-        this.props.storage_reciept_set_done_sound(Sound.status.PLAYING)
-    }
-
-    err_sound_play = () => {
-        this.props.storage_reciept_set_err_sound(Sound.status.PLAYING)
-    }
-
-    funk_sound_play = () => {
-        this.props.storage_reciept_set_funk_sound(Sound.status.PLAYING)
-    }
-
     add_disp = (disp) => {
         get_data('storage_chek', {userkey: this.props.store.login.userkey, disp: disp}).then(
             (result) => {
@@ -43,11 +24,15 @@ class Screen extends React.Component {
                     this.props.storage_reciept_add_disp_list(result);
                     this.props.storage_reciept_set_barcode('');
                     if(this.props.store.storage_reciept.sound) {
-                        this.done_sound_play();
+                        const audio = new Audio(done_sound);
+                        audio.type = 'audio/ogg';
+                        var playPromise = audio.play();
                     }
                 } else {
                     if (this.props.store.storage_reciept.sound) {
-                        this.props.storage_reciept_set_err_sound(Sound.status.PLAYING);
+                        const audio = new Audio(err_sound);
+                        audio.type = 'audio/ogg';
+                        var playPromise = audio.play();
                     }
                     this.props.set_popup_message('Накладная уже добавлена!');
                 }
@@ -58,7 +43,9 @@ class Screen extends React.Component {
                 this.err_sound_play();
             }
         );
-        document.getElementById("storage_reciept_input").focus();
+        if(!this.props.store.storage_reciept.qr) {
+            document.getElementById("storage_reciept_input").focus();
+        }
     }
 
     send_req = () => {
@@ -66,7 +53,7 @@ class Screen extends React.Component {
     }
 
     handleScan = data => {
-        if (data) {
+        if (data && this.props.store.storage_reciept.barcode !== data) {
             this.props.storage_reciept_set_barcode(data);
             this.add_disp(data);
         }
@@ -78,27 +65,6 @@ class Screen extends React.Component {
 
     render() {
 
-        let done_sound_status
-        if (this.props.store.storage_reciept.done_sound === undefined) {
-            done_sound_status = Sound.status.STOPPED
-        } else {
-            done_sound_status = this.props.store.storage_reciept.done_sound
-        }
-
-        let funk_sound_status
-        if (this.props.store.storage_reciept.funk_sound === undefined) {
-            funk_sound_status = Sound.status.STOPPED
-        } else {
-            funk_sound_status = this.props.store.storage_reciept.funk_sound
-        }
-
-        let err_sound_status
-        if (this.props.store.storage_reciept.err_sound === undefined) {
-            err_sound_status = Sound.status.STOPPED
-        } else {
-            err_sound_status = this.props.store.storage_reciept.err_sound
-        }
-
         return (
             <div>
                 <div className="mobile_heading">
@@ -108,9 +74,9 @@ class Screen extends React.Component {
                     <div className="storage_reciept_item">
                         Текущий склад: {this.props.store.storage_reciept.storage.name}
                     </div>
-                    <div className="storage_reciept_item">
+                    {/* <div className="storage_reciept_item">
                         Зона хранения: {this.props.store.storage_reciept.selected_zone}
-                    </div>
+                    </div> */}
                     <div className="storage_reciept_item" style={{ display: "flex", justifyContent: "space-between" }}>
                         <div style={{ display: "flex" }}>
                             Звук:
@@ -177,10 +143,6 @@ class Screen extends React.Component {
                             {this.props.store.storage_reciept.status_message}
                         </div>
                     ) : (null)}
-
-                    <Sound volume={100} url={done_sound} playStatus={done_sound_status} />
-                    <Sound volume={100} url={err_sound} playStatus={err_sound_status} />
-                    <Sound volume={100} url={funk_sound} playStatus={funk_sound_status} />
                 </div>
             </div>
         )
