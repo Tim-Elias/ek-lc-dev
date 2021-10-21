@@ -186,25 +186,27 @@ class Screen extends React.Component {
                         if (result !== "status finish") {
                             this.props.storage_reciept_add_disp_list(result);
 
-                            if (!this.props.store.storage_reciept.qr) {
-                                this.props.storage_reciept_set_barcode('');
+                            this.props.storage_reciept_set_barcode('');
+
+                            if (this.props.store.storage_reciept.sound) {
+                                let sound = this.city_sound(result.rec_city);
+                                const audioCity = new Audio(sound);
+                                audioCity.type = 'audio/ogg';
+                                audioCity.addEventListener('ended', function storageSound () {
+                                    if (result.del_method === "Дверь-Дверь" || result.del_method === "Склад-Дверь") {
+                                        const audio = new Audio(dver);
+                                        audio.type = 'audio/ogg';
+                                        var playPromise = audio.play();
+                                    } else if (result.del_method === "Склад-Склад" || result.del_method === "Дверь-Склад") {
+                                        const audio = new Audio(sklad);
+                                        audio.type = 'audio/ogg';
+                                        var playPromise = audio.play();
+                                    }
+                                audioCity.removeEventListener('ended', storageSound)
+                                });
+                                audioCity.play();
                             }
 
-                            let sound = this.city_sound(result.rec_city);
-                            const audioCity = new Audio(sound);
-                            audioCity.type = 'audio/ogg';
-                            audioCity.addEventListener('ended', () => {
-                                if (result.del_method === "Дверь-Дверь" || result.del_method === "Склад-Дверь") {
-                                    const audio = new Audio(dver);
-                                    audio.type = 'audio/ogg';
-                                    var playPromise = audio.play();
-                                } else if (result.del_method === "Склад-Склад" || result.del_method === "Дверь-Склад") {
-                                    const audio = new Audio(sklad);
-                                    audio.type = 'audio/ogg';
-                                    var playPromise = audio.play();
-                                }
-                            });
-                            audioCity.play();
                         } else {
                             const audio = new Audio(err_sound);
                             audio.type = 'audio/ogg';
@@ -230,7 +232,7 @@ class Screen extends React.Component {
             );
             
         }
-        
+        this.focus_input();
     }
 
     send_req = () => {
