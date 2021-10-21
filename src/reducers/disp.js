@@ -23,6 +23,7 @@ const initialState = {
   delivery_time: '',
   cash_accepted: 0,
   comment: '',
+  newDate: '',
   type_cash: false,
 
   foto: '',
@@ -61,9 +62,11 @@ const initialState = {
 
 export default function dispatch (state = initialState, action) {
   switch (action.type) {
-    case 'reset_data': return { ...state, foto: '', FIO_Customer: '', comment: '', cash_accepted: 0, type_cash: false }
+    case 'reset_data': return { ...state, foto: '', FIO_Customer: '', comment: '', cash_accepted: 0, type_cash: false, newDate: '' }
 
     case 'set_key': return { ...state, key: { ...state.key, num: action.payload.num, status: action.payload.status } }
+
+    case 'set_notDel_newDate': return { ...state, newDate: action.payload }
 
     case 'set_popup': return { ...state, popup: action.payload }
     case 'set_popup_message': return { ...state, popup_message: action.payload }

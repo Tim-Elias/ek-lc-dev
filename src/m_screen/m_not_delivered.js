@@ -22,7 +22,9 @@ class Screen extends React.Component {
             comment: this.props.store.disp.comment,
             img: barcode,
             result: type,
+            newDate: this.props.store.disp.newDate,
         }
+
         get_data('notdelivered', data).then(
             (result) => {
 
@@ -72,7 +74,6 @@ class Screen extends React.Component {
 
         return (
             <div>
-
                 <div className="mobile_container">
                     <div className="mobile_del_row">
                         <div className="mobile_del_data_label">Номер накладной:</div>
@@ -82,9 +83,13 @@ class Screen extends React.Component {
                         <div className="mobile_del_data_label">Комментарий</div>
                         <input onChange={e => this.props.set_disp_comment(e.target.value)} value={this.props.store.disp.comment} className="mobile_del_input" type="text"></input>
                     </div>
+                    <div className="mobile_del_row">
+                        <div className="mobile_del_data_label">Новая дата: </div>
+                        <input type="date" onChange={e => this.props.set_notDel_newDate(e.target.value)} value={this.props.store.disp.newDate} className="mobile_del_input"></input>
+                    </div>
                 </div>
 
-                <div className="mobile_container">
+                <div className="mobile_container" style={{margin:"40px 0 0 0"}}>
                     <button className="mobile_disp_button_item--full mobile_disp_button_item--not" onClick={this.sendpod.bind(this, "ОтказПриДоставке")}>Отказ при доставке</button>
                     <button className="mobile_disp_button_item--full mobile_disp_button_item--yellow" onClick={this.sendpod.bind(this, "ОтменаЗаказа")}>Отмена заказа</button>
                     <button className="mobile_disp_button_item--full mobile_disp_button_item--blue" onClick={this.sendpod.bind(this, "Недозвон")}>Недозвон</button>
@@ -104,8 +109,10 @@ export default withCookies(connect(
         store: state
     }),
     dispatch => ({
-        reset_data: (param) => { dispatch({ type: 'reset_data', payload: param }); },
-        set_disp_comment: (param) => { dispatch({ type: 'set_disp_comment', payload: param }); },
-        set_active_window: (param) => { dispatch({ type: 'set_active_window', payload: param }); },
+        set_notDel_newDate: (param) => { dispatch({ type: 'set_notDel_newDate', payload: param }) },
+
+        reset_data: (param) => { dispatch({ type: 'reset_data', payload: param }) },
+        set_disp_comment: (param) => { dispatch({ type: 'set_disp_comment', payload: param }) },
+        set_active_window: (param) => { dispatch({ type: 'set_active_window', payload: param }) },
     })
 )(Screen));
