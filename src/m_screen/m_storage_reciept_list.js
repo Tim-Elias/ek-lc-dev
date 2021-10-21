@@ -171,120 +171,6 @@ class Screen extends React.Component {
         return sound
     }
 
-    // city_sound = (city) => {
-    //     return new Promise((resolve, reject) => {
-    //         let sound;
-    //         switch (city) {
-    //             case "Абакан":
-    //                 sound = abakan;
-    //                 break;
-    //             case "Анжеро-Судженск":
-    //                 sound = as;
-    //                 break;
-    //             case "Ачинск":
-    //                 sound = achinsk;
-    //                 break;
-    //             case "Барабинск":
-    //                 sound = barabinsk;
-    //                 break;
-    //             case "Барнаул":
-    //                 sound = barnayl;
-    //                 break;
-    //             case "Белово":
-    //                 sound = belovo;
-    //                 break;
-    //             case "Бердск":
-    //                 sound = berdsk;
-    //                 break;
-    //             case "Бийск":
-    //                 sound = bisk;
-    //                 break;
-    //             case "Боготол":
-    //                 sound = bogotol;
-    //                 break;
-    //             case "Горно-Алтайск":
-    //                 sound = ga;
-    //                 break;
-    //             case "Екатеренбург":
-    //                 sound = ekaterenburg;
-    //                 break;
-    //             case "Железногорск":
-    //                 sound = jeleznogorsk;
-    //                 break;
-    //             case "Зеленогорск":
-    //                 sound = zelenogorsk;
-    //                 break;
-    //             case "Иркутск":
-    //                 sound = irkytsk;
-    //                 break;
-    //             case "Кемерово":
-    //                 sound = kemerovo;
-    //                 break;
-    //             case "Киселевск":
-    //                 sound = kiselev;
-    //                 break;
-    //             case "Красноярск":
-    //                 sound = krasnoiarsk;
-    //                 break;
-    //             case "Куйбышев":
-    //                 sound = kyibishev;
-    //                 break;
-    //             case "Ленинск-Кузнецкий":
-    //                 sound = lk;
-    //                 break;
-    //             case "Мариинск":
-    //                 sound = mariinsk;
-    //                 break;
-    //             case "Междуреченск":
-    //                 sound = mejdyrechinsk;
-    //                 break;
-    //             case "Новокузнецк":
-    //                 sound = novokyzneck;
-    //                 break;
-    //             case "Новосибирск":
-    //                 sound = novosibirsk;
-    //                 break;
-    //             case "Омск":
-    //                 sound = omsk;
-    //                 break;
-    //             case "Осинники":
-    //                 sound = osiniki;
-    //                 break;
-    //             case "Полысаево":
-    //                 sound = polisaevo;
-    //                 break;
-    //             case "Прокопьевск":
-    //                 sound = prokopevsk;
-    //                 break;
-    //             case "Санкт-Петербург":
-    //                 sound = sp;
-    //                 break;
-    //             case "Томск":
-    //                 sound = tomsk;
-    //                 break;
-    //             case "Хабаровск":
-    //                 sound = habarovsk;
-    //                 break;
-    //             case "Чита":
-    //                 sound = chita;
-    //                 break;
-
-    //             default:
-    //                 sound = neznaugorod;
-    //                 break;
-    //         }
-    //         if (this.props.store.storage_reciept.sound) {
-    //             const audio = new Audio(sound);
-    //             audio.type = 'audio/ogg';
-    //             var playPromise = audio.play();
-    //             while(audio.ended) {
-
-    //             }
-    //             resolve(true)
-    //         }
-    //     })
-    // }
-
     focus_input = () => {
         if (!this.props.store.storage_reciept.qr) {
             document.getElementById("storage_reciept_input").focus();
@@ -324,6 +210,7 @@ class Screen extends React.Component {
                             audio.type = 'audio/ogg';
                             var playPromise = audio.play();
                             this.props.set_popup_message('Накладная не может быть принята на склад т.к. находится в завершенном статусе');
+                            this.props.storage_reciept_set_barcode('');
                         }
                         
                     } else {
@@ -343,7 +230,7 @@ class Screen extends React.Component {
             );
             
         }
-        this.focus_input();
+        
     }
 
     send_req = () => {
