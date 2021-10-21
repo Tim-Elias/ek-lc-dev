@@ -36,6 +36,7 @@ const initialState = {
 
   sound: false,
   qr: false,
+  inputMode: "none",
 
   disp_list: [],
 }
@@ -43,7 +44,11 @@ const initialState = {
 export default function dispatch (state = initialState, action) {
   switch (action.type) {
     case 'storage_reciept_add_disp_list': 
-      action.payload.task_date = action.payload.task_date.substr(0,10)
+      try {
+        action.payload.task_date = action.payload.task_date.substr(0, 10);
+      } catch (error) {
+        
+      }
       return { ...state, disp_list: [...state.disp_list, action.payload] }
 
     case 'storage_reciept_delete_list_item': return { ...state, disp_list: state.disp_list.filter((item, index) => index !== action.payload) }
@@ -51,6 +56,14 @@ export default function dispatch (state = initialState, action) {
     case 'storage_reciept_clear_list': return { ...state, disp_list: [] }
 
     case 'storage_reciept_sound': return { ...state, sound: action.payload }
+
+    case 'storage_reciept_inputMode': 
+      if(state.inputMode === "none") {
+        return { ...state, inputMode: "text" }
+      } else {
+        return { ...state, inputMode: "none" }
+      }
+      
 
     case 'storage_reciept_qr': return { ...state, qr: action.payload }
 
