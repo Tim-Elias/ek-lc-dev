@@ -254,6 +254,7 @@ class Screen extends React.Component {
             },
             (err) => {
                 this.props.set_active_loader(false);
+                this.props.set_popup_message(err);
                 console.log(err);
             }
         );
@@ -317,13 +318,13 @@ class Screen extends React.Component {
                                 </label>
                             </div>
 
-                            <div style={{ display: "flex" }}>
+                            {/* <div style={{ display: "flex" }}>
                                 QR:
                                 <label className="switch">
                                     <input type="checkbox" value={this.props.store.storage_reciept.qr} onChange={() => this.props.storage_reciept_qr(!this.props.store.storage_reciept.qr)} />
                                     <span className="slider round"></span>
                                 </label>
-                            </div>
+                            </div> */}
                         </div>
                         <input inputMode={this.props.store.storage_reciept.inputMode} className="storage_reciept_input" id="storage_reciept_input" autoFocus value={this.props.store.storage_reciept.barcode} onChange={(e) => { this.props.storage_reciept_set_barcode(e.target.value) }} />
                         <button className="storage_reciept_button_m" onClick={() => this.add_disp(this.props.store.storage_reciept.barcode)}>Добавить</button>
