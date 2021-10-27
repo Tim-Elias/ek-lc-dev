@@ -35,7 +35,15 @@ class Screen extends React.Component {
 
         get_data('dispatch', data).then(
             (result) => {
-                this.props.set_data_disp(result);
+                try {
+                    this.props.set_data_disp(result);
+                } catch (error) {
+                    console.log(error);
+                    this.props.set_active_loader(false);
+                    this.settings_window("m_storage");
+                    alert("Не удалось загрузить данные накладной, ошибка: " + error);
+                }
+                
                 this.props.set_action("deliver");
                 this.props.set_active_loader(false);
             },
@@ -45,7 +53,7 @@ class Screen extends React.Component {
                 this.settings_window("m_storage");
             }
         );
-    } 
+    }
 
     componentDidMount() {
         this.loadData();
@@ -331,7 +339,6 @@ class Screen extends React.Component {
                             <div className="disp_address_data_header disp_address_data_header--green">Грузы</div>
                             <div className="disp_address_data_el mobile_disp_address_data_el">
                                 {this.props.store.disp.cargo.map((cargo, index) =>
-
                                     <div key={index} className="cargo_item">
                                         <div className="">{cargo.Weight}кг, (Об. {cargo.Volume}кг), ({cargo.L}X{cargo.W}X{cargo.H}) {cargo.Q}шт.<br /> Итого {cargo.TotalWeight}кг,(Об. {cargo.TotalVolume}кг)</div>
                                     </div>
@@ -355,17 +362,17 @@ export default withCookies(connect(
     }),
     dispatch => ({
         set_Customer: (param) => { dispatch({ type: 'set_Customer', payload: param }) },
-        set_select_template: (param) => { dispatch({ type: 'set_select_template', payload: param }); },
+        set_select_template: (param) => { dispatch({ type: 'set_select_template', payload: param }) },
         SetSendTerminalList: (param) => { dispatch({ type: 'SetSendTerminalListMobile', payload: param }) },
         SetRecTerminalList: (param) => { dispatch({ type: 'SetRecTerminalListMobile', payload: param }) },
         SetCityList: (param) => { dispatch({ type: 'SetCityListMobile', payload: param }) },
         set_key: (param) => { dispatch({ type: 'set_key', payload: param }) },
-        set_active_window: (param) => { dispatch({ type: 'set_active_window', payload: param }); },
+        set_active_window: (param) => { dispatch({ type: 'set_active_window', payload: param }) },
         set_data_disp: (param) => { dispatch({ type: 'set_data_disp', payload: param }) },
         set_last_window: (param) => { dispatch({ type: 'set_last_window', payload: param }) },
         set_action: (param) => { dispatch({ type: 'set_action', payload: param }) }, 
-        set_active_loader: (param) => { dispatch({ type: 'set_active_loader', payload: param }); },
-        set_popup_message: (param) => { dispatch({ type: 'set_popup_message', payload: param }); },
+        set_active_loader: (param) => { dispatch({ type: 'set_active_loader', payload: param }) },
+        set_popup_message: (param) => { dispatch({ type: 'set_popup_message', payload: param }) },
     })
 
 )(Screen));
