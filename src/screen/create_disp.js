@@ -451,6 +451,7 @@ SetTotal = (value) =>{
         this.props.set_disp_template_list(result);
         this.props.SetCustomNumber(false);
         this.props.SetAvailableNumber(null);
+        this.props.SetCyrillic(false);
 
         this.props.SetDispDate(date);
 
@@ -470,23 +471,32 @@ SetTotal = (value) =>{
 
   checkNumber = () => {
     this.props.SetCustomNumberLoader(true);
-    get_data('history', { Number: this.props.store.create_disp.Number }).then(
-      (result) => {
-        this.props.SetAvailableNumber(false);
-        this.props.SetCustomNumberLoader(false);
-      },
-      (err) => {
-        if (err === "disp not found") {
-          this.props.SetAvailableNumber(true);
-        } else {
-          console.log(err)
-          this.props.modules.set_modal_show(true)
-          this.props.modules.set_modal_header('Ошибка')
-          this.props.modules.set_modal_text(err)
+    this.props.SetAvailableNumber(true);
+    this.props.SetCyrillic(false);
+
+    if (/[а-яА-ЯЁё]/.test(this.props.store.create_disp.Number)) {
+      this.props.SetCustomNumberLoader(false);
+      this.props.SetCyrillic(true);
+    } else {
+      this.props.SetCyrillic(false);
+      get_data('history', { Number: this.props.store.create_disp.Number }).then(
+        (result) => {
+          this.props.SetAvailableNumber(false);
+          this.props.SetCustomNumberLoader(false);
+        },
+        (err) => {
+          if (err === "disp not found") {
+            this.props.SetAvailableNumber(true);
+          } else {
+            console.log(err)
+            this.props.modules.set_modal_show(true)
+            this.props.modules.set_modal_header('Ошибка')
+            this.props.modules.set_modal_text(err)
+          }
+          this.props.SetCustomNumberLoader(false);
         }
-        this.props.SetCustomNumberLoader(false);
-      }
-    );
+      );
+    }
   }
 
   render() {
@@ -532,11 +542,17 @@ SetTotal = (value) =>{
                         )}
                         {this.props.store.create_disp.customNumber ? (
                           <div className="disp_data_el" style={{ margin: "0 0 0 5px", width: "200px" }}>
-                            <input autoFocus className="create_disp_data_input" style={this.props.store.create_disp.availableNumber === true ? ({ backgroundColor: "#e0ffe0" }) : this.props.store.create_disp.availableNumber === false ? ({ backgroundColor: "#ffe0e0" }) : ({ backgroundColor: "#fff" })} value={this.props.store.create_disp.Number} onChange={(e) => this.props.SetNumber(e.target.value)} onBlur={() => this.checkNumber()} />
+                            <input autoFocus className="create_disp_data_input" style={
+                            (this.props.store.create_disp.availableNumber === true && this.props.store.create_disp.cyrillic === false) ? ({ backgroundColor: "#e0ffe0" }) : (this.props.store.create_disp.availableNumber === false || this.props.store.create_disp.cyrillic === true) ? ({ backgroundColor: "#ffe0e0" }) : ({ backgroundColor: "#fff" })
+                            }
+                              value={this.props.store.create_disp.Number} onChange={(e) => this.props.SetNumber(e.target.value)} onBlur={() => this.checkNumber()} />
                           </div>
                         ) : (null)}
                         {this.props.store.create_disp.customNumberLoader ? (
                           <div className="loader_custom"></div>
+                        ) : (null)}
+                        {this.props.store.create_disp.cyrillic  === true ? (
+                        <div style={{ fontSize: "11px", margin: "0 0 0 5px" }}>В номере накладной недопустима кириллица!</div>
                         ) : (null)}
                         {this.props.store.create_disp.availableNumber === false ? (
                           <div style={{fontSize: "11px", margin: "0 0 0 5px"}}>Накладная с таким номером уже существует!</div>
@@ -988,6 +1004,8 @@ export default connect(
     store: state
   }),
   dispatch => ({
+
+    SetCyrillic: (param) => { dispatch({ type: 'SetCyrillic', payload: param }) },
 
     SetDelType: (param) => { dispatch({ type: 'SetDelType', payload: param }) },
 

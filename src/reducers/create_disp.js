@@ -18,6 +18,7 @@ const initialState = {
   customNumber: false,
   customNumberLoader: false,
   availableNumber: null,
+  cyrillic: false,
 
   isNew: true,
 
@@ -89,6 +90,9 @@ export default function dispatch (state = initialState, action) {
     case 'reset_create_disp_data': return  initialState 
 
     case 'SetWarningAlert': return { ...state, warningAlert: action.payload }
+
+    case 'SetCyrillic': return { ...state, cyrillic: action.payload }
+
     case 'SetWarningMessage': return { ...state, warningMessage: action.payload }
 
     case 'SetPayerSelect': return { ...state, PayerSelect: action.payload }
