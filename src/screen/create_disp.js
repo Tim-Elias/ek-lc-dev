@@ -513,6 +513,7 @@ SetTotal = (value) =>{
       || (this.props.store.create_disp.Weight==0 && this.props.store.create_disp.CargoInfoType.value)
       || (total_weight==0 && ! this.props.store.create_disp.CargoInfoType.value)
       || (this.props.store.create_disp.customNumber === true ? (this.props.store.create_disp.availableNumber === true) : (true)) === false
+      || this.props.store.create_disp.cyrillic === true
       ){
       disabled = true
     }    
