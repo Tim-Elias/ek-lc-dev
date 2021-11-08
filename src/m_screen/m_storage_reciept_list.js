@@ -227,7 +227,6 @@ class Screen extends React.Component {
                 (err) => {
                     this.props.set_popup_message('Накладной не существует!');
                     console.log(err);
-                    this.err_sound_play();
                 }
             );
             
