@@ -1,3 +1,16 @@
+const today = new Date();
+let mm = today.getMonth() + 1;
+let dd = today.getDate();
+
+const y = today.getFullYear();
+
+if (mm < 10) { mm = '0' + mm }
+if (dd < 10) { dd = '0' + dd }
+
+const hours = today.getUTCHours() + 7;
+
+const date = y + '-' + mm + '-' + dd;
+
 const initialState = {
 
   warningAlert: false,
@@ -261,7 +274,28 @@ export default function dispatch (state = initialState, action) {
       return { ...state, Cargo: state.Cargo }
 
     case 'SetCargoInfoType': return { ...state, CargoInfoType: action.payload }
-    case 'SetDispDate': return { ...state, DispDate: action.payload }
+    case 'SetDispDate': 
+    if (date === action.payload) {
+      
+      if (hours >= 14) {
+        const today = new Date();
+        let mm = today.getMonth() + 1;
+        let dd = today.getDate() + 1;
+        const y = today.getFullYear();
+
+        if (mm < 10) { mm = '0' + mm }
+        if (dd < 10) { dd = '0' + dd }
+
+        const newdate = y + '-' + mm + '-' + dd;
+
+        return { ...state, DispDate: newdate }
+      } else {
+        return { ...state, DispDate: action.payload }
+      }
+    } else {
+      return { ...state, DispDate: action.payload }
+    }
+
     case 'SetTotal': return { ...state, Total: action.payload }
     case 'SetWeight': return { ...state, Weight: action.payload }
     case 'SetVolume': return { ...state, Volume: action.payload }
