@@ -275,26 +275,30 @@ export default function dispatch (state = initialState, action) {
 
     case 'SetCargoInfoType': return { ...state, CargoInfoType: action.payload }
     case 'SetDispDate': 
-    if (date === action.payload) {
-      
-      if (hours >= 14) {
-        const today = new Date();
-        let mm = today.getMonth() + 1;
-        let dd = today.getDate() + 1;
-        const y = today.getFullYear();
+      if (state.DelMethod === 'Дверь - Дверь' || state.DelMethod === 'Дверь - Склад') {
+        if (date === action.payload) {
 
-        if (mm < 10) { mm = '0' + mm }
-        if (dd < 10) { dd = '0' + dd }
+          if (hours >= 14) {
+            const today = new Date();
+            let mm = today.getMonth() + 1;
+            let dd = today.getDate() + 1;
+            const y = today.getFullYear();
 
-        const newdate = y + '-' + mm + '-' + dd;
+            if (mm < 10) { mm = '0' + mm }
+            if (dd < 10) { dd = '0' + dd }
 
-        return { ...state, DispDate: newdate }
+            const newdate = y + '-' + mm + '-' + dd;
+
+            return { ...state, DispDate: newdate }
+          } else {
+            return { ...state, DispDate: action.payload }
+          }
+        } else {
+          return { ...state, DispDate: action.payload }
+        }
       } else {
         return { ...state, DispDate: action.payload }
       }
-    } else {
-      return { ...state, DispDate: action.payload }
-    }
 
     case 'SetTotal': return { ...state, Total: action.payload }
     case 'SetWeight': return { ...state, Weight: action.payload }

@@ -284,12 +284,20 @@ RemoveCargo = (index) => {
 
   sent_disp = () => {
 
+    let dateClaim;
+    if (this.props.store.create_disp.DelMethod === 'Дверь - Дверь' || this.props.store.create_disp.DelMethod === 'Дверь - Склад') {
+      dateClaim = this.props.store.create_disp.DispDate;
+    } else {
+      dateClaim = date;
+    }
+    console.log(dateClaim);
+
     const create_disp_data = {
       userkey: this.props.store.login.userkey, 
       Number: this.props.store.create_disp.Number,
       isNew: this.props.store.create_disp.isNew,
       PayType: this.props.store.create_disp.PayType.value,
-      DispDate: this.props.store.create_disp.DispDate,
+      DispDate: dateClaim,
       DelType: this.props.store.create_disp.DelType,
 
       SendCity: this.props.store.create_disp.SendCity, 
@@ -326,44 +334,44 @@ RemoveCargo = (index) => {
       Customer: this.props.store.create_disp.PayerSelect.value,
     }
 
-      this.props.set_active_window("wait");
+      // this.props.set_active_window("wait");
       
-          get_data('createcustomerdisp', create_disp_data).then(
-            (result) => {
+      //     get_data('createcustomerdisp', create_disp_data).then(
+      //       (result) => {
 
-              const data = {
-                userkey: this.props.store.login.userkey,
-                status: "Накладная",
-                num: result.Number
-              };
+      //         const data = {
+      //           userkey: this.props.store.login.userkey,
+      //           status: "Накладная",
+      //           num: result.Number
+      //         };
 
-              get_data('dispatch', data).then(
-                (result) => {
-                  this.props.set_data_disp(result);
-                  this.props.set_active_window("disp");
-                  this.props.set_last_window("create_disp");
-                },
-                (err) => {
-                  console.log(err);
-                  this.props.set_last_window("create_disp");
-                  this.props.set_active_window("");
+      //         get_data('dispatch', data).then(
+      //           (result) => {
+      //             this.props.set_data_disp(result);
+      //             this.props.set_active_window("disp");
+      //             this.props.set_last_window("create_disp");
+      //           },
+      //           (err) => {
+      //             console.log(err);
+      //             this.props.set_last_window("create_disp");
+      //             this.props.set_active_window("");
 
-                  this.props.modules.set_modal_show(true)
-                  this.props.modules.set_modal_header('Ошибка')
-                  this.props.modules.set_modal_text(err)
-                }
-              );
-            },
-            (err) => {
-              console.log(err);
-              this.props.set_last_window("create_disp");
-              this.props.set_active_window("");
+      //             this.props.modules.set_modal_show(true)
+      //             this.props.modules.set_modal_header('Ошибка')
+      //             this.props.modules.set_modal_text(err)
+      //           }
+      //         );
+      //       },
+      //       (err) => {
+      //         console.log(err);
+      //         this.props.set_last_window("create_disp");
+      //         this.props.set_active_window("");
 
-              this.props.modules.set_modal_show(true)
-              this.props.modules.set_modal_header('Ошибка')
-              this.props.modules.set_modal_text(err)
-            }
-          );
+      //         this.props.modules.set_modal_show(true)
+      //         this.props.modules.set_modal_header('Ошибка')
+      //         this.props.modules.set_modal_text(err)
+      //       }
+      //     );
   }
 
   SelectSendTemplate = (value) => {
@@ -609,11 +617,11 @@ SetTotal = (value) =>{
                       />
                     </div>) : (null)}
 
-                    {this.props.store.login.userkey === "000000187" ? (
+                    {this.props.store.login.userkey === "000000006" ? (
                       <div className="disp_data_label">Срочность:</div>
                     ) : (null)}
                     
-                    {this.props.store.login.userkey === "000000187" ? (
+                    {this.props.store.login.userkey === "000000006" ? (
                       <div className="disp_data_el ">
                         <Select
                           options={
