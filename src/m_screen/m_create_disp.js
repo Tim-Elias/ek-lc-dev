@@ -491,7 +491,7 @@ class Screen extends React.Component {
                                     <div className="PopUp_table_row">
                                         <div className="PopUp_table_label">Компания:</div>
                                         <div className="PopUp_table_el">{el.Company}</div>
-                                    </div>
+                                    </div> 
 
                                     <div className="PopUp_table_row">
                                         <div className="PopUp_table_label">Доп.инфо:</div>
