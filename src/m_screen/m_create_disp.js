@@ -417,6 +417,18 @@ class Screen extends React.Component {
         this.props.set_popup(!(this.props.store.m_create_disp.popup));
     }
 
+    autoNumber = () => {
+        get_data('autonumber', {}).then(
+            (result) => {
+                this.props.set_Number(result);
+            },
+            (err) => {
+                alert(err);
+                console.log(err);
+            }
+        );
+    }
+
     render() {
         let disabled = false;
         let total_weight = Math.ceil(this.props.store.m_create_disp.Cargo.reduce((accumulator, Cargo) => accumulator + Math.ceil(Cargo.Weight * Cargo.Q * 1000) / 1000, 0) * 1000) / 1000;
@@ -501,6 +513,8 @@ class Screen extends React.Component {
                                 <div className="mobile_del_data_label">Номер накладной:</div>
                                 <input className="mobile_del_input" type="text" value={this.props.store.m_create_disp.Number} onChange={e => this.props.set_Number(e.target.value)}></input>
                             </div>
+
+                            <button style={{margin:"0 0 10px 0"}} onClick={() => this.autoNumber()}>Автономер</button>
 
                             <div className="mobile_del_row">
                                 <div className="mobile_del_data_label">Заказчик:</div>
