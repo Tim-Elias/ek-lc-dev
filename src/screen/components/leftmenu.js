@@ -177,20 +177,21 @@ class Screen extends Component {
                             (result) => {
                                 this.props.set_disp_template_list(result);
                                 if (this.props.store.login.default_send !== '0') {
-                                    const default_send = this.props.store.upload_manifest.disp_template_list.find(el => el.Key === this.props.store.login.default_send)
+                                    try {
+                                        const default_send = this.props.store.upload_manifest.disp_template_list.find(el => el.Key === this.props.store.login.default_send)
+                                        const city = this.props.store.create_disp.CityList.filter((el) => el.value === default_send.City)[0]
+                                        this.SelectSendCity(city)
+                                        this.props.SetSendAdress(default_send.Adress)
+                                        this.props.SetSendAdress(default_send.Adress)
+                                        this.props.SetSendPhone(default_send.Phone)
+                                        this.props.SetSendPerson(default_send.Person)
+                                        this.props.SetSendCompany(default_send.Company)
+                                        this.props.SetSendAddInfo(default_send.AddInfo)
 
-                                    const city = this.props.store.create_disp.CityList.filter((el) => el.value === default_send.City)[0]
-                                    this.SelectSendCity(city)
-                                    this.props.SetSendAdress(default_send.Adress)
-                                    this.props.SetSendAdress(default_send.Adress)
-                                    this.props.SetSendPhone(default_send.Phone)
-                                    this.props.SetSendPerson(default_send.Person)
-                                    this.props.SetSendCompany(default_send.Company)
-                                    this.props.SetSendAddInfo(default_send.AddInfo)
-
-                                    this.SetSendTerminal(default_send.Terminal)
-
-
+                                        this.SetSendTerminal(default_send.Terminal)
+                                    } catch (error) {
+                                        console.log(error)
+                                    }
                                 }
                                 if (this.props.store.login.default_rec !== '0') {
                                     const default_rec = this.props.store.upload_manifest.disp_template_list.find(el => el.Key === this.props.store.login.default_rec)
