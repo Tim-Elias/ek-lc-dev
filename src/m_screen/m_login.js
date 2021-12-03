@@ -8,25 +8,6 @@ import { withCookies } from 'react-cookie';
 import logo from './../logo.svg';
 import { Header, Modal } from 'semantic-ui-react';
 
-const today = new Date()
-let mm = today.getMonth() + 1; // getMonth() is zero-based
-let dd = today.getDate();
-
-const y = today.getFullYear();
-
-if (mm < 10) { mm = '0' + mm }
-if (dd < 10) { dd = '0' + dd }
-
-const date = y + '-' + mm + '-' + dd;
-
-let H = today.getHours();
-let M = today.getMinutes();
-
-if (H < 10) { H = '0' + H }
-if (M < 10) { M = '0' + M }
-
-const time = H + ':' + M;
-
 class Screen extends React.Component {
 
     handleKeyDown = (e) => {
@@ -99,21 +80,11 @@ class Screen extends React.Component {
 
                 <div className="mobile_login_container">
                     <img className="header_mobile_logo login_logo" src={logo} alt="" />
-                    
-
-                    {(date >= "2021-12-04" && time >= "00:00") ? (
-                        [
-                            <input className="mobile_login_item" onKeyDown={this.handleKeyDown} onChange={e => this.props.set_login(e.target.value)} value={this.props.store.login.username} type="text" placeholder="Логин" name="username" />,
-                            <input className="mobile_login_item" onKeyDown={this.handleKeyDown} onChange={e => this.props.set_password(e.target.value)} value={this.props.store.login.pass} type="password" placeholder="Пароль" name="psw" />,
-                            <button onClick={this.login.bind(this)} className="mobile_logout mobile_login_item">
-                                Вход
-                            </button>,
-                        ]
-                    ) : (
-                        <div className="">
-                            <p className="login__label">В данный момент личный кабинет не работает, мы знаем о проблеме и пытаемся её устранить, приносим извинения за неудобства.</p>
-                        </div>
-                    )}
+                    <input className="mobile_login_item" onKeyDown={this.handleKeyDown} onChange={e => this.props.set_login(e.target.value)} value={this.props.store.login.username} type="text" placeholder="Логин" name="username" />
+                    <input className="mobile_login_item" onKeyDown={this.handleKeyDown} onChange={e => this.props.set_password(e.target.value)} value={this.props.store.login.pass} type="password" placeholder="Пароль" name="psw" />
+                    <button onClick={this.login.bind(this)} className="mobile_logout mobile_login_item">
+                        Вход
+                    </button>
 
                 </div>
             </div>

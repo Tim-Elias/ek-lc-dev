@@ -8,25 +8,6 @@ import md5 from 'md5'
 import logo from './../logo.svg'
 import './login.css'
 
-const today = new Date()
-let mm = today.getMonth() + 1; // getMonth() is zero-based
-let dd = today.getDate();
-
-const y = today.getFullYear();
-
-if (mm < 10) { mm = '0' + mm }
-if (dd < 10) { dd = '0' + dd }
-
-const date = y + '-' + mm + '-' + dd;
-
-let H = today.getHours();
-let M = today.getMinutes();
-
-if (H < 10) { H = '0' + H }
-if (M < 10) { M = '0' + M }
-
-const time = H + ':' + M;
-
 class Screen extends React.Component {
 
     componentDidMount() {
@@ -105,9 +86,7 @@ class Screen extends React.Component {
     }
 
     render() {
-
-        console.log(date, time);
-
+      
         return (
             <div className="login__container">
                 <Modal closeIcon
@@ -128,18 +107,12 @@ class Screen extends React.Component {
                     <button className="login__button_back" onClick={() => document.location = 'https://express-kinetika.ru/'}>Перейти на сайт</button>
                 </div>
 
-                {(date >= "2021-12-04" && time >= "00:00") ? (
-                    <div className="login__row">
-                        <p className="login__label">Вход в личный кабинет</p>
-                        <input className="login__input" value={this.props.store.login.login} onChange={e => this.props.set_login(e.target.value)} value={this.props.store.login.username} type="text" placeholder="Логин" />
-                        <input className="login__input" value={this.props.store.login.password} onChange={e => this.props.set_password(e.target.value)} value={this.props.store.login.pass} type="password" placeholder="Пароль" />
-                        <button className="login__button" onClick={this.login.bind(this)}>Вход</button>
-                    </div> 
-                ) : (
-                    <div className="login__row">
-                        <p className="login__label">В данный момент личный кабинет не работает, мы знаем о проблеме и пытаемся её устранить, приносим извинения за неудобства.</p>
-                    </div> 
-                )}
+                <div className="login__row">
+                    <p className="login__label">Вход в личный кабинет</p>
+                    <input className="login__input" value={this.props.store.login.login} onChange={e => this.props.set_login(e.target.value)} value={this.props.store.login.username} type="text" placeholder="Логин" />
+                    <input className="login__input" value={this.props.store.login.password} onChange={e => this.props.set_password(e.target.value)} value={this.props.store.login.pass} type="password" placeholder="Пароль" />
+                    <button className="login__button" onClick={this.login.bind(this)}>Вход</button>
+                </div>
             </div>
         )
 
