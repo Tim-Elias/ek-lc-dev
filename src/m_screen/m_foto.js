@@ -6,8 +6,6 @@ class Screen extends React.Component {
 
     _handleImageChange(e) {
         e.preventDefault();
-        
-        const fileName = e.target.files[0].name;
 
         const reader = new FileReader();
 
