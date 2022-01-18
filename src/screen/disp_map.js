@@ -94,7 +94,7 @@ class Screen extends React.Component {
 
                   
                   var infowindow = new g_maps.InfoWindow({
-                    content: `<div><div>${el.Num} </div><div>Заказчик: ${el.Customer}</div></div><div>Город: ${el.RecCity}</div><div>Адрес: <b>${el.RecAddress}</b></div><div>Получатель: ${el.RecPerson}</div><div>Телефон: ${el.RecPhone}</div><div>Время доставки: ${el.RecTime}</div><div>Вес: ${el.Weight} (${Math.round(el.Volume*5)/1000})</div><div>Статус: ${el.StatusType}: ${el.StatusValue} ${el.StoreZone===""?(""):("</div><div>Зона хранения:"+el.StoreZone)}</div></div>`
+                      content: `<div><div>${el.Num} </div><div>Заказчик: ${el.Customer}</div></div><div>Город: ${el.RecCity}</div><div>Район: ${el.RecDistrict}</div><div>Адрес: <b>${el.RecAddress}</b></div><div>Получатель: ${el.RecPerson}</div><div>Телефон: ${el.RecPhone}</div><div>Время доставки: ${el.RecTime}</div><div>Вес: ${el.Weight} (${Math.round(el.Volume*5)/1000})</div><div>Статус: ${el.StatusType}: ${el.StatusValue} ${el.StoreZone===""?(""):("</div><div>Зона хранения:"+el.StoreZone)}</div></div>`
                     
                   });
 
