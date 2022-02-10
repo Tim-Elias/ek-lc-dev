@@ -50,7 +50,7 @@ class Screen extends React.Component {
             city: item.rec_city,
         };
 
-        get_data('terminallist', s_city).then(
+        get_data('terminallist', { city: s_city, userkey: this.props.store.login.userkey }).then(
             (result) => {
                 const data = {
                     result: result,
@@ -64,7 +64,7 @@ class Screen extends React.Component {
             }
         );
 
-        get_data('terminallist', r_city).then(
+        get_data('terminallist', { city: r_city, userkey: this.props.store.login.userkey } ).then(
             (result) => {
                 const data = {
                     result: result,

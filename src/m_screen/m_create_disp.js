@@ -66,8 +66,8 @@ class Screen extends React.Component {
                 this.props.SetPrice(result);
             },
             (err) => { 
-              console.log("err")  
-              console.log(err) 
+              console.log("err");
+              console.log(err);
           }
         );
     }
@@ -76,7 +76,7 @@ class Screen extends React.Component {
         this.props.SetSendCity(value);
         let city = value.label;
 
-        get_data('terminallist', { city }).then(
+        get_data('terminallist', { city: city, userkey: this.props.store.login.userkey }).then(
             (result) => {
                 let sel_terminal;
                 if(terminal) {
@@ -138,7 +138,7 @@ class Screen extends React.Component {
         this.props.SetRecCity(value);
         let city = value.label;
 
-        get_data('terminallist', { city }).then(
+        get_data('terminallist', { city: city, userkey: this.props.store.login.userkey }).then(
             (result) => {
                 
                 let sel_terminal;

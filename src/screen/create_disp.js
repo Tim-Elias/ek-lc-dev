@@ -166,7 +166,7 @@ RemoveCargo = (index) => {
     const city = value.label
     this.props.SetSendCity(city) 
     
-    get_data('terminallist', {city}).then(
+    get_data('terminallist', { city: city, userkey: this.props.store.login.userkey }).then(
           (result) => {
             
             this.props.SetSendTerminalList(result)
@@ -193,9 +193,10 @@ RemoveCargo = (index) => {
 
     const city = value.label
     this.props.SetRecCity(city)
-    
-    get_data('terminallist', {city}).then(
+    console.log({ city: city, userkey: this.props.store.login.userkey })
+    get_data('terminallist', { city: city, userkey: this.props.store.login.userkey }).then(
           (result) => {
+            console.log(result)
             this.props.SetRecTerminalList(result)
             if (result.length === 0) {
               this.SetRecTerminal(false)

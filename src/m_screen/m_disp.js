@@ -70,7 +70,7 @@ class Screen extends React.Component {
             status: stat,
         }
 
-        get_data('setorderstatus', data).then (
+        get_data('setorderstatus', data).then(
             (result) => {
                 this.loadData();
                 if(stat === "Выполнено") {
@@ -116,7 +116,7 @@ class Screen extends React.Component {
                     city: this.props.store.disp.data.RecCity,
                 };
 
-                get_data('terminallist', s_city).then(
+                get_data('terminallist', { city: s_city, userkey: this.props.store.login.userkey }).then(
                     (result) => {
                         const data = {
                             result: result,
@@ -130,7 +130,7 @@ class Screen extends React.Component {
                     }
                 );
 
-                get_data('terminallist', r_city).then(
+                get_data('terminallist', { city: r_city, userkey: this.props.store.login.userkey } ).then(
                     (result) => {
                         const data = {
                             result: result,

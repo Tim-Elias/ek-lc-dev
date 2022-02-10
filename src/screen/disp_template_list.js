@@ -23,7 +23,7 @@ class Screen extends React.Component {
         
         const city_label = city.label
         this.props.modules.set_active_window('wait')
-        get_data('terminallist', {city: city_label}).then(
+        get_data('terminallist', { city: city_label, userkey: this.props.store.login.userkey }).then(
             (result) => {
               
               let crrent_terminal = {}

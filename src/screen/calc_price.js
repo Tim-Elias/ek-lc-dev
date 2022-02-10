@@ -36,7 +36,7 @@ class Screen extends React.Component {
 
         const city = value.label
 
-        get_data('terminallist', { city }).then(
+        get_data('terminallist', { city: city, userkey: this.props.store.login.userkey }).then(
             (result) => {
 
                 this.props.set_calc_price_send_terminal_list(result)
@@ -65,7 +65,7 @@ class Screen extends React.Component {
 
         const city = value.label
 
-        get_data('terminallist', { city }).then(
+        get_data('terminallist', { city: city, userkey: this.props.store.login.userkey }).then(
             (result) => {
 
                 this.props.set_calc_price_rec_terminal_list(result)

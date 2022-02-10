@@ -53,7 +53,7 @@ class Screen extends React.Component {
 
         const city_label = value.label
 
-        get_data('terminallist', {city: city_label}).then(
+        get_data('terminallist', { city: city_label, userkey: this.props.store.login.userkey }).then(
             (result) => {
               
             this.props.set_disp_template_terminal_list(result)
