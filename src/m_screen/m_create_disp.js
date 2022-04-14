@@ -32,6 +32,19 @@ class Screen extends React.Component {
             },
             (err) => { console.log(err) }
         );
+
+        // get_data('terminallist', { city: city, userkey: this.props.store.login.userkey }).then(
+        //     (result) => {
+        //         this.props.SetSendTerminalListMobile(result)
+        //         this.props.SetRecTerminalListMobile(result)
+        //         if (result.length === 0) {
+        //             this.SetSendTerminal(false)
+        //         }
+        //     },
+        //     (err) => {
+        //         console.log("err", err)
+        //     }
+        // );
     }
 
     componentWillUnmount() {
@@ -367,7 +380,7 @@ class Screen extends React.Component {
             // RecEmailInformer: this.props.store.m_create_disp.RecEmailInformer,bool
 
             Cargo: this.props.store.m_create_disp.Cargo,
-            Total: this.props.store.m_create_disp.Total,
+            Total: +this.props.store.m_create_disp.Total,
             Volume: this.props.store.m_create_disp.Volume,
             Weight: this.props.store.m_create_disp.Weight,
 
@@ -382,7 +395,7 @@ class Screen extends React.Component {
 
 
         this.props.active_window("wait");
-
+        
         get_data('createdisp', create_disp_data).then(
             (result) => {
 
