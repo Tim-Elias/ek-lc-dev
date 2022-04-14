@@ -380,7 +380,7 @@ class Screen extends React.Component {
             // RecEmailInformer: this.props.store.m_create_disp.RecEmailInformer,bool
 
             Cargo: this.props.store.m_create_disp.Cargo,
-            Total: +this.props.store.m_create_disp.Total,
+            Total: this.props.store.m_create_disp.Total,
             Volume: this.props.store.m_create_disp.Volume,
             Weight: this.props.store.m_create_disp.Weight,
 
