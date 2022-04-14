@@ -50,13 +50,14 @@ class Screen extends React.Component {
             city: item.rec_city,
         };
 
-        get_data('terminallist', { city: s_city, userkey: this.props.store.login.userkey }).then(
+        get_data('terminallist', { city: s_city.city, userkey: this.props.store.login.userkey }).then(
             (result) => {
                 const data = {
                     result: result,
                     terminal: null,
                 }
-                this.props.SetSendTerminalList(data);
+                
+                this.props.SetSendTerminalListMobile(data);
             },
             (err) => {
                 console.log("err");
@@ -64,13 +65,13 @@ class Screen extends React.Component {
             }
         );
 
-        get_data('terminallist', { city: r_city, userkey: this.props.store.login.userkey } ).then(
+        get_data('terminallist', { city: r_city.city, userkey: this.props.store.login.userkey } ).then(
             (result) => {
                 const data = {
                     result: result,
                     terminal: null,
                 }
-                this.props.SetRecTerminalList(data);
+                this.props.SetRecTerminalListMobile(data);
             },
             (err) => {
                 console.log("err");
@@ -133,7 +134,7 @@ export default connect(
         set_active_loader: (param) => { dispatch({ type: 'set_active_loader', payload: param }); },
         set_template_list: (param) => { dispatch({ type: 'set_template_list', payload: param }); },
         set_select_template: (param) => { dispatch({ type: 'set_select_template', payload: param }); },
-        SetSendTerminalList: (param) => { dispatch({ type: 'SetSendTerminalListMobile', payload: param }) },
-        SetRecTerminalList: (param) => { dispatch({ type: 'SetRecTerminalListMobile', payload: param }) },
+        SetSendTerminalListMobile: (param) => { dispatch({ type: 'SetSendTerminalListMobile', payload: param }) },
+        SetRecTerminalListMobile: (param) => { dispatch({ type: 'SetRecTerminalListMobile', payload: param }) },
     })
 )(Screen);
