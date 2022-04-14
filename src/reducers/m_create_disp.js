@@ -80,7 +80,13 @@ export default function dispatch(state = initialState, action) {
     
         case 'SetPriceMobile': return { ...state, Price: action.payload }
 
-        case 'SetTotalMobile': return { ...state, Total: action.payload }
+        case 'SetTotalMobile': 
+            if (parseInt(action.payload) >= 0 || parseInt(action.payload) <= 0) {
+                return { ...state, Total: action.payload }
+            } else {
+                return { ...state }
+            }
+            
         case 'SetWeightMobile': return { ...state, Weight: action.payload }
         case 'SetVolumeMobile': return { ...state, Volume: action.payload }
         case 'SetCODMobile': return { ...state, COD: action.payload }
