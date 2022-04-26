@@ -284,6 +284,14 @@ td {
   margin: 5px;
 }
 
+.disp_cargo_data_fragile {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 250px 180px;
+  margin: 5px;
+  align-items: center;
+}
+
 .grid-container {
   display: grid;
   grid-template-rows: 60px 1fr 60px;

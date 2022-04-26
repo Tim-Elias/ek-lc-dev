@@ -87,14 +87,14 @@ const initialState = {
   COD: 0,
   InsureValue: 0,
 
-
-  Termo: '',
+  Termo: false,
+  TMax: 0,
+  TMin: 0,
 
   IRR: false,
   Fragile: false,
   DelType: '',
   DispDate: '',
-
 }
 
 export default function dispatch (state = initialState, action) {
@@ -103,6 +103,10 @@ export default function dispatch (state = initialState, action) {
     case 'reset_create_disp_data': return  initialState 
 
     case 'SetWarningAlert': return { ...state, warningAlert: action.payload }
+    
+    case 'SetTermo': return { ...state, Termo: action.payload, TMax: action.payload ? state.TMax : 0, TMin: action.payload ? state.TMin : 0}
+    case 'SetTMax': return { ...state, TMax: action.payload }
+    case 'SetTMin': return { ...state, TMin: action.payload }
 
     case 'SetCyrillic': return { ...state, cyrillic: action.payload }
 
@@ -306,7 +310,7 @@ export default function dispatch (state = initialState, action) {
 
     case 'SetTermo': return { ...state, PayType: action.payload }
     case 'SetIRR': return { ...state, PayType: action.payload }
-    case 'SetFragile': return { ...state, PayType: action.payload }
+    case 'SetFragile': return { ...state, Fragile: action.payload }
     case 'SetDelType': return { ...state, DelType: action.payload.value }
 
     case 'SetCustomerEmailInformer': return { ...state, CustomerEmailInformer: action.payload }
@@ -351,6 +355,9 @@ export default function dispatch (state = initialState, action) {
       
       RecTerminal: action.payload.RecTerminal,
       // RecSelectTerminal: {},
+      Fragile: action.payload.Fragile,
+      TMax: action.payload.TMax,
+      TMin: action.payload.TMin,
 
       CargoInfoType: action.payload.CargoInfoType,
 
@@ -361,8 +368,6 @@ export default function dispatch (state = initialState, action) {
       Cargo: action.payload.Cargo.map(el=>{
         const cargo_type = el.Type
         const CargoTypeListEl = CargoTypeList.find(el_list => el_list.value === el.Type)
-        console.log(cargo_type)
-        console.log(CargoTypeListEl)
         return {
         Weight: el.Weight,
         L: el.L,

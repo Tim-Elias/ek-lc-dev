@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Table, Button, Icon, Modal, Loader, Dimmer } from 'semantic-ui-react'
+import { Table, Button, Icon, Modal, Loader, Dimmer, Checkbox } from 'semantic-ui-react'
 import { get_data, get_file } from './../common/common_modules'
 import ReactToPrint from 'react-to-print'
 import Barcode from 'react-barcode'
@@ -16,13 +16,10 @@ let g_map
 let g_maps
 let marker
 
-
-
 class Screen extends React.Component {
 
     sound_test = () =>{
         this.props.set_test_sound(Sound.status.PLAYING)
-      
     }
 
     save_lat_lng = () =>{
@@ -35,7 +32,6 @@ class Screen extends React.Component {
 
         get_data('setreclatlng', lat_lng_data).then(
             (result) => {
-                console.log(result);
                 this.props.set_active_window("wait");
     
                 const data = {
@@ -156,7 +152,6 @@ class Screen extends React.Component {
             (result) => {
                 this.props.set_active_window("reciept");
                 this.props.set_search_error(`Накладная ${this.props.store.disp.data.Number} успешно принята на склад`);
-
             },
             (err) => {
                 this.props.modules.set_modal_show(true)
@@ -167,7 +162,6 @@ class Screen extends React.Component {
                 console.log(err)
             }
         );
-
     }
 
     open_history = () => {
@@ -225,7 +219,6 @@ class Screen extends React.Component {
     remove_disp = () => {
         this.props.set_disp_remove_confirm(false)
         this.props.set_disp_show_remove_modal(true)
-
     }
 
     close_remove_modal = () => {
@@ -256,10 +249,7 @@ class Screen extends React.Component {
             } else {
                 this.back()
             }
-
         }
-
-
     }
 
     confirm_remove_disp = () => {
@@ -272,7 +262,6 @@ class Screen extends React.Component {
         }
         get_data('removedisp', data).then(
             (result) => {
-               
                 if (result == 1) {
                     this.props.set_disp_text_remove_modal("Накладная успешно удалена");
                 } else {
@@ -438,7 +427,10 @@ class Screen extends React.Component {
                         Total: current_disp_data.Total,
                         Weight: current_disp_data.Weight,
                         Volume: current_disp_data.Volume,
-
+                        Fragile: current_disp_data.Fragile,
+                        Termo: current_disp_data.Termo,
+                        TMax: current_disp_data.TMax,
+                        TMin: current_disp_data.TMin
                     }
 
                     this.props.set_copy_disp_data(copy_disp_data)
@@ -448,8 +440,6 @@ class Screen extends React.Component {
                     this.props.modules.set_last_window('disp');
                     
                     this.props.set_active_window('create_disp');
-
-
                 },
                 (err) => { 
                     console.log(err) 
@@ -517,8 +507,7 @@ class Screen extends React.Component {
         const set_disp_lat_lng = this.props.set_disp_lat_lng
 
         geocoder.geocode( { 'address': this.props.store.disp.search_box}, function(results, status) {
-            console.log(results)
-            console.log(status)
+
             if (status == 'OK') {
                 position = results[0].geometry.location
 
@@ -881,6 +870,29 @@ class Screen extends React.Component {
                     </div>
                 </div>
                 <div className="disp_cargo_data">
+                    <div className="disp_data_label">Хрупкий груз:</div>
+                    <Checkbox
+                        checked={this.props.store.disp.data.Fragile}
+                    />
+
+                    {this.props.store.login.probably_termo ? (
+                        [<div key={1} className="disp_data_label">Терморежим:</div>,
+                        <Checkbox
+                            key={2}
+                            checked={this.props.store.disp.data.Termo}
+                        />]
+                    ) : (null)}
+
+                    {this.props.store.disp.data.Termo ? (
+                        [<div key={1} className="disp_data_label">Терморежим минимум:</div>,
+                        <div key={2} className="disp_data_el">
+                            {this.props.store.disp.data.TMin}
+                        </div>,
+                        <div key={3} className="disp_data_label">Терморежим максимум:</div>,
+                        <div key={4} className="disp_data_el">
+                            {this.props.store.disp.data.TMax}
+                    </div>]) : (null)}
+
                     <div className="disp_data_label">Общее количество мест:</div>
                     <div className="disp_data_el">{this.props.store.disp.data.Total}</div>
                     <div className="disp_data_label">Общий фактический вес:</div>
@@ -939,7 +951,7 @@ class Screen extends React.Component {
                 {this.props.store.login.disp_map ? (<div className='disp_map'>
               
             
-              <GoogleMapReact
+                <GoogleMapReact
                     bootstrapURLKeys={{ key: 'AIzaSyD5AmmHNIXXN0yquTsPxoXuvtOp8OYhe2E' }}
                     defaultCenter={center}
                     defaultZoom={14}
@@ -953,13 +965,13 @@ class Screen extends React.Component {
                 {this.props.store.login.disp_map ? (<button className="search_box" onClick={this.save_lat_lng.bind(this)}>Сохранить</button>):(null)}
                 {this.props.store.login.disp_map ? (<button className="search_box" onClick={this.sound_test.bind(this)}>Тест звука</button>):(null)}
                 <Sound
-      url={test_sound}
-      playStatus={this.props.store.general.test_sound}
-      playFromPosition={100 /* in milliseconds */}
-      onLoading={console.log('1')}
-      onPlaying={console.log('2')}
-      onFinishedPlaying={console.log('3')}
-    />
+                    url={test_sound}
+                    playStatus={this.props.store.general.test_sound}
+                    playFromPosition={100 /* in milliseconds */}
+                    onLoading={console.log('1')}
+                    onPlaying={console.log('2')}
+                    onFinishedPlaying={console.log('3')}
+                    />
             </div>
 
         );

@@ -6,6 +6,7 @@ import Select from 'react-select';
 import './home_ek.css';
 import { calcPriceStyle } from "./../common/calc_price_style";
 import Wait from "./wait";
+import { Table, Modal, Icon } from 'semantic-ui-react'
 
 class Screen extends React.Component {
 
@@ -89,32 +90,88 @@ class Screen extends React.Component {
 
     CalcPrice = () => {
 
-        const calcPriceData = {
-            userkey: this.props.store.login.userkey,
-            SendCity: this.props.store.calc_price.calc_price_send_city.label,
-            SendTerminal: this.props.store.calc_price.calc_price_send_terminal,
-            RecCity: this.props.store.calc_price.calc_price_rec_city.label,
-            RecTerminal: this.props.store.calc_price.calc_price_rec_terminal,
-            Volume: (this.props.store.calc_price.calc_price_l * this.props.store.calc_price.calc_price_w * this.props.store.calc_price.calc_price_h / 5000),
-            Weight: this.props.store.calc_price.calc_price_weight === "" ? (0) : (this.props.store.calc_price.calc_price_weight),
-        }
+        if (this.props.store.calc_price.calc_price_send_city === "" || this.props.store.calc_price.calc_price_rec_city === "") {
+            this.props.set_calc_price_result("Не удалось рассчитать");
+            this.props.modules.set_modal_show(true)
+            this.props.modules.set_modal_header('Ошибка')
+            this.props.modules.set_modal_text('Не указан город отправления или город получения!')
+        } else {
+            let Volume = this.props.store.calc_price.calc_price_cargo_info_type.key === 1 ? (this.props.store.calc_price.calc_price_l * this.props.store.calc_price.calc_price_w * this.props.store.calc_price.calc_price_h / 5000) : (Math.ceil(this.props.store.calc_price.CargoList.reduce((accumulator, Cargo) => accumulator + Math.ceil(Cargo.Weight * Cargo.Q * 1000) / 1000, 0) * 1000) / 1000);
+            let Weight = this.props.store.calc_price.calc_price_cargo_info_type.key === 1 ? (this.props.store.calc_price.calc_price_weight === "" ? (0) : (this.props.store.calc_price.calc_price_weight)) : (Math.ceil(this.props.store.calc_price.CargoList.reduce((accumulator, Cargo) => accumulator + Math.ceil(Cargo.L * Cargo.W * Cargo.H * Cargo.Q / 5) / 1000, 0) * 1000) / 1000)
 
-        get_data('customercalc', calcPriceData).then(
-            (result) => {
-                this.props.set_calc_price_result(result);
-            },
-            (err) => {
-                this.props.set_calc_price_result("Не удалось рассчитать");
-                this.props.modules.set_modal_show(true)
-                this.props.modules.set_modal_header('Ошибка')
-                
-                console.log(err)
-                this.props.modules.set_modal_text(err)
+            const calcPriceData = {
+                userkey: this.props.store.login.userkey,
+                SendCity: this.props.store.calc_price.calc_price_send_city.label,
+                SendTerminal: this.props.store.calc_price.calc_price_send_terminal,
+                RecCity: this.props.store.calc_price.calc_price_rec_city.label,
+                RecTerminal: this.props.store.calc_price.calc_price_rec_terminal,
+                Volume: Volume,
+                Weight: Weight,
             }
-        );
+
+            get_data('customercalc', calcPriceData).then(
+                (result) => {
+                    this.props.set_calc_price_result(result);
+                },
+                (err) => {
+                    this.props.set_calc_price_result("Не удалось рассчитать");
+                    this.props.modules.set_modal_show(true)
+                    this.props.modules.set_modal_header('Ошибка')
+
+                    console.log(err)
+                    this.props.modules.set_modal_text(err)
+                }
+            );
+        }
+    }
+
+    SetCargoWeight = (value, index) => {
+        const data = {
+            value: value,
+            index: index
+        }
+        this.props.set_calc_price_cargo_weight(data);
+    }
+
+    SetCargoW = (value, index) => {
+        const data = {
+            value: value,
+            index: index
+        }
+        this.props.set_calc_price_w(data)
+    }
+
+    SetCargoL = (value, index) => {
+        const data = {
+            value: value,
+            index: index
+        }
+        this.props.set_calc_price_cargoL(data)
+    }
+
+    SetCargoH = (value, index) => {
+        const data = {
+            value: value,
+            index: index
+        }
+        this.props.set_calc_price_cargoH(data)
+    }
+
+    SetCargoQ = (value, index) => {
+        const data = {
+            value: value,
+            index: index
+        }
+        this.props.set_calc_price_cargoQ(data)
+    }
+
+    RemoveCargo = (index) => {
+        this.props.remove_calc_price_cargo(index)
     }
 
     render() {
+        let total_weight = Math.ceil(this.props.store.calc_price.CargoList.reduce((accumulator, Cargo) => accumulator + Math.ceil(Cargo.Weight * Cargo.Q * 1000) / 1000, 0) * 1000) / 1000
+        let total_volume = Math.ceil(this.props.store.calc_price.CargoList.reduce((accumulator, Cargo) => accumulator + Math.ceil(Cargo.L * Cargo.W * Cargo.H * Cargo.Q / 5) / 1000, 0) * 1000) / 1000
 
         return (
             <div>
@@ -185,26 +242,85 @@ class Screen extends React.Component {
                         </div>
                     ) : (null)}
 
-                    <div className="calc_price_row">
-                        <div className="calc_price_label">Вес:</div>
-
-                        <input type="number" placeholder="кг" className="calc_price_input" value={this.props.store.calc_price.calc_price_weight} onChange={(e) => { this.props.set_calc_price_weight(e.target.value) }} />
-                    </div>
 
                     <div className="calc_price_row">
-                        <div className="calc_price_label">Габариты:</div>
+                        <div className="calc_price_label">Информация о грузе:</div>
 
-                        <input type="number" placeholder="Длина" className="calc_price_dimensions" value={this.props.store.calc_price.calc_price_l} onChange={(e) => { this.props.set_calc_price_length(e.target.value) }} />
-                        <input type="number" placeholder="Ширина" className="calc_price_dimensions" value={this.props.store.calc_price.calc_price_w} onChange={(e) => { this.props.set_calc_price_width(e.target.value) }} />
-                        <input type="number" placeholder="Высота" className="calc_price_dimensions" value={this.props.store.calc_price.calc_price_h} onChange={(e) => { this.props.set_calc_price_height(e.target.value) }} />
+                        <Select
+                            value={this.props.store.calc_price.calc_price_cargo_info_type}
+                            options={[{ key: 1, label: "Итоговые значения", value: "Итоговые значения" }, { key: 2, label: "Информация о каждом грузе", value: "Информация о каждом грузе" }]}
+                            styles={calcPriceStyle}
+                            onChange={(values) => this.props.set_calc_price_cargo_info_type(values)}
+                            placeholder=" "
+                        />
                     </div>
 
+                    {this.props.store.calc_price.calc_price_cargo_info_type.key === 2 ? (
+                        <div className="disp_cargo_table_data">
+                            
+                            <Table compact celled size='small'>
+                                <Table.Header>
+                                    <Table.Row>
+                                        <Table.HeaderCell>Вес (кг)</Table.HeaderCell>
+                                        <Table.HeaderCell>Длина (см)</Table.HeaderCell>
+                                        <Table.HeaderCell>Ширина (см)</Table.HeaderCell>
+                                        <Table.HeaderCell>Высота (см)</Table.HeaderCell>
+                                        <Table.HeaderCell>Об. вес</Table.HeaderCell>
+                                        <Table.HeaderCell>Количество</Table.HeaderCell>
+                                        <Table.HeaderCell>Итоговый вес</Table.HeaderCell>
+                                        <Table.HeaderCell>Итог. об. вес</Table.HeaderCell>
+                                        {this.props.store.calc_price.CargoList.length === 1 ? (null) : (<Table.HeaderCell></Table.HeaderCell>)}
+                                    </Table.Row>
+                                </Table.Header>
+                                <Table.Body>
+                                    {this.props.store.calc_price.CargoList.map((Cargo, index) =>
+                                        <Table.Row key={index}>
+                                            <Table.Cell><input className="create_disp_td_input" value={Cargo.Weight} onChange={(e) => this.SetCargoWeight(e.target.value, index)} type="number" /></Table.Cell>
+                                            <Table.Cell><input className="create_disp_td_input" value={Cargo.L} onChange={(e) => this.SetCargoL(e.target.value, index)} type="number" /></Table.Cell>
+                                            <Table.Cell><input className="create_disp_td_input" value={Cargo.H} onChange={(e) => this.SetCargoH(e.target.value, index)} type="number" /></Table.Cell>
+                                            <Table.Cell><input className="create_disp_td_input" value={Cargo.W} onChange={(e) => this.SetCargoW(e.target.value, index)} type="number" /></Table.Cell>
+                                            <Table.Cell>{Math.ceil(Cargo.L * Cargo.W * Cargo.H / 5) / 1000}</Table.Cell>
+                                            <Table.Cell><input className="create_disp_td_input" value={Cargo.Q} onChange={(e) => this.SetCargoQ(e.target.value,index)} type="number" /></Table.Cell>
+                                            <Table.Cell>{Math.ceil(Cargo.Weight * Cargo.Q * 1000) / 1000}</Table.Cell>
+                                            <Table.Cell>{Math.ceil(Cargo.L * Cargo.W * Cargo.H * Cargo.Q / 5) / 1000}</Table.Cell>
+
+                                            {this.props.store.calc_price.CargoList.length === 1 ? (null) : (<Table.Cell collapsing> <button onClick={this.RemoveCargo.bind(this, index)} className="IconButton"><Icon type="indicator" name="delete" width={15} height={15} /></button></Table.Cell>)}
+                                        </Table.Row>)}
+                                </Table.Body>
+                            </Table>
+                            <button onClick={this.props.add_calc_price_cargolist.bind(this)}>Добавить место</button>
+                        </div>
+                    ) : (null)}
+
+                    <div className="calc_price_row">
+                        <div className="calc_price_label">Общий вес:</div>
+
+                        {this.props.store.calc_price.calc_price_cargo_info_type.key === 1 ? (
+                            <input type="number" placeholder="кг" className="calc_price_input" value={this.props.store.calc_price.calc_price_weight} onChange={(e) => { this.props.set_calc_price_weight(e.target.value) }} />
+                        ) : (
+                                <div className="calc_price_input">{total_weight} кг.</div>
+                        )}
+                    </div>
+
+                    {this.props.store.calc_price.calc_price_cargo_info_type.key === 1 ? (
+                        <div className="calc_price_row">
+                            <div className="calc_price_label">Габариты:</div>
+
+                            <input type="number" placeholder="Длина" className="calc_price_dimensions" value={this.props.store.calc_price.calc_price_l} onChange={(e) => { this.props.set_calc_price_length(e.target.value) }} />
+                            <input type="number" placeholder="Ширина" className="calc_price_dimensions" value={this.props.store.calc_price.calc_price_w} onChange={(e) => { this.props.set_calc_price_width(e.target.value) }} />
+                            <input type="number" placeholder="Высота" className="calc_price_dimensions" value={this.props.store.calc_price.calc_price_h} onChange={(e) => { this.props.set_calc_price_height(e.target.value) }} />
+                        </div>
+                    ) : (null)}
                 </div>
 
                 <div className="calc_price_row">
-                    <div className="calc_price_label">Объемный вес:</div>
+                    <div className="calc_price_label">Общий объемный вес:</div>
 
-                    <div className="calc_price_input">{this.props.store.calc_price.calc_price_l * this.props.store.calc_price.calc_price_w * this.props.store.calc_price.calc_price_h / 5000} кг.</div>
+                    {this.props.store.calc_price.calc_price_cargo_info_type.key === 1 ? (
+                        <div className="calc_price_input">{this.props.store.calc_price.calc_price_l * this.props.store.calc_price.calc_price_w * this.props.store.calc_price.calc_price_h / 5000} кг.</div>
+                    ) : (
+                        <div className="calc_price_input">{total_volume} кг.</div>
+                    )}
                 </div>
 
                 <div className="calc_price_row" style={{marginTop: "10px"}}>
@@ -256,5 +372,14 @@ export default connect(
         set_calc_price_select_rec_terminal: (param) => { dispatch({ type: 'set_calc_price_select_rec_terminal', payload: param }) },
 
         SetCityList: (param) => { dispatch({ type: 'SetCityList', payload: param }) },
+
+        set_calc_price_cargo_info_type: (param) => { dispatch({ type: 'set_calc_price_cargo_info_type', payload: param }) },
+        add_calc_price_cargolist: (param) => { dispatch({ type: 'add_calc_price_cargolist', payload: param }) },
+        set_calc_price_cargo_weight: (param) => { dispatch({ type: 'set_calc_price_cargo_weight', payload: param }) },
+        set_calc_price_w: (param) => { dispatch({ type: 'set_calc_price_w', payload: param }) },
+        set_calc_price_cargoL: (param) => { dispatch({ type: 'set_calc_price_cargoL', payload: param }) },
+        set_calc_price_cargoH: (param) => { dispatch({ type: 'set_calc_price_cargoH', payload: param }) },
+        set_calc_price_cargoQ: (param) => { dispatch({ type: 'set_calc_price_cargoQ', payload: param }) },
+        remove_calc_price_cargo: (param) => { dispatch({ type: 'remove_calc_price_cargo', payload: param }) },
     })
 )(Screen)

@@ -31,7 +31,8 @@ const initialState = {
   customers: [],
   customer_key: "",
 
-
+  probably_termo: false,
+  necessarily_all_field: false,
 }
 
 export default function login (state = initialState, action) {
@@ -59,8 +60,8 @@ export default function login (state = initialState, action) {
       disp_map: action.payload.disp_map,
       customers: action.payload.customers,
       customer_key: action.payload.customer_key,
-
-      
+      probably_termo: action.payload.probably_termo,
+      necessarily_all_field: action.payload.necessarily_all_field,
   }
     case 'SET_USERNAME': return { ...state, username: action.payload }
     case 'SET_PASS': return { ...state, pass: action.payload }
@@ -93,7 +94,8 @@ export default function login (state = initialState, action) {
       disp_map: action.payload.disp_map,
       customers: action.payload.customers,
       customer_key: action.payload.customer_key,
-
+      probably_termo: action.payload.probably_termo,
+      necessarily_all_field: action.payload.necessarily_all_field,
     }
     case 'LOGOUT': return { ...state, userkey: null, alias: null, logged: false, username: '', pass: '' }
 
