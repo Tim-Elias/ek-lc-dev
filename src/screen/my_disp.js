@@ -63,6 +63,8 @@ class Screen extends React.Component {
 
     get_data('dispatch', data).then(
       (result) => {
+        result[0].Termo = (result[0].TMax !== 0 || result[0].TMin !== 0) ? true : false;
+
         this.props.set_data_disp(result);
         this.props.set_active_window("disp");
         this.props.set_last_window("my_disp");

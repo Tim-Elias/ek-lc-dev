@@ -5,7 +5,7 @@ import { get_data } from './../common/common_modules'
 import Select from 'react-select'
 
 import { customStyles } from "./../common/common_style";
-import { Table, Modal, Button, Icon} from 'semantic-ui-react'
+import { Table, Modal, Button, Icon, Checkbox } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
 
 const PayTypeList = [
@@ -65,16 +65,17 @@ CalcPrice = (total_weight, total_volume) => {
 
   get_data('customercalc', create_disp_data).then(
     (result) => {
-      this.props.SetPrice(result);
+      let sum = this.props.store.create_disp.Termo ? result * 1.3 : result;
+      this.props.SetPrice(this.props.store.create_disp.Fragile ? sum += result * 0.5 : sum);
     },
     (err) => {
-      console.log(err)
+      console.log(err);
       this.props.set_last_window("create_disp");
       this.props.set_active_window("");
 
-      this.props.modules.set_modal_show(true)
-      this.props.modules.set_modal_header('Ошибка')
-      this.props.modules.set_modal_text(err)
+      this.props.modules.set_modal_show(true);
+      this.props.modules.set_modal_header('Ошибка');
+      this.props.modules.set_modal_text(err);
     }
   );
 }
@@ -188,15 +189,13 @@ RemoveCargo = (index) => {
   }
 
   SelectRecCity = (value) => {
-
     this.props.SetSelectedRecCity(value)
-
+    
     const city = value.label
     this.props.SetRecCity(city)
-    console.log({ city: city, userkey: this.props.store.login.userkey })
+
     get_data('terminallist', { city: city, userkey: this.props.store.login.userkey }).then(
           (result) => {
-            console.log(result)
             this.props.SetRecTerminalList(result)
             if (result.length === 0) {
               this.SetRecTerminal(false)
@@ -269,17 +268,41 @@ RemoveCargo = (index) => {
   }
 
   dataСhecking = () => {
-    if (this.props.store.create_disp.RecAdress.length < 2 && this.props.store.create_disp.RecTerminal === false) {
-      this.props.SetWarningMessage("адрес");
-      this.props.SetWarningAlert(true);
-    } else if (this.props.store.create_disp.RecPhone.length < 6) {
-      this.props.SetWarningMessage("телефон");
-      this.props.SetWarningAlert(true);
-    } else if (this.props.store.create_disp.RecPerson.length < 2) {
-      this.props.SetWarningMessage("контактное лицо");
-      this.props.SetWarningAlert(true);
+    if (this.props.store.login.necessarily_all_field) {
+      if (this.props.store.create_disp.SendAdress.length < 2 && this.props.store.create_disp.SendTerminal === false) {
+        this.props.SetWarningMessage("адрес отправителя!");
+        this.props.SetWarningAlert(true);
+      } else if (this.props.store.create_disp.SendPhone.length < 6) {
+        this.props.SetWarningMessage("телефон отправителя!");
+        this.props.SetWarningAlert(true);
+      } else if (this.props.store.create_disp.SendPerson.length < 2) {
+        this.props.SetWarningMessage("контактное лицо отправителя!");
+        this.props.SetWarningAlert(true);
+      } else if (this.props.store.create_disp.RecAdress.length < 2 && this.props.store.create_disp.RecTerminal === false) {
+        this.props.SetWarningMessage("адрес получателя!");
+        this.props.SetWarningAlert(true);
+      } else if (this.props.store.create_disp.RecPhone.length < 6) {
+        this.props.SetWarningMessage("телефон получателя!");
+        this.props.SetWarningAlert(true);
+      } else if (this.props.store.create_disp.RecPerson.length < 2) {
+        this.props.SetWarningMessage("контактное лицо получателя!");
+        this.props.SetWarningAlert(true);
+      } else {
+        this.sent_disp();
+      }
     } else {
-      this.sent_disp();
+      if (this.props.store.create_disp.RecAdress.length < 2 && this.props.store.create_disp.RecTerminal === false) {
+        this.props.SetWarningMessage("адрес получателя!");
+        this.props.SetWarningAlert(true);
+      } else if (this.props.store.create_disp.RecPhone.length < 6) {
+        this.props.SetWarningMessage("телефон получателя!");
+        this.props.SetWarningAlert(true);
+      } else if (this.props.store.create_disp.RecPerson.length < 2) {
+        this.props.SetWarningMessage("контактное лицо получателя!");
+        this.props.SetWarningAlert(true);
+      } else {
+        this.sent_disp();
+      }
     }
   }
 
@@ -330,9 +353,12 @@ RemoveCargo = (index) => {
       InsureValue: this.props.store.create_disp.InsureValue,
       COD: this.props.store.create_disp.COD,
       CargoInfoType: this.props.store.create_disp.CargoInfoType.value,
-
+      Fragile: this.props.store.create_disp.Fragile,
+      TMax: this.props.store.create_disp.Termo ? +this.props.store.create_disp.TMax : 0,
+      TMin: this.props.store.create_disp.Termo ? +this.props.store.create_disp.TMin : 0,
       Customer: this.props.store.create_disp.PayerSelect.value,
     }
+    console.log(create_disp_data)
 
       this.props.set_active_window("wait");
       
@@ -395,7 +421,7 @@ RemoveCargo = (index) => {
   SelectRecTemplate = (value) => {
     if (value !== null && value !== undefined){
       const city = this.props.store.create_disp.CityList.filter((el) => el.value === value.City)[0];
-      
+
       this.SelectRecCity(city)
       this.props.SetRecAdress(value.Adress)
       this.props.SetRecAdress(value.Adress)
@@ -785,7 +811,7 @@ SetTotal = (value) =>{
                         <div className="disp_data_label"> Компания:</div>
                         <div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.props.SetSendCompany(e.target.value)} value={this.props.store.create_disp.SendCompany} type="text" placeholder="Компания отправителя" /></div>
                         <div className="disp_data_label"> Телефон:</div>
-                        <div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.props.SetSendPhone(e.target.value)} value={this.props.store.create_disp.SendPhone} type="text" placeholder="Телефон отправителя" /></div>
+                        <div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.props.SetSendPhone(e.target.value)} value={this.props.store.create_disp.SendPhone} type="text" placeholder="Телефон отправителя (формат 8-9xx-xxx-xxxx)" /></div>
                         <div className="disp_data_label"> Контактное лицо:</div>
                         <div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.props.SetSendPerson(e.target.value)} value={this.props.store.create_disp.SendPerson} type="text" placeholder="Контактное лицо отправителя" /></div>
                         <div className="disp_data_label"> Доп. информация:</div>
@@ -843,7 +869,7 @@ SetTotal = (value) =>{
                         <div className="disp_data_label"> Компания:</div>
                         <div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={(e) => { if (this.props.store.create_disp.PayType.value !== "БезналичнаяОплатаПолучателем") { this.props.SetRecCompany(e.target.value) }}} value={this.props.store.create_disp.RecCompany} type="text" placeholder="Компания получателя" /></div>
                         <div className="disp_data_label"> Телефон:</div>
-                        <div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={(e) => { if (this.props.store.create_disp.PayType.value !== "БезналичнаяОплатаПолучателем") { this.props.SetRecPhone(e.target.value) }}} value={this.props.store.create_disp.RecPhone} type="text" placeholder="Телефон получателя" /></div>
+                        <div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={(e) => { if (this.props.store.create_disp.PayType.value !== "БезналичнаяОплатаПолучателем") { this.props.SetRecPhone(e.target.value) }}} value={this.props.store.create_disp.RecPhone} type="text" placeholder="Телефон получателя (формат 8-9xx-xxx-xxxx)" /></div>
                         <div className="disp_data_label"> Контактное лицо:</div>
                         <div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={(e) => { if (this.props.store.create_disp.PayType.value !== "БезналичнаяОплатаПолучателем") { this.props.SetRecPerson(e.target.value) }}} value={this.props.store.create_disp.RecPerson} type="text" placeholder="Контактное лицо получателя" /></div>
                         <div className="disp_data_label"> Доп. информация:</div>
@@ -915,31 +941,85 @@ SetTotal = (value) =>{
                         
                     </div>
                     <button onClick={this.AddCargo.bind(this)}>Добавить место</button>
+
+                    <div className="disp_cargo_data_fragile">
+                      <div className="disp_data_label">Хрупкий груз:</div>
+                      <Checkbox
+                        onChange={e => this.props.SetFragile(!this.props.store.create_disp.Fragile)}
+                        checked={this.props.store.create_disp.Fragile}
+                      />
+                      {this.props.store.login.probably_termo ? (
+                        [<div key={1} className="disp_data_label">Терморежим:</div>,
+                        <Checkbox
+                          key={2}
+                          onChange={e => this.props.SetTermo(!this.props.store.create_disp.Termo)}
+                          checked={this.props.store.create_disp.Termo}
+                        />]
+                      ) : (null)}
+
+                      {this.props.store.create_disp.Termo ? (
+                        [<div key={1} className="disp_data_label">Терморежим минимум:</div>,
+                        <div key={2} className="disp_data_el">
+                          <input className="create_disp_data_input" onChange={e => this.props.SetTMin(e.target.value)} value={this.props.store.create_disp.TMin} type="number" />
+                        </div>,
+                        <div key={3} className="disp_data_label">Терморежим максимум:</div>,
+                        <div key={4} className="disp_data_el">
+                          <input className="create_disp_data_input" onChange={e => this.props.SetTMax(e.target.value)} value={this.props.store.create_disp.TMax} type="number" />
+                        </div>]) : (null)}
+                    </div>
+
                     <div className="disp_cargo_data">
-                    <div className="disp_data_label">Общее количество мест:</div>
-                    <div className="disp_data_el">{this.props.store.create_disp.Cargo.reduce((accumulator, Cargo) => accumulator + Number(Cargo.Q), 0)}</div>
-                    <div className="disp_data_label">Общий фактический вес (кг):</div> 
-                    <div className="disp_data_el">{total_weight}</div>
-                    <div className="disp_data_label">Общий объемный вес (кг):</div>
-                    <div className="disp_data_el">{total_volume}</div> 
-                </div>
-                    </div>):(<div className="disp_cargo_data">
-                    <div className="disp_data_label">Общее количество мест:</div>
-                    <div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.SetTotal(e.target.value)} value={this.props.store.create_disp.Total} type="number" placeholder="Общее количество мест" /></div>
-                    <div className="disp_data_label">Общий фактический вес (кг):</div>
-                    <div className="disp_data_el"><input readOnly={Q_only} className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.props.SetWeight(e.target.value)} value={this.props.store.create_disp.Weight} type="number" placeholder="Итоговый фактический вес" /></div>
-                    <div className="disp_data_label">Общий объемный вес (кг):</div>
-                    <div className="disp_data_el"><input readOnly={Q_only}  className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.props.SetVolume(e.target.value)} value={this.props.store.create_disp.Volume} type="number" placeholder="Итоговый объемный вес" /></div> 
-                </div>)}
+                      <div className="disp_data_label">Общее количество мест:</div>
+                      <div className="disp_data_el">{this.props.store.create_disp.Cargo.reduce((accumulator, Cargo) => accumulator + Number(Cargo.Q), 0)}</div>
+                      <div className="disp_data_label">Общий фактический вес (кг):</div> 
+                      <div className="disp_data_el">{total_weight}</div>
+                      <div className="disp_data_label">Общий объемный вес (кг):</div>
+                      <div className="disp_data_el">{total_volume}</div> 
+                    </div>
+                    </div>):([
+                    <div key={1} className="disp_cargo_data_fragile">
+                      <div className="disp_data_label">Хрупкий груз:</div>
+                      <Checkbox
+                        onChange={e => this.props.SetFragile(!this.props.store.create_disp.Fragile)}
+                        checked={this.props.store.create_disp.Fragile}
+                      />
+                      {this.props.store.login.probably_termo ? (
+                        [<div key={1} className="disp_data_label">Терморежим:</div>,
+                        <Checkbox
+                          key={2}
+                          onChange={e => this.props.SetTermo(!this.props.store.create_disp.Termo)}
+                          checked={this.props.store.create_disp.Termo}
+                        />]
+                      ) : (null)}
+
+                      {this.props.store.create_disp.Termo ? (
+                        [<div key={1} className="disp_data_label">Терморежим минимум:</div>,
+                        <div key={2} className="disp_data_el">
+                          <input className="create_disp_data_input" onChange={e => this.props.SetTMin(e.target.value)} value={this.props.store.create_disp.TMin} type="number" />
+                        </div>,
+                        <div key={3} className="disp_data_label">Терморежим максимум:</div>,
+                        <div key={4} className="disp_data_el">
+                          <input className="create_disp_data_input" onChange={e => this.props.SetTMax(e.target.value)} value={this.props.store.create_disp.TMax} type="number" />
+                        </div>]) : (null)}
+                    </div>,
+
+                    <div key={2} className="disp_cargo_data">
+                      <div className="disp_data_label">Общее количество мест:</div>
+                      <div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.SetTotal(e.target.value)} value={this.props.store.create_disp.Total} type="number" placeholder="Общее количество мест" /></div>
+                      <div className="disp_data_label">Общий фактический вес (кг):</div>
+                      <div className="disp_data_el"><input readOnly={Q_only} className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.props.SetWeight(e.target.value)} value={this.props.store.create_disp.Weight} type="number" placeholder="Итоговый фактический вес" /></div>
+                      <div className="disp_data_label">Общий объемный вес (кг):</div>
+                      <div className="disp_data_el"><input readOnly={Q_only}  className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.props.SetVolume(e.target.value)} value={this.props.store.create_disp.Volume} type="number" placeholder="Итоговый объемный вес" /></div> 
+                    </div>])}
+
                 {Q_only ? (null):(
                   <div className="disp_cargo_data">
-                  <div className="disp_data_label">Страховая стоимость (руб.):</div>
-                  <div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.props.SetInsureValue(e.target.value)} value={this.props.store.create_disp.InsureValue} type="number"  /></div>
-                  <div className="disp_data_label">Наложенный платеж (руб.):</div>
-                  <div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.props.SetCOD(e.target.value)} value={this.props.store.create_disp.COD} type="number"  /></div> 
-              <div className="disp_data_label">Расчетная стоимость перевозки:</div>
-              <div className="disp_data_el"><input className="create_disp_data_input" readOnly value={this.props.store.create_disp.Price} /></div>
-
+                    <div className="disp_data_label">Страховая стоимость (руб.):</div>
+                    <div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.props.SetInsureValue(e.target.value)} value={this.props.store.create_disp.InsureValue} type="number"  /></div>
+                    <div className="disp_data_label">Наложенный платеж (руб.):</div>
+                    <div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.props.SetCOD(e.target.value)} value={this.props.store.create_disp.COD} type="number"  /></div> 
+                    <div className="disp_data_label">Расчетная стоимость перевозки:</div>
+                    <div className="disp_data_el"><input className="create_disp_data_input" readOnly value={this.props.store.create_disp.Price} /></div>
                   </div>
                 )}
 
@@ -958,11 +1038,13 @@ SetTotal = (value) =>{
                   open={this.props.store.create_disp.warningAlert}
                   size='mini'
                 >
-                <Modal.Header>Вы не ввели {this.props.store.create_disp.warningMessage} получателя!</Modal.Header>
+                <Modal.Header>Вы не ввели {this.props.store.create_disp.warningMessage}</Modal.Header>
                   <Modal.Actions>
-                    <Button onClick={() => { this.props.SetWarningAlert(false); this.sent_disp()}}>
-                      Продолжить
-                    </Button>
+                    {this.props.store.login.necessarily_all_field ? (null) : (
+                      <Button onClick={() => { this.props.SetWarningAlert(false); this.sent_disp() }}>
+                        Продолжить
+                      </Button>
+                    )}                    
                     <Button onClick={() => this.props.SetWarningAlert(false)}>
                       Отмена
                     </Button>
@@ -1091,6 +1173,9 @@ export default connect(
     SetInsureValue: (param) => { dispatch({ type: 'SetInsureValue', payload: param }) },
 
     set_disp_template_list: (param) => { dispatch({ type: 'set_disp_template_list', payload: param }) },
-   
+    SetFragile: (param) => { dispatch({ type: 'SetFragile', payload: param }) },
+    SetTMax: (param) => { dispatch({ type: 'SetTMax', payload: param }) },
+    SetTMin: (param) => { dispatch({ type: 'SetTMin', payload: param }) },
+    SetTermo: (param) => { dispatch({ type: 'SetTermo', payload: param }) }, 
   })
 )(Screen);
