@@ -7,9 +7,9 @@ const y = today.getFullYear();
 if (mm < 10) { mm = '0' + mm }
 if (dd < 10) { dd = '0' + dd }
 
-const hours = today.getUTCHours() + 7;
+// const hours = today.getUTCHours() + 7;
 
-const date = y + '-' + mm + '-' + dd;
+// const date = y + '-' + mm + '-' + dd;
 
 const initialState = {
 
@@ -95,12 +95,18 @@ const initialState = {
   Fragile: false,
   DelType: '',
   DispDate: '',
+
+  CurrentDate: '',
+  CurrentTime: '',
 }
 
 export default function dispatch (state = initialState, action) {
   switch (action.type) {
     
     case 'reset_create_disp_data': return  initialState 
+
+    case 'SetCurrentDate': return { ...state, CurrentDate: action.payload }
+    case 'SetCurrentTime': return { ...state, CurrentTime: action.payload }
 
     case 'SetWarningAlert': return { ...state, warningAlert: action.payload }
     
@@ -280,10 +286,10 @@ export default function dispatch (state = initialState, action) {
     case 'SetCargoInfoType': return { ...state, CargoInfoType: action.payload }
     case 'SetDispDate': 
       if (state.DelMethod === 'Дверь - Дверь' || state.DelMethod === 'Дверь - Склад') {
-        if (date === action.payload) {
+        if (state.CurrentDate === action.payload) {
 
-          if (hours >= 14) {
-            const today = new Date();
+          if (state.CurrentTime >= 14) {
+            const today = new Date(state.CurrentDate);
             let mm = today.getMonth() + 1;
             let dd = today.getDate() + 1;
             const y = today.getFullYear();

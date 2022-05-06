@@ -37,6 +37,7 @@ if (mm < 10) { mm = '0' + mm }
 if (dd < 10) { dd = '0' + dd }
 
 const date = y + '-' + mm + '-' + dd;
+const hours = today.getUTCHours() + 7;
 
 class Screen extends React.Component {
 
@@ -487,6 +488,8 @@ SetTotal = (value) =>{
         this.props.SetAvailableNumber(null);
         this.props.SetCyrillic(false);
 
+        this.props.SetCurrentDate(date);
+        this.props.SetCurrentTime(hours);
         this.props.SetDispDate(date);
 
         this.props.SetDelType({ label: "Стандарт", value: "Стандарт" });
@@ -1177,5 +1180,8 @@ export default connect(
     SetTMax: (param) => { dispatch({ type: 'SetTMax', payload: param }) },
     SetTMin: (param) => { dispatch({ type: 'SetTMin', payload: param }) },
     SetTermo: (param) => { dispatch({ type: 'SetTermo', payload: param }) }, 
+
+    SetCurrentDate: (param) => { dispatch({ type: 'SetCurrentDate', payload: param }) }, 
+    SetCurrentTime: (param) => { dispatch({ type: 'SetCurrentTime', payload: param }) }, 
   })
 )(Screen);
