@@ -108,11 +108,11 @@ class ComponentToPrint extends React.Component {
                                             { disp.data.InsureValue !== 0 ? (
                                                   <div className="disp_print_data_el">{disp.data.InsureValue}</div>
                                             ):(null)}
-                                            
-                                            <div className="disp_print_data_label"> Наложенный платеж:</div>
-                                            <div className="disp_print_data_el">{disp.data.COD}</div>
-
+                                            {/* <div className="disp_print_data_label">Оплата получателем:</div>
+                                            <div className="disp_print_data_el">{disp.data.COD}</div> */}
                                         </div>
+                                        
+                                        <div className="disp_print_data_label--payment">Оплата получателем:{disp.data.COD}</div>
                                     </div>
                                     <div className='disp_print_cargo_data'>
                                         {disp.cargo.reduce((accum, el) => accum + parseInt(el.Q), initialValue) === parseInt(disp.data.Total) ? (

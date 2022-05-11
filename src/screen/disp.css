@@ -82,11 +82,16 @@
     border-bottom: #c0c0c0 solid 1px;
 }
 
+.disp_print_data_label--payment {
+    font-size: 15px;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
 .disp_print_data_el{
     font-size: 10px;
     margin: 0 3px;
-    border-bottom: #c0c0c0 solid 1px;
-    
+    border-bottom: #c0c0c0 solid 1px;   
 }
 
 .disp_print_data{

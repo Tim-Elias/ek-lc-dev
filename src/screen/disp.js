@@ -644,6 +644,7 @@ class Screen extends React.Component {
                             trigger={() => <Button><Icon name='print'></Icon> Печать</Button>}
                             content={() => this.componentRef}
                         />
+
                         <div style={{ display: "none" }}>
                             <ComponentToPrint userkey = {this.props.store.login.userkey} disp={[this.props.store.disp]} ref={el => (this.componentRef = el)} />
                         </div>
@@ -972,6 +973,8 @@ class Screen extends React.Component {
                     onPlaying={console.log('2')}
                     onFinishedPlaying={console.log('3')}
                     />
+
+                    
             </div>
 
         );
