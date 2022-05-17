@@ -98,6 +98,7 @@ const initialState = {
 
   CurrentDate: '',
   CurrentTime: '',
+  TimeError: false,
 }
 
 export default function dispatch (state = initialState, action) {
@@ -105,6 +106,7 @@ export default function dispatch (state = initialState, action) {
     
     case 'reset_create_disp_data': return  initialState 
 
+    case 'SetTimeError': return { ...state, TimeError: action.payload }
     case 'SetCurrentDate': return { ...state, CurrentDate: action.payload }
     case 'SetCurrentTime': return { ...state, CurrentTime: action.payload }
 

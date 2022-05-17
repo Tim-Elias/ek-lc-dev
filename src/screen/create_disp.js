@@ -269,8 +269,27 @@ RemoveCargo = (index) => {
   }
 
   dataСhecking = () => {
+    const today = new Date();
+    let mm = today.getMonth() + 1;
+    let dd = today.getDate();
+
+    const y = today.getFullYear();
+
+    if (mm < 10) { mm = '0' + mm }
+    if (dd < 10) { dd = '0' + dd }
+
+    const currentDate = y + '-' + mm + '-' + dd;
+    const currentHours = today.getUTCHours() + 7;
+    
     if (this.props.store.login.necessarily_all_field) {
-      if (this.props.store.create_disp.SendAdress.length < 2 && this.props.store.create_disp.SendTerminal === false) {
+      if (currentHours >= 14 && currentDate >= this.props.store.create_disp.DispDate) {
+        this.props.SetWarningMessage("Заявку на текущий день возможно разместить только до 14:00, укажите более позднюю дату заявки");
+        this.props.SetTimeError(true);
+        this.props.SetWarningAlert(true);
+
+        this.props.SetCurrentDate(currentDate);
+        this.props.SetCurrentTime(currentHours);
+      } else if (this.props.store.create_disp.SendAdress.length < 2 && this.props.store.create_disp.SendTerminal === false) {
         this.props.SetWarningMessage("адрес отправителя!");
         this.props.SetWarningAlert(true);
       } else if (this.props.store.create_disp.SendPhone.length < 6) {
@@ -292,7 +311,14 @@ RemoveCargo = (index) => {
         this.sent_disp();
       }
     } else {
-      if (this.props.store.create_disp.RecAdress.length < 2 && this.props.store.create_disp.RecTerminal === false) {
+      if (currentHours >= 14 && currentDate >= this.props.store.create_disp.DispDate) {
+        this.props.SetWarningMessage("Заявку на текущий день возможно разместить только до 14:00, укажите более позднюю дату заявки");
+        this.props.SetTimeError(true);
+        this.props.SetWarningAlert(true);
+
+        this.props.SetCurrentDate(currentDate);
+        this.props.SetCurrentTime(currentHours);
+      } else if (this.props.store.create_disp.RecAdress.length < 2 && this.props.store.create_disp.RecTerminal === false) {
         this.props.SetWarningMessage("адрес получателя!");
         this.props.SetWarningAlert(true);
       } else if (this.props.store.create_disp.RecPhone.length < 6) {
@@ -313,7 +339,17 @@ RemoveCargo = (index) => {
     if (this.props.store.create_disp.DelMethod === 'Дверь - Дверь' || this.props.store.create_disp.DelMethod === 'Дверь - Склад') {
       dateClaim = this.props.store.create_disp.DispDate;
     } else {
-      dateClaim = date;
+      const today = new Date();
+      let mm = today.getMonth() + 1;
+      let dd = today.getDate();
+
+      const y = today.getFullYear();
+
+      if (mm < 10) { mm = '0' + mm }
+      if (dd < 10) { dd = '0' + dd }
+
+      const dateDisp = y + '-' + mm + '-' + dd;
+      dateClaim = dateDisp;
     }
 
     const create_disp_data = {
@@ -359,7 +395,6 @@ RemoveCargo = (index) => {
       TMin: this.props.store.create_disp.Termo ? +this.props.store.create_disp.TMin : 0,
       Customer: this.props.store.create_disp.PayerSelect.value,
     }
-    console.log(create_disp_data)
 
       this.props.set_active_window("wait");
       
@@ -491,6 +526,7 @@ SetTotal = (value) =>{
         this.props.SetCurrentDate(date);
         this.props.SetCurrentTime(hours);
         this.props.SetDispDate(date);
+        // this.CurrentDate(true);
 
         this.props.SetDelType({ label: "Стандарт", value: "Стандарт" });
       },
@@ -1041,8 +1077,16 @@ SetTotal = (value) =>{
                   open={this.props.store.create_disp.warningAlert}
                   size='mini'
                 >
-                <Modal.Header>Вы не ввели {this.props.store.create_disp.warningMessage}</Modal.Header>
-                  <Modal.Actions>
+                {this.props.store.create_disp.TimeError ? (
+                  [<Modal.Header key={"timeErrorHeader"}>{this.props.store.create_disp.warningMessage}</Modal.Header>,
+                  <Modal.Actions key={"timeErrorAction"}>
+                    <Button onClick={() => {this.props.SetWarningAlert(false); this.props.SetTimeError(false)}}>
+                      Отмена
+                    </Button>
+                  </Modal.Actions>]
+                ) : (
+                  [<Modal.Header key={"errorHeader"}>Вы не ввели {this.props.store.create_disp.warningMessage}</Modal.Header>,
+                  <Modal.Actions key={"errorAction"}>
                     {this.props.store.login.necessarily_all_field ? (null) : (
                       <Button onClick={() => { this.props.SetWarningAlert(false); this.sent_disp() }}>
                         Продолжить
@@ -1051,7 +1095,8 @@ SetTotal = (value) =>{
                     <Button onClick={() => this.props.SetWarningAlert(false)}>
                       Отмена
                     </Button>
-                  </Modal.Actions>
+                  </Modal.Actions>]
+                )}
                 </Modal>
                 {/* {this.props.store.disp.action === "deliver"  && this.props.store.disp.data.Type === "Доставка" ? (<div>
                 <div className="pod_header">Внести данные о доставке:</div>
@@ -1183,5 +1228,6 @@ export default connect(
 
     SetCurrentDate: (param) => { dispatch({ type: 'SetCurrentDate', payload: param }) }, 
     SetCurrentTime: (param) => { dispatch({ type: 'SetCurrentTime', payload: param }) }, 
+    SetTimeError: (param) => { dispatch({ type: 'SetTimeError', payload: param }) }, 
   })
 )(Screen);
