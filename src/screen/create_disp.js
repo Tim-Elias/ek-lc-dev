@@ -160,8 +160,6 @@ RemoveCargo = (index) => {
   }
 
   SelectSendCity = (value) =>{
-    
-    //console.log(value)
 
   this.props.SetSelectedSendCity(value)
 
@@ -282,7 +280,7 @@ RemoveCargo = (index) => {
     const currentHours = today.getUTCHours() + 7;
     
     if (this.props.store.login.necessarily_all_field) {
-      if (currentHours >= 14 && currentDate >= this.props.store.create_disp.DispDate) {
+      if (currentHours >= 14 && currentDate >= this.props.store.create_disp.DispDate && this.props.store.create_disp.DelMethod === 'Дверь - Дверь' || this.props.store.create_disp.DelMethod === 'Дверь - Склад') {
         this.props.SetWarningMessage("Заявку на текущий день возможно разместить только до 14:00, укажите более позднюю дату заявки");
         this.props.SetTimeError(true);
         this.props.SetWarningAlert(true);
@@ -311,7 +309,7 @@ RemoveCargo = (index) => {
         this.sent_disp();
       }
     } else {
-      if (currentHours >= 14 && currentDate >= this.props.store.create_disp.DispDate) {
+      if (currentHours >= 14 && currentDate >= this.props.store.create_disp.DispDate && this.props.store.create_disp.DelMethod === 'Дверь - Дверь' || this.props.store.create_disp.DelMethod === 'Дверь - Склад') {
         this.props.SetWarningMessage("Заявку на текущий день возможно разместить только до 14:00, укажите более позднюю дату заявки");
         this.props.SetTimeError(true);
         this.props.SetWarningAlert(true);
