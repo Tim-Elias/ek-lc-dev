@@ -267,26 +267,26 @@ RemoveCargo = (index) => {
   }
 
   dataСhecking = () => {
-    const today = new Date();
-    let mm = today.getMonth() + 1;
-    let dd = today.getDate();
+    const currentToday = new Date();
+    let mm = currentToday.getMonth() + 1;
+    let dd = currentToday.getDate();
 
-    const y = today.getFullYear();
+    const y = currentToday.getFullYear();
 
     if (mm < 10) { mm = '0' + mm }
     if (dd < 10) { dd = '0' + dd }
 
     const currentDate = y + '-' + mm + '-' + dd;
-    const currentHours = today.getUTCHours() + 7;
+    const currentHours = currentToday.getUTCHours() + 7;
     
+    this.props.SetCurrentDate(currentDate);
+    this.props.SetCurrentTime(currentHours);
+
     if (this.props.store.login.necessarily_all_field) {
       if (currentHours >= 14 && currentDate >= this.props.store.create_disp.DispDate && this.props.store.create_disp.DelMethod === 'Дверь - Дверь' || this.props.store.create_disp.DelMethod === 'Дверь - Склад') {
         this.props.SetWarningMessage("Заявку на текущий день возможно разместить только до 14:00, укажите более позднюю дату заявки");
         this.props.SetTimeError(true);
         this.props.SetWarningAlert(true);
-
-        this.props.SetCurrentDate(currentDate);
-        this.props.SetCurrentTime(currentHours);
       } else if (this.props.store.create_disp.SendAdress.length < 2 && this.props.store.create_disp.SendTerminal === false) {
         this.props.SetWarningMessage("адрес отправителя!");
         this.props.SetWarningAlert(true);
@@ -313,9 +313,6 @@ RemoveCargo = (index) => {
         this.props.SetWarningMessage("Заявку на текущий день возможно разместить только до 14:00, укажите более позднюю дату заявки");
         this.props.SetTimeError(true);
         this.props.SetWarningAlert(true);
-
-        this.props.SetCurrentDate(currentDate);
-        this.props.SetCurrentTime(currentHours);
       } else if (this.props.store.create_disp.RecAdress.length < 2 && this.props.store.create_disp.RecTerminal === false) {
         this.props.SetWarningMessage("адрес получателя!");
         this.props.SetWarningAlert(true);
@@ -524,7 +521,6 @@ SetTotal = (value) =>{
         this.props.SetCurrentDate(date);
         this.props.SetCurrentTime(hours);
         this.props.SetDispDate(date);
-        // this.CurrentDate(true);
 
         this.props.SetDelType({ label: "Стандарт", value: "Стандарт" });
       },

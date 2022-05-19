@@ -292,8 +292,10 @@ export default function dispatch (state = initialState, action) {
 
           if (state.CurrentTime >= 14) {
             const today = new Date(state.CurrentDate);
-            let mm = today.getMonth() + 1;
-            let dd = today.getDate() + 1;
+            today.setDate(today.getDate() + 1);
+
+            let mm = today.getMonth()+1;
+            let dd = today.getDate();
             const y = today.getFullYear();
 
             if (mm < 10) { mm = '0' + mm }
