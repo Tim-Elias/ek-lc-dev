@@ -281,6 +281,9 @@ RemoveCargo = (index) => {
     
     this.props.SetCurrentDate(currentDate);
     this.props.SetCurrentTime(currentHours);
+    if (this.props.store.create_disp.DispDate < currentDate) {
+      this.props.SetDispDate(currentDate);
+    }
 
     if (this.props.store.login.necessarily_all_field) {
       if (currentHours >= 14 && currentDate >= this.props.store.create_disp.DispDate && this.props.store.create_disp.DelMethod === 'Дверь - Дверь' || this.props.store.create_disp.DelMethod === 'Дверь - Склад') {
