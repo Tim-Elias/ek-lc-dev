@@ -308,9 +308,9 @@ export default function dispatch (state = initialState, action) {
             return { ...state, DispDate: action.payload }
           }
         } else if(state.CurrentDate > action.payload) {
-          return { ...state, DispDate: action.payload }
-        } else {
           return { ...state, DispDate: state.CurrentDate }
+        } else {
+          return { ...state, DispDate: action.payload }
         }
       } else {
         return { ...state, DispDate: action.payload }
