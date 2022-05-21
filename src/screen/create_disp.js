@@ -27,17 +27,17 @@ const CargoTypeList = [
   {label:"Прочее", value: "Прочее"}
 ]
 
-const today = new Date();
-let mm = today.getMonth() + 1;
-let dd = today.getDate();
+// const today = new Date();
+// let mm = today.getMonth() + 1;
+// let dd = today.getDate();
 
-const y = today.getFullYear();
+// const y = today.getFullYear();
 
-if (mm < 10) { mm = '0' + mm }
-if (dd < 10) { dd = '0' + dd }
+// if (mm < 10) { mm = '0' + mm }
+// if (dd < 10) { dd = '0' + dd }
 
-const date = y + '-' + mm + '-' + dd;
-const hours = today.getUTCHours() + 7;
+// const date = y + '-' + mm + '-' + dd;
+// const hours = today.getUTCHours() + 7;
 
 class Screen extends React.Component {
 
@@ -283,14 +283,16 @@ RemoveCargo = (index) => {
     this.props.SetCurrentTime(currentHours);
     if (this.props.store.create_disp.DispDate < currentDate) {
       this.props.SetDispDate(currentDate);
+    } else {
+      this.props.SetDispDate(this.props.store.create_disp.DispDate);
     }
 
     if (this.props.store.login.necessarily_all_field) {
-      if (currentHours >= 14 && currentDate >= this.props.store.create_disp.DispDate && this.props.store.create_disp.DelMethod === 'Дверь - Дверь' || this.props.store.create_disp.DelMethod === 'Дверь - Склад') {
-        this.props.SetWarningMessage("Заявку на текущий день возможно разместить только до 14:00, укажите более позднюю дату заявки");
-        this.props.SetTimeError(true);
-        this.props.SetWarningAlert(true);
-      } else if (this.props.store.create_disp.SendAdress.length < 2 && this.props.store.create_disp.SendTerminal === false) {
+      // if (currentHours >= 14 && currentDate >= this.props.store.create_disp.DispDate && this.props.store.create_disp.DelMethod === 'Дверь - Дверь' || this.props.store.create_disp.DelMethod === 'Дверь - Склад') {
+      //   this.props.SetWarningMessage("Заявку на текущий день возможно разместить только до 14:00, укажите более позднюю дату заявки");
+      //   this.props.SetTimeError(true);
+      //   this.props.SetWarningAlert(true);
+      if (this.props.store.create_disp.SendAdress.length < 2 && this.props.store.create_disp.SendTerminal === false) {
         this.props.SetWarningMessage("адрес отправителя!");
         this.props.SetWarningAlert(true);
       } else if (this.props.store.create_disp.SendPhone.length < 6) {
@@ -312,11 +314,11 @@ RemoveCargo = (index) => {
         this.sent_disp();
       }
     } else {
-      if (currentHours >= 14 && currentDate >= this.props.store.create_disp.DispDate && this.props.store.create_disp.DelMethod === 'Дверь - Дверь' || this.props.store.create_disp.DelMethod === 'Дверь - Склад') {
-        this.props.SetWarningMessage("Заявку на текущий день возможно разместить только до 14:00, укажите более позднюю дату заявки");
-        this.props.SetTimeError(true);
-        this.props.SetWarningAlert(true);
-      } else if (this.props.store.create_disp.RecAdress.length < 2 && this.props.store.create_disp.RecTerminal === false) {
+      // if (currentHours >= 14 && currentDate >= this.props.store.create_disp.DispDate && this.props.store.create_disp.DelMethod === 'Дверь - Дверь' || this.props.store.create_disp.DelMethod === 'Дверь - Склад') {
+      //   this.props.SetWarningMessage("Заявку на текущий день возможно разместить только до 14:00, укажите более позднюю дату заявки");
+      //   this.props.SetTimeError(true);
+      //   this.props.SetWarningAlert(true);
+      if (this.props.store.create_disp.RecAdress.length < 2 && this.props.store.create_disp.RecTerminal === false) {
         this.props.SetWarningMessage("адрес получателя!");
         this.props.SetWarningAlert(true);
       } else if (this.props.store.create_disp.RecPhone.length < 6) {
@@ -516,6 +518,18 @@ SetTotal = (value) =>{
   componentDidMount() {
     get_data('disptemplatelist', { userkey: this.props.store.login.userkey }).then(
       (result) => {
+        const today = new Date();
+        let mm = today.getMonth() + 1;
+        let dd = today.getDate();
+
+        const y = today.getFullYear();
+
+        if (mm < 10) { mm = '0' + mm }
+        if (dd < 10) { dd = '0' + dd }
+
+        const date = y + '-' + mm + '-' + dd;
+        const hours = today.getUTCHours() + 7;
+
         this.props.set_disp_template_list(result);
         this.props.SetCustomNumber(false);
         this.props.SetAvailableNumber(null);
@@ -637,7 +651,7 @@ SetTotal = (value) =>{
                     ) : (null)}
                     {(this.props.store.create_disp.DelMethod === "Дверь - Дверь" || this.props.store.create_disp.DelMethod === "Дверь - Склад") ? (
                       <div className="disp_data_el">
-                        <input onChange={e =>  e.target.value < date ? (null) : (this.props.SetDispDate(e.target.value)) } value={this.props.store.create_disp.DispDate} className="DispDate" type="date"></input>
+                        <input onChange={e =>  e.target.value < this.props.store.create_disp.currentDate ? (null) : (this.props.SetDispDate(e.target.value)) } value={this.props.store.create_disp.DispDate} className="DispDate" type="date"></input>
                       </div>
                     ) : (null)}
                     <div className="disp_data_label">Тип оплаты:</div>
