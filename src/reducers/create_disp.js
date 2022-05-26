@@ -156,6 +156,7 @@ export default function dispatch (state = initialState, action) {
     case 'SetSendPhone': return { ...state, SendPhone: action.payload }
     case 'SetSendPerson': return { ...state, SendPerson: action.payload }
     case 'SetSendAddInfo': return { ...state, SendAddInfo: action.payload }
+    
     case 'SetSendEmail': return { ...state, SendEmail: action.payload }
     case 'SetSendTerminal': return { ...state, SendTerminal: action.payload.SendTerminal, DelMethod: action.payload.DelMethod }
     case 'SetSendEmailInformer': return { ...state, SendEmailInformer: action.payload }

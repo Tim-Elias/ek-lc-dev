@@ -351,6 +351,12 @@ RemoveCargo = (index) => {
       const dateDisp = y + '-' + mm + '-' + dd;
       dateClaim = dateDisp;
     }
+    let SendAddInfo = ""
+    if (this.props.store.create_disp.Fragile && this.props.store.create_disp.SendAddInfo.toLowerCase().indexOf("хрупкий груз",0) === -1) {
+      SendAddInfo = "Хрупкий груз " + this.props.store.create_disp.SendAddInfo
+    } else {
+      SendAddInfo = this.props.store.create_disp.SendAddInfo
+    }
 
     const create_disp_data = {
       userkey: this.props.store.login.userkey, 
@@ -365,7 +371,7 @@ RemoveCargo = (index) => {
       SendCompany: this.props.store.create_disp.SendCompany,
       SendPhone: this.props.store.create_disp.SendPhone,
       SendPerson: this.props.store.create_disp.SendPerson,
-      SendAddInfo: this.props.store.create_disp.SendAddInfo,
+      SendAddInfo: SendAddInfo,
       SendEmail: this.props.store.create_disp.SendEmail,
       SendTerminal: this.props.store.create_disp.SendTerminal, 
       SendSelectTerminal: this.props.store.create_disp.SendSelectTerminal.value,
