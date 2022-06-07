@@ -25,7 +25,7 @@ class ComponentToPrint extends React.Component {
   if (dd<10) {dd = '0' + dd}
         
   const curDate = dd+'.'+mm+'.'+year
-
+        
         const mvuser = this.props.userkey === "000000001";
         return (
             <div>

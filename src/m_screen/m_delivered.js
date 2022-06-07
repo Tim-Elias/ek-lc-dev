@@ -5,6 +5,7 @@ import { get_data } from '../common/common_modules';
 import './mobile_delivery.css';
 import './mobile_disp.css';
 import './popup.css';
+import './mobile.css';
 // import Foto from './foto';
 import Wait from "../screen/wait";
 import { withCookies } from 'react-cookie';
@@ -176,10 +177,47 @@ class Screen extends React.Component {
         } else {
             this.props.set_print_check_disabled(true);
         }
+        this.props.set_popup_foto(true);
     }
 
     componentWillUnmount() {
         this.props.reset_data();
+    }
+
+    addFotoPopUp(e) {
+        e.preventDefault();
+
+        const reader = new FileReader();
+
+        if (e.target.files[0].size > 2000000) {
+            reader.readAsDataURL(e.target.files[0]);
+            reader.onload = event => {
+                const img = new Image();
+
+                img.src = event.target.result;
+                img.onload = () => {
+                    const elem = document.createElement('canvas');
+                    elem.width = img.width;
+                    elem.height = img.height;
+                    const ctx = elem.getContext('2d');
+
+                    ctx.drawImage(img, 0, 0, img.width, img.height);
+
+                    const data = ctx.canvas.toDataURL('image/jpeg', 0.2);
+
+                    this.props.take_foto(data);
+                };
+                reader.onerror = error => console.log(error);
+            };
+        } else {
+            let reader = new FileReader();
+            let file = e.target.files[0];
+            reader.onloadend = () => {
+                this.props.take_foto(reader.result);
+            }
+            reader.readAsDataURL(file);
+        }
+        this.props.set_popup_foto(false);
     }
 
     render() {
@@ -203,6 +241,18 @@ class Screen extends React.Component {
                     <div className="PopUp_button_container">
                         <button className="PopUp_button" onClick={this.createcheck.bind(this)}>Да</button>
                         <button className="PopUp_button" onClick={this.receipt.bind(this)}>Нет</button>
+                    </div>
+                </div>
+
+                <div className={this.props.store.disp.popup_foto ? "PopUp_container" : "none"} onClick={() => this.props.set_popup_foto(false)}></div>
+                <div className={this.props.store.disp.popup_foto ? "PopUp_window" : "none"}>
+                    <p>Добавить фото?</p>
+                    <div className="PopUp_button_container">
+                        <label className="PopUp_button">
+                            <span>Да</span>
+                            <input className="file" type="file" accept="image/jpeg" onChange={e => this.addFotoPopUp(e)} />
+                        </label>
+                        <button className="PopUp_button" onClick={()=>this.props.set_popup_foto(false)}>Нет</button>
                     </div>
                 </div>
 
@@ -290,22 +340,23 @@ export default withCookies(connect(
     }),
     dispatch => ({
         take_foto: (param) => { dispatch({ type: 'set_disp_foto', payload: param }) },
-        reset_data: (param) => { dispatch({ type: 'reset_data', payload: param }); },
-        set_print_check_disabled: (param) => { dispatch({ type: 'set_print_check_disabled', payload: param }); },
-        set_QR: (param) => { dispatch({ type: 'set_QR', payload: param }); }, 
-        set_check_data: (param) => { dispatch({ type: 'set_check_data', payload: param }); },
-        reset_check_data: (param) => { dispatch({ type: 'reset_check_data', payload: param }); },
-        set_active_loader: (param) => { dispatch({ type: 'set_active_loader', payload: param }); },
-        set_disp_comment: (param) => { dispatch({ type: 'set_disp_comment', payload: param }); },
-        check_disable: () => { dispatch({ type: 'check_disable' }); },
-        set_disp_cash: (param) => { dispatch({ type: 'set_disp_cash', payload: param }); },
-        set_disp_FIO: (param) => { dispatch({ type: 'set_disp_FIO', payload: param }); },
-        set_disp_date: (param) => { dispatch({ type: 'set_disp_date', payload: param }); },
-        set_disp_time: (param) => { dispatch({ type: 'set_disp_time', payload: param }); },
-        set_disp_type_cash: (param) => { dispatch({ type: 'set_disp_type_cash', payload: param }); }, 
-        set_active_window: (param) => { dispatch({ type: 'set_active_window', payload: param }); },
-        set_popup: (param) => { dispatch({ type: 'set_popup', payload: param }); }, 
-        set_popup_message: (param) => { dispatch({ type: 'set_popup_message', payload: param }); },
+        reset_data: (param) => { dispatch({ type: 'reset_data', payload: param }) },
+        set_print_check_disabled: (param) => { dispatch({ type: 'set_print_check_disabled', payload: param }) },
+        set_QR: (param) => { dispatch({ type: 'set_QR', payload: param }) }, 
+        set_check_data: (param) => { dispatch({ type: 'set_check_data', payload: param }) },
+        reset_check_data: (param) => { dispatch({ type: 'reset_check_data', payload: param }) },
+        set_active_loader: (param) => { dispatch({ type: 'set_active_loader', payload: param }) },
+        set_disp_comment: (param) => { dispatch({ type: 'set_disp_comment', payload: param }) },
+        check_disable: () => { dispatch({ type: 'check_disable' }) },
+        set_disp_cash: (param) => { dispatch({ type: 'set_disp_cash', payload: param }) },
+        set_disp_FIO: (param) => { dispatch({ type: 'set_disp_FIO', payload: param }) },
+        set_disp_date: (param) => { dispatch({ type: 'set_disp_date', payload: param }) },
+        set_disp_time: (param) => { dispatch({ type: 'set_disp_time', payload: param }) },
+        set_disp_type_cash: (param) => { dispatch({ type: 'set_disp_type_cash', payload: param }) }, 
+        set_active_window: (param) => { dispatch({ type: 'set_active_window', payload: param }) },
+        set_popup: (param) => { dispatch({ type: 'set_popup', payload: param }) }, 
+        set_popup_message: (param) => { dispatch({ type: 'set_popup_message', payload: param }) },
+        set_popup_foto: (param) => { dispatch({ type: 'set_popup_foto', payload: param }) },
     })
 
 )(Screen));

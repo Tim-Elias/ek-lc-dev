@@ -63,6 +63,9 @@
 
 .PopUp_button {
     width: 80px;
+    background-color: #c1c1c1;
+    border: 1px solid #000;
+    cursor: pointer;
 }
 .PopUp_button_check {
     width: 150px;

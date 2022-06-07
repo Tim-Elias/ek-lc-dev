@@ -31,6 +31,7 @@ const initialState = {
   
   popup: false,
   popup_message: false,
+  popup_foto: false,
 
   is_new: false,
   action: null,
@@ -70,6 +71,8 @@ export default function dispatch (state = initialState, action) {
 
     case 'set_popup': return { ...state, popup: action.payload }
     case 'set_popup_message': return { ...state, popup_message: action.payload }
+    case 'set_popup_foto': return { ...state, popup_foto: action.payload }
+
     case 'set_qr': return { ...state, qr: action.payload }
     case 'set_print_check_disabled': return { ...state, print_check_disabled: action.payload }
     case 'check_disable': return { ...state, data: { ...state.data, CheckEnabled: false} }

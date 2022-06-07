@@ -393,7 +393,6 @@ class Screen extends React.Component {
             Customer: this.props.store.m_create_disp.Customer,
         }
 
-
         this.props.active_window("wait");
         
         get_data('createdisp', create_disp_data).then(
