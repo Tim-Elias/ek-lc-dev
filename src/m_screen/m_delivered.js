@@ -77,8 +77,7 @@ class Screen extends React.Component {
         this.props.set_popup(false);
         this.props.set_active_loader(true);
 
-        const data =
-        {
+        const data = {
             userkey: this.props.store.login.userkey,
             summ: this.props.store.disp.cash_accepted,
             terminal: this.props.store.disp.type_cash,
@@ -103,7 +102,6 @@ class Screen extends React.Component {
                             const check_data = {
                                 userkey: this.props.store.login.userkey,
                                 num: this.props.store.disp.data.Number,
-
                             }
 
                             get_data('getcheck', check_data).then(
@@ -111,12 +109,10 @@ class Screen extends React.Component {
                                     this.props.set_check_data(result);
                                 },
                                 (err) => {
-
                                     console.log(err)
                                 }
                             );
                         }
-                        
                     },
                     (err) => {
                         this.props.set_active_loader(false);
@@ -138,7 +134,6 @@ class Screen extends React.Component {
 
         let reader = new FileReader();
         let file = e.target.files[0];
-        console.log(file);
         reader.onloadend = () => {
             this.props.take_foto(reader.result);
         }
@@ -169,8 +164,6 @@ class Screen extends React.Component {
 
         const time = H + ':' + M;
         this.props.set_disp_time(time);
-
-
         
         if (this.props.store.check.check_data.num == this.props.store.disp.data.Number) {
             this.props.set_print_check_disabled(false);
@@ -244,7 +237,7 @@ class Screen extends React.Component {
                     </div>
                 </div>
 
-                <div className={this.props.store.disp.popup_foto ? "PopUp_container" : "none"} onClick={() => this.props.set_popup_foto(false)}></div>
+                {/* <div className={this.props.store.disp.popup_foto ? "PopUp_container" : "none"} onClick={() => this.props.set_popup_foto(false)}></div>
                 <div className={this.props.store.disp.popup_foto ? "PopUp_window" : "none"}>
                     <p>Добавить фото?</p>
                     <div className="PopUp_button_container">
@@ -254,7 +247,8 @@ class Screen extends React.Component {
                         </label>
                         <button className="PopUp_button" onClick={()=>this.props.set_popup_foto(false)}>Нет</button>
                     </div>
-                </div>
+                </div> */} 
+                {/* при открытии спрашивать "доставить фото?" */}
 
                 {/* <div className={this.props.store.disp.popup_message ? ("PopUp_container") : ("none")} onClick={() => this.props.set_popup_message(false)()}></div>
                 <div className={this.props.store.disp.popup_message ? ("PopUp_window") : ("none")}>
