@@ -416,7 +416,7 @@ class Screen extends React.Component {
                         RecAdress: current_disp_data.RecAdress,
                         RecCompany: current_disp_data.RecCompany,
                         RecPhone: current_disp_data.RecPhone,
-                        RecPerson: current_disp_data. RecPerson,
+                        RecPerson: current_disp_data.RecPerson,
                         RecAddInfo: current_disp_data.RecAddInfo,
                         RecEmail: current_disp_data.RecEmail,
 
@@ -780,10 +780,10 @@ class Screen extends React.Component {
                     <div className="disp_data_el">{this.props.store.disp.data.DelMethod}</div>
                     <div className="disp_data_label">Тип оплаты:</div>
                     <div className="disp_data_el">{this.props.store.disp.data.PayType}</div>
-                    {this.props.store.login.userkey === "000000187" || this.props.store.login.userkey === "000000198" ? (
+                    {this.props.store.login.userkey === "000000187" || this.props.store.login.userkey === "000000198" || this.props.store.login.userkey === "000000035" ? (
                         <div className="disp_data_label">Срочность:</div>
                     ) : (null)}
-                    {this.props.store.login.userkey === "000000187" || this.props.store.login.userkey === "000000198" ? (
+                    {this.props.store.login.userkey === "000000187" || this.props.store.login.userkey === "000000198" || this.props.store.login.userkey === "000000035" ? (
                         <div className="disp_data_el">{this.props.store.disp.data.DelType}</div>
                     ) : (null)}
                     
