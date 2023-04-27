@@ -64,10 +64,12 @@ input::-webkit-inner-spin-button {
 }
 
 .create_disp_template_button{
-  border: none;
-  border-radius: 2px;
+  /* border: solid; */
+  border-color: #888;
+  background-color: #FFF;
+  border-radius: 5px;
   font-size: 10px;
-  padding: 5px;
+  padding: 4px;
   cursor: pointer;
 }
 
