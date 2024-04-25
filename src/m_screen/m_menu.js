@@ -131,20 +131,7 @@ class Screen extends React.Component {
                 </button>
               </li>
             )}
-            {this.props.store.login.original_data.courier ||
-            !this.props.store.login.disp_map ? null : (
-              <li className="mobile_menu_item">
-                <button
-                  className="mobile_menu_button"
-                  onClick={this.settings_window.bind(
-                    this,
-                    "m_storage_reciept_list"
-                  )}
-                >
-                  Приемка на склад несколько
-                </button>
-              </li>
-            )}
+
             {this.props.store.login.disp_map ? (
               <li className="mobile_menu_item">
                 <button

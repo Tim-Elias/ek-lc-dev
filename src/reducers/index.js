@@ -13,10 +13,8 @@ import upload_manifest from "./upload_manifest";
 import my_disp from "./my_disp";
 import order from "./order";
 import templates from "./templates";
-import home from "./home";
 import disp_map from "./disp_map";
 import home_ek from "./home_ek";
-import test from "./test";
 import storage_reciept from "./storage_reciept";
 import movement from "./movement";
 import check from "./check";
@@ -38,10 +36,8 @@ export default combineReducers({
   my_disp,
   order,
   templates,
-  home,
   disp_map,
   home_ek,
-  test,
   storage_reciept,
   movement,
   check,

@@ -24,9 +24,7 @@ import StorageReciept from "./storage_reciept";
 import CalcPrice from "./calc_price";
 import DispNumber from "./disp_number";
 import HomeEk from "./home_ek";
-import Test from "./test";
 import { Header, Modal } from "semantic-ui-react";
-
 
 class Screen extends React.Component {
   back = () => {
@@ -128,9 +126,6 @@ class Screen extends React.Component {
         ) : null}
         {this.props.store.general.active_window === "disp_map" ? (
           <DispMap modules={modules} />
-        ) : null}
-        {this.props.store.general.active_window === "test" ? (
-          <Test modules={modules} />
         ) : null}
         {this.props.store.general.active_window === "storage_reciept" ? (
           <StorageReciept modules={modules} />

@@ -10,7 +10,6 @@ import MDisp from "./m_disp";
 import MDelivered from "./m_delivered";
 import MNotDelivered from "./m_not_delivered";
 import MStorageReciept from "./m_storage_reciept";
-import MStorageRecieptList from "./m_storage_reciept_list";
 import MReciept from "./m_reciept";
 import MSend from "./m_send_manifest";
 import MGet from "./m_get_manifest";
@@ -79,9 +78,6 @@ class Screen extends React.Component {
         ) : null}
         {this.props.store.general.active_window === "storage_reciept" ? (
           <MStorageReciept />
-        ) : null}
-        {this.props.store.general.active_window === "m_storage_reciept_list" ? (
-          <MStorageRecieptList />
         ) : null}
         {this.props.store.general.active_window === "m_reciept" ? (
           <MReciept />

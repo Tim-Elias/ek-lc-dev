@@ -108,7 +108,7 @@ class Screen extends Component {
         </Modal>
 
         <div onClick={this.logo_click.bind(this)}>
-          <img className="header_logo" src={logo} />
+          <img alt="header" className="header_logo" src={logo} />
         </div>
         <div className="mainmenu">
           {/* <div className="old"><a href='http://old.express-kinetika.ru'>Старая версия</a></div> */}
