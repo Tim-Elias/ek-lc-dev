@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import "./mobile.css";
 import "./mobil_menu.css";
-import { withCookies } from "react-cookie";
 import { get_data } from "./../common/common_modules";
 
 class Screen extends React.Component {
@@ -46,13 +45,6 @@ class Screen extends React.Component {
   };
 
   logout = () => {
-    try {
-      this.props.cookies.remove("username");
-      this.props.cookies.remove("passkey");
-    } catch (error) {
-      console.log(error);
-    }
-
     this.props.set_active_window(null);
     this.props.logout();
   };
@@ -182,41 +174,39 @@ class Screen extends React.Component {
   }
 }
 
-export default withCookies(
-  connect(
-    (state, ownProps) => ({ store: state, cookies: ownProps.cookies }),
-    (dispatch) => ({
-      set_check_data: (param) => {
-        dispatch({ type: "set_check_data", payload: param });
-      },
-      web_active: (param) => {
-        dispatch({ type: "M_ACTIVE", payload: param });
-      },
-      logout: () => {
-        dispatch({ type: "LOGOUT" });
-      },
-      set_active_window: (param) => {
-        dispatch({ type: "set_active_window", payload: param });
-      },
-      use_width: (param) => {
-        dispatch({ type: "set_use_width", payload: param });
-      },
-      set_list_storage: (param) => {
-        dispatch({ type: "set_list_storage", payload: param });
-      },
-      set_search_storagre: (param) => {
-        dispatch({ type: "set_search_storagre", payload: param });
-      },
+export default connect(
+  (state) => ({ store: state }),
+  (dispatch) => ({
+    set_check_data: (param) => {
+      dispatch({ type: "set_check_data", payload: param });
+    },
+    web_active: (param) => {
+      dispatch({ type: "M_ACTIVE", payload: param });
+    },
+    logout: () => {
+      dispatch({ type: "LOGOUT" });
+    },
+    set_active_window: (param) => {
+      dispatch({ type: "set_active_window", payload: param });
+    },
+    use_width: (param) => {
+      dispatch({ type: "set_use_width", payload: param });
+    },
+    set_list_storage: (param) => {
+      dispatch({ type: "set_list_storage", payload: param });
+    },
+    set_search_storagre: (param) => {
+      dispatch({ type: "set_search_storagre", payload: param });
+    },
 
-      storage_reciept_set_zone_list: (param) => {
-        dispatch({ type: "storage_reciept_set_zone_list", payload: param });
-      },
-      storage_reciept_set_storage: (param) => {
-        dispatch({ type: "storage_reciept_set_storage", payload: param });
-      },
-      set_list_get_manifest: (param) => {
-        dispatch({ type: "set_list_get_manifest", payload: param });
-      },
-    })
-  )(Screen)
-);
+    storage_reciept_set_zone_list: (param) => {
+      dispatch({ type: "storage_reciept_set_zone_list", payload: param });
+    },
+    storage_reciept_set_storage: (param) => {
+      dispatch({ type: "storage_reciept_set_storage", payload: param });
+    },
+    set_list_get_manifest: (param) => {
+      dispatch({ type: "set_list_get_manifest", payload: param });
+    },
+  })
+)(Screen);

@@ -181,16 +181,8 @@ export default function dispatch(state = initialState, action) {
         ...state,
         disp_for_del: [
           ...state.disp_for_del.map((el) => {
-            //console.log(action.payload)
-            //console.log(el.Num)
             const Num = String(el.Num);
-            //console.log(Num)
-            const find = action.payload.findIndex((element) => {
-              if (element === Num) {
-                return true;
-              }
-            });
-            //console.log(find)
+            const find = action.payload.findIndex((element) => element === Num);
             if (find !== -1) {
               if (!el.selected) {
                 return { ...el, selected: true, modify: true };

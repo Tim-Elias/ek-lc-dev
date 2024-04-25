@@ -33,7 +33,11 @@ class ComponentToPrint extends React.Component {
                 <div className="disp_print">
                   <div className="disp_print_header">
                     <div className="logo_container">
-                      <img className="header_logo" src={logo} />
+                      <img
+                        className="header_logo"
+                        alt="header_logo"
+                        src={logo}
+                      />
                     </div>
                     <div className="city_container">{disp.data.RecCity}</div>
                     <div className="qrcode_container">

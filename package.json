@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "@opuscapita/react-icons": "^4.0.12",
+    "@types/react": "^18.2.79",
+    "@types/react-dom": "^18.2.25",
     "axios": "^1.6.8",
     "google-map-react": "^1.1.7",
     "jslib-html5-camera-photo": "^3.1.6",
@@ -12,7 +14,6 @@
     "qrcode.react": "^1.0.0",
     "react": "^16.12.0",
     "react-barcode": "^1.4.0",
-    "react-cookie": "^4.1.1",
     "react-dom": "^16.12.0",
     "react-dropdown-select": "^4.0.0",
     "react-html5-camera-photo": "^1.5.4",
@@ -24,6 +25,7 @@
     "react-to-print": "^2.5.1",
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
+    "redux-persist": "^6.0.0",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.88.2"
   },

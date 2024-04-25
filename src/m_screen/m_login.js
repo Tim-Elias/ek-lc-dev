@@ -4,7 +4,6 @@ import "./mobile_login.css";
 import "./mobile.css";
 import { get_data } from "../common/common_modules";
 import md5 from "md5";
-import { withCookies } from "react-cookie";
 import logo from "./../logo.svg";
 import { Header, Modal } from "semantic-ui-react";
 
@@ -32,24 +31,6 @@ class Screen extends React.Component {
       get_data("autorization", authdata).then(
         (result) => {
           this.props.login(result);
-
-          try {
-            this.props.cookies.set(
-              "username",
-              this.props.store.login.username,
-              { maxAge: 1000000000000 }
-            );
-            this.props.cookies.set("userkey", result.userkey, {
-              maxAge: 1000000000000,
-            });
-            this.props.cookies.set(
-              "passkey",
-              md5(this.props.store.login.pass),
-              { maxAge: 1000000000000 }
-            );
-          } catch (error) {
-            console.log(error);
-          }
         },
         (err) => {
           this.props.set_modal_show(true);
@@ -110,31 +91,29 @@ class Screen extends React.Component {
   }
 }
 
-export default withCookies(
-  connect(
-    (state, ownProps) => ({ store: state, cookies: ownProps.cookies }),
-    (dispatch) => ({
-      login: (param) => {
-        dispatch({ type: "LOGIN", payload: param });
-      },
-      set_login: (param) => {
-        dispatch({ type: "SET_USERNAME", payload: param });
-      },
-      set_password: (param) => {
-        dispatch({ type: "SET_PASS", payload: param });
-      },
-      set_error: (param) => {
-        dispatch({ type: "SET_ERROR", payload: param });
-      },
-      set_modal_show: (param) => {
-        dispatch({ type: "set_modal_show", payload: param });
-      },
-      set_modal_text: (param) => {
-        dispatch({ type: "set_modal_text", payload: param });
-      },
-      set_modal_header: (param) => {
-        dispatch({ type: "set_modal_header", payload: param });
-      },
-    })
-  )(Screen)
-);
+export default connect(
+  (state) => ({ store: state }),
+  (dispatch) => ({
+    login: (param) => {
+      dispatch({ type: "LOGIN", payload: param });
+    },
+    set_login: (param) => {
+      dispatch({ type: "SET_USERNAME", payload: param });
+    },
+    set_password: (param) => {
+      dispatch({ type: "SET_PASS", payload: param });
+    },
+    set_error: (param) => {
+      dispatch({ type: "SET_ERROR", payload: param });
+    },
+    set_modal_show: (param) => {
+      dispatch({ type: "set_modal_show", payload: param });
+    },
+    set_modal_text: (param) => {
+      dispatch({ type: "set_modal_text", payload: param });
+    },
+    set_modal_header: (param) => {
+      dispatch({ type: "set_modal_header", payload: param });
+    },
+  })
+)(Screen);

@@ -6,7 +6,6 @@ import "./mobile_delivery.css";
 import "./mobile_disp.css";
 import "./popup.css";
 import Wait from "../screen/wait";
-import { withCookies } from "react-cookie";
 import CheckPrint from "./m_check_print";
 import DispPrint from "./m_disp_print_signature";
 import MFoto from "./m_foto";
@@ -284,63 +283,61 @@ class Screen extends React.Component {
   }
 }
 
-export default withCookies(
-  connect(
-    (state) => ({
-      store: state,
-    }),
-    (dispatch) => ({
-      take_foto: (param) => {
-        dispatch({ type: "set_disp_foto", payload: param });
-      },
-      reset_data: (param) => {
-        dispatch({ type: "reset_data", payload: param });
-      },
-      set_print_check_disabled: (param) => {
-        dispatch({ type: "set_print_check_disabled", payload: param });
-      },
-      set_QR: (param) => {
-        dispatch({ type: "set_QR", payload: param });
-      },
-      set_check_data: (param) => {
-        dispatch({ type: "set_check_data", payload: param });
-      },
-      reset_check_data: (param) => {
-        dispatch({ type: "reset_check_data", payload: param });
-      },
-      set_active_loader: (param) => {
-        dispatch({ type: "set_active_loader", payload: param });
-      },
-      set_disp_comment: (param) => {
-        dispatch({ type: "set_disp_comment", payload: param });
-      },
-      check_disable: () => {
-        dispatch({ type: "check_disable" });
-      },
-      set_disp_cash: (param) => {
-        dispatch({ type: "set_disp_cash", payload: param });
-      },
-      set_disp_FIO: (param) => {
-        dispatch({ type: "set_disp_FIO", payload: param });
-      },
-      set_disp_date: (param) => {
-        dispatch({ type: "set_disp_date", payload: param });
-      },
-      set_disp_time: (param) => {
-        dispatch({ type: "set_disp_time", payload: param });
-      },
-      set_disp_type_cash: (param) => {
-        dispatch({ type: "set_disp_type_cash", payload: param });
-      },
-      set_active_window: (param) => {
-        dispatch({ type: "set_active_window", payload: param });
-      },
-      set_popup: (param) => {
-        dispatch({ type: "set_popup", payload: param });
-      },
-      set_popup_message: (param) => {
-        dispatch({ type: "set_popup_message", payload: param });
-      },
-    })
-  )(Screen)
-);
+export default connect(
+  (state) => ({
+    store: state,
+  }),
+  (dispatch) => ({
+    take_foto: (param) => {
+      dispatch({ type: "set_disp_foto", payload: param });
+    },
+    reset_data: (param) => {
+      dispatch({ type: "reset_data", payload: param });
+    },
+    set_print_check_disabled: (param) => {
+      dispatch({ type: "set_print_check_disabled", payload: param });
+    },
+    set_QR: (param) => {
+      dispatch({ type: "set_QR", payload: param });
+    },
+    set_check_data: (param) => {
+      dispatch({ type: "set_check_data", payload: param });
+    },
+    reset_check_data: (param) => {
+      dispatch({ type: "reset_check_data", payload: param });
+    },
+    set_active_loader: (param) => {
+      dispatch({ type: "set_active_loader", payload: param });
+    },
+    set_disp_comment: (param) => {
+      dispatch({ type: "set_disp_comment", payload: param });
+    },
+    check_disable: () => {
+      dispatch({ type: "check_disable" });
+    },
+    set_disp_cash: (param) => {
+      dispatch({ type: "set_disp_cash", payload: param });
+    },
+    set_disp_FIO: (param) => {
+      dispatch({ type: "set_disp_FIO", payload: param });
+    },
+    set_disp_date: (param) => {
+      dispatch({ type: "set_disp_date", payload: param });
+    },
+    set_disp_time: (param) => {
+      dispatch({ type: "set_disp_time", payload: param });
+    },
+    set_disp_type_cash: (param) => {
+      dispatch({ type: "set_disp_type_cash", payload: param });
+    },
+    set_active_window: (param) => {
+      dispatch({ type: "set_active_window", payload: param });
+    },
+    set_popup: (param) => {
+      dispatch({ type: "set_popup", payload: param });
+    },
+    set_popup_message: (param) => {
+      dispatch({ type: "set_popup_message", payload: param });
+    },
+  })
+)(Screen);

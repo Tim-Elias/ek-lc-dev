@@ -5,7 +5,6 @@ import "./mobile_storage.css";
 import { get_data } from "../common/common_modules";
 import update from "../common/update.png";
 import scanner from "../common/scanner.png";
-import { withCookies } from "react-cookie";
 import Wait from "../screen/wait";
 import Scanner from "./scanner";
 
@@ -66,51 +65,6 @@ class Screen extends React.Component {
   };
 
   componentDidMount() {
-    // socket.onopen = () => {
-    //     console.log('WebSocket Client Connected');
-    //     console.log(socket)
-    // };
-    // socket.onmessage = (message) => {
-    //     console.log(message);
-    // };
-
-    // if (localStorage.getItem('num')) {
-    //     localStorage.removeItem('num');
-    // }
-    if (this.props.cookies.get("num")) {
-      this.props.cookies.remove("num");
-    }
-    // if (localStorage.getItem('status')) {
-    //     localStorage.removeItem('status');
-    // }
-    if (this.props.cookies.get("status")) {
-      this.props.cookies.remove("status");
-    }
-    // if (localStorage.getItem('window')) {
-    //     localStorage.removeItem('window');
-    // }
-    if (this.props.cookies.get("window")) {
-      this.props.cookies.remove("window");
-    }
-
-    // if ('serviceWorker' in navigator) {
-    //     navigator.serviceWorker.register('/sw.js').then(function (registration) {
-    //         console.log('ServiceWorker registration successful');
-    //     }, function (err) {
-    //         console.log('ServiceWorker registration failed: ', err);
-    //     });
-    // }
-
-    // if (Notification.permission === "granted") {
-    //     this.showNotification();
-    // } else if (Notification.permission === "denied" || "default") {
-    //     Notification.requestPermission().then(permission => {
-    //         if(permission === "granted") {
-    //             this.showNotification();
-    //         }
-    //     })
-    // }
-
     this.props.set_active_loader(true);
 
     const list_data = { userkey: this.props.store.login.userkey };
@@ -164,6 +118,7 @@ class Screen extends React.Component {
                   alt=""
                 />
                 <img
+                  alt="update"
                   src={scanner}
                   className="update"
                   onClick={(e) =>
@@ -238,42 +193,40 @@ class Screen extends React.Component {
   }
 }
 
-export default withCookies(
-  connect(
-    (state) => ({
-      store: state,
-    }),
-    (dispatch) => ({
-      set_scann_active: (param) => {
-        dispatch({ type: "set_scann_active", payload: param });
-      },
-      set_key: (param) => {
-        dispatch({ type: "set_key", payload: param });
-      },
-      set_data_disp: (param) => {
-        dispatch({ type: "set_data_disp", payload: param });
-      },
-      set_last_window: (param) => {
-        dispatch({ type: "set_last_window", payload: param });
-      },
-      set_active_window: (param) => {
-        dispatch({ type: "set_active_window", payload: param });
-      },
-      set_action: (param) => {
-        dispatch({ type: "set_action", payload: param });
-      },
-      set_search_storagre: (param) => {
-        dispatch({ type: "set_search_storagre", payload: param });
-      },
-      set_list_storage: (param) => {
-        dispatch({ type: "set_list_storage", payload: param });
-      },
-      set_active_loader: (param) => {
-        dispatch({ type: "set_active_loader", payload: param });
-      },
-      set_search_reciept: (param) => {
-        dispatch({ type: "set_search_reciept", payload: param });
-      },
-    })
-  )(Screen)
-);
+export default connect(
+  (state) => ({
+    store: state,
+  }),
+  (dispatch) => ({
+    set_scann_active: (param) => {
+      dispatch({ type: "set_scann_active", payload: param });
+    },
+    set_key: (param) => {
+      dispatch({ type: "set_key", payload: param });
+    },
+    set_data_disp: (param) => {
+      dispatch({ type: "set_data_disp", payload: param });
+    },
+    set_last_window: (param) => {
+      dispatch({ type: "set_last_window", payload: param });
+    },
+    set_active_window: (param) => {
+      dispatch({ type: "set_active_window", payload: param });
+    },
+    set_action: (param) => {
+      dispatch({ type: "set_action", payload: param });
+    },
+    set_search_storagre: (param) => {
+      dispatch({ type: "set_search_storagre", payload: param });
+    },
+    set_list_storage: (param) => {
+      dispatch({ type: "set_list_storage", payload: param });
+    },
+    set_active_loader: (param) => {
+      dispatch({ type: "set_active_loader", payload: param });
+    },
+    set_search_reciept: (param) => {
+      dispatch({ type: "set_search_reciept", payload: param });
+    },
+  })
+)(Screen);

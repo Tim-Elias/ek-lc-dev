@@ -623,7 +623,7 @@ class Screen extends React.Component {
               <div className="mobile_del_row">
                 <div className="mobile_del_data_label">Заказчик:</div>
 
-                {this.props.store.m_create_disp.Customer != "" ? (
+                {this.props.store.m_create_disp.Customer !== "" ? (
                   <div className="mobile_del_input">
                     {this.props.store.m_create_disp.Customer}
                   </div>

@@ -12,9 +12,9 @@
   "use strict";
 
   window =
-    typeof window != "undefined" && window.Math === Math
+    typeof window !== "undefined" && window.Math === Math
       ? window
-      : typeof self != "undefined" && self.Math === Math
+      : typeof self !== "undefined" && self.Math === Math
         ? self
         : Function("return this")();
 
@@ -819,20 +819,20 @@
             maxDepth = query.length - 1;
             $.each(query, function (depth, value) {
               var camelCaseValue =
-                depth != maxDepth
+                depth !== maxDepth
                   ? value +
                     query[depth + 1].charAt(0).toUpperCase() +
                     query[depth + 1].slice(1)
                   : query;
               if (
                 $.isPlainObject(object[camelCaseValue]) &&
-                depth != maxDepth
+                depth !== maxDepth
               ) {
                 object = object[camelCaseValue];
               } else if (object[camelCaseValue] !== undefined) {
                 found = object[camelCaseValue];
                 return false;
-              } else if ($.isPlainObject(object[value]) && depth != maxDepth) {
+              } else if ($.isPlainObject(object[value]) && depth !== maxDepth) {
                 object = object[value];
               } else if (object[value] !== undefined) {
                 found = object[value];

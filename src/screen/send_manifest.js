@@ -10,29 +10,23 @@ class Screen extends React.Component {
     this.props.set_search_send_manifest_error("");
     const num = this.props.store.send_manifest.search;
     if (
-      this.props.store.storage.list.filter((el) => {
-        if (el.selected && el.Number === num) {
-          return el;
-        }
-      }).length === 1
+      this.props.store.storage.list.filter(
+        (el) => el.selected && el.Number === num
+      ).length === 1
     ) {
       this.props.set_search_send_manifest_error(
         `Накладная ${num} уже добавлена`
       );
     } else if (
-      this.props.store.storage.list.filter((el) => {
-        if (!el.selected && el.Number === num) {
-          return el;
-        }
-      }).length === 1
+      this.props.store.storage.list.filter(
+        (el) => !el.selected && el.Number === num
+      ).length === 1
     ) {
       this.props.select_disp(num);
     } else if (
-      this.props.store.storage.list.filter((el) => {
-        if (!el.selected && el.Number === num) {
-          return el;
-        }
-      }).length === 0
+      this.props.store.storage.list.filter(
+        (el) => !el.selected && el.Number === num
+      ).length === 0
     ) {
       this.props.set_search_send_manifest_error(`Накладная ${num} не найдена`);
     }
@@ -42,9 +36,7 @@ class Screen extends React.Component {
     this.props.set_active_window("wait");
 
     const dispatches = this.props.store.storage.list
-      .filter((el) => {
-        if (el.selected) return el;
-      })
+      .filter((el) => el.selected)
       .map((disp) => {
         return disp.Number;
       });
@@ -141,9 +133,8 @@ class Screen extends React.Component {
         </div>
         <div className="search_error">{this.props.store.reciept.error}</div>
 
-        {this.props.store.storage.list.filter((el) => {
-          if (el.selected) return el;
-        }).length !== 0 ? (
+        {this.props.store.storage.list.filter((el) => el.selected).length !==
+        0 ? (
           <div>
             <Table>
               <Table.Header>
@@ -162,9 +153,7 @@ class Screen extends React.Component {
               </Table.Header>
               <Table.Body>
                 {this.props.store.storage.list
-                  .filter((el) => {
-                    if (el.selected) return el;
-                  })
+                  .filter((el) => el.selected)
                   .map((disp, index) => (
                     <Table.Row key={index}>
                       <Table.Cell>{disp.Date}</Table.Cell>
@@ -188,16 +177,10 @@ class Screen extends React.Component {
 
         <div className="disp_data_el">
           Отправить на склад: накладных:{" "}
-          {
-            this.props.store.storage.list.filter((el) => {
-              if (el.selected) return el;
-            }).length
-          }{" "}
+          {this.props.store.storage.list.filter((el) => el.selected).length}{" "}
           (мест:{" "}
           {this.props.store.storage.list
-            .filter((el) => {
-              if (el.selected) return el;
-            })
+            .filter((el) => el.selected)
             .reduce((sum, el) => {
               return sum + parseInt(el.total);
             }, 0)}

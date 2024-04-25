@@ -4,10 +4,6 @@ import { Table } from "semantic-ui-react";
 import { get_data } from "./../common/common_modules";
 
 class Screen extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   update = () => {
     this.props.set_active_window("wait");
     const list_data = { userkey: this.props.store.login.userkey };

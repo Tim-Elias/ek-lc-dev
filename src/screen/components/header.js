@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import logo from "./../../logo.svg";
 import { get_data } from "./../../common/common_modules";
-import { withCookies } from "react-cookie";
 import { Header, Modal } from "semantic-ui-react";
 import md5 from "md5";
 
@@ -37,10 +36,6 @@ class Screen extends Component {
   };
 
   logout = () => {
-    // localStorage.removeItem('username')
-    // localStorage.removeItem('passkey')
-    this.props.cookies.remove("username");
-    this.props.cookies.remove("passkey");
     this.props.logout();
     this.props.set_active_window("home");
   };
@@ -60,13 +55,6 @@ class Screen extends Component {
           this.props.login(result);
 
           this.get_list(result.userkey);
-
-          // localStorage.setItem('username', this.props.store.login.username)
-          // localStorage.setItem('userkey', result.userkey)
-          // localStorage.setItem('passkey', md5(this.props.store.login.pass))
-          this.props.cookies.set("username", this.props.store.login.username);
-          this.props.cookies.set("userkey", result.userkey);
-          this.props.cookies.set("passkey", md5(this.props.store.login.pass));
         },
         (err) => {
           if (err === undefined || err === "") {
@@ -157,40 +145,38 @@ class Screen extends Component {
   }
 }
 
-export default withCookies(
-  connect(
-    (state, ownProps) => ({ store: state, cookies: ownProps.cookies }),
-    (dispatch) => ({
-      login: (param) => {
-        dispatch({ type: "LOGIN", payload: param });
-      },
-      logout: () => {
-        dispatch({ type: "LOGOUT" });
-      },
-      set_login: (param) => {
-        dispatch({ type: "SET_USERNAME", payload: param });
-      },
-      set_password: (param) => {
-        dispatch({ type: "SET_PASS", payload: param });
-      },
-      set_active_window: (param) => {
-        dispatch({ type: "set_active_window", payload: param });
-      },
-      set_list: (param) => {
-        dispatch({ type: "SET_DISPATCH_LIST", payload: param });
-      },
-      set_error: (param) => {
-        dispatch({ type: "SET_ERROR", payload: param });
-      },
-      set_modal_show: (param) => {
-        dispatch({ type: "set_modal_show", payload: param });
-      },
-      set_modal_text: (param) => {
-        dispatch({ type: "set_modal_text", payload: param });
-      },
-      set_modal_header: (param) => {
-        dispatch({ type: "set_modal_header", payload: param });
-      },
-    })
-  )(Screen)
-);
+export default connect(
+  (state) => ({ store: state }),
+  (dispatch) => ({
+    login: (param) => {
+      dispatch({ type: "LOGIN", payload: param });
+    },
+    logout: () => {
+      dispatch({ type: "LOGOUT" });
+    },
+    set_login: (param) => {
+      dispatch({ type: "SET_USERNAME", payload: param });
+    },
+    set_password: (param) => {
+      dispatch({ type: "SET_PASS", payload: param });
+    },
+    set_active_window: (param) => {
+      dispatch({ type: "set_active_window", payload: param });
+    },
+    set_list: (param) => {
+      dispatch({ type: "SET_DISPATCH_LIST", payload: param });
+    },
+    set_error: (param) => {
+      dispatch({ type: "SET_ERROR", payload: param });
+    },
+    set_modal_show: (param) => {
+      dispatch({ type: "set_modal_show", payload: param });
+    },
+    set_modal_text: (param) => {
+      dispatch({ type: "set_modal_text", payload: param });
+    },
+    set_modal_header: (param) => {
+      dispatch({ type: "set_modal_header", payload: param });
+    },
+  })
+)(Screen);

@@ -5,7 +5,6 @@ import { Button } from "semantic-ui-react";
 import "./mobile_setting.css";
 import "../App.css";
 import ReactToPrint from "react-to-print";
-import { withCookies } from "react-cookie";
 
 class Screen extends React.Component {
   settings_window = (window) => {
@@ -34,14 +33,6 @@ class Screen extends React.Component {
         console.log(err);
       }
     );
-  };
-
-  cookie = () => {
-    this.props.cookies.set("test", "Сookies work", { maxAge: 1000000000000 });
-  };
-
-  cookieShow = () => {
-    alert(this.props.cookies.get("test"));
   };
 
   render() {
@@ -109,41 +100,34 @@ class Screen extends React.Component {
             <div ref={(el) => (this.componentRef = el)}>Test message.</div>
           </div>
         </div>
-
-        <div className="mobile_disp_button" style={{ justifyContent: "left" }}>
-          <Button onClick={() => this.cookie()}>Записать куки</Button>
-          <Button onClick={() => this.cookieShow()}>Проверить куки</Button>
-        </div>
       </div>
     );
   }
 }
 
-export default withCookies(
-  connect(
-    (state) => ({ store: state }),
-    (dispatch) => ({
-      set_user_email: (param) => {
-        dispatch({ type: "set_user_email", payload: param });
-      },
-      set_user_phone: (param) => {
-        dispatch({ type: "set_user_phone", payload: param });
-      },
-      set_user_name: (param) => {
-        dispatch({ type: "set_user_name", payload: param });
-      },
-      set_user_default_send: (param) => {
-        dispatch({ type: "set_user_default_send", payload: param });
-      },
-      set_user_default_rec: (param) => {
-        dispatch({ type: "set_user_default_rec", payload: param });
-      },
-      save_changes_user_data: (param) => {
-        dispatch({ type: "save_changes_user_data", payload: param });
-      },
-      set_active_window: (param) => {
-        dispatch({ type: "set_active_window", payload: param });
-      },
-    })
-  )(Screen)
-);
+export default connect(
+  (state) => ({ store: state }),
+  (dispatch) => ({
+    set_user_email: (param) => {
+      dispatch({ type: "set_user_email", payload: param });
+    },
+    set_user_phone: (param) => {
+      dispatch({ type: "set_user_phone", payload: param });
+    },
+    set_user_name: (param) => {
+      dispatch({ type: "set_user_name", payload: param });
+    },
+    set_user_default_send: (param) => {
+      dispatch({ type: "set_user_default_send", payload: param });
+    },
+    set_user_default_rec: (param) => {
+      dispatch({ type: "set_user_default_rec", payload: param });
+    },
+    save_changes_user_data: (param) => {
+      dispatch({ type: "save_changes_user_data", payload: param });
+    },
+    set_active_window: (param) => {
+      dispatch({ type: "set_active_window", payload: param });
+    },
+  })
+)(Screen);

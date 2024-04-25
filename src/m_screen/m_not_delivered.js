@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import "./mobile.css";
 import { get_data } from "../common/common_modules";
 import "./mobile_disp.css";
-import { withCookies } from "react-cookie";
 import MFoto from "./m_foto";
 
 class Screen extends React.Component {
@@ -29,14 +28,6 @@ class Screen extends React.Component {
 
         get_data("list", list_data).then(
           (result) => {
-            try {
-              this.props.cookies.remove("num");
-              this.props.cookies.remove("status");
-              this.props.cookies.remove("window");
-            } catch (error) {
-              console.log(error);
-            }
-
             alert("Данные отправлены!");
             this.props.set_active_window("m_storage");
           },
@@ -133,25 +124,23 @@ class Screen extends React.Component {
   }
 }
 
-export default withCookies(
-  connect(
-    (state) => ({
-      store: state,
-    }),
-    (dispatch) => ({
-      set_notDel_newDate: (param) => {
-        dispatch({ type: "set_notDel_newDate", payload: param });
-      },
+export default connect(
+  (state) => ({
+    store: state,
+  }),
+  (dispatch) => ({
+    set_notDel_newDate: (param) => {
+      dispatch({ type: "set_notDel_newDate", payload: param });
+    },
 
-      reset_data: (param) => {
-        dispatch({ type: "reset_data", payload: param });
-      },
-      set_disp_comment: (param) => {
-        dispatch({ type: "set_disp_comment", payload: param });
-      },
-      set_active_window: (param) => {
-        dispatch({ type: "set_active_window", payload: param });
-      },
-    })
-  )(Screen)
-);
+    reset_data: (param) => {
+      dispatch({ type: "reset_data", payload: param });
+    },
+    set_disp_comment: (param) => {
+      dispatch({ type: "set_disp_comment", payload: param });
+    },
+    set_active_window: (param) => {
+      dispatch({ type: "set_active_window", payload: param });
+    },
+  })
+)(Screen);

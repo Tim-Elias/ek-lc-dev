@@ -26,18 +26,11 @@ import MDispTemplate from "./m_disp_template";
 import MReceiveFromSender from "./m_receive_from_sender";
 import MSendPartner from "./m_send_partner";
 import PopUp from "./popup";
-import { withCookies } from "react-cookie";
 
 class Screen extends React.Component {
   componentDidMount() {
     if (this.props.store.general.active_window === "home") {
       let wind;
-      try {
-        // wind = localStorage.getItem('window')
-        wind = this.props.cookies.get("window");
-      } catch (error) {
-        wind = undefined;
-      }
 
       if (wind === undefined) {
         this.props.set_active_window("m_storage");
@@ -46,10 +39,6 @@ class Screen extends React.Component {
         if (wind === "m_disp") {
           const data = {
             userkey: this.props.store.login.userkey,
-            // status: localStorage.getItem('status'),
-            // num: localStorage.getItem('num'),
-            status: this.props.cookies.get("status"),
-            num: this.props.cookies.get("num"),
           };
 
           this.props.set_key(data);
@@ -131,21 +120,19 @@ class Screen extends React.Component {
   }
 }
 
-export default withCookies(
-  connect(
-    (state) => ({
-      store: state,
-    }),
-    (dispatch) => ({
-      set_active_window: (param) => {
-        dispatch({ type: "set_active_window", payload: param });
-      },
-      set_key: (param) => {
-        dispatch({ type: "set_key", payload: param });
-      },
-      login: (param) => {
-        dispatch({ type: "LOGIN", payload: param });
-      },
-    })
-  )(Screen)
-);
+export default connect(
+  (state) => ({
+    store: state,
+  }),
+  (dispatch) => ({
+    set_active_window: (param) => {
+      dispatch({ type: "set_active_window", payload: param });
+    },
+    set_key: (param) => {
+      dispatch({ type: "set_key", payload: param });
+    },
+    login: (param) => {
+      dispatch({ type: "LOGIN", payload: param });
+    },
+  })
+)(Screen);

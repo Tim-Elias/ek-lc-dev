@@ -53,13 +53,11 @@ class Screen extends React.Component {
   };
 
   render_markers = (arr, hard) => {
-    // console.log(arr)
-    // console.log(hard)
     arr
       .filter((disp_el) => {
         return disp_el.modify || hard;
       })
-      .map((el) => {
+      .forEach((el) => {
         markers
           .filter((marker_el) => {
             return marker_el.title === el.Num;
@@ -530,7 +528,7 @@ class Screen extends React.Component {
 
           {this.props.store.disp_map.courier_filter !== "" ? (
             <div>
-              <a style={{ margin: "0 5px" }}>
+              <a href="/" style={{ margin: "0 5px" }}>
                 {this.props.store.disp_map.courier_filter}{" "}
               </a>
               <button onClick={this.set_courier_filter.bind(this, "")}>
@@ -578,6 +576,7 @@ class Screen extends React.Component {
                     );
                   }
                 }
+                return null;
               })}
             </div>
           </div>
@@ -736,6 +735,7 @@ class Screen extends React.Component {
                   </List.Item>
                 );
               }
+              return null;
             })}
           </List>
 
@@ -771,15 +771,6 @@ class Screen extends React.Component {
             </div>
             <div className="disp_map_panel_input_element">
               <div>Курьер </div>
-              {/* <Dropdown
-                        placeholder='Выберете курьера'
-                        options={this.props.store.disp_map.courier_list}
-                        
-                        
-                        selection
-                        value={this.props.store.disp_map.selected_courier}
-                        onChange={(sel_value) => this.props.select_disp_map_courier(sel_value._targetInst.return.key)}
-                      />  */}
 
               <div id="myDropdown" className="dropdown-content">
                 <i
@@ -836,6 +827,7 @@ class Screen extends React.Component {
                       );
                     }
                   }
+                  return null;
                 })}
               </div>
             </div>
@@ -912,7 +904,7 @@ class Screen extends React.Component {
           <div className="disp_map">
             <GoogleMapReact
               bootstrapURLKeys={{
-                key: "AIzaSyD5AmmHNIXXN0yquTsPxoXuvtOp8OYhe2E",
+                key: process.env.REACT_APP_GOOGLE_API_KEY,
               }}
               defaultCenter={this.props.store.home.map.center}
               defaultZoom={8}
@@ -920,43 +912,7 @@ class Screen extends React.Component {
               onGoogleApiLoaded={({ map, maps }) =>
                 onGoogleApiLoaded(map, maps)
               }
-            >
-              {/* {this.props.store.disp_map.disp_for_del.map(el=>{
-                        let opacity = 0.9
-                        let blink = 0
-                        let borderColor = '#888'
-                       if (el.selected) {
-                        opacity = 1
-                        borderColor = '#000'
-                        blink = 0.2
-                       }
-                        const lat = parseFloat(el.RecLat.replace(/,/, '.'))
-                        const lng = parseFloat(el.RecLng.replace(/,/, '.'))
-
-                        if (lat > 0 && lng > 0 ) {
-                           
-                        return(
-                            <Marker 
-                            key={el.Num}
-                            lat={lat}
-                            lng={lng}
-                            text={el.Num} 
-                            size={5}
-                            el_key={el.Num}
-                            color={el.Color}
-                            opacity={opacity}
-                            borderColor={borderColor}
-                            onClick = {this.marker_onClick}
-                            blink = {blink}
-                            
-                            />
-                            )
-
-                        }
-                        }
-                    )
-                        } */}
-            </GoogleMapReact>
+            ></GoogleMapReact>
           </div>
         </div>
       </div>

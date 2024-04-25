@@ -24,10 +24,10 @@ class Screen extends Component {
           onScan={this.handleScan}
           style={{ width: "100%", margin: " 0 0 10px 0" }}
         />
-        <a
+        <span
           className="scanner_close"
           onClick={(e) => this.props.set_scann_active(false)}
-        ></a>
+        />
       </div>
     );
   }

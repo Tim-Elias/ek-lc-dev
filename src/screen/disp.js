@@ -90,15 +90,9 @@ class Screen extends React.Component {
         map: g_map,
       });
 
-      marker.addListener("click", function () {
-        //marker_onClick(el.Num)
-      });
+      marker.addListener("click", function () {});
     }
   };
-
-  // print = () =>{
-  //    get_file(this.props.store.login.userkey,'Накладная',this.props.store.disp.data.Number,this.props.store.disp.data.Number.concat('.pdf'))
-  // }
 
   back = () => {
     const last_window =
@@ -746,7 +740,7 @@ class Screen extends React.Component {
                               <Table.Cell>{el.Date}</Table.Cell>
                               <Table.Cell>
                                 {el.Status}
-                                {el.Skan != 0 ? (
+                                {el.Skan !== 0 ? (
                                   <Modal
                                     trigger={
                                       <button
@@ -774,6 +768,7 @@ class Screen extends React.Component {
                                           </div>
                                         ) : (
                                           <img
+                                            alt="skan"
                                             className="disp_skan"
                                             src={this.props.store.disp.skan}
                                           />
@@ -1080,19 +1075,6 @@ class Screen extends React.Component {
 
         {this.props.store.disp.action === "reciept" ? (
           <div>
-            {/* <div className="pod_header">Принять накладную на склад:</div> */}
-            {/* <div className="pod_data">
-                    <div className="disp_data_label">Дата доставки</div>
-                    <div className="disp_data_input"><input id="date" className="pod_input" type="date"></input></div>
-                    <div className="disp_data_label">Время доставки</div>
-                    <div className="disp_data_input"><input id="time" className="pod_input" type="time"></input></div>
-                    <div className="disp_data_label">ФИО получателя</div>
-                    <div className="disp_data_input"><input id="recient" className="pod_input" type="text"></input></div>
-                    <div className="disp_data_label">Принятая сумма наличных</div>
-                    <div className="disp_data_input"><input id="summ" className="pod_input" type="number"></input></div>
-                    <div className="disp_data_label">Комментарий</div>
-                    <div className="disp_data_input"><input id="comment" className="pod_input" type="text"></input></div>
-                </div> */}
             <button onClick={this.reciept.bind(this)} className="send_pod">
               Принять на склад и закрыть
             </button>
@@ -1116,7 +1098,7 @@ class Screen extends React.Component {
           <div className="disp_map">
             <GoogleMapReact
               bootstrapURLKeys={{
-                key: "AIzaSyD5AmmHNIXXN0yquTsPxoXuvtOp8OYhe2E",
+                key: process.env.REACT_APP_GOOGLE_API_KEY,
               }}
               defaultCenter={center}
               defaultZoom={14}

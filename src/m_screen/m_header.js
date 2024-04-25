@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import logo from "./../logo.svg";
 import "./mobile_header.css";
 import menu from "../common/burger_menu.png";
-import { withCookies } from "react-cookie";
 import arrow from "../common/blue-arrow.png";
 
 class Screen extends React.Component {
@@ -118,13 +117,11 @@ class Screen extends React.Component {
   }
 }
 
-export default withCookies(
-  connect(
-    (state, ownProps) => ({ store: state, cookies: ownProps.cookies }),
-    (dispatch) => ({
-      set_mobile_menu: (param) => {
-        dispatch({ type: "set_mobile_menu", payload: param });
-      },
-    })
-  )(Screen)
-);
+export default connect(
+  (state) => ({ store: state }),
+  (dispatch) => ({
+    set_mobile_menu: (param) => {
+      dispatch({ type: "set_mobile_menu", payload: param });
+    },
+  })
+)(Screen);

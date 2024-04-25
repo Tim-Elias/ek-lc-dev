@@ -4,7 +4,6 @@ import "./mobile.css";
 import { get_data } from "../common/common_modules";
 import "./mobile_disp.css";
 import Wait from "../screen/wait";
-import { withCookies } from "react-cookie";
 
 class Screen extends React.Component {
   settings_window = (window) => {
@@ -15,14 +14,6 @@ class Screen extends React.Component {
     num = this.props.store.disp.key.num,
     status = this.props.store.disp.key.status
   ) => {
-    try {
-      this.props.cookies.set("window", "m_disp", { maxAge: 1000000000000 });
-      this.props.cookies.set("num", num, { maxAge: 1000000000000 });
-      this.props.cookies.set("status", status, { maxAge: 1000000000000 });
-    } catch (error) {
-      console.log(error);
-    }
-
     this.props.set_active_loader(true);
 
     const data = {
@@ -361,7 +352,7 @@ class Screen extends React.Component {
                               ? "+7" + item
                               : item}
                       </a>
-                      {index != RecPhoneList.length - 1 ? ", " : null}
+                      {index !== RecPhoneList.length - 1 ? ", " : null}
                     </div>
                   ))}
                 </div>
@@ -401,7 +392,7 @@ class Screen extends React.Component {
                   {SendPhoneList.map((item, index) => (
                     <div key={index}>
                       <a href={"tel:" + item}>{item}</a>
-                      {index != SendPhoneList.length - 1 ? ", " : null}
+                      {index !== SendPhoneList.length - 1 ? ", " : null}
                     </div>
                   ))}
                 </div>
@@ -476,7 +467,7 @@ class Screen extends React.Component {
               </div>
             </div>
 
-            {this.props.store.disp.cargo.length != 0 ? (
+            {this.props.store.disp.cargo.length !== 0 ? (
               <div className="mobile_disp_address_data">
                 <div className="disp_address_data_header disp_address_data_header--green">
                   Грузы
@@ -504,48 +495,46 @@ class Screen extends React.Component {
   }
 }
 
-export default withCookies(
-  connect(
-    (state) => ({
-      store: state,
-    }),
-    (dispatch) => ({
-      set_Customer: (param) => {
-        dispatch({ type: "set_Customer", payload: param });
-      },
-      set_select_template: (param) => {
-        dispatch({ type: "set_select_template", payload: param });
-      },
-      SetSendTerminalList: (param) => {
-        dispatch({ type: "SetSendTerminalListMobile", payload: param });
-      },
-      SetRecTerminalList: (param) => {
-        dispatch({ type: "SetRecTerminalListMobile", payload: param });
-      },
-      SetCityList: (param) => {
-        dispatch({ type: "SetCityListMobile", payload: param });
-      },
-      set_key: (param) => {
-        dispatch({ type: "set_key", payload: param });
-      },
-      set_active_window: (param) => {
-        dispatch({ type: "set_active_window", payload: param });
-      },
-      set_data_disp: (param) => {
-        dispatch({ type: "set_data_disp", payload: param });
-      },
-      set_last_window: (param) => {
-        dispatch({ type: "set_last_window", payload: param });
-      },
-      set_action: (param) => {
-        dispatch({ type: "set_action", payload: param });
-      },
-      set_active_loader: (param) => {
-        dispatch({ type: "set_active_loader", payload: param });
-      },
-      set_popup_message: (param) => {
-        dispatch({ type: "set_popup_message", payload: param });
-      },
-    })
-  )(Screen)
-);
+export default connect(
+  (state) => ({
+    store: state,
+  }),
+  (dispatch) => ({
+    set_Customer: (param) => {
+      dispatch({ type: "set_Customer", payload: param });
+    },
+    set_select_template: (param) => {
+      dispatch({ type: "set_select_template", payload: param });
+    },
+    SetSendTerminalList: (param) => {
+      dispatch({ type: "SetSendTerminalListMobile", payload: param });
+    },
+    SetRecTerminalList: (param) => {
+      dispatch({ type: "SetRecTerminalListMobile", payload: param });
+    },
+    SetCityList: (param) => {
+      dispatch({ type: "SetCityListMobile", payload: param });
+    },
+    set_key: (param) => {
+      dispatch({ type: "set_key", payload: param });
+    },
+    set_active_window: (param) => {
+      dispatch({ type: "set_active_window", payload: param });
+    },
+    set_data_disp: (param) => {
+      dispatch({ type: "set_data_disp", payload: param });
+    },
+    set_last_window: (param) => {
+      dispatch({ type: "set_last_window", payload: param });
+    },
+    set_action: (param) => {
+      dispatch({ type: "set_action", payload: param });
+    },
+    set_active_loader: (param) => {
+      dispatch({ type: "set_active_loader", payload: param });
+    },
+    set_popup_message: (param) => {
+      dispatch({ type: "set_popup_message", payload: param });
+    },
+  })
+)(Screen);
