@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@opuscapita/react-icons": "^4.0.12",
-    "axios": "^0.21.1",
+    "axios": "^1.6.8",
     "google-map-react": "^1.1.7",
     "jslib-html5-camera-photo": "^3.1.6",
     "md5": "^2.2.1",
@@ -13,13 +13,13 @@
     "react": "^16.12.0",
     "react-barcode": "^1.4.0",
     "react-cookie": "^4.1.1",
-    "react-data-export": "^0.6.0",
+    "react-data-export": "^0.4.2",
     "react-dom": "^16.12.0",
     "react-dropdown-select": "^4.0.0",
     "react-html5-camera-photo": "^1.5.4",
     "react-qr-reader": "^2.2.1",
     "react-redux": "^7.2.0",
-    "react-scripts": "^4.0.3",
+    "react-scripts": "^5.0.1",
     "react-select": "^3.0.8",
     "react-sound": "^1.2.0",
     "react-to-print": "^2.5.1",
@@ -49,5 +49,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   }
 }
