@@ -53,7 +53,7 @@ export default function dispatch(state = initialState, action) {
       return {
         ...state,
         Cargo_list: state.Cargo_list.map((item, index) => {
-          if (action.payload.name == item.name) {
+          if (action.payload.name === item.name) {
             return { ...item, quantity: action.payload.quantity };
           } else {
             return item;
@@ -116,7 +116,7 @@ export default function dispatch(state = initialState, action) {
       return {
         ...state,
         Cargo: state.Cargo.map((el, index) => {
-          if (index == action.payload.index) {
+          if (index === action.payload.index) {
             return { ...el, Weight: action.payload.value };
           } else {
             return el;
@@ -127,7 +127,7 @@ export default function dispatch(state = initialState, action) {
       return {
         ...state,
         Cargo: state.Cargo.map((el, index) => {
-          if (index == action.payload.index) {
+          if (index === action.payload.index) {
             return { ...el, L: action.payload.value };
           } else {
             return el;
@@ -138,7 +138,7 @@ export default function dispatch(state = initialState, action) {
       return {
         ...state,
         Cargo: state.Cargo.map((el, index) => {
-          if (index == action.payload.index) {
+          if (index === action.payload.index) {
             return { ...el, W: action.payload.value };
           } else {
             return el;
@@ -149,7 +149,7 @@ export default function dispatch(state = initialState, action) {
       return {
         ...state,
         Cargo: state.Cargo.map((el, index) => {
-          if (index == action.payload.index) {
+          if (index === action.payload.index) {
             return { ...el, H: action.payload.value };
           } else {
             return el;
@@ -160,7 +160,7 @@ export default function dispatch(state = initialState, action) {
       return {
         ...state,
         Cargo: state.Cargo.map((el, index) => {
-          if (index == action.payload.index) {
+          if (index === action.payload.index) {
             return { ...el, Type: action.payload.value };
           } else {
             return el;
@@ -171,7 +171,7 @@ export default function dispatch(state = initialState, action) {
       return {
         ...state,
         Cargo: state.Cargo.map((el, index) => {
-          if (index == action.payload.index) {
+          if (index === action.payload.index) {
             return { ...el, Comment: action.payload.value };
           } else {
             return el;
@@ -246,7 +246,7 @@ export default function dispatch(state = initialState, action) {
         DelMethod: action.payload.DelMethod,
       };
     case "SetSendTerminalListMobile":
-      if (action.payload.result.length == 0) {
+      if (action.payload.result.length === 0) {
         return { ...state, SendTerminalList: action.payload.result };
       } else if (action.payload.terminal) {
         return {
@@ -271,7 +271,7 @@ export default function dispatch(state = initialState, action) {
         DelMethod: action.payload.DelMethod,
       };
     case "SetRecTerminalListMobile":
-      if (action.payload.result.length == 0) {
+      if (action.payload.result.length === 0) {
         return { ...state, RecTerminalList: action.payload.result };
       } else if (action.payload.terminal) {
         return {
@@ -336,24 +336,16 @@ export default function dispatch(state = initialState, action) {
 
     case "set_template_list":
       return { ...state, template_list: action.payload };
-    case "set_select_template":
-      const CargoTypeList = [
-        { label: "Сейф-пакет", value: "СейфПакет" },
-        { label: "Коробка", value: "Коробка" },
-        { label: "Контейнер", value: "Контейнер" },
-        { label: "Мешок под пломбой", value: "МешокПодПломбой" },
-        { label: "Прочее", value: "Прочее" },
-      ];
-
+    case "set_select_template": {
       let delivery_method = action.payload.data.del_method.split("-");
       let send_teminal, rec_terminal;
-      if (delivery_method[0] == "Склад") {
+      if (delivery_method[0] === "Склад") {
         send_teminal = true;
       } else {
         send_teminal = false;
       }
 
-      if (delivery_method[1] == "Склад") {
+      if (delivery_method[1] === "Склад") {
         rec_terminal = true;
       } else {
         rec_terminal = false;
@@ -386,7 +378,7 @@ export default function dispatch(state = initialState, action) {
 
         RecTerminal: rec_terminal,
       };
-
+    }
     default:
       return state;
   }

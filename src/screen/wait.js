@@ -1,16 +1,14 @@
-import React from 'react'
+import React from "react";
 
 class Screen extends React.Component {
-  render () {
-    document.onkeydown = function (event) {}
+  render() {
+    document.onkeydown = function (event) {};
     return (
-
-      <div className='preloader'>
-        <div className='preloader__image_animate' />
+      <div className="preloader">
+        <div className="preloader__image_animate" />
       </div>
-
-    )
+    );
   }
-};
+}
 
-export default Screen
+export default Screen;

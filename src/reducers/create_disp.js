@@ -2,8 +2,6 @@ const today = new Date();
 let mm = today.getMonth() + 1;
 let dd = today.getDate();
 
-const y = today.getFullYear();
-
 if (mm < 10) {
   mm = "0" + mm;
 }
@@ -235,7 +233,7 @@ export default function dispatch(state = initialState, action) {
       return { ...state, RecEmailInformer: action.payload };
 
     case "SetRecTerminalList":
-      if (action.payload.length == 0) {
+      if (action.payload.length === 0) {
         return { ...state, RecTerminalList: action.payload };
       } else {
         return {
@@ -246,7 +244,7 @@ export default function dispatch(state = initialState, action) {
       }
 
     case "SetSendTerminalList":
-      if (action.payload.length == 0) {
+      if (action.payload.length === 0) {
         return { ...state, SendTerminalList: action.payload };
       } else {
         return {
@@ -262,7 +260,7 @@ export default function dispatch(state = initialState, action) {
       return {
         ...state,
         Cargo: state.Cargo.map((el, index) => {
-          if (index == action.payload.index) {
+          if (index === action.payload.index) {
             return { ...el, Weight: action.payload.value };
           } else {
             return el;
@@ -274,7 +272,7 @@ export default function dispatch(state = initialState, action) {
       return {
         ...state,
         Cargo: state.Cargo.map((el, index) => {
-          if (index == action.payload.index) {
+          if (index === action.payload.index) {
             return { ...el, W: action.payload.value };
           } else {
             return el;
@@ -286,7 +284,7 @@ export default function dispatch(state = initialState, action) {
       return {
         ...state,
         Cargo: state.Cargo.map((el, index) => {
-          if (index == action.payload.index) {
+          if (index === action.payload.index) {
             return { ...el, L: action.payload.value };
           } else {
             return el;
@@ -298,7 +296,7 @@ export default function dispatch(state = initialState, action) {
       return {
         ...state,
         Cargo: state.Cargo.map((el, index) => {
-          if (index == action.payload.index) {
+          if (index === action.payload.index) {
             return { ...el, H: action.payload.value };
           } else {
             return el;
@@ -310,7 +308,7 @@ export default function dispatch(state = initialState, action) {
       return {
         ...state,
         Cargo: state.Cargo.map((el, index) => {
-          if (index == action.payload.index) {
+          if (index === action.payload.index) {
             return { ...el, Q: action.payload.value };
           } else {
             return el;
@@ -322,7 +320,7 @@ export default function dispatch(state = initialState, action) {
       return {
         ...state,
         Cargo: state.Cargo.map((el, index) => {
-          if (index == action.payload.index) {
+          if (index === action.payload.index) {
             return { ...el, Comment: action.payload.value };
           } else {
             return el;
@@ -334,7 +332,7 @@ export default function dispatch(state = initialState, action) {
       return {
         ...state,
         Cargo: state.Cargo.map((el, index) => {
-          if (index == action.payload.index) {
+          if (index === action.payload.index) {
             return { ...el, Type: action.payload.value };
           } else {
             return el;
@@ -409,9 +407,6 @@ export default function dispatch(state = initialState, action) {
       return { ...state, Weight: action.payload };
     case "SetVolume":
       return { ...state, Volume: action.payload };
-
-    case "SetTermo":
-      return { ...state, PayType: action.payload };
     case "SetIRR":
       return { ...state, PayType: action.payload };
     case "SetFragile":
@@ -429,7 +424,7 @@ export default function dispatch(state = initialState, action) {
     case "SetRecSelectTerminal":
       return { ...state, RecSelectTerminal: action.payload };
 
-    case "set_copy_disp_data":
+    case "set_copy_disp_data": {
       const CargoTypeList = [
         { label: "Сейф-пакет", value: "СейфПакет" },
         { label: "Коробка", value: "Коробка" },
@@ -475,10 +470,6 @@ export default function dispatch(state = initialState, action) {
         Weight: action.payload.Weight,
 
         Cargo: action.payload.Cargo.map((el) => {
-          const cargo_type = el.Type;
-          const CargoTypeListEl = CargoTypeList.find(
-            (el_list) => el_list.value === el.Type
-          );
           return {
             Weight: el.Weight,
             L: el.L,
@@ -490,6 +481,7 @@ export default function dispatch(state = initialState, action) {
           };
         }),
       };
+    }
 
     default:
       return state;

@@ -3,22 +3,9 @@ import { connect } from "react-redux";
 import "./create_disp.css";
 import { get_data } from "./../common/common_modules";
 import Select from "react-select";
-
 import { customStyles } from "./../common/common_style";
 import { Table, Modal, Button, Icon, Checkbox } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
-
-const PayTypeList = [
-  { label: "Безналичная оплата", value: "БезналичнаяОплата" },
-  {
-    label: "Оплата наличными при отправлении",
-    value: "ОплатаНаличнымиПриОтправлении",
-  },
-  {
-    label: "Оплата наличными при получении",
-    value: "ОплатаНаличнымиПриПолучении",
-  },
-];
 
 const CargoInfoTypeList = [
   { label: "Указать итогвые значения", value: true },
@@ -33,17 +20,6 @@ const CargoTypeList = [
   { label: "Прочее", value: "Прочее" },
 ];
 
-// const today = new Date();
-// let mm = today.getMonth() + 1;
-// let dd = today.getDate();
-
-// const y = today.getFullYear();
-
-// if (mm < 10) { mm = '0' + mm }
-// if (dd < 10) { dd = '0' + dd }
-
-// const date = y + '-' + mm + '-' + dd;
-// const hours = today.getUTCHours() + 7;
 
 class Screen extends React.Component {
   CalcPrice = (total_weight, total_volume) => {
@@ -89,10 +65,6 @@ class Screen extends React.Component {
 
   TotalQ = () => {
     return 1;
-    // this.props.store.create_disp.Cargo.reduce((accumulator,currentValue)=>
-    //                   {
-    //                     return accumulator + [currentValue.Q]
-    //                   })
   };
 
   AddCargo = () => {
@@ -185,7 +157,6 @@ class Screen extends React.Component {
         console.log("err", err);
         this.props.set_last_window("create_disp");
         this.props.set_active_window("");
-
         this.props.modules.set_modal_show(true);
         this.props.modules.set_modal_header("Ошибка");
         this.props.modules.set_modal_text(err);
@@ -303,10 +274,7 @@ class Screen extends React.Component {
     }
 
     if (this.props.store.login.necessarily_all_field) {
-      // if (currentHours >= 14 && currentDate >= this.props.store.create_disp.DispDate && this.props.store.create_disp.DelMethod === 'Дверь - Дверь' || this.props.store.create_disp.DelMethod === 'Дверь - Склад') {
-      //   this.props.SetWarningMessage("Заявку на текущий день возможно разместить только до 14:00, укажите более позднюю дату заявки");
-      //   this.props.SetTimeError(true);
-      //   this.props.SetWarningAlert(true);
+
       if (
         this.props.store.create_disp.SendAdress.length < 2 &&
         this.props.store.create_disp.SendTerminal === false
@@ -335,10 +303,7 @@ class Screen extends React.Component {
         this.sent_disp();
       }
     } else {
-      // if (currentHours >= 14 && currentDate >= this.props.store.create_disp.DispDate && this.props.store.create_disp.DelMethod === 'Дверь - Дверь' || this.props.store.create_disp.DelMethod === 'Дверь - Склад') {
-      //   this.props.SetWarningMessage("Заявку на текущий день возможно разместить только до 14:00, укажите более позднюю дату заявки");
-      //   this.props.SetTimeError(true);
-      //   this.props.SetWarningAlert(true);
+
       if (
         this.props.store.create_disp.RecAdress.length < 2 &&
         this.props.store.create_disp.RecTerminal === false
@@ -401,7 +366,6 @@ class Screen extends React.Component {
       PayType: this.props.store.create_disp.PayType.value,
       DispDate: dateClaim,
       DelType: this.props.store.create_disp.DelType,
-
       SendCity: this.props.store.create_disp.SendCity,
       SendAdress: this.props.store.create_disp.SendAdress,
       SendCompany: this.props.store.create_disp.SendCompany,
@@ -412,7 +376,6 @@ class Screen extends React.Component {
       SendTerminal: this.props.store.create_disp.SendTerminal,
       SendSelectTerminal: this.props.store.create_disp.SendSelectTerminal.value,
       SendEmailInformer: this.props.store.create_disp.SendEmailInformer,
-
       RecCity: this.props.store.create_disp.RecCity,
       RecAdress: this.props.store.create_disp.RecAdress,
       RecCompany: this.props.store.create_disp.RecCompany,
@@ -423,12 +386,10 @@ class Screen extends React.Component {
       RecTerminal: this.props.store.create_disp.RecTerminal,
       RecSelectTerminal: this.props.store.create_disp.RecSelectTerminal.value,
       RecEmailInformer: this.props.store.create_disp.RecEmailInformer,
-
       Cargo: this.props.store.create_disp.Cargo,
       Total: this.props.store.create_disp.Total,
       Volume: this.props.store.create_disp.Volume,
       Weight: this.props.store.create_disp.Weight,
-
       InsureValue: this.props.store.create_disp.InsureValue,
       COD: this.props.store.create_disp.COD,
       CargoInfoType: this.props.store.create_disp.CargoInfoType.value,
@@ -539,7 +500,7 @@ class Screen extends React.Component {
   PayerSelect = (value) => {
     this.props.SetPayerSelect(value);
     let template = this.props.store.upload_manifest.disp_template_list.filter(
-      (e) => e.Key == value.template
+      (e) => e.Key === value.template
     );
 
     this.SelectRecTemplate(template[0]);
@@ -663,11 +624,11 @@ class Screen extends React.Component {
     if (
       this.props.store.create_disp.SelectedSendCity === null ||
       this.props.store.create_disp.SelectedRecCity === null ||
-      (this.props.store.create_disp.Total == 0 &&
+      (this.props.store.create_disp.Total === 0 &&
         this.props.store.create_disp.CargoInfoType.value) ||
-      (this.props.store.create_disp.Weight == 0 &&
+      (this.props.store.create_disp.Weight === 0 &&
         this.props.store.create_disp.CargoInfoType.value) ||
-      (total_weight == 0 &&
+      (total_weight === 0 &&
         !this.props.store.create_disp.CargoInfoType.value) ||
       (this.props.store.create_disp.customNumber === true
         ? this.props.store.create_disp.availableNumber === true
@@ -683,7 +644,6 @@ class Screen extends React.Component {
           <Button compact icon onClick={this.props.modules.back}>
             <Icon name="arrow left" />
           </Button>
-          {/* {this.props.store.create_disp.Number === 0 ? (<b>Создание новой накладной</b>):(<b>Редактирование накладной {this.props.store.create_disp.Number}</b>)} */}
           {this.props.store.create_disp.isNew ? (
             <b>Создание новой накладной</b>
           ) : (
@@ -727,10 +687,10 @@ class Screen extends React.Component {
                       this.props.store.create_disp.cyrillic === false
                         ? { backgroundColor: "#e0ffe0" }
                         : this.props.store.create_disp.availableNumber ===
-                            false ||
-                          this.props.store.create_disp.cyrillic === true
-                        ? { backgroundColor: "#ffe0e0" }
-                        : { backgroundColor: "#fff" }
+                              false ||
+                            this.props.store.create_disp.cyrillic === true
+                          ? { backgroundColor: "#ffe0e0" }
+                          : { backgroundColor: "#fff" }
                     }
                     value={this.props.store.create_disp.Number}
                     onChange={(e) => this.props.SetNumber(e.target.value)}
@@ -1252,7 +1212,7 @@ class Screen extends React.Component {
               <div className="disp_data_el">
                 <Select
                   disabled={
-                    this.props.store.create_disp.PayType.value ==
+                    this.props.store.create_disp.PayType.value ===
                     "БезналичнаяОплатаПолучателем"
                   }
                   options={this.props.store.create_disp.RecTerminalList}
@@ -1386,7 +1346,6 @@ class Screen extends React.Component {
                       <Table.HeaderCell>Итоговый вес</Table.HeaderCell>
                       <Table.HeaderCell>Итог. об. вес</Table.HeaderCell>
                       <Table.HeaderCell>Тип груза</Table.HeaderCell>
-                      {/* <Table.HeaderCell colSpan='2'>Комментарий</Table.HeaderCell> */}
                     </Table.Row>
                   </Table.Header>
                   <Table.Body>
@@ -1468,17 +1427,6 @@ class Screen extends React.Component {
                             }
                           />
                         </Table.Cell>
-                        {/* <Table.Cell>
-                          <input
-                            className="create_disp_td_input"
-                            onKeyDown={(e) => this.handleKeyPress(e)}
-                            onChange={(e) =>
-                              this.SetCargoComment(e.target.value, index)
-                            }
-                            value={Cargo.Comment}
-                            type="text"
-                          />
-                        </Table.Cell> */}
                         {this.props.store.create_disp.Cargo.length ===
                         1 ? null : (
                           <Table.Cell collapsing>
@@ -1704,9 +1652,6 @@ class Screen extends React.Component {
             </div>
           )}
 
-          {/* <div className="disp_cargo_table_data">
-                  <input value={this.props.store.create_disp.Price} />
-                </div> */}
           <div className="disp_cargo_table_data">
             <button
               onClick={this.CalcPrice.bind(this, total_weight, total_volume)}
@@ -1768,39 +1713,7 @@ class Screen extends React.Component {
                 </Modal.Actions>,
               ]}
         </Modal>
-        {/* {this.props.store.disp.action === "deliver"  && this.props.store.disp.data.Type === "Доставка" ? (<div>
-                <div className="pod_header">Внести данные о доставке:</div>
-                <div className="pod_data">
-                    <div className="disp_data_label">Дата доставки</div>
-                    <div className="disp_data_input"><input id="date" className="pod_input" type="date"></input></div>
-                    <div className="disp_data_label">Время доставки</div>
-                    <div className="disp_data_input"><input id="time" className="pod_input" type="time"></input></div>
-                    <div className="disp_data_label">ФИО получателя</div>
-                    <div className="disp_data_input"><input id="recient" className="pod_input" type="text"></input></div>
-                    <div className="disp_data_label">Принятая сумма наличных</div>
-                    <div className="disp_data_input"><input id="summ" className="pod_input" type="number"></input></div>
-                    <div className="disp_data_label">Комментарий</div>
-                    <div className="disp_data_input"><input id="comment" className="pod_input" type="text"></input></div>
-                </div>
-                <button onClick={this.sendpod.bind(this)} className="send_pod">Отметить доставленным и закрыть</button>
-                </div>):(null)} */}
-
-        {/* {this.props.store.disp.action === "reciept" ? (<div> */}
-        {/* <div className="pod_header">Принять накладную на склад:</div> */}
-        {/* <div className="pod_data">
-                    <div className="disp_data_label">Дата доставки</div>
-                    <div className="disp_data_input"><input id="date" className="pod_input" type="date"></input></div>
-                    <div className="disp_data_label">Время доставки</div>
-                    <div className="disp_data_input"><input id="time" className="pod_input" type="time"></input></div>
-                    <div className="disp_data_label">ФИО получателя</div>
-                    <div className="disp_data_input"><input id="recient" className="pod_input" type="text"></input></div>
-                    <div className="disp_data_label">Принятая сумма наличных</div>
-                    <div className="disp_data_input"><input id="summ" className="pod_input" type="number"></input></div>
-                    <div className="disp_data_label">Комментарий</div>
-                    <div className="disp_data_input"><input id="comment" className="pod_input" type="text"></input></div>
-                </div> */}
-        {/* <button onClick={this.reciept.bind(this)} className="send_pod">Принять на склад и закрыть</button>
-                </div>):(null)} */}
+       
       </div>
     );
   }

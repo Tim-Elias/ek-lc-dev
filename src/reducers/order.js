@@ -1,15 +1,20 @@
 const initialState = {
-
-    data: {},
-    dispatches: [],
-    nomenclature: [],
-
-}
+  data: {},
+  dispatches: [],
+  nomenclature: [],
+};
 
 export default function dispatch(state = initialState, action) {
-    switch (action.type) {
-        case 'set_order_data': return { ...state, data: action.payload.data, dispatches: action.payload.dispatches, nomenclature: action.payload.nomenclature }
+  switch (action.type) {
+    case "set_order_data":
+      return {
+        ...state,
+        data: action.payload.data,
+        dispatches: action.payload.dispatches,
+        nomenclature: action.payload.nomenclature,
+      };
 
-        default: return state
-    }
+    default:
+      return state;
+  }
 }
