@@ -1,31 +1,37 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import './create_disp.css'
-import { get_data } from './../common/common_modules'
-import Select from 'react-select'
+import React from "react";
+import { connect } from "react-redux";
+import "./create_disp.css";
+import { get_data } from "./../common/common_modules";
+import Select from "react-select";
 
 import { customStyles } from "./../common/common_style";
-import { Table, Modal, Button, Icon, Checkbox } from 'semantic-ui-react'
-import 'semantic-ui-css/semantic.min.css'
+import { Table, Modal, Button, Icon, Checkbox } from "semantic-ui-react";
+import "semantic-ui-css/semantic.min.css";
 
 const PayTypeList = [
-  {label:"Безналичная оплата", value:"БезналичнаяОплата"},
-  {label:"Оплата наличными при отправлении", value:"ОплатаНаличнымиПриОтправлении"},
-  {label:"Оплата наличными при получении", value:"ОплатаНаличнымиПриПолучении"}
-]
+  { label: "Безналичная оплата", value: "БезналичнаяОплата" },
+  {
+    label: "Оплата наличными при отправлении",
+    value: "ОплатаНаличнымиПриОтправлении",
+  },
+  {
+    label: "Оплата наличными при получении",
+    value: "ОплатаНаличнымиПриПолучении",
+  },
+];
 
 const CargoInfoTypeList = [
-  {label:"Указать итогвые значения", value: true},
-  {label:"Внести информацию о каждом грузе", value: false}
-]
+  { label: "Указать итогвые значения", value: true },
+  { label: "Внести информацию о каждом грузе", value: false },
+];
 
 const CargoTypeList = [
-  {label:"Сейф-пакет", value: "СейфПакет"},
-  {label:"Коробка", value: "Коробка"},
-  {label:"Контейнер", value: "Контейнер"},
-  {label:"Мешок под пломбой", value: "МешокПодПломбой"},
-  {label:"Прочее", value: "Прочее"}
-]
+  { label: "Сейф-пакет", value: "СейфПакет" },
+  { label: "Коробка", value: "Коробка" },
+  { label: "Контейнер", value: "Контейнер" },
+  { label: "Мешок под пломбой", value: "МешокПодПломбой" },
+  { label: "Прочее", value: "Прочее" },
+];
 
 // const today = new Date();
 // let mm = today.getMonth() + 1;
@@ -40,231 +46,236 @@ const CargoTypeList = [
 // const hours = today.getUTCHours() + 7;
 
 class Screen extends React.Component {
+  CalcPrice = (total_weight, total_volume) => {
+    let weight;
+    let volume;
 
-CalcPrice = (total_weight, total_volume) => {
-  
-  let weight;
-  let volume;
-
-  if(this.props.store.create_disp.CargoInfoType.value) {
-    weight = this.props.store.create_disp.Weight;
-    volume = this.props.store.create_disp.Volume;
-  } else {
-    weight = total_weight;
-    volume = total_volume;
-  }
-  
-  const create_disp_data = {
-    userkey: this.props.store.login.userkey, 
-    SendCity: this.props.store.create_disp.SendCity, 
-    SendTerminal: this.props.store.create_disp.SendTerminal, 
-    RecCity: this.props.store.create_disp.RecCity, 
-    RecTerminal: this.props.store.create_disp.RecTerminal, 
-    Volume: volume, 
-    Weight: weight, 
-  }
-
-  get_data('customercalc', create_disp_data).then(
-    (result) => {
-      let sum = this.props.store.create_disp.Termo ? result * 1.3 : result;
-      this.props.SetPrice(this.props.store.create_disp.Fragile ? sum += result * 0.5 : sum);
-    },
-    (err) => {
-      console.log(err);
-      this.props.set_last_window("create_disp");
-      this.props.set_active_window("");
-
-      this.props.modules.set_modal_show(true);
-      this.props.modules.set_modal_header('Ошибка');
-      this.props.modules.set_modal_text(err);
+    if (this.props.store.create_disp.CargoInfoType.value) {
+      weight = this.props.store.create_disp.Weight;
+      volume = this.props.store.create_disp.Volume;
+    } else {
+      weight = total_weight;
+      volume = total_volume;
     }
-  );
-}
 
-TotalQ = () => {
-  return 1
-  // this.props.store.create_disp.Cargo.reduce((accumulator,currentValue)=>
-  //                   {
-  //                     return accumulator + [currentValue.Q]
-  //                   })
-}
+    const create_disp_data = {
+      userkey: this.props.store.login.userkey,
+      SendCity: this.props.store.create_disp.SendCity,
+      SendTerminal: this.props.store.create_disp.SendTerminal,
+      RecCity: this.props.store.create_disp.RecCity,
+      RecTerminal: this.props.store.create_disp.RecTerminal,
+      Volume: volume,
+      Weight: weight,
+    };
 
-AddCargo = () => {
-  this.props.AddCargo()
-}
+    get_data("customercalc", create_disp_data).then(
+      (result) => {
+        let sum = this.props.store.create_disp.Termo ? result * 1.3 : result;
+        this.props.SetPrice(
+          this.props.store.create_disp.Fragile ? (sum += result * 0.5) : sum
+        );
+      },
+      (err) => {
+        console.log(err);
+        this.props.set_last_window("create_disp");
+        this.props.set_active_window("");
 
-RemoveCargo = (index) => {
-  this.props.RemoveCargo(index)
-}
+        this.props.modules.set_modal_show(true);
+        this.props.modules.set_modal_header("Ошибка");
+        this.props.modules.set_modal_text(err);
+      }
+    );
+  };
 
-  SetCargoWeight = (value,index) =>{
+  TotalQ = () => {
+    return 1;
+    // this.props.store.create_disp.Cargo.reduce((accumulator,currentValue)=>
+    //                   {
+    //                     return accumulator + [currentValue.Q]
+    //                   })
+  };
+
+  AddCargo = () => {
+    this.props.AddCargo();
+  };
+
+  RemoveCargo = (index) => {
+    this.props.RemoveCargo(index);
+  };
+
+  SetCargoWeight = (value, index) => {
     const data = {
       value: value,
-      index: index
-    }
-    this.props.SetCargoWeight(data)
-  }
+      index: index,
+    };
+    this.props.SetCargoWeight(data);
+  };
 
-  SetCargoW = (value,index) =>{
+  SetCargoW = (value, index) => {
     const data = {
       value: value,
-      index: index
-    }
-    this.props.SetCargoW(data)
-  }
+      index: index,
+    };
+    this.props.SetCargoW(data);
+  };
 
-  SetCargoL = (value,index) =>{
+  SetCargoL = (value, index) => {
     const data = {
       value: value,
-      index: index
-    }
-    this.props.SetCargoL(data)
-  }
+      index: index,
+    };
+    this.props.SetCargoL(data);
+  };
 
-  SetCargoH = (value,index) =>{
+  SetCargoH = (value, index) => {
     const data = {
       value: value,
-      index: index
-    }
-    this.props.SetCargoH(data)
-  }
+      index: index,
+    };
+    this.props.SetCargoH(data);
+  };
 
-  SetCargoQ = (value,index) =>{
+  SetCargoQ = (value, index) => {
     const data = {
       value: value,
-      index: index
-    }
-    this.props.SetCargoQ(data)
-  }
+      index: index,
+    };
+    this.props.SetCargoQ(data);
+  };
 
-  SetCargoComment = (value,index) =>{
+  SetCargoComment = (value, index) => {
     const data = {
       value: value,
-      index: index
-    }
-    this.props.SetCargoComment(data)
-  }
+      index: index,
+    };
+    this.props.SetCargoComment(data);
+  };
 
-  SetCargoType = (value,index) =>{
+  SetCargoType = (value, index) => {
     const data = {
       value: value,
-      index: index
+      index: index,
+    };
+    this.props.SetCargoType(data);
+  };
+
+  handleKeyPress = (e) => {
+    if (e.keyCode === 13) {
+      e.target.blur();
     }
-    this.props.SetCargoType(data)
-  }
+  };
 
-  handleKeyPress = (e) =>{
-    if(e.keyCode === 13){
-      e.target.blur(); 
-    }
-  }
+  SelectSendCity = (value) => {
+    this.props.SetSelectedSendCity(value);
 
-  SelectSendCity = (value) =>{
+    const city = value.label;
+    this.props.SetSendCity(city);
 
-  this.props.SetSelectedSendCity(value)
+    get_data("terminallist", {
+      city: city,
+      userkey: this.props.store.login.userkey,
+    }).then(
+      (result) => {
+        this.props.SetSendTerminalList(result);
+        if (result.length === 0) {
+          this.SetSendTerminal(false);
+        }
+      },
+      (err) => {
+        console.log("err", err);
+        this.props.set_last_window("create_disp");
+        this.props.set_active_window("");
 
-    const city = value.label
-    this.props.SetSendCity(city) 
-    
-    get_data('terminallist', { city: city, userkey: this.props.store.login.userkey }).then(
-          (result) => {
-            
-            this.props.SetSendTerminalList(result)
-            if (result.length === 0) {
-              this.SetSendTerminal(false)
-            }
-            
-          },
-          (err) => { 
-            console.log("err", err)  
-            this.props.set_last_window("create_disp");
-            this.props.set_active_window("");
-
-            this.props.modules.set_modal_show(true)
-            this.props.modules.set_modal_header('Ошибка')
-            this.props.modules.set_modal_text(err)
-          }
-      );
-  }
+        this.props.modules.set_modal_show(true);
+        this.props.modules.set_modal_header("Ошибка");
+        this.props.modules.set_modal_text(err);
+      }
+    );
+  };
 
   SelectRecCity = (value) => {
-    this.props.SetSelectedRecCity(value)
-    
-    const city = value.label
-    this.props.SetRecCity(city)
+    this.props.SetSelectedRecCity(value);
 
-    get_data('terminallist', { city: city, userkey: this.props.store.login.userkey }).then(
-          (result) => {
-            this.props.SetRecTerminalList(result)
-            if (result.length === 0) {
-              this.SetRecTerminal(false)
-            }
-          },
-          (err) => { 
-            console.log("err", err)  
-            this.props.set_last_window("create_disp");
-            this.props.set_active_window("");
+    const city = value.label;
+    this.props.SetRecCity(city);
 
-            this.props.modules.set_modal_show(true)
-            this.props.modules.set_modal_header('Ошибка')
-            this.props.modules.set_modal_text(err)
-          }
-      );
-  }
+    get_data("terminallist", {
+      city: city,
+      userkey: this.props.store.login.userkey,
+    }).then(
+      (result) => {
+        this.props.SetRecTerminalList(result);
+        if (result.length === 0) {
+          this.SetRecTerminal(false);
+        }
+      },
+      (err) => {
+        console.log("err", err);
+        this.props.set_last_window("create_disp");
+        this.props.set_active_window("");
+
+        this.props.modules.set_modal_show(true);
+        this.props.modules.set_modal_header("Ошибка");
+        this.props.modules.set_modal_text(err);
+      }
+    );
+  };
 
   SetSendTerminal = (param) => {
-    let DelMethod
-  
-    if (this.props.store.create_disp.RecTerminal){
-      if(param){
-         DelMethod = "Склад - Склад"
+    let DelMethod;
+
+    if (this.props.store.create_disp.RecTerminal) {
+      if (param) {
+        DelMethod = "Склад - Склад";
       } else {
-         DelMethod = "Дверь - Склад"
+        DelMethod = "Дверь - Склад";
       }
     } else {
-      if(param){
-         DelMethod = "Склад - Дверь"
+      if (param) {
+        DelMethod = "Склад - Дверь";
       } else {
-         DelMethod = "Дверь - Дверь"
+        DelMethod = "Дверь - Дверь";
       }
     }
 
     const data = {
       SendTerminal: param,
-      DelMethod: DelMethod
-    }
+      DelMethod: DelMethod,
+    };
 
-    this.props.SetSendTerminal(data)
-    
-  }
+    this.props.SetSendTerminal(data);
+  };
 
   SetRecTerminal = (param, force) => {
-    if (this.props.store.create_disp.PayType.value === "БезналичнаяОплатаПолучателем" && (force !== true) ) {
-
-      return false
+    if (
+      this.props.store.create_disp.PayType.value ===
+        "БезналичнаяОплатаПолучателем" &&
+      force !== true
+    ) {
+      return false;
     }
 
-    let DelMethod
-    if (param){
-      if(this.props.store.create_disp.SendTerminal){
-         DelMethod = "Склад - Склад"
+    let DelMethod;
+    if (param) {
+      if (this.props.store.create_disp.SendTerminal) {
+        DelMethod = "Склад - Склад";
       } else {
-         DelMethod = "Дверь - Склад"
+        DelMethod = "Дверь - Склад";
       }
     } else {
-      if(this.props.store.create_disp.SendTerminal){
-         DelMethod = "Склад - Дверь"
+      if (this.props.store.create_disp.SendTerminal) {
+        DelMethod = "Склад - Дверь";
       } else {
-         DelMethod = "Дверь - Дверь"
+        DelMethod = "Дверь - Дверь";
       }
     }
 
     const data = {
       RecTerminal: param,
-      DelMethod: DelMethod
-    }
-    this.props.SetRecTerminal(data)
-  }
+      DelMethod: DelMethod,
+    };
+    this.props.SetRecTerminal(data);
+  };
 
   dataСhecking = () => {
     const currentToday = new Date();
@@ -273,12 +284,16 @@ RemoveCargo = (index) => {
 
     const y = currentToday.getFullYear();
 
-    if (mm < 10) { mm = '0' + mm }
-    if (dd < 10) { dd = '0' + dd }
+    if (mm < 10) {
+      mm = "0" + mm;
+    }
+    if (dd < 10) {
+      dd = "0" + dd;
+    }
 
-    const currentDate = y + '-' + mm + '-' + dd;
+    const currentDate = y + "-" + mm + "-" + dd;
     const currentHours = currentToday.getUTCHours() + 7;
-    
+
     this.props.SetCurrentDate(currentDate);
     this.props.SetCurrentTime(currentHours);
     if (this.props.store.create_disp.DispDate < currentDate) {
@@ -292,7 +307,10 @@ RemoveCargo = (index) => {
       //   this.props.SetWarningMessage("Заявку на текущий день возможно разместить только до 14:00, укажите более позднюю дату заявки");
       //   this.props.SetTimeError(true);
       //   this.props.SetWarningAlert(true);
-      if (this.props.store.create_disp.SendAdress.length < 2 && this.props.store.create_disp.SendTerminal === false) {
+      if (
+        this.props.store.create_disp.SendAdress.length < 2 &&
+        this.props.store.create_disp.SendTerminal === false
+      ) {
         this.props.SetWarningMessage("адрес отправителя!");
         this.props.SetWarningAlert(true);
       } else if (this.props.store.create_disp.SendPhone.length < 6) {
@@ -301,7 +319,10 @@ RemoveCargo = (index) => {
       } else if (this.props.store.create_disp.SendPerson.length < 2) {
         this.props.SetWarningMessage("контактное лицо отправителя!");
         this.props.SetWarningAlert(true);
-      } else if (this.props.store.create_disp.RecAdress.length < 2 && this.props.store.create_disp.RecTerminal === false) {
+      } else if (
+        this.props.store.create_disp.RecAdress.length < 2 &&
+        this.props.store.create_disp.RecTerminal === false
+      ) {
         this.props.SetWarningMessage("адрес получателя!");
         this.props.SetWarningAlert(true);
       } else if (this.props.store.create_disp.RecPhone.length < 6) {
@@ -318,7 +339,10 @@ RemoveCargo = (index) => {
       //   this.props.SetWarningMessage("Заявку на текущий день возможно разместить только до 14:00, укажите более позднюю дату заявки");
       //   this.props.SetTimeError(true);
       //   this.props.SetWarningAlert(true);
-      if (this.props.store.create_disp.RecAdress.length < 2 && this.props.store.create_disp.RecTerminal === false) {
+      if (
+        this.props.store.create_disp.RecAdress.length < 2 &&
+        this.props.store.create_disp.RecTerminal === false
+      ) {
         this.props.SetWarningMessage("адрес получателя!");
         this.props.SetWarningAlert(true);
       } else if (this.props.store.create_disp.RecPhone.length < 6) {
@@ -331,12 +355,14 @@ RemoveCargo = (index) => {
         this.sent_disp();
       }
     }
-  }
+  };
 
   sent_disp = () => {
-
     let dateClaim;
-    if (this.props.store.create_disp.DelMethod === 'Дверь - Дверь' || this.props.store.create_disp.DelMethod === 'Дверь - Склад') {
+    if (
+      this.props.store.create_disp.DelMethod === "Дверь - Дверь" ||
+      this.props.store.create_disp.DelMethod === "Дверь - Склад"
+    ) {
       dateClaim = this.props.store.create_disp.DispDate;
     } else {
       const today = new Date();
@@ -345,184 +371,202 @@ RemoveCargo = (index) => {
 
       const y = today.getFullYear();
 
-      if (mm < 10) { mm = '0' + mm }
-      if (dd < 10) { dd = '0' + dd }
+      if (mm < 10) {
+        mm = "0" + mm;
+      }
+      if (dd < 10) {
+        dd = "0" + dd;
+      }
 
-      const dateDisp = y + '-' + mm + '-' + dd;
+      const dateDisp = y + "-" + mm + "-" + dd;
       dateClaim = dateDisp;
     }
-    let SendAddInfo = ""
-    if (this.props.store.create_disp.Fragile && this.props.store.create_disp.SendAddInfo.toLowerCase().indexOf("хрупкий груз",0) === -1) {
-      SendAddInfo = "Хрупкий груз " + this.props.store.create_disp.SendAddInfo
+    let SendAddInfo = "";
+    if (
+      this.props.store.create_disp.Fragile &&
+      this.props.store.create_disp.SendAddInfo.toLowerCase().indexOf(
+        "хрупкий груз",
+        0
+      ) === -1
+    ) {
+      SendAddInfo = "Хрупкий груз " + this.props.store.create_disp.SendAddInfo;
     } else {
-      SendAddInfo = this.props.store.create_disp.SendAddInfo
+      SendAddInfo = this.props.store.create_disp.SendAddInfo;
     }
 
     const create_disp_data = {
-      userkey: this.props.store.login.userkey, 
+      userkey: this.props.store.login.userkey,
       Number: this.props.store.create_disp.Number,
       isNew: this.props.store.create_disp.isNew,
       PayType: this.props.store.create_disp.PayType.value,
       DispDate: dateClaim,
       DelType: this.props.store.create_disp.DelType,
 
-      SendCity: this.props.store.create_disp.SendCity, 
+      SendCity: this.props.store.create_disp.SendCity,
       SendAdress: this.props.store.create_disp.SendAdress,
       SendCompany: this.props.store.create_disp.SendCompany,
       SendPhone: this.props.store.create_disp.SendPhone,
       SendPerson: this.props.store.create_disp.SendPerson,
       SendAddInfo: SendAddInfo,
       SendEmail: this.props.store.create_disp.SendEmail,
-      SendTerminal: this.props.store.create_disp.SendTerminal, 
+      SendTerminal: this.props.store.create_disp.SendTerminal,
       SendSelectTerminal: this.props.store.create_disp.SendSelectTerminal.value,
       SendEmailInformer: this.props.store.create_disp.SendEmailInformer,
 
-      RecCity: this.props.store.create_disp.RecCity, 
+      RecCity: this.props.store.create_disp.RecCity,
       RecAdress: this.props.store.create_disp.RecAdress,
       RecCompany: this.props.store.create_disp.RecCompany,
       RecPhone: this.props.store.create_disp.RecPhone,
       RecPerson: this.props.store.create_disp.RecPerson,
       RecAddInfo: this.props.store.create_disp.RecAddInfo,
       RecEmail: this.props.store.create_disp.RecEmail,
-      RecTerminal: this.props.store.create_disp.RecTerminal, 
+      RecTerminal: this.props.store.create_disp.RecTerminal,
       RecSelectTerminal: this.props.store.create_disp.RecSelectTerminal.value,
       RecEmailInformer: this.props.store.create_disp.RecEmailInformer,
 
       Cargo: this.props.store.create_disp.Cargo,
       Total: this.props.store.create_disp.Total,
-      Volume: this.props.store.create_disp.Volume, 
-      Weight: this.props.store.create_disp.Weight, 
+      Volume: this.props.store.create_disp.Volume,
+      Weight: this.props.store.create_disp.Weight,
 
       InsureValue: this.props.store.create_disp.InsureValue,
       COD: this.props.store.create_disp.COD,
       CargoInfoType: this.props.store.create_disp.CargoInfoType.value,
       Fragile: this.props.store.create_disp.Fragile,
-      TMax: this.props.store.create_disp.Termo ? +this.props.store.create_disp.TMax : 0,
-      TMin: this.props.store.create_disp.Termo ? +this.props.store.create_disp.TMin : 0,
+      TMax: this.props.store.create_disp.Termo
+        ? +this.props.store.create_disp.TMax
+        : 0,
+      TMin: this.props.store.create_disp.Termo
+        ? +this.props.store.create_disp.TMin
+        : 0,
       Customer: this.props.store.create_disp.PayerSelect.value,
-    }
+    };
 
-      this.props.set_active_window("wait");
-      
-          get_data('createcustomerdisp', create_disp_data).then(
-            (result) => {
+    this.props.set_active_window("wait");
 
-              const data = {
-                userkey: this.props.store.login.userkey,
-                status: "Накладная",
-                num: result.Number
-              };
+    get_data("createcustomerdisp", create_disp_data).then(
+      (result) => {
+        const data = {
+          userkey: this.props.store.login.userkey,
+          status: "Накладная",
+          num: result.Number,
+        };
 
-              get_data('dispatch', data).then(
-                (result) => {
-                  this.props.set_data_disp(result);
-                  this.props.set_active_window("disp");
-                  this.props.set_last_window("create_disp");
-                },
-                (err) => {
-                  console.log(err);
-                  this.props.set_last_window("create_disp");
-                  this.props.set_active_window("");
+        get_data("dispatch", data).then(
+          (result) => {
+            this.props.set_data_disp(result);
+            this.props.set_active_window("disp");
+            this.props.set_last_window("create_disp");
+          },
+          (err) => {
+            console.log(err);
+            this.props.set_last_window("create_disp");
+            this.props.set_active_window("");
 
-                  this.props.modules.set_modal_show(true)
-                  this.props.modules.set_modal_header('Ошибка')
-                  this.props.modules.set_modal_text(err)
-                }
-              );
-            },
-            (err) => {
-              console.log(err);
-              this.props.set_last_window("create_disp");
-              this.props.set_active_window("");
+            this.props.modules.set_modal_show(true);
+            this.props.modules.set_modal_header("Ошибка");
+            this.props.modules.set_modal_text(err);
+          }
+        );
+      },
+      (err) => {
+        console.log(err);
+        this.props.set_last_window("create_disp");
+        this.props.set_active_window("");
 
-              this.props.modules.set_modal_show(true)
-              this.props.modules.set_modal_header('Ошибка')
-              this.props.modules.set_modal_text(err)
-            }
-          );
-  }
+        this.props.modules.set_modal_show(true);
+        this.props.modules.set_modal_header("Ошибка");
+        this.props.modules.set_modal_text(err);
+      }
+    );
+  };
 
   SelectSendTemplate = (value) => {
-    if(value!==null){
-      const city = this.props.store.create_disp.CityList.filter((el)=>el.value === value.City)[0]
-    
-      this.SelectSendCity(city)
-      this.props.SetSendAdress(value.Adress)
-      this.props.SetSendAdress(value.Adress)
-      this.props.SetSendPhone(value.Phone)
-      this.props.SetSendPerson(value.Person)
-      this.props.SetSendCompany(value.Company)
-      this.props.SetSendAddInfo(value.AddInfo)
+    if (value !== null) {
+      const city = this.props.store.create_disp.CityList.filter(
+        (el) => el.value === value.City
+      )[0];
 
-      this.SetSendTerminal(value.Terminal)
-      
+      this.SelectSendCity(city);
+      this.props.SetSendAdress(value.Adress);
+      this.props.SetSendAdress(value.Adress);
+      this.props.SetSendPhone(value.Phone);
+      this.props.SetSendPerson(value.Person);
+      this.props.SetSendCompany(value.Company);
+      this.props.SetSendAddInfo(value.AddInfo);
+
+      this.SetSendTerminal(value.Terminal);
     }
-    this.props.SetOpenModalSendTemplate(false)
-  }
+    this.props.SetOpenModalSendTemplate(false);
+  };
 
   SelectRecTemplate = (value) => {
-    if (value !== null && value !== undefined){
-      const city = this.props.store.create_disp.CityList.filter((el) => el.value === value.City)[0];
+    if (value !== null && value !== undefined) {
+      const city = this.props.store.create_disp.CityList.filter(
+        (el) => el.value === value.City
+      )[0];
 
-      this.SelectRecCity(city)
-      this.props.SetRecAdress(value.Adress)
-      this.props.SetRecAdress(value.Adress)
-      this.props.SetRecPhone(value.Phone)
-      this.props.SetRecPerson(value.Person)
-      this.props.SetRecCompany(value.Company)
-      this.props.SetRecAddInfo(value.AddInfo)
+      this.SelectRecCity(city);
+      this.props.SetRecAdress(value.Adress);
+      this.props.SetRecAdress(value.Adress);
+      this.props.SetRecPhone(value.Phone);
+      this.props.SetRecPerson(value.Person);
+      this.props.SetRecCompany(value.Company);
+      this.props.SetRecAddInfo(value.AddInfo);
 
-      this.SetRecTerminal(value.Terminal, true)
-      
+      this.SetRecTerminal(value.Terminal, true);
     }
-    this.props.SetOpenModalRecTemplate(false)
-  }
+    this.props.SetOpenModalRecTemplate(false);
+  };
 
-OpenSendTemplateModal = () => {
-  this.props.SetOpenModalSendTemplate(true)
-}
+  OpenSendTemplateModal = () => {
+    this.props.SetOpenModalSendTemplate(true);
+  };
 
-OpenRecTemplateModal = () => {
-  this.props.SetOpenModalRecTemplate(true)
-}
+  OpenRecTemplateModal = () => {
+    this.props.SetOpenModalRecTemplate(true);
+  };
 
-SetTotal = (value) =>{
-  this.props.SetTotal(value)
-  if (this.props.store.login.Q_only){
-    const Weight = value * parseInt(this.props.store.login.default_cargo)
-    this.props.SetWeight(Weight)
-    this.props.SetVolume(Weight)
-  }
-}
+  SetTotal = (value) => {
+    this.props.SetTotal(value);
+    if (this.props.store.login.Q_only) {
+      const Weight = value * parseInt(this.props.store.login.default_cargo);
+      this.props.SetWeight(Weight);
+      this.props.SetVolume(Weight);
+    }
+  };
 
   PayerSelect = (value) => {
-
     this.props.SetPayerSelect(value);
-    let template = this.props.store.upload_manifest.disp_template_list.filter((e) => e.Key == value.template)
+    let template = this.props.store.upload_manifest.disp_template_list.filter(
+      (e) => e.Key == value.template
+    );
 
     this.SelectRecTemplate(template[0]);
-  }
+  };
 
   PayType = (values) => {
-    if(values.value === "БезналичнаяОплатаПолучателем") {
+    if (values.value === "БезналичнаяОплатаПолучателем") {
       this.props.SetPayerSelect({});
       this.props.SetSelectedRecCity(null);
-      this.props.SetRecCity('');
-      this.props.SetRecAdress('');
-      this.props.SetRecAdress('');
-      this.props.SetRecPhone('');
-      this.props.SetRecPerson('');
-      this.props.SetRecCompany('');
-      this.props.SetRecAddInfo('');
+      this.props.SetRecCity("");
+      this.props.SetRecAdress("");
+      this.props.SetRecAdress("");
+      this.props.SetRecPhone("");
+      this.props.SetRecPerson("");
+      this.props.SetRecCompany("");
+      this.props.SetRecAddInfo("");
       this.SetRecTerminal(false, true);
       this.props.SetRecTerminalList([]);
     }
 
     this.props.SetPayType(values);
-  }
+  };
 
   componentDidMount() {
-    get_data('disptemplatelist', { userkey: this.props.store.login.userkey }).then(
+    get_data("disptemplatelist", {
+      userkey: this.props.store.login.userkey,
+    }).then(
       (result) => {
         const today = new Date();
         let mm = today.getMonth() + 1;
@@ -530,10 +574,14 @@ SetTotal = (value) =>{
 
         const y = today.getFullYear();
 
-        if (mm < 10) { mm = '0' + mm }
-        if (dd < 10) { dd = '0' + dd }
+        if (mm < 10) {
+          mm = "0" + mm;
+        }
+        if (dd < 10) {
+          dd = "0" + dd;
+        }
 
-        const date = y + '-' + mm + '-' + dd;
+        const date = y + "-" + mm + "-" + dd;
         const hours = today.getUTCHours() + 7;
 
         this.props.set_disp_template_list(result);
@@ -548,13 +596,13 @@ SetTotal = (value) =>{
         this.props.SetDelType({ label: "Стандарт", value: "Стандарт" });
       },
       (err) => {
-        console.log(err) 
+        console.log(err);
         this.props.set_last_window("create_disp");
         this.props.set_active_window("");
 
-        this.props.modules.set_modal_show(true)
-        this.props.modules.set_modal_header('Ошибка')
-        this.props.modules.set_modal_text(err)
+        this.props.modules.set_modal_show(true);
+        this.props.modules.set_modal_header("Ошибка");
+        this.props.modules.set_modal_text(err);
       }
     );
   }
@@ -569,7 +617,7 @@ SetTotal = (value) =>{
       this.props.SetCyrillic(true);
     } else {
       this.props.SetCyrillic(false);
-      get_data('history', { Number: this.props.store.create_disp.Number }).then(
+      get_data("history", { Number: this.props.store.create_disp.Number }).then(
         (result) => {
           this.props.SetAvailableNumber(false);
           this.props.SetCustomNumberLoader(false);
@@ -578,544 +626,1149 @@ SetTotal = (value) =>{
           if (err === "disp not found") {
             this.props.SetAvailableNumber(true);
           } else {
-            console.log(err)
-            this.props.modules.set_modal_show(true)
-            this.props.modules.set_modal_header('Ошибка')
-            this.props.modules.set_modal_text(err)
+            console.log(err);
+            this.props.modules.set_modal_show(true);
+            this.props.modules.set_modal_header("Ошибка");
+            this.props.modules.set_modal_text(err);
           }
           this.props.SetCustomNumberLoader(false);
         }
       );
     }
-  }
+  };
 
   render() {
-    const Q_only = this.props.store.login.Q_only
-    document.onkeydown = function (event) {}
+    const Q_only = this.props.store.login.Q_only;
+    document.onkeydown = function (event) {};
 
-    let disabled = false
-    let total_weight = Math.ceil(this.props.store.create_disp.Cargo.reduce((accumulator, Cargo) => accumulator + Math.ceil(Cargo.Weight * Cargo.Q*1000)/1000, 0)*1000)/1000
-    let total_volume = Math.ceil(this.props.store.create_disp.Cargo.reduce((accumulator, Cargo) => accumulator + Math.ceil(Cargo.L * Cargo.W * Cargo.H * Cargo.Q / 5) / 1000, 0) * 1000) / 1000
+    let disabled = false;
+    let total_weight =
+      Math.ceil(
+        this.props.store.create_disp.Cargo.reduce(
+          (accumulator, Cargo) =>
+            accumulator + Math.ceil(Cargo.Weight * Cargo.Q * 1000) / 1000,
+          0
+        ) * 1000
+      ) / 1000;
+    let total_volume =
+      Math.ceil(
+        this.props.store.create_disp.Cargo.reduce(
+          (accumulator, Cargo) =>
+            accumulator +
+            Math.ceil((Cargo.L * Cargo.W * Cargo.H * Cargo.Q) / 5) / 1000,
+          0
+        ) * 1000
+      ) / 1000;
 
-    if(this.props.store.create_disp.SelectedSendCity===null 
-      || this.props.store.create_disp.SelectedRecCity===null 
-      || (this.props.store.create_disp.Total==0 && this.props.store.create_disp.CargoInfoType.value)
-      || (this.props.store.create_disp.Weight==0 && this.props.store.create_disp.CargoInfoType.value)
-      || (total_weight==0 && ! this.props.store.create_disp.CargoInfoType.value)
-      || (this.props.store.create_disp.customNumber === true ? (this.props.store.create_disp.availableNumber === true) : (true)) === false
-      || this.props.store.create_disp.cyrillic === true
-      ){
-      disabled = true
-    }    
+    if (
+      this.props.store.create_disp.SelectedSendCity === null ||
+      this.props.store.create_disp.SelectedRecCity === null ||
+      (this.props.store.create_disp.Total == 0 &&
+        this.props.store.create_disp.CargoInfoType.value) ||
+      (this.props.store.create_disp.Weight == 0 &&
+        this.props.store.create_disp.CargoInfoType.value) ||
+      (total_weight == 0 &&
+        !this.props.store.create_disp.CargoInfoType.value) ||
+      (this.props.store.create_disp.customNumber === true
+        ? this.props.store.create_disp.availableNumber === true
+        : true) === false ||
+      this.props.store.create_disp.cyrillic === true
+    ) {
+      disabled = true;
+    }
 
     return (
-      
       <div>
-                <div className="disp_Number">
-                  <Button compact icon onClick={this.props.modules.back}>
-                    <Icon name='arrow left' />
-                  </Button>
-                {/* {this.props.store.create_disp.Number === 0 ? (<b>Создание новой накладной</b>):(<b>Редактирование накладной {this.props.store.create_disp.Number}</b>)} */}
-                {this.props.store.create_disp.isNew ? (<b>Создание новой накладной</b>) : (<b>Редактирование накладной {this.props.store.create_disp.Number}</b>)}
+        <div className="disp_Number">
+          <Button compact icon onClick={this.props.modules.back}>
+            <Icon name="arrow left" />
+          </Button>
+          {/* {this.props.store.create_disp.Number === 0 ? (<b>Создание новой накладной</b>):(<b>Редактирование накладной {this.props.store.create_disp.Number}</b>)} */}
+          {this.props.store.create_disp.isNew ? (
+            <b>Создание новой накладной</b>
+          ) : (
+            <b>
+              Редактирование накладной {this.props.store.create_disp.Number}
+            </b>
+          )}
+        </div>
+        <div className="disp_customer_data">
+          <div className="disp_data_label">Заказчик:</div>
+          <div className="disp_data_el">{this.props.store.login.alias}</div>
+          {this.props.store.create_disp.isNew ? (
+            <div className="disp_data_label">Номер накладной:</div>
+          ) : null}
+          {this.props.store.create_disp.isNew ? (
+            <div
+              style={{
+                display: "flex",
+                alignItems: "flex-end",
+                height: "23px",
+              }}
+            >
+              {this.props.store.create_disp.customNumber ? null : (
+                <button
+                  onClick={() => this.props.SetCustomNumber(true)}
+                  style={{ height: "16px", fontSize: "13px", padding: "0" }}
+                >
+                  Ввести номер
+                </button>
+              )}
+              {this.props.store.create_disp.customNumber ? (
+                <div
+                  className="disp_data_el"
+                  style={{ margin: "0 0 0 5px", width: "200px" }}
+                >
+                  <input
+                    autoFocus
+                    className="create_disp_data_input"
+                    style={
+                      this.props.store.create_disp.availableNumber === true &&
+                      this.props.store.create_disp.cyrillic === false
+                        ? { backgroundColor: "#e0ffe0" }
+                        : this.props.store.create_disp.availableNumber ===
+                            false ||
+                          this.props.store.create_disp.cyrillic === true
+                        ? { backgroundColor: "#ffe0e0" }
+                        : { backgroundColor: "#fff" }
+                    }
+                    value={this.props.store.create_disp.Number}
+                    onChange={(e) => this.props.SetNumber(e.target.value)}
+                    onBlur={() => this.checkNumber()}
+                  />
                 </div>
-                <div className="disp_customer_data">
-                    <div className="disp_data_label">Заказчик:</div>
-                    <div className="disp_data_el">{this.props.store.login.alias}</div>
-                    {this.props.store.create_disp.isNew ? (
-                      <div className="disp_data_label">Номер накладной:</div>
-                    ) : (null)}
-                    {this.props.store.create_disp.isNew ? (
-                      <div style={{ display: "flex", alignItems: "flex-end", height: "23px" }}>
-                        {this.props.store.create_disp.customNumber ? (null) : (
-                          <button onClick={() => this.props.SetCustomNumber(true)} style={{ height: "16px", fontSize: "13px", padding: "0" }}>
-                            Ввести номер
-                          </button>
-                        )}
-                        {this.props.store.create_disp.customNumber ? (
-                          <div className="disp_data_el" style={{ margin: "0 0 0 5px", width: "200px" }}>
-                            <input autoFocus className="create_disp_data_input" style={
-                            (this.props.store.create_disp.availableNumber === true && this.props.store.create_disp.cyrillic === false) ? ({ backgroundColor: "#e0ffe0" }) : (this.props.store.create_disp.availableNumber === false || this.props.store.create_disp.cyrillic === true) ? ({ backgroundColor: "#ffe0e0" }) : ({ backgroundColor: "#fff" })
-                            }
-                              value={this.props.store.create_disp.Number} onChange={(e) => this.props.SetNumber(e.target.value)} onBlur={() => this.checkNumber()} />
-                          </div>
-                        ) : (null)}
-                        {this.props.store.create_disp.customNumberLoader ? (
-                          <div className="loader_custom"></div>
-                        ) : (null)}
-                        {this.props.store.create_disp.cyrillic  === true ? (
-                        <div style={{ fontSize: "11px", margin: "0 0 0 5px" }}>В номере накладной недопустима кириллица!</div>
-                        ) : (null)}
-                        {this.props.store.create_disp.availableNumber === false ? (
-                          <div style={{fontSize: "11px", margin: "0 0 0 5px"}}>Накладная с таким номером уже существует!</div>
-                        ) : (null)}
-                      </div>
-                    ) : (null)}
-                    <div className="disp_data_label">Вид доставки:</div>
-                    <div className="disp_data_el">{this.props.store.create_disp.DelMethod}</div>
-                    {(this.props.store.create_disp.DelMethod === "Дверь - Дверь" || this.props.store.create_disp.DelMethod === "Дверь - Склад") ? (
-                      <div className="disp_data_label">Дата заявки:</div>
-                    ) : (null)}
-                    {(this.props.store.create_disp.DelMethod === "Дверь - Дверь" || this.props.store.create_disp.DelMethod === "Дверь - Склад") ? (
-                      <div className="disp_data_el">
-                        <input onChange={e =>  e.target.value < this.props.store.create_disp.currentDate ? (null) : (this.props.SetDispDate(e.target.value)) } value={this.props.store.create_disp.DispDate} className="DispDate" type="date"></input>
-                      </div>
-                    ) : (null)}
-                    <div className="disp_data_label">Тип оплаты:</div>
-                    <div className="disp_data_el ">
-                    <Select
-                      options={
-                        this.props.store.login.customers.length > 0 ? ([
-                          { label: "Безналичная оплата", value: "БезналичнаяОплата" },
-                          { label: "Оплата наличными при отправлении", value: "ОплатаНаличнымиПриОтправлении" },
-                          { label: "Оплата наличными при получении", value: "ОплатаНаличнымиПриПолучении" },
-                          { label: "Оплата получателем по договору", value: "БезналичнаяОплатаПолучателем" }
-                        ]) : 
-                        ([
-                          { label: "Безналичная оплата", value: "БезналичнаяОплата" },
-                          { label: "Оплата наличными при отправлении", value: "ОплатаНаличнымиПриОтправлении" },
-                          { label: "Оплата наличными при получении", value: "ОплатаНаличнымиПриПолучении" },
-                        ])
-                      }
-                      styles={customStyles}
-                      value={this.props.store.create_disp.PayType}
-                      onChange={(values) => this.PayType(values)}
-                    /> 
-                    </div>
-                    {this.props.store.create_disp.PayType.value === "БезналичнаяОплатаПолучателем" ? (<div className="disp_data_label">Плательщик:</div>) : (null)}
-                    {this.props.store.create_disp.PayType.value === "БезналичнаяОплатаПолучателем" ? (<div className="disp_data_el">
-                      <Select 
-                        options={
-                          this.props.store.login.customers.map((item, index) => {
-                            return{
-                              label: item.customer,
-                              value: item.customerKey,
-                              template: item.template,
-                            }
-                          })
+              ) : null}
+              {this.props.store.create_disp.customNumberLoader ? (
+                <div className="loader_custom"></div>
+              ) : null}
+              {this.props.store.create_disp.cyrillic === true ? (
+                <div style={{ fontSize: "11px", margin: "0 0 0 5px" }}>
+                  В номере накладной недопустима кириллица!
+                </div>
+              ) : null}
+              {this.props.store.create_disp.availableNumber === false ? (
+                <div style={{ fontSize: "11px", margin: "0 0 0 5px" }}>
+                  Накладная с таким номером уже существует!
+                </div>
+              ) : null}
+            </div>
+          ) : null}
+          <div className="disp_data_label">Вид доставки:</div>
+          <div className="disp_data_el">
+            {this.props.store.create_disp.DelMethod}
+          </div>
+          {this.props.store.create_disp.DelMethod === "Дверь - Дверь" ||
+          this.props.store.create_disp.DelMethod === "Дверь - Склад" ? (
+            <div className="disp_data_label">Дата заявки:</div>
+          ) : null}
+          {this.props.store.create_disp.DelMethod === "Дверь - Дверь" ||
+          this.props.store.create_disp.DelMethod === "Дверь - Склад" ? (
+            <div className="disp_data_el">
+              <input
+                onChange={(e) =>
+                  e.target.value < this.props.store.create_disp.currentDate
+                    ? null
+                    : this.props.SetDispDate(e.target.value)
+                }
+                value={this.props.store.create_disp.DispDate}
+                className="DispDate"
+                type="date"
+              ></input>
+            </div>
+          ) : null}
+          <div className="disp_data_label">Тип оплаты:</div>
+          <div className="disp_data_el ">
+            <Select
+              options={
+                this.props.store.login.customers.length > 0
+                  ? [
+                      {
+                        label: "Безналичная оплата",
+                        value: "БезналичнаяОплата",
+                      },
+                      {
+                        label: "Оплата наличными при отправлении",
+                        value: "ОплатаНаличнымиПриОтправлении",
+                      },
+                      {
+                        label: "Оплата наличными при получении",
+                        value: "ОплатаНаличнымиПриПолучении",
+                      },
+                      {
+                        label: "Оплата получателем по договору",
+                        value: "БезналичнаяОплатаПолучателем",
+                      },
+                    ]
+                  : [
+                      {
+                        label: "Безналичная оплата",
+                        value: "БезналичнаяОплата",
+                      },
+                      {
+                        label: "Оплата наличными при отправлении",
+                        value: "ОплатаНаличнымиПриОтправлении",
+                      },
+                      {
+                        label: "Оплата наличными при получении",
+                        value: "ОплатаНаличнымиПриПолучении",
+                      },
+                    ]
+              }
+              styles={customStyles}
+              value={this.props.store.create_disp.PayType}
+              onChange={(values) => this.PayType(values)}
+            />
+          </div>
+          {this.props.store.create_disp.PayType.value ===
+          "БезналичнаяОплатаПолучателем" ? (
+            <div className="disp_data_label">Плательщик:</div>
+          ) : null}
+          {this.props.store.create_disp.PayType.value ===
+          "БезналичнаяОплатаПолучателем" ? (
+            <div className="disp_data_el">
+              <Select
+                options={this.props.store.login.customers.map((item, index) => {
+                  return {
+                    label: item.customer,
+                    value: item.customerKey,
+                    template: item.template,
+                  };
+                })}
+                styles={customStyles}
+                value={this.props.store.create_disp.PayerSelect}
+                onChange={(value) => this.PayerSelect(value)}
+              />
+            </div>
+          ) : null}
+
+          {this.props.store.login.userkey === "000000187" ||
+          this.props.store.login.userkey === "000000198" ||
+          this.props.store.login.userkey === "000000035" ? (
+            <div className="disp_data_label">Срочность:</div>
+          ) : null}
+
+          {this.props.store.login.userkey === "000000187" ||
+          this.props.store.login.userkey === "000000198" ||
+          this.props.store.login.userkey === "000000035" ? (
+            <div className="disp_data_el ">
+              <Select
+                options={[
+                  { label: "Стандарт", value: "Стандарт" },
+                  { label: "Экспресс", value: "Экспресс" },
+                  { label: "СуперЭкспресс", value: "СуперЭкспресс" },
+                ]}
+                styles={customStyles}
+                value={{
+                  label: this.props.store.create_disp.DelType,
+                  value: this.props.store.create_disp.DelType,
+                }}
+                onChange={(value) => this.props.SetDelType(value)}
+              />
+            </div>
+          ) : null}
+        </div>
+
+        <div className="disp_address_data">
+          <div className="create_disp_address_data_header">
+            <div></div>
+            <div>Данные отправителя</div>
+            <div className="create_disp_template_button_container">
+              <Modal
+                trigger={
+                  <button
+                    onClick={this.OpenSendTemplateModal.bind(this)}
+                    className="create_disp_template_button"
+                  >
+                    Из шаблона
+                  </button>
+                }
+                open={this.props.store.create_disp.OpenModalSendTemplate}
+                onClose={this.SelectSendTemplate.bind(this, null)}
+              >
+                <Modal.Header>Заполнить отправителя из шаблона</Modal.Header>
+                <Modal.Content>
+                  <Modal.Description>
+                    <div className="disp_data_el">
+                      <input
+                        className="create_disp_data_input"
+                        onChange={(e) =>
+                          this.props.SetFilterModalSendTemplate(e.target.value)
                         }
-                        styles={customStyles}
-                        value={this.props.store.create_disp.PayerSelect}
-                        onChange={(value) => this.PayerSelect(value)}
+                        value={
+                          this.props.store.create_disp.FilterModalSendTemplate
+                        }
+                        type="text"
+                        placeholder="Поиск по наименованию"
                       />
-                    </div>) : (null)}
+                    </div>
 
-                    {this.props.store.login.userkey === "000000187" || this.props.store.login.userkey === "000000198" || this.props.store.login.userkey === "000000035" ? (
-                      <div className="disp_data_label">Срочность:</div>
-                    ) : (null)}
-                    
-                    {this.props.store.login.userkey === "000000187" || this.props.store.login.userkey === "000000198" || this.props.store.login.userkey === "000000035"? (
-                      <div className="disp_data_el ">
-                        <Select
-                          options={
-                            [
-                              { label: "Стандарт", value: "Стандарт" },
-                              { label: "Экспресс", value: "Экспресс" },
-                              { label: "СуперЭкспресс", value: "СуперЭкспресс" }
-                            ]
-                          }
-                          styles={customStyles}
-                          value={{ label: this.props.store.create_disp.DelType, value: this.props.store.create_disp.DelType }}
-                          onChange={(value) => this.props.SetDelType(value)}
-                        />
-                      </div>
-                    ) : (null)}
-                    
-                </div>
-
-                <div className="disp_address_data">
-                    <div className="create_disp_address_data_header">
-                        <div></div>
-                        <div>Данные отправителя</div>
-                        <div className='create_disp_template_button_container'>
-                        <Modal 
-                        trigger={<button onClick={this.OpenSendTemplateModal.bind(this)} className='create_disp_template_button'>Из шаблона</button>}
-                        open={this.props.store.create_disp.OpenModalSendTemplate}
-                        onClose={this.SelectSendTemplate.bind(this,null)}
-                        >
-                          <Modal.Header>Заполнить отправителя из шаблона</Modal.Header>
-                          <Modal.Content>
-                          
-                          <Modal.Description>
-                          <div className="disp_data_el"><input className="create_disp_data_input"  onChange={e => this.props.SetFilterModalSendTemplate(e.target.value)} value={this.props.store.create_disp.FilterModalSendTemplate} type="text" placeholder="Поиск по наименованию" /></div>
-                          
-                          <div >
-                          <Table celled compact='very'>
-                          <Table.Header className = "create_disp_template_list_th">
-                            <Table.Row>
-                              <Table.HeaderCell>Имя</Table.HeaderCell>
-                              <Table.HeaderCell>Город</Table.HeaderCell>
-                              <Table.HeaderCell>Адрес</Table.HeaderCell>
-                              <Table.HeaderCell>Телефон</Table.HeaderCell>
-                              <Table.HeaderCell>Конт. лицо</Table.HeaderCell>
-                              <Table.HeaderCell>Компания</Table.HeaderCell>
-                              <Table.HeaderCell>Доп. инфо</Table.HeaderCell>
-                            </Table.Row>
-                          </Table.Header>
-                          <Table.Body>
-                          {this.props.store.upload_manifest.disp_template_list.filter((el)=>this.props.store.create_disp.FilterModalSendTemplate === "" || el.label.indexOf(this.props.store.create_disp.FilterModalSendTemplate) !== -1).map((el,index)=>
-                            
-                              <Table.Row 
-                              className = "create_disp_template_list_tr"
-                              key={index}
-                              onDoubleClick={this.SelectSendTemplate.bind(this,el)}
+                    <div>
+                      <Table celled compact="very">
+                        <Table.Header className="create_disp_template_list_th">
+                          <Table.Row>
+                            <Table.HeaderCell>Имя</Table.HeaderCell>
+                            <Table.HeaderCell>Город</Table.HeaderCell>
+                            <Table.HeaderCell>Адрес</Table.HeaderCell>
+                            <Table.HeaderCell>Телефон</Table.HeaderCell>
+                            <Table.HeaderCell>Конт. лицо</Table.HeaderCell>
+                            <Table.HeaderCell>Компания</Table.HeaderCell>
+                            <Table.HeaderCell>Доп. инфо</Table.HeaderCell>
+                          </Table.Row>
+                        </Table.Header>
+                        <Table.Body>
+                          {this.props.store.upload_manifest.disp_template_list
+                            .filter(
+                              (el) =>
+                                this.props.store.create_disp
+                                  .FilterModalSendTemplate === "" ||
+                                el.label.indexOf(
+                                  this.props.store.create_disp
+                                    .FilterModalSendTemplate
+                                ) !== -1
+                            )
+                            .map((el, index) => (
+                              <Table.Row
+                                className="create_disp_template_list_tr"
+                                key={index}
+                                onDoubleClick={this.SelectSendTemplate.bind(
+                                  this,
+                                  el
+                                )}
                               >
-                                <Table.Cell >{el.label}</Table.Cell>
+                                <Table.Cell>{el.label}</Table.Cell>
                                 <Table.Cell>{el.City}</Table.Cell>
-                                <Table.Cell>{el.Terminal ? (el.CurrentTerminal + " (Cклад)"):(el.Adress)}</Table.Cell>
+                                <Table.Cell>
+                                  {el.Terminal
+                                    ? el.CurrentTerminal + " (Cклад)"
+                                    : el.Adress}
+                                </Table.Cell>
                                 <Table.Cell>{el.Phone}</Table.Cell>
                                 <Table.Cell>{el.Person}</Table.Cell>
                                 <Table.Cell>{el.Company}</Table.Cell>
                                 <Table.Cell>{el.AddInfo}</Table.Cell>
                               </Table.Row>
-                          )}
-                          </Table.Body>
-                          </Table>
-                          </div>
-                            
-                          </Modal.Description>
-                        </Modal.Content>
-                      </Modal>
-                          </div>
-                      </div>
-                    <div className="create_disp_address_data_header">
-                      <div></div>
-                      <div>Данные получателя</div>
-                      <div className='create_disp_template_button_container'>
-                      <Modal 
-                        trigger={ (this.props.store.create_disp.PayType.value !== "БезналичнаяОплатаПолучателем") ? (<button onClick={this.OpenRecTemplateModal.bind(this)} className='create_disp_template_button'>Из шаблона</button>) : (null)}
-                        open={this.props.store.create_disp.OpenModalRecTemplate}
-                        onClose={this.SelectRecTemplate.bind(this,null)}
-                        >
-                          <Modal.Header>Заполнить получателя из шаблона</Modal.Header>
-                          <Modal.Content>
-                          <Modal.Description>
-                          <div className="disp_data_el"><input className="create_disp_data_input"  onChange={e => this.props.SetFilterModalRecTemplate(e.target.value)} value={this.props.store.create_disp.FilterModalRecTemplate} type="text" placeholder="Поиск по наименованию" /></div>
-                          <div >
-                          <Table celled compact='very'>
-                          <Table.Header className = "create_disp_template_list_th">
-                            <Table.Row>
-                              <Table.HeaderCell>Имя</Table.HeaderCell>
-                              <Table.HeaderCell>Город</Table.HeaderCell>
-                              <Table.HeaderCell>Адрес</Table.HeaderCell>
-                              <Table.HeaderCell>Телефон</Table.HeaderCell>
-                              <Table.HeaderCell>Конт. лицо</Table.HeaderCell>
-                              <Table.HeaderCell>Компания</Table.HeaderCell>
-                              <Table.HeaderCell>Доп. инфо</Table.HeaderCell>
-                            </Table.Row>
-                          </Table.Header>
-                          <Table.Body>
-                          {this.props.store.upload_manifest.disp_template_list.filter((el)=>this.props.store.create_disp.FilterModalRecTemplate === "" || el.label.indexOf(this.props.store.create_disp.FilterModalRecTemplate) !== -1).map((el,index)=>
-                            
-                              <Table.Row 
-                              className = "create_disp_template_list_tr"
-                              key={index}
-                              onDoubleClick={this.SelectRecTemplate.bind(this,el)}
+                            ))}
+                        </Table.Body>
+                      </Table>
+                    </div>
+                  </Modal.Description>
+                </Modal.Content>
+              </Modal>
+            </div>
+          </div>
+          <div className="create_disp_address_data_header">
+            <div></div>
+            <div>Данные получателя</div>
+            <div className="create_disp_template_button_container">
+              <Modal
+                trigger={
+                  this.props.store.create_disp.PayType.value !==
+                  "БезналичнаяОплатаПолучателем" ? (
+                    <button
+                      onClick={this.OpenRecTemplateModal.bind(this)}
+                      className="create_disp_template_button"
+                    >
+                      Из шаблона
+                    </button>
+                  ) : null
+                }
+                open={this.props.store.create_disp.OpenModalRecTemplate}
+                onClose={this.SelectRecTemplate.bind(this, null)}
+              >
+                <Modal.Header>Заполнить получателя из шаблона</Modal.Header>
+                <Modal.Content>
+                  <Modal.Description>
+                    <div className="disp_data_el">
+                      <input
+                        className="create_disp_data_input"
+                        onChange={(e) =>
+                          this.props.SetFilterModalRecTemplate(e.target.value)
+                        }
+                        value={
+                          this.props.store.create_disp.FilterModalRecTemplate
+                        }
+                        type="text"
+                        placeholder="Поиск по наименованию"
+                      />
+                    </div>
+                    <div>
+                      <Table celled compact="very">
+                        <Table.Header className="create_disp_template_list_th">
+                          <Table.Row>
+                            <Table.HeaderCell>Имя</Table.HeaderCell>
+                            <Table.HeaderCell>Город</Table.HeaderCell>
+                            <Table.HeaderCell>Адрес</Table.HeaderCell>
+                            <Table.HeaderCell>Телефон</Table.HeaderCell>
+                            <Table.HeaderCell>Конт. лицо</Table.HeaderCell>
+                            <Table.HeaderCell>Компания</Table.HeaderCell>
+                            <Table.HeaderCell>Доп. инфо</Table.HeaderCell>
+                          </Table.Row>
+                        </Table.Header>
+                        <Table.Body>
+                          {this.props.store.upload_manifest.disp_template_list
+                            .filter(
+                              (el) =>
+                                this.props.store.create_disp
+                                  .FilterModalRecTemplate === "" ||
+                                el.label.indexOf(
+                                  this.props.store.create_disp
+                                    .FilterModalRecTemplate
+                                ) !== -1
+                            )
+                            .map((el, index) => (
+                              <Table.Row
+                                className="create_disp_template_list_tr"
+                                key={index}
+                                onDoubleClick={this.SelectRecTemplate.bind(
+                                  this,
+                                  el
+                                )}
                               >
-                                <Table.Cell >{el.label}</Table.Cell>
+                                <Table.Cell>{el.label}</Table.Cell>
                                 <Table.Cell>{el.City}</Table.Cell>
-                                <Table.Cell>{el.Terminal ? (el.CurrentTerminal + " (Cклад)"):(el.Adress)}</Table.Cell>
+                                <Table.Cell>
+                                  {el.Terminal
+                                    ? el.CurrentTerminal + " (Cклад)"
+                                    : el.Adress}
+                                </Table.Cell>
                                 <Table.Cell>{el.Phone}</Table.Cell>
                                 <Table.Cell>{el.Person}</Table.Cell>
                                 <Table.Cell>{el.Company}</Table.Cell>
                                 <Table.Cell>{el.AddInfo}</Table.Cell>
                               </Table.Row>
-                          )}
-                          </Table.Body>
-                          </Table>
-                          </div>
-                            
-                          </Modal.Description>
-                        </Modal.Content>
-                      </Modal>
-                        </div>
-                      
-                      </div>
-                    <div className="disp_address_data_el">
-
-                        <div className="disp_data_label"> Город:</div>
-                        <div className="disp_data_el">
-                        
-                           <Select 
-                          value={this.props.store.create_disp.SelectedSendCity}
-                          options={this.props.store.create_disp.CityList}
-                          styles={customStyles}
-                          onChange={(values) => this.SelectSendCity(values)}
-                          placeholder="Город отправителя" /> 
-                 
-                        </div>
-                        
-                        {this.props.store.create_disp.SendTerminalList.length === 0 ? (null):(<div className="disp_data_label">Отправка на складе</div>)}
-                        {this.props.store.create_disp.SendTerminalList.length === 0 ? (null) : (<div className="disp_data_radio"><input name="send_type" type="radio"  onChange={this.SetSendTerminal.bind(this,true)} disabled={this.props.store.create_disp.SendTerminalList.length === 0} checked={this.props.store.create_disp.SendTerminal}></input></div>)}
-                        {this.props.store.create_disp.SendTerminalList.length === 0 ? (null):(<div className="disp_data_label">Забор с адреса</div>)}
-                        {this.props.store.create_disp.SendTerminalList.length === 0 ? (null) : (<div className="disp_data_radio"><input name="send_type" type="radio" onChange={this.SetSendTerminal.bind(this,false)} checked={!this.props.store.create_disp.SendTerminal}></input></div>)}
-                        
-                        {this.props.store.create_disp.SendTerminal? (<div className="disp_data_label"> Терминал:</div>):(<div className="disp_data_label"> Адрес:</div>)}
-                        
-                        {this.props.store.create_disp.SendTerminal? (
-                          <div className="disp_data_el">
-                          <Select
-                            
-                            options={this.props.store.create_disp.SendTerminalList}
-                            styles={customStyles}
-                            value={this.props.store.create_disp.SendSelectTerminal}
-                            onChange={(values) => this.props.SetSendSelectTerminal(values)}
-                          /> 
-                          </div>
-                        ):(<div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.props.SetSendAdress(e.target.value)} value={this.props.store.create_disp.SendAdress} type="text" placeholder="Адрес отправителя" /></div>)}
-                        
-                        
-                        <div className="disp_data_label"> Компания:</div>
-                        <div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.props.SetSendCompany(e.target.value)} value={this.props.store.create_disp.SendCompany} type="text" placeholder="Компания отправителя" /></div>
-                        <div className="disp_data_label"> Телефон:</div>
-                        <div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.props.SetSendPhone(e.target.value)} value={this.props.store.create_disp.SendPhone} type="text" placeholder="Телефон отправителя (формат 8-9xx-xxx-xxxx)" /></div>
-                        <div className="disp_data_label"> Контактное лицо:</div>
-                        <div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.props.SetSendPerson(e.target.value)} value={this.props.store.create_disp.SendPerson} type="text" placeholder="Контактное лицо отправителя" /></div>
-                        <div className="disp_data_label"> Доп. информация:</div>
-                        <div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.props.SetSendAddInfo(e.target.value)} value={this.props.store.create_disp.SendAddInfo} type="text" placeholder="Доп. информация отправителя" /></div>
+                            ))}
+                        </Table.Body>
+                      </Table>
                     </div>
+                  </Modal.Description>
+                </Modal.Content>
+              </Modal>
+            </div>
+          </div>
+          <div className="disp_address_data_el">
+            <div className="disp_data_label"> Город:</div>
+            <div className="disp_data_el">
+              <Select
+                value={this.props.store.create_disp.SelectedSendCity}
+                options={this.props.store.create_disp.CityList}
+                styles={customStyles}
+                onChange={(values) => this.SelectSendCity(values)}
+                placeholder="Город отправителя"
+              />
+            </div>
 
-                    <div className="disp_address_data_el">
+            {this.props.store.create_disp.SendTerminalList.length ===
+            0 ? null : (
+              <div className="disp_data_label">Отправка на складе</div>
+            )}
+            {this.props.store.create_disp.SendTerminalList.length ===
+            0 ? null : (
+              <div className="disp_data_radio">
+                <input
+                  name="send_type"
+                  type="radio"
+                  onChange={this.SetSendTerminal.bind(this, true)}
+                  disabled={
+                    this.props.store.create_disp.SendTerminalList.length === 0
+                  }
+                  checked={this.props.store.create_disp.SendTerminal}
+                ></input>
+              </div>
+            )}
+            {this.props.store.create_disp.SendTerminalList.length ===
+            0 ? null : (
+              <div className="disp_data_label">Забор с адреса</div>
+            )}
+            {this.props.store.create_disp.SendTerminalList.length ===
+            0 ? null : (
+              <div className="disp_data_radio">
+                <input
+                  name="send_type"
+                  type="radio"
+                  onChange={this.SetSendTerminal.bind(this, false)}
+                  checked={!this.props.store.create_disp.SendTerminal}
+                ></input>
+              </div>
+            )}
 
-                    <div className="disp_data_label"> Город:</div>
-                        <div className="disp_data_el">
-                          
-                          {this.props.store.create_disp.PayType.value !== "БезналичнаяОплатаПолучателем" ? (
-                            <Select
-                              value={this.props.store.create_disp.SelectedRecCity}
-                              options={this.props.store.create_disp.CityList}
-                              styles={customStyles}
-                              onChange={(values) => {
-                                if (this.props.store.create_disp.PayType.value !== "БезналичнаяОплатаПолучателем") {
-                                  this.SelectRecCity(values)
-                                }
-                              }}
-                              placeholder="Город получателя"
-                            />
-                          ) : (<input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={(e) => { if (this.props.store.create_disp.PayType.value !== "БезналичнаяОплатаПолучателем") { this.props.SelectRecCity(e.target.value) }}} value={this.props.store.create_disp.RecCity} type="text" placeholder="Город получателя" />)}
-                          
-                        </div>
-                        
-                        {this.props.store.create_disp.RecTerminalList.length === 0 ? (null):(<div className="disp_data_label">Получение на складе</div>)}
-                   
-                        {this.props.store.create_disp.RecTerminalList.length === 0 ? (null) : (<div className="disp_data_radio"><input name="rec_type" type="radio" onChange={  this.SetRecTerminal.bind(this, true) } disabled={this.props.store.create_disp.RecTerminalList.length === 0} checked={this.props.store.create_disp.RecTerminal}></input></div>)}
-                        
-                        {this.props.store.create_disp.RecTerminalList.length === 0 ? (null):(<div className="disp_data_label">Доставка до адреса</div>)}
-                        
-                        {this.props.store.create_disp.RecTerminalList.length === 0 ? (null) : (<div className="disp_data_radio"><input name="rec_type" type="radio" onChange={ this.SetRecTerminal.bind(this, false) } checked={!this.props.store.create_disp.RecTerminal}></input></div>)}
-                        
-                        {this.props.store.create_disp.RecTerminal? (<div className="disp_data_label"> Терминал:</div>):(<div className="disp_data_label"> Адрес:</div>)}
-                        
-                        {this.props.store.create_disp.RecTerminal? (
-                          <div className="disp_data_el">
-                          <Select
-                            disabled = {this.props.store.create_disp.PayType.value == "БезналичнаяОплатаПолучателем"}
-                            options={this.props.store.create_disp.RecTerminalList}
-                            styles={customStyles}
-                            value={this.props.store.create_disp.RecSelectTerminal}
-                            onChange={(values) => {
-                              if(this.props.store.create_disp.PayType.value !== "БезналичнаяОплатаПолучателем"){
-                                this.props.SetRecSelectTerminal(values)
-                              }
-                            }}
-                          /> 
-                          </div>
-                        ):(<div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={(e) => { if (this.props.store.create_disp.PayType.value !== "БезналичнаяОплатаПолучателем") { this.props.SetRecAdress(e.target.value) }}} value={this.props.store.create_disp.RecAdress} type="text" placeholder="Адрес получателя" /></div>)}
-                        
-                        
-                        <div className="disp_data_label"> Компания:</div>
-                        <div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={(e) => { if (this.props.store.create_disp.PayType.value !== "БезналичнаяОплатаПолучателем") { this.props.SetRecCompany(e.target.value) }}} value={this.props.store.create_disp.RecCompany} type="text" placeholder="Компания получателя" /></div>
-                        <div className="disp_data_label"> Телефон:</div>
-                        <div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={(e) => { if (this.props.store.create_disp.PayType.value !== "БезналичнаяОплатаПолучателем") { this.props.SetRecPhone(e.target.value) }}} value={this.props.store.create_disp.RecPhone} type="text" placeholder="Телефон получателя (формат 8-9xx-xxx-xxxx)" /></div>
-                        <div className="disp_data_label"> Контактное лицо:</div>
-                        <div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={(e) => { if (this.props.store.create_disp.PayType.value !== "БезналичнаяОплатаПолучателем") { this.props.SetRecPerson(e.target.value) }}} value={this.props.store.create_disp.RecPerson} type="text" placeholder="Контактное лицо получателя" /></div>
-                        <div className="disp_data_label"> Доп. информация:</div>
-                        <div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.props.SetRecAddInfo(e.target.value)} value={this.props.store.create_disp.RecAddInfo} type="text" placeholder="Доп. информация получателя" /></div>
-                    </div>
+            {this.props.store.create_disp.SendTerminal ? (
+              <div className="disp_data_label"> Терминал:</div>
+            ) : (
+              <div className="disp_data_label"> Адрес:</div>
+            )}
 
-                </div>
+            {this.props.store.create_disp.SendTerminal ? (
+              <div className="disp_data_el">
+                <Select
+                  options={this.props.store.create_disp.SendTerminalList}
+                  styles={customStyles}
+                  value={this.props.store.create_disp.SendSelectTerminal}
+                  onChange={(values) =>
+                    this.props.SetSendSelectTerminal(values)
+                  }
+                />
+              </div>
+            ) : (
+              <div className="disp_data_el">
+                <input
+                  className="create_disp_data_input"
+                  onKeyDown={(e) => this.handleKeyPress(e)}
+                  onChange={(e) => this.props.SetSendAdress(e.target.value)}
+                  value={this.props.store.create_disp.SendAdress}
+                  type="text"
+                  placeholder="Адрес отправителя"
+                />
+              </div>
+            )}
 
-                <div className="disp_cargo_table">
-                  <div className="disp_cargo_table_header">Данные о грузах:</div>
-                    {this.props.store.login.total_only ? (<div className="disp_cargo_info">
-                    <div className="disp_data_label">Метод внесения информации:</div>
-                    <div className="disp_data_el ">
-                      <Select
-                          options={CargoInfoTypeList}
-                          styles={customStyles}
-                          value={this.props.store.create_disp.CargoInfoType}
-                          onChange={(values) => this.props.SetCargoInfoType(values)}
-                      /> 
-                      </div>
-                      </div>):(null)}
-                    {!this.props.store.create_disp.CargoInfoType.value ? (<div>
-                    
-                    <div className="disp_cargo_table_data">
-                    <Table compact celled size='small'>
+            <div className="disp_data_label"> Компания:</div>
+            <div className="disp_data_el">
+              <input
+                className="create_disp_data_input"
+                onKeyDown={(e) => this.handleKeyPress(e)}
+                onChange={(e) => this.props.SetSendCompany(e.target.value)}
+                value={this.props.store.create_disp.SendCompany}
+                type="text"
+                placeholder="Компания отправителя"
+              />
+            </div>
+            <div className="disp_data_label"> Телефон:</div>
+            <div className="disp_data_el">
+              <input
+                className="create_disp_data_input"
+                onKeyDown={(e) => this.handleKeyPress(e)}
+                onChange={(e) => this.props.SetSendPhone(e.target.value)}
+                value={this.props.store.create_disp.SendPhone}
+                type="text"
+                placeholder="Телефон отправителя (формат 8-9xx-xxx-xxxx)"
+              />
+            </div>
+            <div className="disp_data_label"> Контактное лицо:</div>
+            <div className="disp_data_el">
+              <input
+                className="create_disp_data_input"
+                onKeyDown={(e) => this.handleKeyPress(e)}
+                onChange={(e) => this.props.SetSendPerson(e.target.value)}
+                value={this.props.store.create_disp.SendPerson}
+                type="text"
+                placeholder="Контактное лицо отправителя"
+              />
+            </div>
+            <div className="disp_data_label"> Доп. информация:</div>
+            <div className="disp_data_el">
+              <input
+                className="create_disp_data_input"
+                onKeyDown={(e) => this.handleKeyPress(e)}
+                onChange={(e) => this.props.SetSendAddInfo(e.target.value)}
+                value={this.props.store.create_disp.SendAddInfo}
+                type="text"
+                placeholder="Доп. информация отправителя"
+              />
+            </div>
+          </div>
 
-                    <Table.Header>
+          <div className="disp_address_data_el">
+            <div className="disp_data_label"> Город:</div>
+            <div className="disp_data_el">
+              {this.props.store.create_disp.PayType.value !==
+              "БезналичнаяОплатаПолучателем" ? (
+                <Select
+                  value={this.props.store.create_disp.SelectedRecCity}
+                  options={this.props.store.create_disp.CityList}
+                  styles={customStyles}
+                  onChange={(values) => {
+                    if (
+                      this.props.store.create_disp.PayType.value !==
+                      "БезналичнаяОплатаПолучателем"
+                    ) {
+                      this.SelectRecCity(values);
+                    }
+                  }}
+                  placeholder="Город получателя"
+                />
+              ) : (
+                <input
+                  className="create_disp_data_input"
+                  onKeyDown={(e) => this.handleKeyPress(e)}
+                  onChange={(e) => {
+                    if (
+                      this.props.store.create_disp.PayType.value !==
+                      "БезналичнаяОплатаПолучателем"
+                    ) {
+                      this.props.SelectRecCity(e.target.value);
+                    }
+                  }}
+                  value={this.props.store.create_disp.RecCity}
+                  type="text"
+                  placeholder="Город получателя"
+                />
+              )}
+            </div>
+
+            {this.props.store.create_disp.RecTerminalList.length ===
+            0 ? null : (
+              <div className="disp_data_label">Получение на складе</div>
+            )}
+
+            {this.props.store.create_disp.RecTerminalList.length ===
+            0 ? null : (
+              <div className="disp_data_radio">
+                <input
+                  name="rec_type"
+                  type="radio"
+                  onChange={this.SetRecTerminal.bind(this, true)}
+                  disabled={
+                    this.props.store.create_disp.RecTerminalList.length === 0
+                  }
+                  checked={this.props.store.create_disp.RecTerminal}
+                ></input>
+              </div>
+            )}
+
+            {this.props.store.create_disp.RecTerminalList.length ===
+            0 ? null : (
+              <div className="disp_data_label">Доставка до адреса</div>
+            )}
+
+            {this.props.store.create_disp.RecTerminalList.length ===
+            0 ? null : (
+              <div className="disp_data_radio">
+                <input
+                  name="rec_type"
+                  type="radio"
+                  onChange={this.SetRecTerminal.bind(this, false)}
+                  checked={!this.props.store.create_disp.RecTerminal}
+                ></input>
+              </div>
+            )}
+
+            {this.props.store.create_disp.RecTerminal ? (
+              <div className="disp_data_label"> Терминал:</div>
+            ) : (
+              <div className="disp_data_label"> Адрес:</div>
+            )}
+
+            {this.props.store.create_disp.RecTerminal ? (
+              <div className="disp_data_el">
+                <Select
+                  disabled={
+                    this.props.store.create_disp.PayType.value ==
+                    "БезналичнаяОплатаПолучателем"
+                  }
+                  options={this.props.store.create_disp.RecTerminalList}
+                  styles={customStyles}
+                  value={this.props.store.create_disp.RecSelectTerminal}
+                  onChange={(values) => {
+                    if (
+                      this.props.store.create_disp.PayType.value !==
+                      "БезналичнаяОплатаПолучателем"
+                    ) {
+                      this.props.SetRecSelectTerminal(values);
+                    }
+                  }}
+                />
+              </div>
+            ) : (
+              <div className="disp_data_el">
+                <input
+                  className="create_disp_data_input"
+                  onKeyDown={(e) => this.handleKeyPress(e)}
+                  onChange={(e) => {
+                    if (
+                      this.props.store.create_disp.PayType.value !==
+                      "БезналичнаяОплатаПолучателем"
+                    ) {
+                      this.props.SetRecAdress(e.target.value);
+                    }
+                  }}
+                  value={this.props.store.create_disp.RecAdress}
+                  type="text"
+                  placeholder="Адрес получателя"
+                />
+              </div>
+            )}
+
+            <div className="disp_data_label"> Компания:</div>
+            <div className="disp_data_el">
+              <input
+                className="create_disp_data_input"
+                onKeyDown={(e) => this.handleKeyPress(e)}
+                onChange={(e) => {
+                  if (
+                    this.props.store.create_disp.PayType.value !==
+                    "БезналичнаяОплатаПолучателем"
+                  ) {
+                    this.props.SetRecCompany(e.target.value);
+                  }
+                }}
+                value={this.props.store.create_disp.RecCompany}
+                type="text"
+                placeholder="Компания получателя"
+              />
+            </div>
+            <div className="disp_data_label"> Телефон:</div>
+            <div className="disp_data_el">
+              <input
+                className="create_disp_data_input"
+                onKeyDown={(e) => this.handleKeyPress(e)}
+                onChange={(e) => {
+                  if (
+                    this.props.store.create_disp.PayType.value !==
+                    "БезналичнаяОплатаПолучателем"
+                  ) {
+                    this.props.SetRecPhone(e.target.value);
+                  }
+                }}
+                value={this.props.store.create_disp.RecPhone}
+                type="text"
+                placeholder="Телефон получателя (формат 8-9xx-xxx-xxxx)"
+              />
+            </div>
+            <div className="disp_data_label"> Контактное лицо:</div>
+            <div className="disp_data_el">
+              <input
+                className="create_disp_data_input"
+                onKeyDown={(e) => this.handleKeyPress(e)}
+                onChange={(e) => {
+                  if (
+                    this.props.store.create_disp.PayType.value !==
+                    "БезналичнаяОплатаПолучателем"
+                  ) {
+                    this.props.SetRecPerson(e.target.value);
+                  }
+                }}
+                value={this.props.store.create_disp.RecPerson}
+                type="text"
+                placeholder="Контактное лицо получателя"
+              />
+            </div>
+            <div className="disp_data_label"> Доп. информация:</div>
+            <div className="disp_data_el">
+              <input
+                className="create_disp_data_input"
+                onKeyDown={(e) => this.handleKeyPress(e)}
+                onChange={(e) => this.props.SetRecAddInfo(e.target.value)}
+                value={this.props.store.create_disp.RecAddInfo}
+                type="text"
+                placeholder="Доп. информация получателя"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="disp_cargo_table">
+          <div className="disp_cargo_table_header">Данные о грузах:</div>
+          {this.props.store.login.total_only ? (
+            <div className="disp_cargo_info">
+              <div className="disp_data_label">Метод внесения информации:</div>
+              <div className="disp_data_el ">
+                <Select
+                  options={CargoInfoTypeList}
+                  styles={customStyles}
+                  value={this.props.store.create_disp.CargoInfoType}
+                  onChange={(values) => this.props.SetCargoInfoType(values)}
+                />
+              </div>
+            </div>
+          ) : null}
+          {!this.props.store.create_disp.CargoInfoType.value ? (
+            <div>
+              <div className="disp_cargo_table_data">
+                <Table compact celled size="small">
+                  <Table.Header>
                     <Table.Row>
-                    <Table.HeaderCell>Вес (кг)</Table.HeaderCell>
-                    <Table.HeaderCell>Длина (см)</Table.HeaderCell>
-                    <Table.HeaderCell>Ширина (см)</Table.HeaderCell>
-                    <Table.HeaderCell>Высота (см)</Table.HeaderCell>
-                    <Table.HeaderCell>Об. вес</Table.HeaderCell>
-                    <Table.HeaderCell>Количество</Table.HeaderCell>
-                    <Table.HeaderCell>Итоговый вес</Table.HeaderCell>
-                    <Table.HeaderCell>Итог. об. вес</Table.HeaderCell>
-                    <Table.HeaderCell>Тип груза</Table.HeaderCell>
-                    <Table.HeaderCell colSpan='2'>Комментарий</Table.HeaderCell>
-                    
-                    
-
+                      <Table.HeaderCell>Вес (кг)</Table.HeaderCell>
+                      <Table.HeaderCell>Длина (см)</Table.HeaderCell>
+                      <Table.HeaderCell>Ширина (см)</Table.HeaderCell>
+                      <Table.HeaderCell>Высота (см)</Table.HeaderCell>
+                      <Table.HeaderCell>Об. вес</Table.HeaderCell>
+                      <Table.HeaderCell>Количество</Table.HeaderCell>
+                      <Table.HeaderCell>Итоговый вес</Table.HeaderCell>
+                      <Table.HeaderCell>Итог. об. вес</Table.HeaderCell>
+                      <Table.HeaderCell>Тип груза</Table.HeaderCell>
+                      {/* <Table.HeaderCell colSpan='2'>Комментарий</Table.HeaderCell> */}
                     </Table.Row>
-                    </Table.Header>
-                    <Table.Body>
-                                {this.props.store.create_disp.Cargo.map((Cargo, index) =>
-                                    <Table.Row key={index}>
-                                        <Table.Cell><input className="create_disp_td_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.SetCargoWeight(e.target.value,index)} value={Cargo.Weight} type="number" /></Table.Cell>
-                                        <Table.Cell><input className="create_disp_td_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.SetCargoL(e.target.value,index)} value={Cargo.L} type="number" /></Table.Cell>
-                                        <Table.Cell><input className="create_disp_td_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.SetCargoW(e.target.value,index)} value={Cargo.W} type="number" /></Table.Cell>
-                                        <Table.Cell><input className="create_disp_td_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.SetCargoH(e.target.value,index)} value={Cargo.H} type="number" /></Table.Cell>
-                                        <Table.Cell>{Math.ceil(Cargo.L * Cargo.W * Cargo.H /5)/1000}</Table.Cell>
-                                        <Table.Cell><input className="create_disp_td_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.SetCargoQ(e.target.value,index)} value={Cargo.Q} type="number" /></Table.Cell>
-                                        <Table.Cell>{Math.ceil(Cargo.Weight * Cargo.Q*1000)/1000}</Table.Cell>
-                                        <Table.Cell>{Math.ceil(Cargo.L * Cargo.W * Cargo.H * Cargo.Q /5)/1000}</Table.Cell>
-                                        <Table.Cell>
-                                        <Select
-                                            options={CargoTypeList}
-                                            styles={customStyles}
-                                            value={Cargo.Type}
-                                            onChange={(values) => this.SetCargoType(values,index)}
-                                        /> 
-                                        </Table.Cell>
-                                        <Table.Cell ><input className="create_disp_td_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.SetCargoComment(e.target.value,index)} value={Cargo.Comment} type="text" /></Table.Cell>
-                                        {this.props.store.create_disp.Cargo.length === 1 ? (null):(<Table.Cell collapsing> <button onClick={this.RemoveCargo.bind(this,index)} className="IconButton"><Icon type="indicator" name="delete" width={15} height={15}/></button></Table.Cell>)}
-                                        
-                                        </Table.Row>)}
-                                        </Table.Body>
-                                        </Table>
-                        
-                    </div>
-                    <button onClick={this.AddCargo.bind(this)}>Добавить место</button>
+                  </Table.Header>
+                  <Table.Body>
+                    {this.props.store.create_disp.Cargo.map((Cargo, index) => (
+                      <Table.Row key={index}>
+                        <Table.Cell>
+                          <input
+                            className="create_disp_td_input"
+                            onKeyDown={(e) => this.handleKeyPress(e)}
+                            onChange={(e) =>
+                              this.SetCargoWeight(e.target.value, index)
+                            }
+                            value={Cargo.Weight}
+                            type="number"
+                          />
+                        </Table.Cell>
+                        <Table.Cell>
+                          <input
+                            className="create_disp_td_input"
+                            onKeyDown={(e) => this.handleKeyPress(e)}
+                            onChange={(e) =>
+                              this.SetCargoL(e.target.value, index)
+                            }
+                            value={Cargo.L}
+                            type="number"
+                          />
+                        </Table.Cell>
+                        <Table.Cell>
+                          <input
+                            className="create_disp_td_input"
+                            onKeyDown={(e) => this.handleKeyPress(e)}
+                            onChange={(e) =>
+                              this.SetCargoW(e.target.value, index)
+                            }
+                            value={Cargo.W}
+                            type="number"
+                          />
+                        </Table.Cell>
+                        <Table.Cell>
+                          <input
+                            className="create_disp_td_input"
+                            onKeyDown={(e) => this.handleKeyPress(e)}
+                            onChange={(e) =>
+                              this.SetCargoH(e.target.value, index)
+                            }
+                            value={Cargo.H}
+                            type="number"
+                          />
+                        </Table.Cell>
+                        <Table.Cell>
+                          {Math.ceil((Cargo.L * Cargo.W * Cargo.H) / 5) / 1000}
+                        </Table.Cell>
+                        <Table.Cell>
+                          <input
+                            className="create_disp_td_input"
+                            onKeyDown={(e) => this.handleKeyPress(e)}
+                            onChange={(e) =>
+                              this.SetCargoQ(e.target.value, index)
+                            }
+                            value={Cargo.Q}
+                            type="number"
+                          />
+                        </Table.Cell>
+                        <Table.Cell>
+                          {Math.ceil(Cargo.Weight * Cargo.Q * 1000) / 1000}
+                        </Table.Cell>
+                        <Table.Cell>
+                          {Math.ceil(
+                            (Cargo.L * Cargo.W * Cargo.H * Cargo.Q) / 5
+                          ) / 1000}
+                        </Table.Cell>
+                        <Table.Cell>
+                          <Select
+                            options={CargoTypeList}
+                            styles={customStyles}
+                            value={Cargo.Type}
+                            onChange={(values) =>
+                              this.SetCargoType(values, index)
+                            }
+                          />
+                        </Table.Cell>
+                        {/* <Table.Cell>
+                          <input
+                            className="create_disp_td_input"
+                            onKeyDown={(e) => this.handleKeyPress(e)}
+                            onChange={(e) =>
+                              this.SetCargoComment(e.target.value, index)
+                            }
+                            value={Cargo.Comment}
+                            type="text"
+                          />
+                        </Table.Cell> */}
+                        {this.props.store.create_disp.Cargo.length ===
+                        1 ? null : (
+                          <Table.Cell collapsing>
+                            {" "}
+                            <button
+                              onClick={this.RemoveCargo.bind(this, index)}
+                              className="IconButton"
+                            >
+                              <Icon
+                                type="indicator"
+                                name="delete"
+                                width={15}
+                                height={15}
+                              />
+                            </button>
+                          </Table.Cell>
+                        )}
+                      </Table.Row>
+                    ))}
+                  </Table.Body>
+                </Table>
+              </div>
+              <button onClick={this.AddCargo.bind(this)}>Добавить место</button>
 
-                    <div className="disp_cargo_data_fragile">
-                      <div className="disp_data_label">Хрупкий груз:</div>
+              <div className="disp_cargo_data_fragile">
+                <div className="disp_data_label">Хрупкий груз:</div>
+                <Checkbox
+                  onChange={(e) =>
+                    this.props.SetFragile(!this.props.store.create_disp.Fragile)
+                  }
+                  checked={this.props.store.create_disp.Fragile}
+                />
+                {this.props.store.login.probably_termo
+                  ? [
+                      <div key={1} className="disp_data_label">
+                        Терморежим:
+                      </div>,
                       <Checkbox
-                        onChange={e => this.props.SetFragile(!this.props.store.create_disp.Fragile)}
-                        checked={this.props.store.create_disp.Fragile}
-                      />
-                      {this.props.store.login.probably_termo ? (
-                        [<div key={1} className="disp_data_label">Терморежим:</div>,
-                        <Checkbox
-                          key={2}
-                          onChange={e => this.props.SetTermo(!this.props.store.create_disp.Termo)}
-                          checked={this.props.store.create_disp.Termo}
-                        />]
-                      ) : (null)}
+                        key={2}
+                        onChange={(e) =>
+                          this.props.SetTermo(
+                            !this.props.store.create_disp.Termo
+                          )
+                        }
+                        checked={this.props.store.create_disp.Termo}
+                      />,
+                    ]
+                  : null}
 
-                      {this.props.store.create_disp.Termo ? (
-                        [<div key={1} className="disp_data_label">Терморежим минимум:</div>,
-                        <div key={2} className="disp_data_el">
-                          <input className="create_disp_data_input" onChange={e => this.props.SetTMin(e.target.value)} value={this.props.store.create_disp.TMin} type="number" />
-                        </div>,
-                        <div key={3} className="disp_data_label">Терморежим максимум:</div>,
-                        <div key={4} className="disp_data_el">
-                          <input className="create_disp_data_input" onChange={e => this.props.SetTMax(e.target.value)} value={this.props.store.create_disp.TMax} type="number" />
-                        </div>]) : (null)}
-                    </div>
+                {this.props.store.create_disp.Termo
+                  ? [
+                      <div key={1} className="disp_data_label">
+                        Терморежим минимум:
+                      </div>,
+                      <div key={2} className="disp_data_el">
+                        <input
+                          className="create_disp_data_input"
+                          onChange={(e) => this.props.SetTMin(e.target.value)}
+                          value={this.props.store.create_disp.TMin}
+                          type="number"
+                        />
+                      </div>,
+                      <div key={3} className="disp_data_label">
+                        Терморежим максимум:
+                      </div>,
+                      <div key={4} className="disp_data_el">
+                        <input
+                          className="create_disp_data_input"
+                          onChange={(e) => this.props.SetTMax(e.target.value)}
+                          value={this.props.store.create_disp.TMax}
+                          type="number"
+                        />
+                      </div>,
+                    ]
+                  : null}
+              </div>
 
-                    <div className="disp_cargo_data">
-                      <div className="disp_data_label">Общее количество мест:</div>
-                      <div className="disp_data_el">{this.props.store.create_disp.Cargo.reduce((accumulator, Cargo) => accumulator + Number(Cargo.Q), 0)}</div>
-                      <div className="disp_data_label">Общий фактический вес (кг):</div> 
-                      <div className="disp_data_el">{total_weight}</div>
-                      <div className="disp_data_label">Общий объемный вес (кг):</div>
-                      <div className="disp_data_el">{total_volume}</div> 
-                    </div>
-                    </div>):([
-                    <div key={1} className="disp_cargo_data_fragile">
-                      <div className="disp_data_label">Хрупкий груз:</div>
+              <div className="disp_cargo_data">
+                <div className="disp_data_label">Общее количество мест:</div>
+                <div className="disp_data_el">
+                  {this.props.store.create_disp.Cargo.reduce(
+                    (accumulator, Cargo) => accumulator + Number(Cargo.Q),
+                    0
+                  )}
+                </div>
+                <div className="disp_data_label">
+                  Общий фактический вес (кг):
+                </div>
+                <div className="disp_data_el">{total_weight}</div>
+                <div className="disp_data_label">Общий объемный вес (кг):</div>
+                <div className="disp_data_el">{total_volume}</div>
+              </div>
+            </div>
+          ) : (
+            [
+              <div key={1} className="disp_cargo_data_fragile">
+                <div className="disp_data_label">Хрупкий груз:</div>
+                <Checkbox
+                  onChange={(e) =>
+                    this.props.SetFragile(!this.props.store.create_disp.Fragile)
+                  }
+                  checked={this.props.store.create_disp.Fragile}
+                />
+                {this.props.store.login.probably_termo
+                  ? [
+                      <div key={1} className="disp_data_label">
+                        Терморежим:
+                      </div>,
                       <Checkbox
-                        onChange={e => this.props.SetFragile(!this.props.store.create_disp.Fragile)}
-                        checked={this.props.store.create_disp.Fragile}
-                      />
-                      {this.props.store.login.probably_termo ? (
-                        [<div key={1} className="disp_data_label">Терморежим:</div>,
-                        <Checkbox
-                          key={2}
-                          onChange={e => this.props.SetTermo(!this.props.store.create_disp.Termo)}
-                          checked={this.props.store.create_disp.Termo}
-                        />]
-                      ) : (null)}
+                        key={2}
+                        onChange={(e) =>
+                          this.props.SetTermo(
+                            !this.props.store.create_disp.Termo
+                          )
+                        }
+                        checked={this.props.store.create_disp.Termo}
+                      />,
+                    ]
+                  : null}
 
-                      {this.props.store.create_disp.Termo ? (
-                        [<div key={1} className="disp_data_label">Терморежим минимум:</div>,
-                        <div key={2} className="disp_data_el">
-                          <input className="create_disp_data_input" onChange={e => this.props.SetTMin(e.target.value)} value={this.props.store.create_disp.TMin} type="number" />
-                        </div>,
-                        <div key={3} className="disp_data_label">Терморежим максимум:</div>,
-                        <div key={4} className="disp_data_el">
-                          <input className="create_disp_data_input" onChange={e => this.props.SetTMax(e.target.value)} value={this.props.store.create_disp.TMax} type="number" />
-                        </div>]) : (null)}
-                    </div>,
+                {this.props.store.create_disp.Termo
+                  ? [
+                      <div key={1} className="disp_data_label">
+                        Терморежим минимум:
+                      </div>,
+                      <div key={2} className="disp_data_el">
+                        <input
+                          className="create_disp_data_input"
+                          onChange={(e) => this.props.SetTMin(e.target.value)}
+                          value={this.props.store.create_disp.TMin}
+                          type="number"
+                        />
+                      </div>,
+                      <div key={3} className="disp_data_label">
+                        Терморежим максимум:
+                      </div>,
+                      <div key={4} className="disp_data_el">
+                        <input
+                          className="create_disp_data_input"
+                          onChange={(e) => this.props.SetTMax(e.target.value)}
+                          value={this.props.store.create_disp.TMax}
+                          type="number"
+                        />
+                      </div>,
+                    ]
+                  : null}
+              </div>,
 
-                    <div key={2} className="disp_cargo_data">
-                      <div className="disp_data_label">Общее количество мест:</div>
-                      <div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.SetTotal(e.target.value)} value={this.props.store.create_disp.Total} type="number" placeholder="Общее количество мест" /></div>
-                      <div className="disp_data_label">Общий фактический вес (кг):</div>
-                      <div className="disp_data_el"><input readOnly={Q_only} className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.props.SetWeight(e.target.value)} value={this.props.store.create_disp.Weight} type="number" placeholder="Итоговый фактический вес" /></div>
-                      <div className="disp_data_label">Общий объемный вес (кг):</div>
-                      <div className="disp_data_el"><input readOnly={Q_only}  className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.props.SetVolume(e.target.value)} value={this.props.store.create_disp.Volume} type="number" placeholder="Итоговый объемный вес" /></div> 
-                    </div>])}
+              <div key={2} className="disp_cargo_data">
+                <div className="disp_data_label">Общее количество мест:</div>
+                <div className="disp_data_el">
+                  <input
+                    className="create_disp_data_input"
+                    onKeyDown={(e) => this.handleKeyPress(e)}
+                    onChange={(e) => this.SetTotal(e.target.value)}
+                    value={this.props.store.create_disp.Total}
+                    type="number"
+                    placeholder="Общее количество мест"
+                  />
+                </div>
+                <div className="disp_data_label">
+                  Общий фактический вес (кг):
+                </div>
+                <div className="disp_data_el">
+                  <input
+                    readOnly={Q_only}
+                    className="create_disp_data_input"
+                    onKeyDown={(e) => this.handleKeyPress(e)}
+                    onChange={(e) => this.props.SetWeight(e.target.value)}
+                    value={this.props.store.create_disp.Weight}
+                    type="number"
+                    placeholder="Итоговый фактический вес"
+                  />
+                </div>
+                <div className="disp_data_label">Общий объемный вес (кг):</div>
+                <div className="disp_data_el">
+                  <input
+                    readOnly={Q_only}
+                    className="create_disp_data_input"
+                    onKeyDown={(e) => this.handleKeyPress(e)}
+                    onChange={(e) => this.props.SetVolume(e.target.value)}
+                    value={this.props.store.create_disp.Volume}
+                    type="number"
+                    placeholder="Итоговый объемный вес"
+                  />
+                </div>
+              </div>,
+            ]
+          )}
 
-                {Q_only ? (null):(
-                  <div className="disp_cargo_data">
-                    <div className="disp_data_label">Страховая стоимость (руб.):</div>
-                    <div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.props.SetInsureValue(e.target.value)} value={this.props.store.create_disp.InsureValue} type="number"  /></div>
-                    <div className="disp_data_label">Наложенный платеж (руб.):</div>
-                    <div className="disp_data_el"><input className="create_disp_data_input" onKeyDown={(e) => this.handleKeyPress(e)} onChange={e => this.props.SetCOD(e.target.value)} value={this.props.store.create_disp.COD} type="number"  /></div> 
-                    <div className="disp_data_label">Расчетная стоимость перевозки:</div>
-                    <div className="disp_data_el"><input className="create_disp_data_input" readOnly value={this.props.store.create_disp.Price} /></div>
-                  </div>
-                )}
+          {Q_only ? null : (
+            <div className="disp_cargo_data">
+              <div className="disp_data_label">Страховая стоимость (руб.):</div>
+              <div className="disp_data_el">
+                <input
+                  className="create_disp_data_input"
+                  onKeyDown={(e) => this.handleKeyPress(e)}
+                  onChange={(e) => this.props.SetInsureValue(e.target.value)}
+                  value={this.props.store.create_disp.InsureValue}
+                  type="number"
+                />
+              </div>
+              <div className="disp_data_label">Наложенный платеж (руб.):</div>
+              <div className="disp_data_el">
+                <input
+                  className="create_disp_data_input"
+                  onKeyDown={(e) => this.handleKeyPress(e)}
+                  onChange={(e) => this.props.SetCOD(e.target.value)}
+                  value={this.props.store.create_disp.COD}
+                  type="number"
+                />
+              </div>
+              <div className="disp_data_label">
+                Расчетная стоимость перевозки:
+              </div>
+              <div className="disp_data_el">
+                <input
+                  className="create_disp_data_input"
+                  readOnly
+                  value={this.props.store.create_disp.Price}
+                />
+              </div>
+            </div>
+          )}
 
-                {/* <div className="disp_cargo_table_data">
+          {/* <div className="disp_cargo_table_data">
                   <input value={this.props.store.create_disp.Price} />
                 </div> */}
-                <div className="disp_cargo_table_data">
-                  <button onClick={this.CalcPrice.bind(this, total_weight, total_volume)}>Рассчитать стоимость</button>
-                </div>
-                
-                {this.props.store.create_disp.isNew ? (<Button disabled={disabled} onClick={this.dataСhecking.bind(this)}>Создать накладную</Button>) : (<Button disabled={disabled} onClick={this.dataСhecking.bind(this)}>Сохранить изменения</Button>)}
-                </div>
-                
-                <Modal
-                  onClose={() => this.props.SetWarningAlert(false)}
-                  open={this.props.store.create_disp.warningAlert}
-                  size='mini'
-                >
-                {this.props.store.create_disp.TimeError ? (
-                  [<Modal.Header key={"timeErrorHeader"}>{this.props.store.create_disp.warningMessage}</Modal.Header>,
-                  <Modal.Actions key={"timeErrorAction"}>
-                    <Button onClick={() => {this.props.SetWarningAlert(false); this.props.SetTimeError(false)}}>
-                      Отмена
+          <div className="disp_cargo_table_data">
+            <button
+              onClick={this.CalcPrice.bind(this, total_weight, total_volume)}
+            >
+              Рассчитать стоимость
+            </button>
+          </div>
+
+          {this.props.store.create_disp.isNew ? (
+            <Button disabled={disabled} onClick={this.dataСhecking.bind(this)}>
+              Создать накладную
+            </Button>
+          ) : (
+            <Button disabled={disabled} onClick={this.dataСhecking.bind(this)}>
+              Сохранить изменения
+            </Button>
+          )}
+        </div>
+
+        <Modal
+          onClose={() => this.props.SetWarningAlert(false)}
+          open={this.props.store.create_disp.warningAlert}
+          size="mini"
+        >
+          {this.props.store.create_disp.TimeError
+            ? [
+                <Modal.Header key={"timeErrorHeader"}>
+                  {this.props.store.create_disp.warningMessage}
+                </Modal.Header>,
+                <Modal.Actions key={"timeErrorAction"}>
+                  <Button
+                    onClick={() => {
+                      this.props.SetWarningAlert(false);
+                      this.props.SetTimeError(false);
+                    }}
+                  >
+                    Отмена
+                  </Button>
+                </Modal.Actions>,
+              ]
+            : [
+                <Modal.Header key={"errorHeader"}>
+                  Вы не ввели {this.props.store.create_disp.warningMessage}
+                </Modal.Header>,
+                <Modal.Actions key={"errorAction"}>
+                  {this.props.store.login.necessarily_all_field ? null : (
+                    <Button
+                      onClick={() => {
+                        this.props.SetWarningAlert(false);
+                        this.sent_disp();
+                      }}
+                    >
+                      Продолжить
                     </Button>
-                  </Modal.Actions>]
-                ) : (
-                  [<Modal.Header key={"errorHeader"}>Вы не ввели {this.props.store.create_disp.warningMessage}</Modal.Header>,
-                  <Modal.Actions key={"errorAction"}>
-                    {this.props.store.login.necessarily_all_field ? (null) : (
-                      <Button onClick={() => { this.props.SetWarningAlert(false); this.sent_disp() }}>
-                        Продолжить
-                      </Button>
-                    )}                    
-                    <Button onClick={() => this.props.SetWarningAlert(false)}>
-                      Отмена
-                    </Button>
-                  </Modal.Actions>]
-                )}
-                </Modal>
-                {/* {this.props.store.disp.action === "deliver"  && this.props.store.disp.data.Type === "Доставка" ? (<div>
+                  )}
+                  <Button onClick={() => this.props.SetWarningAlert(false)}>
+                    Отмена
+                  </Button>
+                </Modal.Actions>,
+              ]}
+        </Modal>
+        {/* {this.props.store.disp.action === "deliver"  && this.props.store.disp.data.Type === "Доставка" ? (<div>
                 <div className="pod_header">Внести данные о доставке:</div>
                 <div className="pod_data">
                     <div className="disp_data_label">Дата доставки</div>
@@ -1132,9 +1785,9 @@ SetTotal = (value) =>{
                 <button onClick={this.sendpod.bind(this)} className="send_pod">Отметить доставленным и закрыть</button>
                 </div>):(null)} */}
 
-                {/* {this.props.store.disp.action === "reciept" ? (<div> */}
-                {/* <div className="pod_header">Принять накладную на склад:</div> */}
-                {/* <div className="pod_data">
+        {/* {this.props.store.disp.action === "reciept" ? (<div> */}
+        {/* <div className="pod_header">Принять накладную на склад:</div> */}
+        {/* <div className="pod_data">
                     <div className="disp_data_label">Дата доставки</div>
                     <div className="disp_data_input"><input id="date" className="pod_input" type="date"></input></div>
                     <div className="disp_data_label">Время доставки</div>
@@ -1146,105 +1799,226 @@ SetTotal = (value) =>{
                     <div className="disp_data_label">Комментарий</div>
                     <div className="disp_data_input"><input id="comment" className="pod_input" type="text"></input></div>
                 </div> */}
-                {/* <button onClick={this.reciept.bind(this)} className="send_pod">Принять на склад и закрыть</button>
+        {/* <button onClick={this.reciept.bind(this)} className="send_pod">Принять на склад и закрыть</button>
                 </div>):(null)} */}
-                
-            </div>
-      
+      </div>
     );
   }
-};
+}
 
 export default connect(
-  state => ({
-    store: state
+  (state) => ({
+    store: state,
   }),
-  dispatch => ({
+  (dispatch) => ({
+    SetCyrillic: (param) => {
+      dispatch({ type: "SetCyrillic", payload: param });
+    },
 
-    SetCyrillic: (param) => { dispatch({ type: 'SetCyrillic', payload: param }) },
+    SetDelType: (param) => {
+      dispatch({ type: "SetDelType", payload: param });
+    },
 
-    SetDelType: (param) => { dispatch({ type: 'SetDelType', payload: param }) },
+    SetWarningAlert: (param) => {
+      dispatch({ type: "SetWarningAlert", payload: param });
+    },
+    SetWarningMessage: (param) => {
+      dispatch({ type: "SetWarningMessage", payload: param });
+    },
 
-    SetWarningAlert: (param) => { dispatch({ type: 'SetWarningAlert', payload: param }) },
-    SetWarningMessage: (param) => { dispatch({ type: 'SetWarningMessage', payload: param }) },
+    SetPayerSelect: (param) => {
+      dispatch({ type: "SetPayerSelect", payload: param });
+    },
 
-    SetPayerSelect: (param) => { dispatch({ type: 'SetPayerSelect', payload: param }) },
+    SetPrice: (param) => {
+      dispatch({ type: "SetPrice", payload: param });
+    },
 
-    SetPrice: (param) => { dispatch({ type: 'SetPrice', payload: param }) },
-    
-    SetNumber: (param) => { dispatch({ type: 'SetNumber', payload: param }) },
-    SetCustomNumber: (param) => { dispatch({ type: 'SetCustomNumber', payload: param }) },
-    SetAvailableNumber: (param) => { dispatch({ type: 'SetAvailableNumber', payload: param }) },
-    SetCustomNumberLoader: (param) => { dispatch({ type: 'SetCustomNumberLoader', payload: param }) },
+    SetNumber: (param) => {
+      dispatch({ type: "SetNumber", payload: param });
+    },
+    SetCustomNumber: (param) => {
+      dispatch({ type: "SetCustomNumber", payload: param });
+    },
+    SetAvailableNumber: (param) => {
+      dispatch({ type: "SetAvailableNumber", payload: param });
+    },
+    SetCustomNumberLoader: (param) => {
+      dispatch({ type: "SetCustomNumberLoader", payload: param });
+    },
 
-    SetSendCity: (param) => { dispatch({ type: 'SetSendCity', payload: param }) },
-    SetSendTerminal: (param) => { dispatch({ type: 'SetSendTerminal', payload: param }) },
-    SetSendAdress: (param) => { dispatch({ type: 'SetSendAdress', payload: param }) },
+    SetSendCity: (param) => {
+      dispatch({ type: "SetSendCity", payload: param });
+    },
+    SetSendTerminal: (param) => {
+      dispatch({ type: "SetSendTerminal", payload: param });
+    },
+    SetSendAdress: (param) => {
+      dispatch({ type: "SetSendAdress", payload: param });
+    },
 
-    SetSendCompany: (param) => { dispatch({ type: 'SetSendCompany', payload: param }) },
-    SetSendPhone: (param) => { dispatch({ type: 'SetSendPhone', payload: param }) },
-    SetSendPerson: (param) => { dispatch({ type: 'SetSendPerson', payload: param }) },
-    SetSendAddInfo: (param) => { dispatch({ type: 'SetSendAddInfo', payload: param }) },
+    SetSendCompany: (param) => {
+      dispatch({ type: "SetSendCompany", payload: param });
+    },
+    SetSendPhone: (param) => {
+      dispatch({ type: "SetSendPhone", payload: param });
+    },
+    SetSendPerson: (param) => {
+      dispatch({ type: "SetSendPerson", payload: param });
+    },
+    SetSendAddInfo: (param) => {
+      dispatch({ type: "SetSendAddInfo", payload: param });
+    },
 
-    SetSendSelectTerminal: (param) => { dispatch({ type: 'SetSendSelectTerminal', payload: param }) },
-    SetSendTerminalList: (param) => { dispatch({ type: 'SetSendTerminalList', payload: param }) },
+    SetSendSelectTerminal: (param) => {
+      dispatch({ type: "SetSendSelectTerminal", payload: param });
+    },
+    SetSendTerminalList: (param) => {
+      dispatch({ type: "SetSendTerminalList", payload: param });
+    },
 
-    SetRecCity: (param) => { dispatch({ type: 'SetRecCity', payload: param }) },
-    SetRecTerminal: (param) => { dispatch({ type: 'SetRecTerminal', payload: param }) },
-    SetRecAdress: (param) => { dispatch({ type: 'SetRecAdress', payload: param }) },
+    SetRecCity: (param) => {
+      dispatch({ type: "SetRecCity", payload: param });
+    },
+    SetRecTerminal: (param) => {
+      dispatch({ type: "SetRecTerminal", payload: param });
+    },
+    SetRecAdress: (param) => {
+      dispatch({ type: "SetRecAdress", payload: param });
+    },
 
-    SetRecCompany: (param) => { dispatch({ type: 'SetRecCompany', payload: param }) },
-    SetRecPhone: (param) => { dispatch({ type: 'SetRecPhone', payload: param }) },
-    SetRecPerson: (param) => { dispatch({ type: 'SetRecPerson', payload: param }) },
-    SetRecAddInfo: (param) => { dispatch({ type: 'SetRecAddInfo', payload: param }) },
+    SetRecCompany: (param) => {
+      dispatch({ type: "SetRecCompany", payload: param });
+    },
+    SetRecPhone: (param) => {
+      dispatch({ type: "SetRecPhone", payload: param });
+    },
+    SetRecPerson: (param) => {
+      dispatch({ type: "SetRecPerson", payload: param });
+    },
+    SetRecAddInfo: (param) => {
+      dispatch({ type: "SetRecAddInfo", payload: param });
+    },
 
-    SetRecSelectTerminal: (param) => { dispatch({ type: 'SetRecSelectTerminal', payload: param }) },
-    SetRecTerminalList: (param) => { dispatch({ type: 'SetRecTerminalList', payload: param }) },
-    
-    SetPayType: (param) => { dispatch({ type: 'SetPayType', payload: param }) },
+    SetRecSelectTerminal: (param) => {
+      dispatch({ type: "SetRecSelectTerminal", payload: param });
+    },
+    SetRecTerminalList: (param) => {
+      dispatch({ type: "SetRecTerminalList", payload: param });
+    },
 
-    RemoveCargo: (param) => { dispatch({ type: 'RemoveCargo', payload: param }) },
-    
-    AddCargo: () => { dispatch({ type: 'AddCargo'}) },
+    SetPayType: (param) => {
+      dispatch({ type: "SetPayType", payload: param });
+    },
 
-    SetCargoWeight: (param) => { dispatch({ type: 'SetCargoWeight', payload: param }) },
-    SetCargoW: (param) => { dispatch({ type: 'SetCargoW', payload: param }) },
-    SetCargoL: (param) => { dispatch({ type: 'SetCargoL', payload: param }) },
-    SetCargoH: (param) => { dispatch({ type: 'SetCargoH', payload: param }) },
-    SetCargoQ: (param) => { dispatch({ type: 'SetCargoQ', payload: param }) },
-    SetCargoType: (param) => { dispatch({ type: 'SetCargoType', payload: param }) },
-    SetCargoInfoType: (param) => { dispatch({ type: 'SetCargoInfoType', payload: param }) },
-    SetCargoComment: (param) => { dispatch({ type: 'SetCargoComment', payload: param }) },
-    SetTotal: (param) => { dispatch({ type: 'SetTotal', payload: param }) },
-    SetWeight: (param) => { dispatch({ type: 'SetWeight', payload: param }) },
-    SetVolume: (param) => { dispatch({ type: 'SetVolume', payload: param }) },
+    RemoveCargo: (param) => {
+      dispatch({ type: "RemoveCargo", payload: param });
+    },
 
-    SetSelectedSendCity: (param) => { dispatch({ type: 'SetSelectedSendCity', payload: param }) },
-    SetSelectedRecCity: (param) => { dispatch({ type: 'SetSelectedRecCity', payload: param }) },
+    AddCargo: () => {
+      dispatch({ type: "AddCargo" });
+    },
 
-    set_active_window: (param) => { dispatch({ type: 'set_active_window', payload: param }) },
-    set_data_disp: (param) => { dispatch({ type: 'set_data_disp', payload: param }) },
-    set_last_window: (param) => { dispatch({ type: 'set_last_window', payload: param }) },
+    SetCargoWeight: (param) => {
+      dispatch({ type: "SetCargoWeight", payload: param });
+    },
+    SetCargoW: (param) => {
+      dispatch({ type: "SetCargoW", payload: param });
+    },
+    SetCargoL: (param) => {
+      dispatch({ type: "SetCargoL", payload: param });
+    },
+    SetCargoH: (param) => {
+      dispatch({ type: "SetCargoH", payload: param });
+    },
+    SetCargoQ: (param) => {
+      dispatch({ type: "SetCargoQ", payload: param });
+    },
+    SetCargoType: (param) => {
+      dispatch({ type: "SetCargoType", payload: param });
+    },
+    SetCargoInfoType: (param) => {
+      dispatch({ type: "SetCargoInfoType", payload: param });
+    },
+    SetCargoComment: (param) => {
+      dispatch({ type: "SetCargoComment", payload: param });
+    },
+    SetTotal: (param) => {
+      dispatch({ type: "SetTotal", payload: param });
+    },
+    SetWeight: (param) => {
+      dispatch({ type: "SetWeight", payload: param });
+    },
+    SetVolume: (param) => {
+      dispatch({ type: "SetVolume", payload: param });
+    },
 
-    SetOpenModalSendTemplate: (param) => { dispatch({ type: 'SetOpenModalSendTemplate', payload: param }) },
-    SetOpenModalRecTemplate: (param) => { dispatch({ type: 'SetOpenModalRecTemplate', payload: param }) },
+    SetSelectedSendCity: (param) => {
+      dispatch({ type: "SetSelectedSendCity", payload: param });
+    },
+    SetSelectedRecCity: (param) => {
+      dispatch({ type: "SetSelectedRecCity", payload: param });
+    },
 
-    SetFilterModalSendTemplate: (param) => { dispatch({ type: 'SetFilterModalSendTemplate', payload: param }) },
-    SetFilterModalRecTemplate: (param) => { dispatch({ type: 'SetFilterModalRecTemplate', payload: param }) },
-    
-    SetDispDate: (param) => { dispatch({ type: 'SetDispDate', payload: param }) },
+    set_active_window: (param) => {
+      dispatch({ type: "set_active_window", payload: param });
+    },
+    set_data_disp: (param) => {
+      dispatch({ type: "set_data_disp", payload: param });
+    },
+    set_last_window: (param) => {
+      dispatch({ type: "set_last_window", payload: param });
+    },
 
-    SetCOD: (param) => { dispatch({ type: 'SetCOD', payload: param }) },
-    SetInsureValue: (param) => { dispatch({ type: 'SetInsureValue', payload: param }) },
+    SetOpenModalSendTemplate: (param) => {
+      dispatch({ type: "SetOpenModalSendTemplate", payload: param });
+    },
+    SetOpenModalRecTemplate: (param) => {
+      dispatch({ type: "SetOpenModalRecTemplate", payload: param });
+    },
 
-    set_disp_template_list: (param) => { dispatch({ type: 'set_disp_template_list', payload: param }) },
-    SetFragile: (param) => { dispatch({ type: 'SetFragile', payload: param }) },
-    SetTMax: (param) => { dispatch({ type: 'SetTMax', payload: param }) },
-    SetTMin: (param) => { dispatch({ type: 'SetTMin', payload: param }) },
-    SetTermo: (param) => { dispatch({ type: 'SetTermo', payload: param }) }, 
+    SetFilterModalSendTemplate: (param) => {
+      dispatch({ type: "SetFilterModalSendTemplate", payload: param });
+    },
+    SetFilterModalRecTemplate: (param) => {
+      dispatch({ type: "SetFilterModalRecTemplate", payload: param });
+    },
 
-    SetCurrentDate: (param) => { dispatch({ type: 'SetCurrentDate', payload: param }) }, 
-    SetCurrentTime: (param) => { dispatch({ type: 'SetCurrentTime', payload: param }) }, 
-    SetTimeError: (param) => { dispatch({ type: 'SetTimeError', payload: param }) }, 
+    SetDispDate: (param) => {
+      dispatch({ type: "SetDispDate", payload: param });
+    },
+
+    SetCOD: (param) => {
+      dispatch({ type: "SetCOD", payload: param });
+    },
+    SetInsureValue: (param) => {
+      dispatch({ type: "SetInsureValue", payload: param });
+    },
+
+    set_disp_template_list: (param) => {
+      dispatch({ type: "set_disp_template_list", payload: param });
+    },
+    SetFragile: (param) => {
+      dispatch({ type: "SetFragile", payload: param });
+    },
+    SetTMax: (param) => {
+      dispatch({ type: "SetTMax", payload: param });
+    },
+    SetTMin: (param) => {
+      dispatch({ type: "SetTMin", payload: param });
+    },
+    SetTermo: (param) => {
+      dispatch({ type: "SetTermo", payload: param });
+    },
+
+    SetCurrentDate: (param) => {
+      dispatch({ type: "SetCurrentDate", payload: param });
+    },
+    SetCurrentTime: (param) => {
+      dispatch({ type: "SetCurrentTime", payload: param });
+    },
+    SetTimeError: (param) => {
+      dispatch({ type: "SetTimeError", payload: param });
+    },
   })
 )(Screen);

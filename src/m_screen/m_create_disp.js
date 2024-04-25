@@ -740,10 +740,10 @@ class Screen extends React.Component {
                                                 </select>
                                             </div>
 
-                                            <div className="mobile_table_row">
+                                            {/* <div className="mobile_table_row">
                                                 <div className="mobile_table_label">Комментарий:</div>
                                                 <input className="mobile_table_el" value={item.Comment} onChange={e => this.CargoComm(e.target.value, index)} />
-                                            </div>
+                                            </div> */}
                                             <br />
                                             <button onClick={this.RemoveCargo.bind(this, index, item)} className="mobile_disp_button_item mobile_disp_button_item--full mobile_disp_button_item--yellow">Удалить место</button>
                                         </div>
