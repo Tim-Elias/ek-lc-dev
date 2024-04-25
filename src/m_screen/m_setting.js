@@ -52,22 +52,6 @@ class Screen extends React.Component {
     }.bind(this);
 
     document.onkeydown = function (event) {};
-    let default_send_template = {};
-    let default_rec_template = {};
-
-    if (this.props.store.login.default_send !== "0") {
-      default_send_template =
-        this.props.store.upload_manifest.disp_template_list.find(
-          (el) => el.Key === this.props.store.login.default_send
-        );
-    }
-
-    if (this.props.store.login.default_rec !== "0") {
-      default_rec_template =
-        this.props.store.upload_manifest.disp_template_list.find(
-          (el) => el.Key === this.props.store.login.default_rec
-        );
-    }
 
     return (
       <div className="mobile_setting">

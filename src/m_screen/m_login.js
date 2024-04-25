@@ -33,12 +33,7 @@ class Screen extends React.Component {
         (result) => {
           this.props.login(result);
 
-          //this.get_list(result.userkey);
-
           try {
-            // localStorage.setItem('username', this.props.store.login.username);
-            // localStorage.setItem('userkey', result.userkey);
-            // localStorage.setItem('passkey', md5(this.props.store.login.pass));
             this.props.cookies.set(
               "username",
               this.props.store.login.username,
@@ -52,7 +47,9 @@ class Screen extends React.Component {
               md5(this.props.store.login.pass),
               { maxAge: 1000000000000 }
             );
-          } catch (error) {}
+          } catch (error) {
+            console.log(error);
+          }
         },
         (err) => {
           this.props.set_modal_show(true);

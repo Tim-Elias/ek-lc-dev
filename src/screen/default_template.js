@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Button, Icon, Table } from "semantic-ui-react";
+import { Button, Icon } from "semantic-ui-react";
 
 class Screen extends React.Component {
   render() {

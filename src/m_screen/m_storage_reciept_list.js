@@ -29,7 +29,6 @@ import kyibishev from "./../common/sound/Куйбышев.wav";
 import lk from "./../common/sound/Ленинск-Кузнецкий.wav";
 import mariinsk from "./../common/sound/Мариинск.wav";
 import mejdyrechinsk from "./../common/sound/Междуреченск.wav";
-import moskva from "./../common/sound/Москва.wav";
 import novokyzneck from "./../common/sound/Новокузнецк.wav";
 import novosibirsk from "./../common/sound/Новосибирск.wav";
 import omsk from "./../common/sound/Омск.wav";
@@ -202,14 +201,12 @@ class Screen extends React.Component {
                   ) {
                     const audio = new Audio(dver);
                     audio.type = "audio/ogg";
-                    var playPromise = audio.play();
                   } else if (
                     result.del_method === "Склад-Склад" ||
                     result.del_method === "Дверь-Склад"
                   ) {
                     const audio = new Audio(sklad);
                     audio.type = "audio/ogg";
-                    var playPromise = audio.play();
                   }
                   audioCity.removeEventListener("ended", storageSound);
                 });
@@ -218,7 +215,6 @@ class Screen extends React.Component {
             } else {
               const audio = new Audio(err_sound);
               audio.type = "audio/ogg";
-              var playPromise = audio.play();
               this.props.set_popup_message(
                 "Накладная не может быть принята на склад т.к. находится в завершенном статусе"
               );
@@ -228,7 +224,6 @@ class Screen extends React.Component {
             if (this.props.store.storage_reciept.sound) {
               const audio = new Audio(err_sound);
               audio.type = "audio/ogg";
-              var playPromise = audio.play();
             }
             this.props.set_popup_message("Накладная уже добавлена!");
           }
@@ -287,11 +282,9 @@ class Screen extends React.Component {
     if (this.props.store.storage_reciept.sound) {
       const audio = new Audio(funk_sound);
       audio.type = "audio/ogg";
-      var playPromise = audio.play();
     } else {
       const audio = new Audio(done_sound);
       audio.type = "audio/ogg";
-      var playPromise = audio.play();
     }
   };
 

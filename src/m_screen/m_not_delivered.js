@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import "./mobile.css";
 import { get_data } from "../common/common_modules";
 import "./mobile_disp.css";
-import Foto from "./foto";
 import { withCookies } from "react-cookie";
 import MFoto from "./m_foto";
 
@@ -31,13 +30,12 @@ class Screen extends React.Component {
         get_data("list", list_data).then(
           (result) => {
             try {
-              // localStorage.removeItem('num');
-              // localStorage.removeItem('status');
-              // localStorage.removeItem('window');
               this.props.cookies.remove("num");
               this.props.cookies.remove("status");
               this.props.cookies.remove("window");
-            } catch (error) {}
+            } catch (error) {
+              console.log(error);
+            }
 
             alert("Данные отправлены!");
             this.props.set_active_window("m_storage");

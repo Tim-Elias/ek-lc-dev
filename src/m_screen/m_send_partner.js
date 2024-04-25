@@ -64,10 +64,6 @@ class Screen extends React.Component {
   };
 
   render() {
-    const search = () => {
-      this.search();
-    };
-
     return (
       <div>
         <div className="mobile_heading">Передать партнеру</div>
@@ -82,7 +78,9 @@ class Screen extends React.Component {
               onChange={(e) => this.props.set_select_customer(e.target.value)}
             >
               {this.props.store.login.customers.map((item) => (
-                <option value={item.customerKey}>{item.customer}</option>
+                <option key={item.customerKey} value={item.customerKey}>
+                  {item.customer}
+                </option>
               ))}
             </select>
 

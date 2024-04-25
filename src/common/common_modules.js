@@ -4,7 +4,7 @@ const get_data = (url, data) => {
   return new Promise((resolve, reject) => {
     axios
       .post(
-        `https://kinetika-server.tw1.su/http/hs/agent/${url}/post`,
+        `${process.env.REACT_APP_API_URL}${url}/post`,
         JSON.stringify(data),
         {
           headers: { "Content-Type": "text/plain" },
@@ -56,8 +56,6 @@ const saveAs = (blob, fileName) => {
 
   document.body.removeChild(anchorElem);
 
-  // On Edge, revokeObjectURL should be called only after
-  // a.click() has completed, atleast on EdgeHTML 15.15048
   setTimeout(function () {
     window.URL.revokeObjectURL(url);
   }, 1000);
@@ -78,7 +76,6 @@ const get_file = (userkey, file_type, file_num, filename) => {
       }
       var byteArray = new Uint8Array(byteNumbers);
 
-      // now that we have the byte array, construct the blob from it
       var blob1 = new Blob([byteArray], { type: "application/octet-stream" });
 
       var fileName1 = filename;

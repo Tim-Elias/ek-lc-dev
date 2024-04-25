@@ -47,11 +47,11 @@ class Screen extends React.Component {
 
   logout = () => {
     try {
-      // localStorage.removeItem('username')
-      // localStorage.removeItem('passkey')
       this.props.cookies.remove("username");
       this.props.cookies.remove("passkey");
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
 
     this.props.set_active_window(null);
     this.props.logout();

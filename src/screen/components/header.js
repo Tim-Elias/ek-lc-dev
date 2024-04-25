@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import logo from "./../../logo.svg";
 import { get_data } from "./../../common/common_modules";
 import { withCookies } from "react-cookie";
-import { Header, Modal, Button } from "semantic-ui-react";
+import { Header, Modal } from "semantic-ui-react";
 import md5 from "md5";
 
 class Screen extends Component {

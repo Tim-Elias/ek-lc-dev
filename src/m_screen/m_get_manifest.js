@@ -51,14 +51,6 @@ class Screen extends React.Component {
   render() {
     document.onkeydown = function (event) {};
 
-    const tr_click = (name) => {
-      this.tr_click(name);
-    };
-
-    const tr_double_click = (disp) => {
-      this.tr_double_click(disp);
-    };
-
     return (
       <div>
         <div className="mobile_heading">Входящие манифесты</div>

@@ -174,7 +174,7 @@ export default function dispatch(state = initialState, action) {
         };
       }
 
-    case "set_data_upload_manifest":
+    case "set_data_upload_manifest": {
       const chars = state.text_area.split(String.fromCharCode(10));
       const data = [];
       let consolidate_checkbox_index = 0;
@@ -194,10 +194,10 @@ export default function dispatch(state = initialState, action) {
         data: data,
         consolidate_checkbox_index: consolidate_checkbox_index,
       };
+    }
 
     case "add_data_upload_manifest":
-      state.data.push(action.payload);
-    // return { ...state, data: state.data};
+      return state.data.push(action.payload);
     default:
       return state;
   }

@@ -49,7 +49,9 @@ export default function dispatch(state = initialState, action) {
     case "storage_reciept_add_disp_list":
       try {
         action.payload.task_date = action.payload.task_date.substr(0, 10);
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+      }
       return { ...state, disp_list: [...state.disp_list, action.payload] };
 
     case "storage_reciept_delete_list_item":

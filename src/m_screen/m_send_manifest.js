@@ -27,9 +27,7 @@ class Screen extends React.Component {
     this.props.set_active_window("wait");
 
     const dispatches = this.props.store.storage.list
-      .filter((el) => {
-        if (el.selected) return el;
-      })
+      .filter((el) => el.selected)
       .map((disp) => {
         return disp.Number;
       });
@@ -61,10 +59,6 @@ class Screen extends React.Component {
   };
 
   render() {
-    const search = () => {
-      this.search();
-    };
-
     return (
       <div>
         <div className="mobile_heading">Формирование исходящего манифеста</div>
@@ -143,16 +137,10 @@ class Screen extends React.Component {
 
             <div className="disp_data_el">
               Отправить на склад: накладных:{" "}
-              {
-                this.props.store.storage.list.filter((el) => {
-                  if (el.selected) return el;
-                }).length
-              }{" "}
+              {this.props.store.storage.list.filter((el) => el.selected).length}{" "}
               (мест:{" "}
               {this.props.store.storage.list
-                .filter((el) => {
-                  if (el.selected) return el;
-                })
+                .filter((el) => el.selected)
                 .reduce((sum, el) => {
                   return sum + parseInt(el.total);
                 }, 0)}

@@ -2,16 +2,12 @@ const today = new Date();
 let mm = today.getMonth() + 1; // getMonth() is zero-based
 let dd = today.getDate();
 
-const y = today.getFullYear();
-
 if (mm < 10) {
   mm = "0" + mm;
 }
 if (dd < 10) {
   dd = "0" + dd;
 }
-
-const date = y + "-" + mm + "-" + dd;
 
 let H = today.getHours();
 let M = today.getMinutes();
@@ -22,8 +18,6 @@ if (H < 10) {
 if (M < 10) {
   M = "0" + M;
 }
-
-const time = H + ":" + M;
 
 const initialState = {
   FIO_Customer: "",
