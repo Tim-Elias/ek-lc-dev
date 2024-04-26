@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import "./mutual.css";
-import { Table, Button } from "semantic-ui-react";
+import { Table } from "semantic-ui-react";
 import { get_data } from "./../common/common_modules";
 
 class Screen extends React.Component {
@@ -85,20 +85,18 @@ class Screen extends React.Component {
             ></input>
           </div>
           <div>
-            <Button
+            <button
               style={{ marginTop: "-5px" }}
               onClick={this.get_mutual.bind(this)}
               size="mini"
             >
               Получить данные
-            </Button>
+            </button>
           </div>
         </div>
-        {/* <div>{this.props.store.mutual.error}</div> */}
 
         {this.props.store.mutual.data.length !== 0 ? (
           <div className="mutual_table">
-            {/* <div className="mutual_int_label">Счета за период:</div> */}
             <div className="mutual_table_data">
               <Table celled size="small" compact="very">
                 <Table.Header>

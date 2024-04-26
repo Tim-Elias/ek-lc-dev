@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Button, Icon } from "semantic-ui-react";
+import { Icon } from "semantic-ui-react";
 
 class Screen extends React.Component {
   render() {
@@ -9,9 +9,9 @@ class Screen extends React.Component {
       <div>
         <div className="disp_Number">
           <div>
-            <Button compact icon onClick={this.props.modules.back}>
+            <button onClick={this.props.modules.back}>
               <Icon name="arrow left" />
-            </Button>
+            </button>
             <b className="page_header">Шаблон значений по умолчанию</b>
           </div>
         </div>

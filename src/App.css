@@ -3,6 +3,23 @@
   outline: 0 !important;
 }
 
+select{
+  padding: 6px;
+  margin: 0 4px;
+  border: 1px solid #d0d0d0;
+  border-radius: 3px;
+  }
+
+button{
+  padding: 8px 12px;
+  border: none;
+  border-radius: 3px;
+}
+
+button:hover{
+  background-color: #d0d0d0; 
+  }
+
 :root{
   --logo-size:80px;
   --logo-half-size:40px;
@@ -513,7 +530,7 @@ margin: auto;
 }
 
 .my_disp_control_panel--small {
-  grid-template-columns: 130px 150px 1fr ;
+  grid-template-columns: 130px 150px 150px ;
 }
 
 .my_disp_control_panel--s {

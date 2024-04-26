@@ -4,7 +4,7 @@ import "./create_disp.css";
 import { get_data } from "./../common/common_modules";
 import Select from "react-select";
 import { customStyles } from "./../common/common_style";
-import { Table, Modal, Button, Icon, Checkbox } from "semantic-ui-react";
+import { Table, Modal, Icon, Checkbox } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 
 const CargoInfoTypeList = [
@@ -19,7 +19,6 @@ const CargoTypeList = [
   { label: "Мешок под пломбой", value: "МешокПодПломбой" },
   { label: "Прочее", value: "Прочее" },
 ];
-
 
 class Screen extends React.Component {
   CalcPrice = (total_weight, total_volume) => {
@@ -274,7 +273,6 @@ class Screen extends React.Component {
     }
 
     if (this.props.store.login.necessarily_all_field) {
-
       if (
         this.props.store.create_disp.SendAdress.length < 2 &&
         this.props.store.create_disp.SendTerminal === false
@@ -303,7 +301,6 @@ class Screen extends React.Component {
         this.sent_disp();
       }
     } else {
-
       if (
         this.props.store.create_disp.RecAdress.length < 2 &&
         this.props.store.create_disp.RecTerminal === false
@@ -641,9 +638,9 @@ class Screen extends React.Component {
     return (
       <div>
         <div className="disp_Number">
-          <Button compact icon onClick={this.props.modules.back}>
+          <button onClick={this.props.modules.back}>
             <Icon name="arrow left" />
-          </Button>
+          </button>
           {this.props.store.create_disp.isNew ? (
             <b>Создание новой накладной</b>
           ) : (
@@ -1661,13 +1658,13 @@ class Screen extends React.Component {
           </div>
 
           {this.props.store.create_disp.isNew ? (
-            <Button disabled={disabled} onClick={this.dataСhecking.bind(this)}>
+            <button disabled={disabled} onClick={this.dataСhecking.bind(this)}>
               Создать накладную
-            </Button>
+            </button>
           ) : (
-            <Button disabled={disabled} onClick={this.dataСhecking.bind(this)}>
+            <button disabled={disabled} onClick={this.dataСhecking.bind(this)}>
               Сохранить изменения
-            </Button>
+            </button>
           )}
         </div>
 
@@ -1682,14 +1679,14 @@ class Screen extends React.Component {
                   {this.props.store.create_disp.warningMessage}
                 </Modal.Header>,
                 <Modal.Actions key={"timeErrorAction"}>
-                  <Button
+                  <button
                     onClick={() => {
                       this.props.SetWarningAlert(false);
                       this.props.SetTimeError(false);
                     }}
                   >
                     Отмена
-                  </Button>
+                  </button>
                 </Modal.Actions>,
               ]
             : [
@@ -1698,22 +1695,21 @@ class Screen extends React.Component {
                 </Modal.Header>,
                 <Modal.Actions key={"errorAction"}>
                   {this.props.store.login.necessarily_all_field ? null : (
-                    <Button
+                    <button
                       onClick={() => {
                         this.props.SetWarningAlert(false);
                         this.sent_disp();
                       }}
                     >
                       Продолжить
-                    </Button>
+                    </button>
                   )}
-                  <Button onClick={() => this.props.SetWarningAlert(false)}>
+                  <button onClick={() => this.props.SetWarningAlert(false)}>
                     Отмена
-                  </Button>
+                  </button>
                 </Modal.Actions>,
               ]}
         </Modal>
-       
       </div>
     );
   }

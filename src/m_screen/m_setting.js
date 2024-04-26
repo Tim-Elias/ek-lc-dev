@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import { get_data } from "./../common/common_modules";
-import { Button } from "semantic-ui-react";
 import "./mobile_setting.css";
 import "../App.css";
 import ReactToPrint from "react-to-print";
@@ -59,16 +58,16 @@ class Screen extends React.Component {
               this.props.store.login.original_data.default_rec ||
             this.props.store.login.phone !==
               this.props.store.login.original_data.phone ? (
-              <Button
+              <button
                 style={{ margin: "0 10px" }}
                 onClick={this.save_changes_user_data.bind(this)}
               >
                 Сохранить изменения
-              </Button>
+              </button>
             ) : (
-              <Button style={{ margin: "0 10px" }} disabled>
+              <button style={{ margin: "0 10px" }} disabled>
                 Сохранить изменения
-              </Button>
+              </button>
             )}
           </div>
         </div>
@@ -92,7 +91,7 @@ class Screen extends React.Component {
 
         <div className="mobile_disp_button">
           <ReactToPrint
-            trigger={() => <Button>Тестовая печать</Button>}
+            trigger={() => <button>Тестовая печать</button>}
             content={() => this.componentRef}
           />
 

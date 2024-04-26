@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { get_data } from "./../../common/common_modules";
-import { Button, Icon } from "semantic-ui-react";
+import { Icon } from "semantic-ui-react";
 
 class Screen extends Component {
   hide_menu = () => {
@@ -307,18 +307,6 @@ class Screen extends Component {
       case "setting":
         this.props.set_active_window(target);
 
-        // get_data('importtemplatelist', list_data).then(
-        //     (result) => {
-        //         this.props.set_import_template_list(result);
-        //     },
-        //     (err) => { console.log(err) }
-        // );
-        // get_data('defaulttemplatelist', list_data).then(
-        //     (result) => {
-        //         this.props.set_default_template_list(result);
-        //     },
-        //     (err) => { console.log(err) }
-        // );
         get_data("disptemplatelist", list_data).then(
           (result) => {
             this.props.set_disp_template_list(result);
@@ -355,130 +343,90 @@ class Screen extends Component {
         this.props.set_active_window(target);
         break;
     }
-    // if(target === "create_disp") {
-    //     get_data('citylist').then(
-    //         (result) => {
-    //             this.props.SetCityList(result);
-    //             this.props.set_active_window(target);
-
-    //         },
-    //         (err) => { console.log(err) }
-    //     );
-    // } else {
-    //     this.props.set_active_window(target);
-    // }
   };
 
   render() {
     return (
       <div>
-        {/* <CreateDispModules  setClick={click => this.clickChild = click}/> */}
-
         {this.props.store.general.hidemenu ? (
           <div className="leftmenu">
             <div className="leftmenubutton">
-              <Button compact icon onClick={this.hide_menu.bind(this)}>
+              <button onClick={this.hide_menu.bind(this)}>
                 <div className="leftmenubuttonicon">
                   <Icon name="arrow right" />
                 </div>
-              </Button>
+              </button>
             </div>
             <div className="leftmenubutton">
-              <Button
-                compact
-                icon
-                onClick={this.button_click.bind(this, "my_disp")}
-              >
+              <button onClick={this.button_click.bind(this, "my_disp")}>
                 <div className="leftmenubuttonicon">
                   <Icon name="list" />
                 </div>
-              </Button>
+              </button>
             </div>
             <div className="leftmenubutton">
-              <Button
-                compact
-                icon
-                onClick={this.button_click.bind(this, "disp_number")}
-              >
+              <button onClick={this.button_click.bind(this, "disp_number")}>
                 <div className="leftmenubuttonicon">
                   <Icon name="search" />
                 </div>
-              </Button>
+              </button>
             </div>
             {this.props.store.login.create_disp ? (
               <div className="leftmenubutton">
-                <Button
-                  compact
-                  icon
-                  onClick={this.button_click.bind(this, "create_disp")}
-                >
+                <button onClick={this.button_click.bind(this, "create_disp")}>
                   <div className="leftmenubuttonicon">
                     <Icon name="edit outline" />
                   </div>
-                </Button>
+                </button>
               </div>
             ) : null}
             {this.props.store.login.create_disp ? (
               <div className="leftmenubutton">
-                <Button
-                  compact
-                  icon
-                  onClick={this.button_click.bind(this, "calc_price")}
-                >
+                <button onClick={this.button_click.bind(this, "calc_price")}>
                   <div className="leftmenubuttonicon">
                     <Icon name="calculator" />
                   </div>
-                </Button>
+                </button>
               </div>
             ) : null}
             {this.props.store.login.upload_manifest ? (
               <div className="leftmenubutton">
-                <Button
-                  compact
-                  icon
+                <button
                   onClick={this.button_click.bind(this, "upload_manifest")}
                 >
                   <div className="leftmenubuttonicon">
                     <Icon name="upload" />
                   </div>
-                </Button>
+                </button>
               </div>
             ) : null}
             {this.props.store.login.mutual ? (
               <div className="leftmenubutton">
-                <Button
-                  compact
-                  icon
-                  onClick={this.button_click.bind(this, "mutual")}
-                >
+                <button onClick={this.button_click.bind(this, "mutual")}>
                   <div className="leftmenubuttonicon">
                     <Icon name="money" />
                   </div>
-                </Button>
+                </button>
               </div>
             ) : null}
             {this.props.store.login.setting ? (
               <div className="leftmenubutton">
-                <Button
-                  compact
-                  icon
-                  onClick={this.button_click.bind(this, "setting")}
-                >
+                <button onClick={this.button_click.bind(this, "setting")}>
                   <div className="leftmenubuttonicon">
                     <Icon name="setting" />
                   </div>
-                </Button>
+                </button>
               </div>
             ) : null}
           </div>
         ) : (
           <div className="leftmenu">
             <div className="leftmenubutton">
-              <Button compact icon onClick={this.hide_menu.bind(this)}>
+              <button onClick={this.hide_menu.bind(this)}>
                 <div className="leftmenubuttonicon">
                   <Icon name="arrow left" />
                 </div>
-              </Button>
+              </button>
             </div>
             <div
               onClick={this.button_click.bind(this, "my_disp")}

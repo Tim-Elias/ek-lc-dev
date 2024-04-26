@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import GoogleMapReact from "google-map-react";
-import { Button, List, Icon } from "semantic-ui-react";
+import { List, Icon } from "semantic-ui-react";
 import "./disp_map.css";
 import { get_data } from "./../common/common_modules";
 
@@ -451,7 +451,7 @@ class Screen extends React.Component {
 
           <div className="disp_map_button disp_map_button--flex">
             {this.props.store.disp_map.loading ? (
-              <Button className="ui button mini" loading>
+              <button className="ui button mini" loading>
                 Получить все координаты (
                 {
                   this.props.store.disp_map.disp_for_del
@@ -459,7 +459,7 @@ class Screen extends React.Component {
                     .filter((el) => el.RecAddress !== "").length
                 }
                 )
-              </Button>
+              </button>
             ) : (
               <button
                 className="ui button mini"
@@ -478,21 +478,21 @@ class Screen extends React.Component {
 
           <div className="disp_map_button">
             {this.props.store.disp_map.showButton ? (
-              <Button
+              <button
                 className="ui button mini"
                 style={{ width: "190px" }}
                 onClick={() => this.props.set_disp_map_showButton(false)}
               >
                 Скрыть
-              </Button>
+              </button>
             ) : (
-              <Button
+              <button
                 className="ui button mini"
                 style={{ width: "190px" }}
                 onClick={() => this.props.set_disp_map_showButton(true)}
               >
                 Показать
-              </Button>
+              </button>
             )}
           </div>
 
@@ -819,9 +819,9 @@ class Screen extends React.Component {
 
             {this.props.store.disp_map.loadingData ? (
               <div className="disp_map_button">
-                <Button className="ui button mini" loading>
+                <button className="ui button mini" loading>
                   Получить данные
-                </Button>
+                </button>
               </div>
             ) : (
               <div className="disp_map_button">

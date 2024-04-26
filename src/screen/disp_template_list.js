@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Button, Icon, Table } from "semantic-ui-react";
+import { Icon, Table } from "semantic-ui-react";
 import { get_data } from "./../common/common_modules";
 
 class Screen extends React.Component {
@@ -60,9 +60,9 @@ class Screen extends React.Component {
       <div>
         <div className="disp_Number">
           <div>
-            <Button compact icon onClick={this.props.modules.back}>
+            <button onClick={this.props.modules.back}>
               <Icon name="arrow left" />
-            </Button>
+            </button>
             <b className="page_header">Шаблоны отправителей и получателей</b>
           </div>
         </div>
@@ -134,9 +134,9 @@ class Screen extends React.Component {
             )}
           </Table.Body>
         </Table>
-        <Button onClick={this.create_disp_template.bind(this)}>
+        <button onClick={this.create_disp_template.bind(this)}>
           Создать шаблон
-        </Button>
+        </button>
       </div>
     );
   }

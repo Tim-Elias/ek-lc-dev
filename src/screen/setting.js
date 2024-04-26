@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { get_data } from "./../common/common_modules";
 import Select from "react-select";
 import { customStyles } from "./../common/common_style";
-import { Button } from "semantic-ui-react";
 
 class Screen extends React.Component {
   clear_default_send = () => {
@@ -90,21 +89,21 @@ class Screen extends React.Component {
               this.props.store.login.original_data.default_rec ||
             this.props.store.login.phone !==
               this.props.store.login.original_data.phone ? (
-              <Button
+              <button
                 style={{ margin: "0 5px", padding: "8px" }}
                 size="mini"
                 onClick={this.save_changes_user_data.bind(this)}
               >
                 Сохранить изменения
-              </Button>
+              </button>
             ) : (
-              <Button
+              <button
                 style={{ margin: "0 5px", padding: "8px" }}
                 size="mini"
                 disabled
               >
                 Сохранить изменения
-              </Button>
+              </button>
             )}
           </div>
         </div>
@@ -160,13 +159,9 @@ class Screen extends React.Component {
             />
           </div>
           <div className="setting_template_button">
-            <Button
-              onClick={this.clear_default_send.bind(this)}
-              style={{ margin: "0 5px", padding: "6px" }}
-              size="mini"
-            >
+            <button onClick={this.clear_default_send.bind(this)} size="mini">
               X
-            </Button>
+            </button>
           </div>
           <div className="disp_data_label">Шаблон получателя по умолчанию</div>
           <div className="setting_data_el">
@@ -178,13 +173,9 @@ class Screen extends React.Component {
             />
           </div>
           <div className="setting_template_button">
-            <Button
-              onClick={this.clear_default_rec.bind(this)}
-              style={{ margin: "0 5px", padding: "6px" }}
-              size="mini"
-            >
+            <button onClick={this.clear_default_rec.bind(this)} size="mini">
               X
-            </Button>
+            </button>
           </div>
         </div>
 
@@ -199,20 +190,14 @@ class Screen extends React.Component {
             {this.props.store.upload_manifest.disp_template_list.length}
           </div>
           <div className="setting_template_button">
-            <Button
+            <button
               onClick={this.click_disp_template_list.bind(this)}
               style={{ margin: "0 5px", padding: "6px" }}
               size="mini"
             >
               Редактировать
-            </Button>
+            </button>
           </div>
-          {/* <div className="disp_data_label">Шаблоны импорта:</div>
-        <div className="disp_data_el">{this.props.store.upload_manifest.import_template_list.length}</div>
-        <div><Button onClick={this.click_import_template_list.bind(this)} style={{margin: '0 5px', padding: '6px'}} size='mini'>Редактировать</Button></div>
-        <div className="disp_data_label">Шаблоны значений по умолчанию:</div>
-        <div className="disp_data_el">{this.props.store.upload_manifest.default_template_list.length}</div>
-        <div><Button onClick={this.click_default_template_list.bind(this)} style={{margin: '0 5px', padding: '6px'}} size='mini'>Редактировать</Button></div> */}
         </div>
       </div>
     );

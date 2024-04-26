@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Table, Button, Icon } from "semantic-ui-react";
+import { Table, Icon } from "semantic-ui-react";
 import { get_data, get_file } from "./../common/common_modules";
 
 class Screen extends React.Component {
@@ -71,17 +71,17 @@ class Screen extends React.Component {
       <div>
         <div className="disp_Number">
           <div>
-            <Button compact icon onClick={this.back.bind(this)}>
+            <button onClick={this.back.bind(this)}>
               <Icon name="arrow left" />
-            </Button>
+            </button>
             <b className="page_header">
               Реализация № {this.props.store.order.data.Number} от{" "}
               {this.props.store.order.data.Date}
             </b>
-            <Button onClick={this.get_order.bind(this)}>Счёт</Button>
-            <Button onClick={this.get_act.bind(this)}>Акт</Button>
+            <button onClick={this.get_order.bind(this)}>Счёт</button>
+            <button onClick={this.get_act.bind(this)}>Акт</button>
             {this.props.store.order.data.VAT === 0 ? null : (
-              <Button onClick={this.get_cf.bind(this)}>Счёт-фактура</Button>
+              <button onClick={this.get_cf.bind(this)}>Счёт-фактура</button>
             )}
           </div>
         </div>

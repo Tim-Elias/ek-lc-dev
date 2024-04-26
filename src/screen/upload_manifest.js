@@ -2,14 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import Select from "react-select";
 import { customStyles } from "./../common/common_style";
-import {
-  Header,
-  Modal,
-  Table,
-  Button,
-  Icon,
-  Checkbox,
-} from "semantic-ui-react";
+import { Header, Modal, Table, Icon, Checkbox } from "semantic-ui-react";
 import ReactToPrint from "react-to-print";
 import { get_data } from "./../common/common_modules";
 import "semantic-ui-css/semantic.min.css";
@@ -1538,22 +1531,22 @@ class Screen extends React.Component {
                         <ReactToPrint
                           trigger={() => (
                             <div className="upload_manifest_button_container">
-                              <Button size="mini">
+                              <button size="mini">
                                 <Icon name="print"></Icon> Печать
-                              </Button>
+                              </button>
                             </div>
                           )}
                           content={() => this.componentRef[el.Key]}
                         />
                       ) : (
-                        <Button
+                        <button
                           size="mini"
                           onClick={() =>
                             this.props.upload_manifest_remove_disp(el.Key)
                           }
                         >
                           <Icon name="remove"></Icon> Удалить
-                        </Button>
+                        </button>
                       )}
 
                       {el.Status === "Загружено" ? (
@@ -1571,9 +1564,9 @@ class Screen extends React.Component {
                         <ReactToPrint
                           trigger={() => (
                             <div className="upload_manifest_button_container">
-                              <Button size="mini">
+                              <button size="mini">
                                 <Icon name="print"></Icon> Печать наклеек
-                              </Button>
+                              </button>
                             </div>
                           )}
                           content={() => this.stickerRef[el.Key]}

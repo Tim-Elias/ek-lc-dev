@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import { get_data } from "./../common/common_modules";
-import { Button } from "semantic-ui-react";
 import "./disp_map.css";
 import "./my_disp.css";
 
@@ -82,13 +81,13 @@ class Screen extends React.Component {
           ></input>
 
           <div>
-            <Button
+            <button
               style={{ marginTop: "-5px" }}
               size="mini"
               onClick={this.get_my_disp_data.bind(this)}
             >
               Открыть накладную
-            </Button>
+            </button>
           </div>
         </div>
 

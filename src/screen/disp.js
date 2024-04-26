@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import {
   Table,
-  Button,
   Icon,
   Modal,
   Loader,
@@ -666,16 +665,16 @@ class Screen extends React.Component {
       <div>
         <div className="disp_Number">
           <div>
-            <Button compact icon onClick={this.back.bind(this)}>
+            <button onClick={this.back.bind(this)}>
               <Icon name="arrow left" />
-            </Button>{" "}
+            </button>{" "}
             {this.props.store.disp.data.Type}{" "}
             <b>{this.props.store.disp.data.Number} </b>
             <ReactToPrint
               trigger={() => (
-                <Button>
+                <button>
                   <Icon name="print"></Icon> Печать
-                </Button>
+                </button>
               )}
               content={() => this.componentRef}
             />
@@ -689,9 +688,9 @@ class Screen extends React.Component {
             {this.props.store.login.print_ticket ? (
               <ReactToPrint
                 trigger={() => (
-                  <Button>
+                  <button>
                     <Icon name="print"></Icon> Печать наклеек
-                  </Button>
+                  </button>
                 )}
                 content={() => this.stickerRef}
               />
@@ -704,7 +703,7 @@ class Screen extends React.Component {
             </div>
             <Modal
               trigger={
-                <Button onClick={this.open_history.bind(this)}>История</Button>
+                <button onClick={this.open_history.bind(this)}>История</button>
               }
               open={this.props.store.disp.show_history}
               onClose={this.close_history.bind(this)}
@@ -790,16 +789,16 @@ class Screen extends React.Component {
             </Modal>
             {this.props.store.login.create_disp &&
             (this.props.store.login.total_only || CargoInfoType) ? (
-              <Button onClick={this.copy_disp.bind(this, false)}>
+              <button onClick={this.copy_disp.bind(this, false)}>
                 Скопировать
-              </Button>
+              </button>
             ) : null}
             {this.props.store.login.edit_disp &&
             this.props.store.disp.data.Status === "Ожидается от отправителя" ? (
               <Modal
                 closeIcon
                 trigger={
-                  <Button onClick={this.remove_disp.bind(this)}>Удалить</Button>
+                  <button onClick={this.remove_disp.bind(this)}>Удалить</button>
                 }
                 open={this.props.store.disp.show_remove_modal}
                 onClose={this.close_remove_modal.bind(this)}
@@ -829,27 +828,27 @@ class Screen extends React.Component {
                 </Modal.Content>
                 {this.props.store.disp.remove_confirm ? null : (
                   <Modal.Actions>
-                    <Button
+                    <button
                       color="red"
                       onClick={this.close_remove_modal.bind(this)}
                     >
                       <Icon name="remove" /> Нет
-                    </Button>
-                    <Button
+                    </button>
+                    <button
                       color="green"
                       onClick={this.confirm_remove_disp.bind(this)}
                     >
                       <Icon name="checkmark" /> Да
-                    </Button>
+                    </button>
                   </Modal.Actions>
                 )}
               </Modal>
             ) : null}
             {this.props.store.login.edit_disp &&
             this.props.store.disp.data.Status === "Ожидается от отправителя" ? (
-              <Button onClick={this.copy_disp.bind(this, true)}>
+              <button onClick={this.copy_disp.bind(this, true)}>
                 Редактировать
-              </Button>
+              </button>
             ) : null}
           </div>
         </div>
