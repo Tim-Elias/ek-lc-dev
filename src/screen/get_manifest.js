@@ -106,13 +106,15 @@ class Screen extends React.Component {
             <div>
               <table>
                 <thead>
-                  <th>Дата отправления</th>
-                  <th>Номер менифеста</th>
-                  <th>Склад отправления</th>
-                  <th>Перевозчик</th>
-                  <th>Количество накладных</th>
-                  <th>Общее количество мест</th>
-                  <th>Общий вес</th>
+                  <tr>
+                    <th>Дата отправления</th>
+                    <th>Номер менифеста</th>
+                    <th>Склад отправления</th>
+                    <th>Перевозчик</th>
+                    <th>Количество накладных</th>
+                    <th>Общее количество мест</th>
+                    <th>Общий вес</th>
+                  </tr>
                 </thead>
 
                 {this.props.store.get_manifest.list.map((disp, index) => (

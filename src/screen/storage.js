@@ -154,16 +154,18 @@ class Screen extends React.Component {
             <div>
               <table>
                 <thead>
-                  <th>Дата</th>
-                  <th>Тип</th>
-                  <th>Заказчик</th>
-                  <th>Номер накладной</th>
-                  <th>Адрес</th>
-                  <th>Телефон</th>
-                  <th>Контактное лицо</th>
-                  <th>К оплате</th>
-                  <th>Количество мест</th>
-                  <th>Вес</th>
+                  <tr>
+                    <th>Дата</th>
+                    <th>Тип</th>
+                    <th>Заказчик</th>
+                    <th>Номер накладной</th>
+                    <th>Адрес</th>
+                    <th>Телефон</th>
+                    <th>Контактное лицо</th>
+                    <th>К оплате</th>
+                    <th>Количество мест</th>
+                    <th>Вес</th>
+                  </tr>
                 </thead>
 
                 {this.props.store.storage.list

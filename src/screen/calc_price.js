@@ -355,7 +355,7 @@ class Screen extends React.Component {
           {this.props.store.calc_price.calc_price_cargo_info_type.key === 2 ? (
             <div className="disp_cargo_table_data">
               <table>
-                <thead>
+                <thead><tr>
                   <th>Вес (кг)</th>
                   <th>Длина (см)</th>
                   <th>Ширина (см)</th>
@@ -367,7 +367,7 @@ class Screen extends React.Component {
                   {this.props.store.calc_price.CargoList.length === 1 ? null : (
                     <th></th>
                   )}
-                </thead>
+                </tr></thead>
                 <tbody>
                   {this.props.store.calc_price.CargoList.map((Cargo, index) => (
                     <tr key={index}>

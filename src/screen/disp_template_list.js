@@ -68,27 +68,29 @@ class Screen extends React.Component {
 
         <table>
           <thead>
-            <th>
-              <div className="small_table_data">Имя</div>
-            </th>
-            <th>
-              <div className="small_table_data">Город</div>
-            </th>
-            <th>
-              <div className="small_table_data">Адрес</div>
-            </th>
-            <th>
-              <div className="small_table_data">Телефон</div>
-            </th>
-            <th>
-              <div className="small_table_data">Контактное лицо</div>
-            </th>
-            <th>
-              <div className="small_table_data">Компания</div>
-            </th>
-            <th>
-              <div className="small_table_data">Доп.инфо</div>
-            </th>
+            <tr>
+              <th>
+                <div className="small_table_data">Имя</div>
+              </th>
+              <th>
+                <div className="small_table_data">Город</div>
+              </th>
+              <th>
+                <div className="small_table_data">Адрес</div>
+              </th>
+              <th>
+                <div className="small_table_data">Телефон</div>
+              </th>
+              <th>
+                <div className="small_table_data">Контактное лицо</div>
+              </th>
+              <th>
+                <div className="small_table_data">Компания</div>
+              </th>
+              <th>
+                <div className="small_table_data">Доп.инфо</div>
+              </th>
+            </tr>
           </thead>
           <tbody>
             {this.props.store.upload_manifest.disp_template_list.map(

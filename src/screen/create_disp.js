@@ -863,13 +863,15 @@ class Screen extends React.Component {
                 <div className="table-wrapper">
                   <table>
                     <thead className="create_disp_template_list_th">
-                      <th>Имя</th>
-                      <th>Город</th>
-                      <th>Адрес</th>
-                      <th>Телефон</th>
-                      <th>Конт. лицо</th>
-                      <th>Компания</th>
-                      <th>Доп. инфо</th>
+                      <tr>
+                        <th>Имя</th>
+                        <th>Город</th>
+                        <th>Адрес</th>
+                        <th>Телефон</th>
+                        <th>Конт. лицо</th>
+                        <th>Компания</th>
+                        <th>Доп. инфо</th>
+                      </tr>
                     </thead>
                     <tbody>
                       {this.props.store.upload_manifest.disp_template_list
@@ -946,13 +948,15 @@ class Screen extends React.Component {
                 <div className="table-wrapper">
                   <table>
                     <thead className="create_disp_template_list_th">
-                      <th>Имя</th>
-                      <th>Город</th>
-                      <th>Адрес</th>
-                      <th>Телефон</th>
-                      <th>Конт. лицо</th>
-                      <th>Компания</th>
-                      <th>Доп. инфо</th>
+                      <tr>
+                        <th>Имя</th>
+                        <th>Город</th>
+                        <th>Адрес</th>
+                        <th>Телефон</th>
+                        <th>Конт. лицо</th>
+                        <th>Компания</th>
+                        <th>Доп. инфо</th>
+                      </tr>
                     </thead>
                     <tbody>
                       {this.props.store.upload_manifest.disp_template_list
@@ -1324,16 +1328,18 @@ class Screen extends React.Component {
               <div className="disp_cargo_table_data">
                 <table>
                   <thead>
-                    <th>Вес (кг)</th>
-                    <th>Длина (см)</th>
-                    <th>Ширина (см)</th>
-                    <th>Высота (см)</th>
-                    <th>Об. вес</th>
-                    <th>Количество</th>
-                    <th>Итоговый вес</th>
-                    <th>Итог. об. вес</th>
-                    <th>Тип груза</th>
-                    <th></th>
+                    <tr>
+                      <th>Вес (кг)</th>
+                      <th>Длина (см)</th>
+                      <th>Ширина (см)</th>
+                      <th>Высота (см)</th>
+                      <th>Об. вес</th>
+                      <th>Количество</th>
+                      <th>Итоговый вес</th>
+                      <th>Итог. об. вес</th>
+                      <th>Тип груза</th>
+                      <th></th>
+                    </tr>
                   </thead>
                   <tbody>
                     {this.props.store.create_disp.Cargo.map((Cargo, index) => (

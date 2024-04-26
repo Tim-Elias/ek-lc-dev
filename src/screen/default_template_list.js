@@ -21,9 +21,11 @@ class Screen extends React.Component {
         </div>
         <table>
           <thead>
-            <th>
-              <div className="small_table_data">Наименование шаблона</div>
-            </th>
+            <tr>
+              <th>
+                <div className="small_table_data">Наименование шаблона</div>
+              </th>
+            </tr>
           </thead>
           <tbody>
             {this.props.store.upload_manifest.default_template_list.map(

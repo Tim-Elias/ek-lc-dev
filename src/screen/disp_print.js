@@ -190,20 +190,24 @@ class ComponentToPrint extends React.Component {
                         <table className="disp_print_cargo_table">
                           <thead>
                             <tr>
-                              <th className="disp_print_cargo_th top_left_border_radius">
-                                Вес
-                              </th>
-                              <th className="disp_print_cargo_th">Длина</th>
-                              <th className="disp_print_cargo_th">Ширина</th>
-                              <th className="disp_print_cargo_th">Высота</th>
-                              <th className="disp_print_cargo_th">V вес</th>
-                              <th className="disp_print_cargo_th">Кол-во</th>
-                              <th className="disp_print_cargo_th">Σ вес</th>
-                              <th className="disp_print_cargo_th">Σ V вес</th>
-                              <th className="disp_print_cargo_th">Тип груза</th>
-                              <th className="disp_print_cargo_th top_right_border_radius">
-                                Коммент.
-                              </th>
+                              <tr>
+                                <th className="disp_print_cargo_th top_left_border_radius">
+                                  Вес
+                                </th>
+                                <th className="disp_print_cargo_th">Длина</th>
+                                <th className="disp_print_cargo_th">Ширина</th>
+                                <th className="disp_print_cargo_th">Высота</th>
+                                <th className="disp_print_cargo_th">V вес</th>
+                                <th className="disp_print_cargo_th">Кол-во</th>
+                                <th className="disp_print_cargo_th">Σ вес</th>
+                                <th className="disp_print_cargo_th">Σ V вес</th>
+                                <th className="disp_print_cargo_th">
+                                  Тип груза
+                                </th>
+                                <th className="disp_print_cargo_th top_right_border_radius">
+                                  Коммент.
+                                </th>
+                              </tr>
                             </tr>
                           </thead>
                           <tbody>

@@ -89,11 +89,13 @@ class Screen extends React.Component {
             <div className="disp_cargo_table_data">
               <table>
                 <thead>
-                  <th>Приниято</th>
-                  <th>Номер</th>
-                  <th>Заказчик</th>
-                  <th>Количество мест</th>
-                  <th>Вес</th>
+                  <tr>
+                    <th>Приниято</th>
+                    <th>Номер</th>
+                    <th>Заказчик</th>
+                    <th>Количество мест</th>
+                    <th>Вес</th>
+                  </tr>
                 </thead>
                 <tbody>
                   {this.props.store.manifest.data.dispatches.map(

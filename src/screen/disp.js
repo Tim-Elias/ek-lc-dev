@@ -708,9 +708,11 @@ class Screen extends React.Component {
                 ) : (
                   <table>
                     <thead className="create_disp_template_list_th">
-                      <th>Дата</th>
-                      <th>Статус</th>
-                      <th>Комментарий</th>
+                      <tr>
+                        <th>Дата</th>
+                        <th>Статус</th>
+                        <th>Комментарий</th>
+                      </tr>
                     </thead>
 
                     <tbody>
@@ -897,16 +899,18 @@ class Screen extends React.Component {
             {CargoInfoType ? (
               <table>
                 <thead>
-                  <th>Вес</th>
-                  <th>Длина</th>
-                  <th>Ширина</th>
-                  <th>Высота</th>
-                  <th>Об. вес</th>
-                  <th>Количество</th>
-                  <th>Итоговый вес</th>
-                  <th>Итог. об. вес</th>
-                  <th>Тип груза</th>
-                  <th colSpan="2">Комментарий</th>
+                  <tr>
+                    <th>Вес</th>
+                    <th>Длина</th>
+                    <th>Ширина</th>
+                    <th>Высота</th>
+                    <th>Об. вес</th>
+                    <th>Количество</th>
+                    <th>Итоговый вес</th>
+                    <th>Итог. об. вес</th>
+                    <th>Тип груза</th>
+                    <th colSpan="2">Комментарий</th>
+                  </tr>
                 </thead>
                 <tbody>
                   {this.props.store.disp.cargo.map((cargo, index) => (

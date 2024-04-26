@@ -294,52 +294,177 @@ class Screen extends React.Component {
           {this.props.store.my_disp.data.length === 0 ? null : (
             <table>
               <thead>
-                <th>
-                  <div className="small_table_data">Дата</div>
-                </th>
+                <tr>
+                  <th>
+                    <div className="small_table_data">Дата</div>
+                  </th>
 
-                <th>
-                  <div className="small_table_data">
-                    Номер
-                    <div className="my_disp_div_filter on_bottom">
-                      <input
-                        className="my_disp_div_filter_input"
-                        type="text"
-                        value={this.props.store.my_disp.num_filter}
-                        onChange={(e) =>
-                          this.props.set_my_disp_num_filter(e.target.value)
-                        }
-                      ></input>
+                  <th>
+                    <div className="small_table_data">
+                      Номер
+                      <div className="my_disp_div_filter on_bottom">
+                        <input
+                          className="my_disp_div_filter_input"
+                          type="text"
+                          value={this.props.store.my_disp.num_filter}
+                          onChange={(e) =>
+                            this.props.set_my_disp_num_filter(e.target.value)
+                          }
+                        ></input>
+                        <button
+                          className="my_disp_button"
+                          onClick={() => this.props.set_my_disp_num_filter("")}
+                        >
+                          Сброс
+                        </button>
+                      </div>
+                    </div>
+                  </th>
+
+                  <th>
+                    <div className="small_table_data">
+                      Город отправителя
                       <button
                         className="my_disp_button"
-                        onClick={() => this.props.set_my_disp_num_filter("")}
+                        type="text"
+                        onClick={() =>
+                          this.props.set_my_disp_focus_input_send_city()
+                        }
                       >
-                        Сброс
+                        Фильтр
                       </button>
                     </div>
-                  </div>
-                </th>
-
-                <th>
-                  <div className="small_table_data">
-                    Город отправителя
-                    <button
-                      className="my_disp_button"
-                      type="text"
-                      onClick={() =>
-                        this.props.set_my_disp_focus_input_send_city()
-                      }
-                    >
-                      Фильтр
-                    </button>
-                  </div>
-                  {this.props.store.my_disp.focus_input_send_city ? (
-                    <div id="myDropdownSendCity" className="dropdown-content">
-                      <div className="my_disp_dropdown_head">
+                    {this.props.store.my_disp.focus_input_send_city ? (
+                      <div id="myDropdownSendCity" className="dropdown-content">
+                        <div className="my_disp_dropdown_head">
+                          <button
+                            className="margin_right my_disp_button"
+                            onClick={() => {
+                              this.props.set_my_disp_send_city_filter_default(
+                                "select"
+                              );
+                            }}
+                          >
+                            Выбрать все
+                          </button>
+                          <button
+                            className="my_disp_button"
+                            onClick={() => {
+                              this.props.set_my_disp_send_city_filter_default();
+                            }}
+                          >
+                            Отменить все
+                          </button>
+                        </div>
+                        <table>
+                          <tbody>
+                            {this.props.store.my_disp.send_city_filter.map(
+                              (el, index) => {
+                                return (
+                                  <tr
+                                    className="dropdown-content-row"
+                                    key={index}
+                                    onClick={() =>
+                                      this.props.set_check_my_disp_send_city(
+                                        el.id
+                                      )
+                                    }
+                                  >
+                                    <td>
+                                      {el.name === "" ? "(Пустые)" : el.name}
+                                    </td>
+                                    <td>
+                                      <input
+                                        type="checkbox"
+                                        className="input-checkbox"
+                                        checked={el.check}
+                                      />
+                                    </td>
+                                  </tr>
+                                );
+                              }
+                            )}
+                          </tbody>
+                        </table>
                         <button
-                          className="margin_right my_disp_button"
+                          className="my_disp_button"
+                          onClick={() =>
+                            this.props.set_my_disp_focus_input_send_city()
+                          }
+                        >
+                          {" "}
+                          Ок
+                        </button>
+                        <div className="my_disp_filter_selected_text">
+                          &nbsp; Выбрано &nbsp;
+                          {send_city_filter_check_lenght}
+                          &nbsp; из &nbsp;
+                          {send_city_filter_length}
+                        </div>{" "}
+                      </div>
+                    ) : send_city_filter_check_lenght !==
+                      send_city_filter_length ? (
+                      <div className="my_disp_filter_selected_text">
+                        &nbsp;
+                        {send_city_filter_check_lenght} &nbsp; из &nbsp;
+                        {send_city_filter_length}
+                      </div>
+                    ) : null}
+                  </th>
+
+                  <th>
+                    <div className="small_table_data">
+                      Адрес отправителя
+                      <div className="my_disp_div_filter">
+                        <input
+                          className="my_disp_div_filter_input"
+                          value={this.props.store.my_disp.sender_address}
+                          onChange={(e) =>
+                            this.props.set_my_disp_sender_address(
+                              e.target.value
+                            )
+                          }
+                        ></input>
+                        <button
+                          className="my_disp_button"
                           onClick={() => {
-                            this.props.set_my_disp_send_city_filter_default(
+                            this.props.set_my_disp_sender_address("");
+                          }}
+                        >
+                          Сброс
+                        </button>
+                      </div>
+                    </div>
+                  </th>
+
+                  <th>
+                    <div className="small_table_data">Компания отправителя</div>
+                  </th>
+
+                  <th>
+                    <div className="small_table_data">
+                      Город получателя
+                      <button
+                        className="my_disp_button"
+                        type="text"
+                        onClick={() =>
+                          this.props.set_my_disp_focus_input_rec_city()
+                        }
+                      >
+                        Фильтр
+                      </button>
+                      {!this.props.store.my_disp.focus_input_rec_city ? (
+                        <div className="my_disp_filter_selected_text">
+                          {this.props.store.my_disp.filter_rec_city_string}
+                        </div>
+                      ) : null}
+                    </div>
+                    {this.props.store.my_disp.focus_input_rec_city ? (
+                      <div id="myDropdownRecCity" className="dropdown-content">
+                        <button
+                          className="my_disp_button"
+                          onClick={() => {
+                            this.props.set_my_disp_rec_city_filter_default(
                               "select"
                             );
                           }}
@@ -349,424 +474,308 @@ class Screen extends React.Component {
                         <button
                           className="my_disp_button"
                           onClick={() => {
-                            this.props.set_my_disp_send_city_filter_default();
+                            this.props.set_my_disp_rec_city_filter_default();
                           }}
                         >
                           Отменить все
                         </button>
+                        <table>
+                          <tbody>
+                            {this.props.store.my_disp.rec_city_filter.map(
+                              (el, index) => {
+                                return (
+                                  <tr
+                                    className="dropdown-content-row"
+                                    key={index}
+                                    onClick={() =>
+                                      this.props.set_check_my_disp_rec_city(
+                                        el.id
+                                      )
+                                    }
+                                  >
+                                    <td>
+                                      {" "}
+                                      {el.name === "" ? "(Пустые)" : el.name}
+                                    </td>
+                                    <td>
+                                      <input
+                                        type="checkbox"
+                                        className="input-checkbox"
+                                        checked={el.check}
+                                      />
+                                    </td>
+                                  </tr>
+                                );
+                              }
+                            )}
+                          </tbody>
+                        </table>
+                        <button
+                          className="my_disp_button"
+                          onClick={() => {
+                            this.props.set_my_disp_focus_input_rec_city();
+                            this.props.filter_common_string(
+                              this.props.store.my_disp.rec_city_filter
+                            );
+                          }}
+                        >
+                          Ок
+                        </button>
+                        <div className="my_disp_filter_selected_text">
+                          &nbsp; Выбрано &nbsp;
+                          {rec_city_filter_check_lenght}
+                          &nbsp; из &nbsp;
+                          {rec_city_filter_length}
+                        </div>{" "}
                       </div>
-                      <table>
-                        <tbody>
-                          {this.props.store.my_disp.send_city_filter.map(
-                            (el, index) => {
-                              return (
-                                <tr
-                                  className="dropdown-content-row"
-                                  key={index}
-                                  onClick={() =>
-                                    this.props.set_check_my_disp_send_city(
-                                      el.id
-                                    )
-                                  }
-                                >
-                                  <td>
-                                    {el.name === "" ? "(Пустые)" : el.name}
-                                  </td>
-                                  <td>
-                                    <input
-                                      type="checkbox"
-                                      className="input-checkbox"
-                                      checked={el.check}
-                                    />
-                                  </td>
-                                </tr>
-                              );
-                            }
-                          )}
-                        </tbody>
-                      </table>
-                      <button
-                        className="my_disp_button"
-                        onClick={() =>
-                          this.props.set_my_disp_focus_input_send_city()
-                        }
-                      >
-                        {" "}
-                        Ок
-                      </button>
+                    ) : rec_city_filter_check_lenght !==
+                      rec_city_filter_length ? (
                       <div className="my_disp_filter_selected_text">
-                        &nbsp; Выбрано &nbsp;
-                        {send_city_filter_check_lenght}
-                        &nbsp; из &nbsp;
-                        {send_city_filter_length}
-                      </div>{" "}
-                    </div>
-                  ) : send_city_filter_check_lenght !==
-                    send_city_filter_length ? (
-                    <div className="my_disp_filter_selected_text">
-                      &nbsp;
-                      {send_city_filter_check_lenght} &nbsp; из &nbsp;
-                      {send_city_filter_length}
-                    </div>
-                  ) : null}
-                </th>
-
-                <th>
-                  <div className="small_table_data">
-                    Адрес отправителя
-                    <div className="my_disp_div_filter">
-                      <input
-                        className="my_disp_div_filter_input"
-                        value={this.props.store.my_disp.sender_address}
-                        onChange={(e) =>
-                          this.props.set_my_disp_sender_address(e.target.value)
-                        }
-                      ></input>
-                      <button
-                        className="my_disp_button"
-                        onClick={() => {
-                          this.props.set_my_disp_sender_address("");
-                        }}
-                      >
-                        Сброс
-                      </button>
-                    </div>
-                  </div>
-                </th>
-
-                <th>
-                  <div className="small_table_data">Компания отправителя</div>
-                </th>
-
-                <th>
-                  <div className="small_table_data">
-                    Город получателя
-                    <button
-                      className="my_disp_button"
-                      type="text"
-                      onClick={() =>
-                        this.props.set_my_disp_focus_input_rec_city()
-                      }
-                    >
-                      Фильтр
-                    </button>
-                    {!this.props.store.my_disp.focus_input_rec_city ? (
-                      <div className="my_disp_filter_selected_text">
-                        {this.props.store.my_disp.filter_rec_city_string}
-                      </div>
-                    ) : null}
-                  </div>
-                  {this.props.store.my_disp.focus_input_rec_city ? (
-                    <div id="myDropdownRecCity" className="dropdown-content">
-                      <button
-                        className="my_disp_button"
-                        onClick={() => {
-                          this.props.set_my_disp_rec_city_filter_default(
-                            "select"
-                          );
-                        }}
-                      >
-                        Выбрать все
-                      </button>
-                      <button
-                        className="my_disp_button"
-                        onClick={() => {
-                          this.props.set_my_disp_rec_city_filter_default();
-                        }}
-                      >
-                        Отменить все
-                      </button>
-                      <table>
-                        <tbody>
-                          {this.props.store.my_disp.rec_city_filter.map(
-                            (el, index) => {
-                              return (
-                                <tr
-                                  className="dropdown-content-row"
-                                  key={index}
-                                  onClick={() =>
-                                    this.props.set_check_my_disp_rec_city(el.id)
-                                  }
-                                >
-                                  <td>
-                                    {" "}
-                                    {el.name === "" ? "(Пустые)" : el.name}
-                                  </td>
-                                  <td>
-                                    <input
-                                      type="checkbox"
-                                      className="input-checkbox"
-                                      checked={el.check}
-                                    />
-                                  </td>
-                                </tr>
-                              );
-                            }
-                          )}
-                        </tbody>
-                      </table>
-                      <button
-                        className="my_disp_button"
-                        onClick={() => {
-                          this.props.set_my_disp_focus_input_rec_city();
-                          this.props.filter_common_string(
-                            this.props.store.my_disp.rec_city_filter
-                          );
-                        }}
-                      >
-                        Ок
-                      </button>
-                      <div className="my_disp_filter_selected_text">
-                        &nbsp; Выбрано &nbsp;
+                        &nbsp;
                         {rec_city_filter_check_lenght}
                         &nbsp; из &nbsp;
                         {rec_city_filter_length}
-                      </div>{" "}
+                      </div>
+                    ) : null}
+                  </th>
+
+                  <th>
+                    <div className="small_table_data">
+                      Адрес получателя
+                      <div className="my_disp_div_filter">
+                        <input
+                          className="my_disp_div_filter_input"
+                          value={this.props.store.my_disp.rec_address}
+                          onChange={(e) =>
+                            this.props.set_my_disp_rec_address(e.target.value)
+                          }
+                        ></input>
+                        <button
+                          className="my_disp_button"
+                          onClick={() => {
+                            this.props.set_my_disp_rec_address("");
+                          }}
+                        >
+                          Сброс
+                        </button>
+                      </div>
                     </div>
-                  ) : rec_city_filter_check_lenght !==
-                    rec_city_filter_length ? (
-                    <div className="my_disp_filter_selected_text">
-                      &nbsp;
-                      {rec_city_filter_check_lenght}
-                      &nbsp; из &nbsp;
-                      {rec_city_filter_length}
-                    </div>
-                  ) : null}
-                </th>
+                  </th>
 
-                <th>
-                  <div className="small_table_data">
-                    Адрес получателя
-                    <div className="my_disp_div_filter">
-                      <input
-                        className="my_disp_div_filter_input"
-                        value={this.props.store.my_disp.rec_address}
-                        onChange={(e) =>
-                          this.props.set_my_disp_rec_address(e.target.value)
-                        }
-                      ></input>
+                  <th>
+                    <div className="small_table_data">Компания получателя</div>
+                  </th>
+
+                  <th>
+                    <div className="small_table_data">Мест</div>
+                  </th>
+                  <th>
+                    <div className="small_table_data">Вес</div>
+                  </th>
+                  <th>
+                    <div className="small_table_data">V Вес</div>
+                  </th>
+
+                  <th>
+                    <div className="small_table_data">
+                      Вид доставки
                       <button
                         className="my_disp_button"
-                        onClick={() => {
-                          this.props.set_my_disp_rec_address("");
-                        }}
-                      >
-                        Сброс
-                      </button>
-                    </div>
-                  </div>
-                </th>
-
-                <th>
-                  <div className="small_table_data">Компания получателя</div>
-                </th>
-
-                <th>
-                  <div className="small_table_data">Мест</div>
-                </th>
-                <th>
-                  <div className="small_table_data">Вес</div>
-                </th>
-                <th>
-                  <div className="small_table_data">V Вес</div>
-                </th>
-
-                <th>
-                  <div className="small_table_data">
-                    Вид доставки
-                    <button
-                      className="my_disp_button"
-                      type="text"
-                      onClick={() =>
-                        this.props.set_my_disp_focus_input_del_method()
-                      }
-                    >
-                      Фильтр
-                    </button>
-                  </div>
-                  {this.props.store.my_disp.focus_input_del_method ? (
-                    <div id="myDropdownDelMethod" className="dropdown-content">
-                      <button
-                        className="my_disp_button"
-                        onClick={() =>
-                          this.props.set_my_disp_del_method_filter_default(
-                            "select"
-                          )
-                        }
-                      >
-                        Выбрать все
-                      </button>
-                      <button
-                        className="my_disp_button"
-                        onClick={() => {
-                          this.props.set_my_disp_del_method_filter_default();
-                        }}
-                      >
-                        Отменить все
-                      </button>
-                      <table>
-                        <tbody>
-                          {this.props.store.my_disp.del_method_filter.map(
-                            (el, index) => {
-                              return (
-                                <tr
-                                  className="dropdown-content-row"
-                                  key={index}
-                                  onClick={() =>
-                                    this.props.set_check_my_disp_del_method(
-                                      el.id
-                                    )
-                                  }
-                                >
-                                  <td>
-                                    {" "}
-                                    {el.name === "" ? "(Пустые)" : el.name}
-                                  </td>
-                                  <td>
-                                    <input
-                                      type="checkbox"
-                                      className="input-checkbox"
-                                      checked={el.check}
-                                    />
-                                  </td>
-                                </tr>
-                              );
-                            }
-                          )}
-                        </tbody>
-                      </table>
-                      <button
-                        className="my_disp_button"
+                        type="text"
                         onClick={() =>
                           this.props.set_my_disp_focus_input_del_method()
                         }
                       >
-                        Ок
+                        Фильтр
                       </button>
+                    </div>
+                    {this.props.store.my_disp.focus_input_del_method ? (
+                      <div
+                        id="myDropdownDelMethod"
+                        className="dropdown-content"
+                      >
+                        <button
+                          className="my_disp_button"
+                          onClick={() =>
+                            this.props.set_my_disp_del_method_filter_default(
+                              "select"
+                            )
+                          }
+                        >
+                          Выбрать все
+                        </button>
+                        <button
+                          className="my_disp_button"
+                          onClick={() => {
+                            this.props.set_my_disp_del_method_filter_default();
+                          }}
+                        >
+                          Отменить все
+                        </button>
+                        <table>
+                          <tbody>
+                            {this.props.store.my_disp.del_method_filter.map(
+                              (el, index) => {
+                                return (
+                                  <tr
+                                    className="dropdown-content-row"
+                                    key={index}
+                                    onClick={() =>
+                                      this.props.set_check_my_disp_del_method(
+                                        el.id
+                                      )
+                                    }
+                                  >
+                                    <td>
+                                      {" "}
+                                      {el.name === "" ? "(Пустые)" : el.name}
+                                    </td>
+                                    <td>
+                                      <input
+                                        type="checkbox"
+                                        className="input-checkbox"
+                                        checked={el.check}
+                                      />
+                                    </td>
+                                  </tr>
+                                );
+                              }
+                            )}
+                          </tbody>
+                        </table>
+                        <button
+                          className="my_disp_button"
+                          onClick={() =>
+                            this.props.set_my_disp_focus_input_del_method()
+                          }
+                        >
+                          Ок
+                        </button>
+                        <div className="my_disp_filter_selected_text">
+                          &nbsp; Выбрано &nbsp;
+                          {del_method_filter_check_lenght}
+                          &nbsp; из &nbsp;
+                          {del_method_filter_length}
+                        </div>
+                      </div>
+                    ) : del_method_filter_check_lenght !==
+                      del_method_filter_length ? (
                       <div className="my_disp_filter_selected_text">
-                        &nbsp; Выбрано &nbsp;
+                        &nbsp;
                         {del_method_filter_check_lenght}
                         &nbsp; из &nbsp;
                         {del_method_filter_length}
                       </div>
-                    </div>
-                  ) : del_method_filter_check_lenght !==
-                    del_method_filter_length ? (
-                    <div className="my_disp_filter_selected_text">
-                      &nbsp;
-                      {del_method_filter_check_lenght}
-                      &nbsp; из &nbsp;
-                      {del_method_filter_length}
-                    </div>
-                  ) : null}
-                </th>
+                    ) : null}
+                  </th>
 
-                <th>
-                  <div className="small_table_data">Цена </div>
-                </th>
+                  <th>
+                    <div className="small_table_data">Цена </div>
+                  </th>
 
-                <th>
-                  <div className="small_table_data">
-                    Статус
-                    <button
-                      className="my_disp_button"
-                      type="text"
-                      onClick={() =>
-                        this.props.set_my_disp_focus_input_status()
-                      }
-                    >
-                      Фильтр
-                    </button>
-                    <button
-                      className="my_disp_button"
-                      type="text"
-                      onClick={() => this.show_all()}
-                    >
-                      {this.props.store.my_disp.show_all
-                        ? "Скрыть"
-                        : "Показать у всех"}
-                    </button>
-                  </div>
-                  {this.props.store.my_disp.focus_input_status ? (
-                    <div id="myDropdownStatus" className="dropdown-content">
+                  <th>
+                    <div className="small_table_data">
+                      Статус
                       <button
                         className="my_disp_button"
-                        onClick={() => {
-                          this.props.set_my_disp_status_filter_default(
-                            "select"
-                          );
-                        }}
-                      >
-                        Выбрать все
-                      </button>
-                      <button
-                        className="my_disp_button"
-                        onClick={() => {
-                          this.props.set_my_disp_status_filter_default();
-                        }}
-                      >
-                        Отменить все
-                      </button>
-                      <table>
-                        <tbody>
-                          {this.props.store.my_disp.status_filter.map(
-                            (el, index) => {
-                              return (
-                                <tr
-                                  style={{ cursor: "pointer" }}
-                                  key={index}
-                                  onClick={() =>
-                                    this.props.set_check_my_disp_status(el.id)
-                                  }
-                                >
-                                  <td>
-                                    {" "}
-                                    {el.name === "" ? "(Пустые)" : el.name}
-                                  </td>
-                                  <td>
-                                    <input
-                                      type="checkbox"
-                                      className="input-checkbox"
-                                      checked={el.check}
-                                    />
-                                  </td>
-                                </tr>
-                              );
-                            }
-                          )}
-                        </tbody>
-                      </table>
-                      <button
-                        className="my_disp_button"
+                        type="text"
                         onClick={() =>
                           this.props.set_my_disp_focus_input_status()
                         }
                       >
-                        Ок
+                        Фильтр
                       </button>
+                      <button
+                        className="my_disp_button"
+                        type="text"
+                        onClick={() => this.show_all()}
+                      >
+                        {this.props.store.my_disp.show_all
+                          ? "Скрыть"
+                          : "Показать у всех"}
+                      </button>
+                    </div>
+                    {this.props.store.my_disp.focus_input_status ? (
+                      <div id="myDropdownStatus" className="dropdown-content">
+                        <button
+                          className="my_disp_button"
+                          onClick={() => {
+                            this.props.set_my_disp_status_filter_default(
+                              "select"
+                            );
+                          }}
+                        >
+                          Выбрать все
+                        </button>
+                        <button
+                          className="my_disp_button"
+                          onClick={() => {
+                            this.props.set_my_disp_status_filter_default();
+                          }}
+                        >
+                          Отменить все
+                        </button>
+                        <table>
+                          <tbody>
+                            {this.props.store.my_disp.status_filter.map(
+                              (el, index) => {
+                                return (
+                                  <tr
+                                    style={{ cursor: "pointer" }}
+                                    key={index}
+                                    onClick={() =>
+                                      this.props.set_check_my_disp_status(el.id)
+                                    }
+                                  >
+                                    <td>
+                                      {" "}
+                                      {el.name === "" ? "(Пустые)" : el.name}
+                                    </td>
+                                    <td>
+                                      <input
+                                        type="checkbox"
+                                        className="input-checkbox"
+                                        checked={el.check}
+                                      />
+                                    </td>
+                                  </tr>
+                                );
+                              }
+                            )}
+                          </tbody>
+                        </table>
+                        <button
+                          className="my_disp_button"
+                          onClick={() =>
+                            this.props.set_my_disp_focus_input_status()
+                          }
+                        >
+                          Ок
+                        </button>
+                        <div className="my_disp_filter_selected_text">
+                          &nbsp; Выбрано &nbsp;
+                          {status_filter_check_lenght}
+                          &nbsp; из &nbsp;
+                          {status_filter_length}
+                        </div>
+                      </div>
+                    ) : status_filter_check_lenght !== status_filter_length ? (
                       <div className="my_disp_filter_selected_text">
-                        &nbsp; Выбрано &nbsp;
+                        &nbsp;
                         {status_filter_check_lenght}
                         &nbsp; из &nbsp;
                         {status_filter_length}
                       </div>
-                    </div>
-                  ) : status_filter_check_lenght !== status_filter_length ? (
-                    <div className="my_disp_filter_selected_text">
-                      &nbsp;
-                      {status_filter_check_lenght}
-                      &nbsp; из &nbsp;
-                      {status_filter_length}
-                    </div>
-                  ) : null}
-                </th>
+                    ) : null}
+                  </th>
 
-                <th>
-                  <div className="small_table_data">Получатель</div>
-                </th>
-                <th>
-                  <div className="small_table_data">Вручено</div>
-                </th>
+                  <th>
+                    <div className="small_table_data">Получатель</div>
+                  </th>
+                  <th>
+                    <div className="small_table_data">Вручено</div>
+                  </th>
+                </tr>
               </thead>
               <tbody>
                 {this.props.store.my_disp.data
@@ -938,9 +947,11 @@ class Screen extends React.Component {
                             >
                               <thead>
                                 <tr>
-                                  <th>Дата</th>
-                                  <th>Статус</th>
-                                  <th>Комментарий</th>
+                                  <tr>
+                                    <th>Дата</th>
+                                    <th>Статус</th>
+                                    <th>Комментарий</th>
+                                  </tr>
                                 </tr>
                               </thead>
                               <tbody>

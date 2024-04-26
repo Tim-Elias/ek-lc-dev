@@ -387,7 +387,11 @@ class Screen extends React.Component {
         }
       );
       let table = [];
-      table.push(<thead key="hr1">{header}</thead>);
+      table.push(
+        <thead key="hr1">
+          <tr>{header}</tr>
+        </thead>
+      );
       table.push(<tbody key="b1">{body}</tbody>);
 
       return table;
@@ -1103,14 +1107,16 @@ class Screen extends React.Component {
               <div className="table-wrapper">
                 <table>
                   <thead>
-                    <th>Имя</th>
-                    <th>Город</th>
-                    <th>Адрес</th>
-                    <th>Телефон</th>
-                    <th>Конт. лицо</th>
-                    <th>Компания</th>
-                    <th>Доп. инфо</th>
-                    <th></th>
+                    <tr>
+                      <th>Имя</th>
+                      <th>Город</th>
+                      <th>Адрес</th>
+                      <th>Телефон</th>
+                      <th>Конт. лицо</th>
+                      <th>Компания</th>
+                      <th>Доп. инфо</th>
+                      <th></th>
+                    </tr>
                   </thead>
                   <tbody>
                     {this.props.store.upload_manifest.disp_template_list.map(

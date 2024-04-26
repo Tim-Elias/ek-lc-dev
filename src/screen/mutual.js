@@ -99,11 +99,13 @@ class Screen extends React.Component {
             <div className="mutual_table_data">
               <table>
                 <thead>
-                  <th>Дата</th>
-                  <th>Номер</th>
-                  <th>Заказчик</th>
-                  <th>Исполнитель</th>
-                  <th>Сумма</th>
+                  <tr>
+                    <th>Дата</th>
+                    <th>Номер</th>
+                    <th>Заказчик</th>
+                    <th>Исполнитель</th>
+                    <th>Сумма</th>
+                  </tr>
                 </thead>
                 <tbody>
                   {this.props.store.mutual.data.map((el, index) => {

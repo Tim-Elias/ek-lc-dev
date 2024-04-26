@@ -72,14 +72,16 @@ class Screen extends React.Component {
               <table>
                 <thead>
                   <tr>
-                    <th>Дата</th>
-                    <th>Накладная</th>
-                    <th>Заказчик</th>
-                    <th>Действие</th>
-                    <th>Город</th>
-                    <th>Адрес</th>
-                    <th>Вес</th>
-                    <th>Сумма</th>
+                    <tr>
+                      <th>Дата</th>
+                      <th>Накладная</th>
+                      <th>Заказчик</th>
+                      <th>Действие</th>
+                      <th>Город</th>
+                      <th>Адрес</th>
+                      <th>Вес</th>
+                      <th>Сумма</th>
+                    </tr>
                   </tr>
                 </thead>
                 <tbody>

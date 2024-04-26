@@ -69,7 +69,7 @@ class Screen extends React.Component {
     return (
       <div>
         <div className="disp_Number">
-          <div>
+          <div className="disp_actions">
             <button onClick={this.back.bind(this)}>
               <i className="ek-arrow-left" />
             </button>
@@ -97,12 +97,14 @@ class Screen extends React.Component {
         {this.props.store.order.data.UseNomenclature ? (
           <table>
             <thead>
-              <th>
-                <div className="small_table_data">Наименование</div>
-              </th>
-              <th>
-                <div className="small_table_data">Сумма</div>
-              </th>
+              <tr>
+                <th>
+                  <div className="small_table_data">Наименование</div>
+                </th>
+                <th>
+                  <div className="small_table_data">Сумма</div>
+                </th>
+              </tr>
             </thead>
             <tbody>
               {this.props.store.order.nomenclature.map((el, index) => {
@@ -124,30 +126,32 @@ class Screen extends React.Component {
         ) : (
           <table>
             <thead>
-              <th>
-                <div className="small_table_data">Дата</div>
-              </th>
-              <th>
-                <div className="small_table_data">Накладная</div>
-              </th>
-              <th>
-                <div className="small_table_data">Город отправителя</div>
-              </th>
-              <th>
-                <div className="small_table_data">Город получателя</div>
-              </th>
-              <th>
-                <div className="small_table_data">Мест</div>
-              </th>
-              <th>
-                <div className="small_table_data">Вес</div>
-              </th>
-              <th>
-                <div className="small_table_data">Вид доставки</div>
-              </th>
-              <th>
-                <div className="small_table_data">Сумма</div>
-              </th>
+              <tr>
+                <th>
+                  <div className="small_table_data">Дата</div>
+                </th>
+                <th>
+                  <div className="small_table_data">Накладная</div>
+                </th>
+                <th>
+                  <div className="small_table_data">Город отправителя</div>
+                </th>
+                <th>
+                  <div className="small_table_data">Город получателя</div>
+                </th>
+                <th>
+                  <div className="small_table_data">Мест</div>
+                </th>
+                <th>
+                  <div className="small_table_data">Вес</div>
+                </th>
+                <th>
+                  <div className="small_table_data">Вид доставки</div>
+                </th>
+                <th>
+                  <div className="small_table_data">Сумма</div>
+                </th>
+              </tr>
             </thead>
             <tbody>
               {this.props.store.order.dispatches.map((el, index) => {
