@@ -651,14 +651,11 @@ class Screen extends React.Component {
       lng = parseFloat(this.props.store.disp.data.Lng.replace(/,/, "."));
     }
 
-    // const lat = parseFloat(this.props.store.disp.data.Lat.replace(/,/, '.'))
-    // const lng = parseFloat(this.props.store.disp.data.Lng.replace(/,/, '.'))
-
     const center = { lat: lat, lng: lng };
     return (
       <div>
         <div className="disp_Number">
-          <div>
+          <div className="disp_actions">
             <button onClick={this.back.bind(this)}>
               <i className="ek-arrow-left" />
             </button>{" "}
