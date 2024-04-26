@@ -39,7 +39,7 @@ class Screen extends React.Component {
               ></input>
             </div>
             <i
-              className="ek-qrcode"
+              className="ek-qrcode action_icon"
               onClick={(e) =>
                 this.props.set_scann_active(
                   !this.props.store.storage.scann_active

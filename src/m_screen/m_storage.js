@@ -109,9 +109,12 @@ class Screen extends React.Component {
                     this.props.set_search_storagre(e.target.value);
                   }}
                 />
-                <i className="ek-spinner11" onClick={this.update.bind(this)} />
                 <i
-                  className="ek-qrcode"
+                  className="ek-spinner11 action_icon"
+                  onClick={this.update.bind(this)}
+                />
+                <i
+                  className="ek-qrcode action_icon"
                   onClick={(e) =>
                     this.props.set_scann_active(
                       !this.props.store.storage.scann_active

@@ -119,3 +119,9 @@ body {
   font-size: 24px;
   color: #2443B5;
 }
+
+.action_icon {
+  margin: 0 4px;
+  font-size: 18px;
+  color: #2443B5;
+}
