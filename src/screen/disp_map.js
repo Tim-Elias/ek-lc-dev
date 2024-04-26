@@ -155,10 +155,8 @@ class Screen extends React.Component {
         }),
     };
 
-    //console.log(set_courier_data)
     get_data("setcourier", set_courier_data).then(
       (result) => {
-        //console.log(result);
         this.get_map_data(
           this.props.store.disp_map.disp_for_del
             .filter((el) => !el.selected)
@@ -184,8 +182,6 @@ class Screen extends React.Component {
   };
 
   get_map_data = (not_modify) => {
-    // console.log(not_modify)
-
     markers.forEach((el_1) => {
       const search = not_modify.indexOf(el_1.title);
       if (search === -1) {
@@ -199,10 +195,8 @@ class Screen extends React.Component {
       date: this.props.store.disp_map.date,
       not_modify: not_modify,
     };
-    // console.log(data)
     get_data("dispfordel", data).then(
       (result) => {
-        // console.log(result)
         this.props.set_disp_map_disp_for_del(result);
         this.render_markers(result);
         this.props.set_disp_map_loadingData(false);
@@ -225,7 +219,6 @@ class Screen extends React.Component {
   };
 
   geocode = (Num, Address) => {
-    // console.log(Address)
     let geocoder = new g_maps.Geocoder();
     let position;
     const userkey = this.props.store.login.userkey;
@@ -356,8 +349,6 @@ class Screen extends React.Component {
   };
 
   render() {
-    //var polygon_point = this.props.store.disp_map.polygon
-
     const map_clck = (target) => {
       if (this.props.store.disp_map.assignment_mode) {
         this.props.disp_map_add_polygon_point(target);
@@ -376,10 +367,6 @@ class Screen extends React.Component {
               latLng,
               bermudaTriangle
             );
-            //console.log(latLng.lat() + " " + latLng.lng())
-
-            //console.log(el.Num + inside)
-
             if (inside) {
               arr.push(el.Num);
             }
@@ -487,8 +474,6 @@ class Screen extends React.Component {
                 )
               </button>
             )}
-
-            {/* {this.props.store.disp_map.loading ? (<div className="disp_map_loader"></div>) : (null)} */}
           </div>
 
           <div className="disp_map_button">
