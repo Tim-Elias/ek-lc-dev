@@ -666,7 +666,11 @@ class Screen extends React.Component {
               {this.props.store.create_disp.customNumber ? null : (
                 <button
                   onClick={() => this.props.SetCustomNumber(true)}
-                  style={{ height: "16px", fontSize: "13px", padding: "0" }}
+                  style={{
+                    height: "22px",
+                    fontSize: "12px",
+                    padding: "5px 8px",
+                  }}
                 >
                   Ввести номер
                 </button>
