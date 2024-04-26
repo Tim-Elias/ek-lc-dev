@@ -45,9 +45,30 @@ button:hover{
 
 
 .table-wrapper{
-  height: calc(100% - 28px);
+  height: calc(100% - 32px);
   overflow-x: auto;
 }
+
+table{
+  border: 1px solid #c0c0c0;
+  
+}
+
+td{
+  padding: 2px 4px;
+  border: 1px solid #c0c0c0;
+}
+
+th{
+  padding: 8px;
+  font-weight: 600;
+  border: 1px solid #c0c0c0;
+}
+
+tr.active{
+  background-color: #00000020;
+}
+
 
 :root{
   --logo-size:80px;

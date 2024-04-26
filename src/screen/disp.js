@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Table } from "semantic-ui-react";
 import { get_data } from "./../common/common_modules";
 import ReactToPrint from "react-to-print";
 import "./disp.css";
@@ -710,23 +709,21 @@ class Screen extends React.Component {
                     <Dimmer />
                   </div>
                 ) : (
-                  <Table celled compact="very">
-                    <Table.Header className="create_disp_template_list_th">
-                      <Table.Row>
-                        <Table.HeaderCell>Дата</Table.HeaderCell>
-                        <Table.HeaderCell>Статус</Table.HeaderCell>
-                        <Table.HeaderCell>Комментарий</Table.HeaderCell>
-                      </Table.Row>
-                    </Table.Header>
+                  <table>
+                    <thead className="create_disp_template_list_th">
+                      <th>Дата</th>
+                      <th>Статус</th>
+                      <th>Комментарий</th>
+                    </thead>
 
-                    <Table.Body>
+                    <tbody>
                       {this.props.store.disp.history.map((el, index) => (
-                        <Table.Row
+                        <tr
                           className="create_disp_template_list_tr"
                           key={index}
                         >
-                          <Table.Cell>{el.Date}</Table.Cell>
-                          <Table.Cell>
+                          <td>{el.Date}</td>
+                          <td>
                             {el.Status}
                             {el.Skan !== 0 ? (
                               <Modal
@@ -758,12 +755,12 @@ class Screen extends React.Component {
                                 )}
                               </Modal>
                             ) : null}
-                          </Table.Cell>
-                          <Table.Cell>{el.Comment}</Table.Cell>
-                        </Table.Row>
+                          </td>
+                          <td>{el.Comment}</td>
+                        </tr>
                       ))}
-                    </Table.Body>
-                  </Table>
+                    </tbody>
+                  </table>
                 )}
               </div>
             </Modal>
@@ -901,38 +898,36 @@ class Screen extends React.Component {
           <div className="disp_cargo_table_header">Данные о грузах:</div>
           <div className="disp_cargo_table_data">
             {CargoInfoType ? (
-              <Table compact celled size="small">
-                <Table.Header>
-                  <Table.Row>
-                    <Table.HeaderCell>Вес</Table.HeaderCell>
-                    <Table.HeaderCell>Длина</Table.HeaderCell>
-                    <Table.HeaderCell>Ширина</Table.HeaderCell>
-                    <Table.HeaderCell>Высота</Table.HeaderCell>
-                    <Table.HeaderCell>Об. вес</Table.HeaderCell>
-                    <Table.HeaderCell>Количество</Table.HeaderCell>
-                    <Table.HeaderCell>Итоговый вес</Table.HeaderCell>
-                    <Table.HeaderCell>Итог. об. вес</Table.HeaderCell>
-                    <Table.HeaderCell>Тип груза</Table.HeaderCell>
-                    <Table.HeaderCell colSpan="2">Комментарий</Table.HeaderCell>
-                  </Table.Row>
-                </Table.Header>
-                <Table.Body>
+              <table>
+                <thead>
+                  <th>Вес</th>
+                  <th>Длина</th>
+                  <th>Ширина</th>
+                  <th>Высота</th>
+                  <th>Об. вес</th>
+                  <th>Количество</th>
+                  <th>Итоговый вес</th>
+                  <th>Итог. об. вес</th>
+                  <th>Тип груза</th>
+                  <th colSpan="2">Комментарий</th>
+                </thead>
+                <tbody>
                   {this.props.store.disp.cargo.map((cargo, index) => (
-                    <Table.Row key={index}>
-                      <Table.Cell>{cargo.Weight}</Table.Cell>
-                      <Table.Cell>{cargo.L}</Table.Cell>
-                      <Table.Cell>{cargo.W}</Table.Cell>
-                      <Table.Cell>{cargo.H}</Table.Cell>
-                      <Table.Cell>{cargo.Volume}</Table.Cell>
-                      <Table.Cell>{cargo.Q}</Table.Cell>
-                      <Table.Cell>{cargo.TotalWeight}</Table.Cell>
-                      <Table.Cell>{cargo.TotalVolume}</Table.Cell>
-                      <Table.Cell>{cargo.Type}</Table.Cell>
-                      <Table.Cell>{cargo.Comment}</Table.Cell>
-                    </Table.Row>
+                    <tr key={index}>
+                      <td>{cargo.Weight}</td>
+                      <td>{cargo.L}</td>
+                      <td>{cargo.W}</td>
+                      <td>{cargo.H}</td>
+                      <td>{cargo.Volume}</td>
+                      <td>{cargo.Q}</td>
+                      <td>{cargo.TotalWeight}</td>
+                      <td>{cargo.TotalVolume}</td>
+                      <td>{cargo.Type}</td>
+                      <td>{cargo.Comment}</td>
+                    </tr>
                   ))}
-                </Table.Body>
-              </Table>
+                </tbody>
+              </table>
             ) : null}
           </div>
         </div>

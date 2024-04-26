@@ -4,7 +4,6 @@ import { get_data } from "./../common/common_modules";
 import Select from "react-select";
 import "./home_ek.css";
 import { calcPriceStyle } from "./../common/calc_price_style";
-import { Table } from "semantic-ui-react";
 
 class Screen extends React.Component {
   componentDidMount() {
@@ -355,27 +354,24 @@ class Screen extends React.Component {
 
           {this.props.store.calc_price.calc_price_cargo_info_type.key === 2 ? (
             <div className="disp_cargo_table_data">
-              <Table compact celled size="small">
-                <Table.Header>
-                  <Table.Row>
-                    <Table.HeaderCell>Вес (кг)</Table.HeaderCell>
-                    <Table.HeaderCell>Длина (см)</Table.HeaderCell>
-                    <Table.HeaderCell>Ширина (см)</Table.HeaderCell>
-                    <Table.HeaderCell>Высота (см)</Table.HeaderCell>
-                    <Table.HeaderCell>Об. вес</Table.HeaderCell>
-                    <Table.HeaderCell>Количество</Table.HeaderCell>
-                    <Table.HeaderCell>Итоговый вес</Table.HeaderCell>
-                    <Table.HeaderCell>Итог. об. вес</Table.HeaderCell>
-                    {this.props.store.calc_price.CargoList.length ===
-                    1 ? null : (
-                      <Table.HeaderCell></Table.HeaderCell>
-                    )}
-                  </Table.Row>
-                </Table.Header>
-                <Table.Body>
+              <table>
+                <thead>
+                  <th>Вес (кг)</th>
+                  <th>Длина (см)</th>
+                  <th>Ширина (см)</th>
+                  <th>Высота (см)</th>
+                  <th>Об. вес</th>
+                  <th>Количество</th>
+                  <th>Итоговый вес</th>
+                  <th>Итог. об. вес</th>
+                  {this.props.store.calc_price.CargoList.length === 1 ? null : (
+                    <th></th>
+                  )}
+                </thead>
+                <tbody>
                   {this.props.store.calc_price.CargoList.map((Cargo, index) => (
-                    <Table.Row key={index}>
-                      <Table.Cell>
+                    <tr key={index}>
+                      <td>
                         <input
                           className="create_disp_td_input"
                           value={Cargo.Weight}
@@ -384,8 +380,8 @@ class Screen extends React.Component {
                           }
                           type="number"
                         />
-                      </Table.Cell>
-                      <Table.Cell>
+                      </td>
+                      <td>
                         <input
                           className="create_disp_td_input"
                           value={Cargo.L}
@@ -394,8 +390,8 @@ class Screen extends React.Component {
                           }
                           type="number"
                         />
-                      </Table.Cell>
-                      <Table.Cell>
+                      </td>
+                      <td>
                         <input
                           className="create_disp_td_input"
                           value={Cargo.H}
@@ -404,8 +400,8 @@ class Screen extends React.Component {
                           }
                           type="number"
                         />
-                      </Table.Cell>
-                      <Table.Cell>
+                      </td>
+                      <td>
                         <input
                           className="create_disp_td_input"
                           value={Cargo.W}
@@ -414,11 +410,11 @@ class Screen extends React.Component {
                           }
                           type="number"
                         />
-                      </Table.Cell>
-                      <Table.Cell>
+                      </td>
+                      <td>
                         {Math.ceil((Cargo.L * Cargo.W * Cargo.H) / 5) / 1000}
-                      </Table.Cell>
-                      <Table.Cell>
+                      </td>
+                      <td>
                         <input
                           className="create_disp_td_input"
                           value={Cargo.Q}
@@ -427,19 +423,17 @@ class Screen extends React.Component {
                           }
                           type="number"
                         />
-                      </Table.Cell>
-                      <Table.Cell>
-                        {Math.ceil(Cargo.Weight * Cargo.Q * 1000) / 1000}
-                      </Table.Cell>
-                      <Table.Cell>
+                      </td>
+                      <td>{Math.ceil(Cargo.Weight * Cargo.Q * 1000) / 1000}</td>
+                      <td>
                         {Math.ceil(
                           (Cargo.L * Cargo.W * Cargo.H * Cargo.Q) / 5
                         ) / 1000}
-                      </Table.Cell>
+                      </td>
 
                       {this.props.store.calc_price.CargoList.length ===
                       1 ? null : (
-                        <Table.Cell collapsing>
+                        <td>
                           {" "}
                           <button
                             onClick={this.RemoveCargo.bind(this, index)}
@@ -447,12 +441,12 @@ class Screen extends React.Component {
                           >
                             <i className="ek-bin" />
                           </button>
-                        </Table.Cell>
+                        </td>
                       )}
-                    </Table.Row>
+                    </tr>
                   ))}
-                </Table.Body>
-              </Table>
+                </tbody>
+              </table>
               <button onClick={this.props.add_calc_price_cargolist.bind(this)}>
                 Добавить место
               </button>

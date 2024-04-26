@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Table } from "semantic-ui-react";
 import { get_data, get_file } from "./../common/common_modules";
 
 class Screen extends React.Component {
@@ -96,121 +95,101 @@ class Screen extends React.Component {
           </div>
         </div>
         {this.props.store.order.data.UseNomenclature ? (
-          <Table celled size="small" compact="very">
-            <Table.Header>
-              <Table.Row>
-                <Table.HeaderCell>
-                  <div className="small_table_data">Наименование</div>
-                </Table.HeaderCell>
-                <Table.HeaderCell>
-                  <div className="small_table_data">Сумма</div>
-                </Table.HeaderCell>
-              </Table.Row>
-            </Table.Header>
-            <Table.Body>
+          <table>
+            <thead>
+              <th>
+                <div className="small_table_data">Наименование</div>
+              </th>
+              <th>
+                <div className="small_table_data">Сумма</div>
+              </th>
+            </thead>
+            <tbody>
               {this.props.store.order.nomenclature.map((el, index) => {
                 let row_className = "";
 
-                //   if (index === this.props.store.my_disp.active_row){
-                //     row_className = 'active'
-                //   }
-
-                //console.log(row_className)
                 return (
-                  <Table.Row
-                    className={row_className}
-                    key={index}
-                    //onClick={this.tr_click.bind(this,index)}
-                    //onDoubleClick={this.tr_double_click.bind(this, el)}
-                  >
-                    <Table.Cell>
+                  <tr className={row_className} key={index}>
+                    <td>
                       <div className="small_table_data">{el.Name}</div>
-                    </Table.Cell>
-                    <Table.Cell>
+                    </td>
+                    <td>
                       <div className="small_table_data">{el.Summ}</div>
-                    </Table.Cell>
-                  </Table.Row>
+                    </td>
+                  </tr>
                 );
               })}
-            </Table.Body>
-          </Table>
+            </tbody>
+          </table>
         ) : (
-          <Table celled size="small" compact="very">
-            <Table.Header>
-              <Table.Row>
-                <Table.HeaderCell>
-                  <div className="small_table_data">Дата</div>
-                </Table.HeaderCell>
-                <Table.HeaderCell>
-                  <div className="small_table_data">Накладная</div>
-                </Table.HeaderCell>
-                <Table.HeaderCell>
-                  <div className="small_table_data">Город отправителя</div>
-                </Table.HeaderCell>
-                <Table.HeaderCell>
-                  <div className="small_table_data">Город получателя</div>
-                </Table.HeaderCell>
-                <Table.HeaderCell>
-                  <div className="small_table_data">Мест</div>
-                </Table.HeaderCell>
-                <Table.HeaderCell>
-                  <div className="small_table_data">Вес</div>
-                </Table.HeaderCell>
-                <Table.HeaderCell>
-                  <div className="small_table_data">Вид доставки</div>
-                </Table.HeaderCell>
-                <Table.HeaderCell>
-                  <div className="small_table_data">Сумма</div>
-                </Table.HeaderCell>
-              </Table.Row>
-            </Table.Header>
-            <Table.Body>
+          <table>
+            <thead>
+              <th>
+                <div className="small_table_data">Дата</div>
+              </th>
+              <th>
+                <div className="small_table_data">Накладная</div>
+              </th>
+              <th>
+                <div className="small_table_data">Город отправителя</div>
+              </th>
+              <th>
+                <div className="small_table_data">Город получателя</div>
+              </th>
+              <th>
+                <div className="small_table_data">Мест</div>
+              </th>
+              <th>
+                <div className="small_table_data">Вес</div>
+              </th>
+              <th>
+                <div className="small_table_data">Вид доставки</div>
+              </th>
+              <th>
+                <div className="small_table_data">Сумма</div>
+              </th>
+            </thead>
+            <tbody>
               {this.props.store.order.dispatches.map((el, index) => {
                 let row_className = "";
 
-                //   if (index === this.props.store.my_disp.active_row){
-                //     row_className = 'active'
-                //   }
-
-                //console.log(row_className)
                 return (
-                  <Table.Row
+                  <tr
                     className={row_className}
                     key={index}
-                    //onClick={this.tr_click.bind(this,index)}
                     onDoubleClick={this.tr_double_click.bind(this, el)}
                   >
-                    <Table.Cell>
+                    <td>
                       <div className="small_table_data">{el.Date}</div>
-                    </Table.Cell>
-                    <Table.Cell>
+                    </td>
+                    <td>
                       <div className="small_table_data">{el.Num}</div>
-                    </Table.Cell>
-                    <Table.Cell>
+                    </td>
+                    <td>
                       <div className="small_table_data">{el.SendCity}</div>
-                    </Table.Cell>
-                    <Table.Cell>
+                    </td>
+                    <td>
                       <div className="small_table_data">{el.RecCity}</div>
-                    </Table.Cell>
+                    </td>
 
-                    <Table.Cell>
+                    <td>
                       <div className="small_table_data">{el.Total}</div>
-                    </Table.Cell>
-                    <Table.Cell>
+                    </td>
+                    <td>
                       <div className="small_table_data">{el.Weight}</div>
-                    </Table.Cell>
+                    </td>
 
-                    <Table.Cell>
+                    <td>
                       <div className="small_table_data">{el.DelMethod}</div>
-                    </Table.Cell>
-                    <Table.Cell>
+                    </td>
+                    <td>
                       <div className="small_table_data">{el.Summ}</div>
-                    </Table.Cell>
-                  </Table.Row>
+                    </td>
+                  </tr>
                 );
               })}
-            </Table.Body>
-          </Table>
+            </tbody>
+          </table>
         )}
 
         <div className="disp_customer_data">

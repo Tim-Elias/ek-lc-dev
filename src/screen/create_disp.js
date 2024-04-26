@@ -4,7 +4,6 @@ import "./create_disp.css";
 import { get_data } from "./../common/common_modules";
 import Select from "react-select";
 import { customStyles } from "./../common/common_style";
-import { Table } from "semantic-ui-react";
 import Modal from "../ui-components/modal/modal";
 
 const CargoInfoTypeList = [
@@ -862,19 +861,17 @@ class Screen extends React.Component {
                 </div>
 
                 <div className="table-wrapper">
-                  <Table celled compact="very">
-                    <Table.Header className="create_disp_template_list_th">
-                      <Table.Row>
-                        <Table.HeaderCell>Имя</Table.HeaderCell>
-                        <Table.HeaderCell>Город</Table.HeaderCell>
-                        <Table.HeaderCell>Адрес</Table.HeaderCell>
-                        <Table.HeaderCell>Телефон</Table.HeaderCell>
-                        <Table.HeaderCell>Конт. лицо</Table.HeaderCell>
-                        <Table.HeaderCell>Компания</Table.HeaderCell>
-                        <Table.HeaderCell>Доп. инфо</Table.HeaderCell>
-                      </Table.Row>
-                    </Table.Header>
-                    <Table.Body>
+                  <table>
+                    <thead className="create_disp_template_list_th">
+                      <th>Имя</th>
+                      <th>Город</th>
+                      <th>Адрес</th>
+                      <th>Телефон</th>
+                      <th>Конт. лицо</th>
+                      <th>Компания</th>
+                      <th>Доп. инфо</th>
+                    </thead>
+                    <tbody>
                       {this.props.store.upload_manifest.disp_template_list
                         .filter(
                           (el) =>
@@ -886,7 +883,7 @@ class Screen extends React.Component {
                             ) !== -1
                         )
                         .map((el, index) => (
-                          <Table.Row
+                          <tr
                             className="create_disp_template_list_tr"
                             key={index}
                             onDoubleClick={this.SelectSendTemplate.bind(
@@ -894,21 +891,21 @@ class Screen extends React.Component {
                               el
                             )}
                           >
-                            <Table.Cell>{el.label}</Table.Cell>
-                            <Table.Cell>{el.City}</Table.Cell>
-                            <Table.Cell>
+                            <td>{el.label}</td>
+                            <td>{el.City}</td>
+                            <td>
                               {el.Terminal
                                 ? el.CurrentTerminal + " (Cклад)"
                                 : el.Adress}
-                            </Table.Cell>
-                            <Table.Cell>{el.Phone}</Table.Cell>
-                            <Table.Cell>{el.Person}</Table.Cell>
-                            <Table.Cell>{el.Company}</Table.Cell>
-                            <Table.Cell>{el.AddInfo}</Table.Cell>
-                          </Table.Row>
+                            </td>
+                            <td>{el.Phone}</td>
+                            <td>{el.Person}</td>
+                            <td>{el.Company}</td>
+                            <td>{el.AddInfo}</td>
+                          </tr>
                         ))}
-                    </Table.Body>
-                  </Table>
+                    </tbody>
+                  </table>
                 </div>
               </Modal>
             </div>
@@ -947,19 +944,17 @@ class Screen extends React.Component {
                   />
                 </div>
                 <div className="table-wrapper">
-                  <Table celled compact="very">
-                    <Table.Header className="create_disp_template_list_th">
-                      <Table.Row>
-                        <Table.HeaderCell>Имя</Table.HeaderCell>
-                        <Table.HeaderCell>Город</Table.HeaderCell>
-                        <Table.HeaderCell>Адрес</Table.HeaderCell>
-                        <Table.HeaderCell>Телефон</Table.HeaderCell>
-                        <Table.HeaderCell>Конт. лицо</Table.HeaderCell>
-                        <Table.HeaderCell>Компания</Table.HeaderCell>
-                        <Table.HeaderCell>Доп. инфо</Table.HeaderCell>
-                      </Table.Row>
-                    </Table.Header>
-                    <Table.Body>
+                  <table>
+                    <thead className="create_disp_template_list_th">
+                      <th>Имя</th>
+                      <th>Город</th>
+                      <th>Адрес</th>
+                      <th>Телефон</th>
+                      <th>Конт. лицо</th>
+                      <th>Компания</th>
+                      <th>Доп. инфо</th>
+                    </thead>
+                    <tbody>
                       {this.props.store.upload_manifest.disp_template_list
                         .filter(
                           (el) =>
@@ -971,7 +966,7 @@ class Screen extends React.Component {
                             ) !== -1
                         )
                         .map((el, index) => (
-                          <Table.Row
+                          <tr
                             className="create_disp_template_list_tr"
                             key={index}
                             onDoubleClick={this.SelectRecTemplate.bind(
@@ -979,21 +974,21 @@ class Screen extends React.Component {
                               el
                             )}
                           >
-                            <Table.Cell>{el.label}</Table.Cell>
-                            <Table.Cell>{el.City}</Table.Cell>
-                            <Table.Cell>
+                            <td>{el.label}</td>
+                            <td>{el.City}</td>
+                            <td>
                               {el.Terminal
                                 ? el.CurrentTerminal + " (Cклад)"
                                 : el.Adress}
-                            </Table.Cell>
-                            <Table.Cell>{el.Phone}</Table.Cell>
-                            <Table.Cell>{el.Person}</Table.Cell>
-                            <Table.Cell>{el.Company}</Table.Cell>
-                            <Table.Cell>{el.AddInfo}</Table.Cell>
-                          </Table.Row>
+                            </td>
+                            <td>{el.Phone}</td>
+                            <td>{el.Person}</td>
+                            <td>{el.Company}</td>
+                            <td>{el.AddInfo}</td>
+                          </tr>
                         ))}
-                    </Table.Body>
-                  </Table>
+                    </tbody>
+                  </table>
                 </div>
               </Modal>
             </div>
@@ -1327,25 +1322,23 @@ class Screen extends React.Component {
           {!this.props.store.create_disp.CargoInfoType.value ? (
             <div>
               <div className="disp_cargo_table_data">
-                <Table compact celled size="small">
-                  <Table.Header>
-                    <Table.Row>
-                      <Table.HeaderCell>Вес (кг)</Table.HeaderCell>
-                      <Table.HeaderCell>Длина (см)</Table.HeaderCell>
-                      <Table.HeaderCell>Ширина (см)</Table.HeaderCell>
-                      <Table.HeaderCell>Высота (см)</Table.HeaderCell>
-                      <Table.HeaderCell>Об. вес</Table.HeaderCell>
-                      <Table.HeaderCell>Количество</Table.HeaderCell>
-                      <Table.HeaderCell>Итоговый вес</Table.HeaderCell>
-                      <Table.HeaderCell>Итог. об. вес</Table.HeaderCell>
-                      <Table.HeaderCell>Тип груза</Table.HeaderCell>
-                      <Table.HeaderCell></Table.HeaderCell>
-                    </Table.Row>
-                  </Table.Header>
-                  <Table.Body>
+                <table>
+                  <thead>
+                    <th>Вес (кг)</th>
+                    <th>Длина (см)</th>
+                    <th>Ширина (см)</th>
+                    <th>Высота (см)</th>
+                    <th>Об. вес</th>
+                    <th>Количество</th>
+                    <th>Итоговый вес</th>
+                    <th>Итог. об. вес</th>
+                    <th>Тип груза</th>
+                    <th></th>
+                  </thead>
+                  <tbody>
                     {this.props.store.create_disp.Cargo.map((Cargo, index) => (
-                      <Table.Row key={index}>
-                        <Table.Cell>
+                      <tr key={index}>
+                        <td>
                           <input
                             className="create_disp_td_input"
                             onKeyDown={(e) => this.handleKeyPress(e)}
@@ -1355,8 +1348,8 @@ class Screen extends React.Component {
                             value={Cargo.Weight}
                             type="number"
                           />
-                        </Table.Cell>
-                        <Table.Cell>
+                        </td>
+                        <td>
                           <input
                             className="create_disp_td_input"
                             onKeyDown={(e) => this.handleKeyPress(e)}
@@ -1366,8 +1359,8 @@ class Screen extends React.Component {
                             value={Cargo.L}
                             type="number"
                           />
-                        </Table.Cell>
-                        <Table.Cell>
+                        </td>
+                        <td>
                           <input
                             className="create_disp_td_input"
                             onKeyDown={(e) => this.handleKeyPress(e)}
@@ -1377,8 +1370,8 @@ class Screen extends React.Component {
                             value={Cargo.W}
                             type="number"
                           />
-                        </Table.Cell>
-                        <Table.Cell>
+                        </td>
+                        <td>
                           <input
                             className="create_disp_td_input"
                             onKeyDown={(e) => this.handleKeyPress(e)}
@@ -1388,11 +1381,11 @@ class Screen extends React.Component {
                             value={Cargo.H}
                             type="number"
                           />
-                        </Table.Cell>
-                        <Table.Cell>
+                        </td>
+                        <td>
                           {Math.ceil((Cargo.L * Cargo.W * Cargo.H) / 5) / 1000}
-                        </Table.Cell>
-                        <Table.Cell>
+                        </td>
+                        <td>
                           <input
                             className="create_disp_td_input"
                             onKeyDown={(e) => this.handleKeyPress(e)}
@@ -1402,16 +1395,16 @@ class Screen extends React.Component {
                             value={Cargo.Q}
                             type="number"
                           />
-                        </Table.Cell>
-                        <Table.Cell>
+                        </td>
+                        <td>
                           {Math.ceil(Cargo.Weight * Cargo.Q * 1000) / 1000}
-                        </Table.Cell>
-                        <Table.Cell>
+                        </td>
+                        <td>
                           {Math.ceil(
                             (Cargo.L * Cargo.W * Cargo.H * Cargo.Q) / 5
                           ) / 1000}
-                        </Table.Cell>
-                        <Table.Cell>
+                        </td>
+                        <td>
                           <Select
                             options={CargoTypeList}
                             styles={customStyles}
@@ -1420,10 +1413,10 @@ class Screen extends React.Component {
                               this.SetCargoType(values, index)
                             }
                           />
-                        </Table.Cell>
+                        </td>
                         {this.props.store.create_disp.Cargo.length ===
                         1 ? null : (
-                          <Table.Cell collapsing>
+                          <td>
                             {" "}
                             <button
                               onClick={this.RemoveCargo.bind(this, index)}
@@ -1431,12 +1424,12 @@ class Screen extends React.Component {
                             >
                               <i className="ek-bin" />
                             </button>
-                          </Table.Cell>
+                          </td>
                         )}
-                      </Table.Row>
+                      </tr>
                     ))}
-                  </Table.Body>
-                </Table>
+                  </tbody>
+                </table>
               </div>
               <button onClick={this.AddCargo.bind(this)}>Добавить место</button>
 

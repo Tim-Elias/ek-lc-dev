@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import GoogleMapReact from "google-map-react";
-import { List } from "semantic-ui-react";
 import "./disp_map.css";
 import { get_data } from "./../common/common_modules";
 
@@ -586,7 +585,7 @@ class Screen extends React.Component {
             </div>
           </div>
 
-          <List divided relaxed>
+          <li>
             {this.props.store.disp_map.courier_list.map((courier, index) => {
               const courier_disp = this.props.store.disp_map.disp_for_del
                 .filter((el) => el.TaskValue === courier.text)
@@ -615,115 +614,106 @@ class Screen extends React.Component {
               const q = courier_disp.length;
               if (q > 0) {
                 return (
-                  <List.Item key={index}>
-                    {/* <List.Icon name='circle' verticalAlign='middle' /> */}
+                  <ul key={index}>
                     <i
                       onClick={this.set_courier_filter.bind(this, courier.text)}
                       aria-hidden="true"
                       className="circle icon"
                       style={{ color: courier.color }}
-                    ></i>
-                    <List.Content>
-                      {courier.text === "" ? (
-                        <List.Description
-                          as="a"
-                          onClick={() =>
-                            this.props.check_courier_disp_map(courier.key)
-                          }
-                        >
-                          {"Не распределено"} <b>({q})</b>
-                        </List.Description>
-                      ) : (
-                        <List.Description
-                          as="a"
-                          onClick={() =>
-                            this.props.check_courier_disp_map(courier.key)
-                          }
-                        >
-                          {courier.text}
-                          {courier_disp_work !== 0 ? (
-                            <b>({courier_disp_work})</b>
-                          ) : null}
-                          {courier_disp_not_work !== 0 ? (
-                            <b style={{ color: "red" }}>
-                              ({courier_disp_not_work})
-                            </b>
-                          ) : null}
-                        </List.Description>
-                      )}
+                    />
+                    {courier.text === "" ? (
+                      <p
+                        onClick={() =>
+                          this.props.check_courier_disp_map(courier.key)
+                        }
+                      >
+                        {"Не распределено"} <b>({q})</b>
+                      </p>
+                    ) : (
+                      <p
+                        onClick={() =>
+                          this.props.check_courier_disp_map(courier.key)
+                        }
+                      >
+                        {courier.text}
+                        {courier_disp_work !== 0 ? (
+                          <b>({courier_disp_work})</b>
+                        ) : null}
+                        {courier_disp_not_work !== 0 ? (
+                          <b style={{ color: "red" }}>
+                            ({courier_disp_not_work})
+                          </b>
+                        ) : null}
+                      </p>
+                    )}
 
-                      {courier.checked ? (
-                        <List.List>
-                          {courier_disp.map((disp, index) => {
-                            let color_row;
-                            if (disp.selected) {
-                              color_row = "#DDD";
-                            } else {
-                              color_row = "#FFF";
-                            }
-                            return (
-                              <List.Item key={index}>
-                                <List.Content
-                                  style={{ backgroundColor: color_row }}
-                                  onClick={this.marker_onClick.bind(
-                                    this,
-                                    disp.Num
-                                  )}
-                                >
-                                  <List.Header as="a">
-                                    {disp.Num}
-                                    <button
-                                      onClick={this.open_disp.bind(
-                                        this,
-                                        disp.Num
-                                      )}
-                                    >
-                                      <i className="ek-enlarge" />
-                                    </button>
-                                    {disp.StatusType === "У сотрудника" ? (
-                                      <i className="ek-truck" />
-                                    ) : (
-                                      <i className="red ek-checkbox-unchecked" />
+                    {courier.checked ? (
+                      <li>
+                        {courier_disp.map((disp, index) => {
+                          let color_row;
+                          if (disp.selected) {
+                            color_row = "#DDD";
+                          } else {
+                            color_row = "#FFF";
+                          }
+                          return (
+                            <ul key={index}>
+                              <p
+                                style={{ backgroundColor: color_row }}
+                                onClick={this.marker_onClick.bind(
+                                  this,
+                                  disp.Num
+                                )}
+                              >
+                                <h4>
+                                  {disp.Num}
+                                  <button
+                                    onClick={this.open_disp.bind(
+                                      this,
+                                      disp.Num
                                     )}
-                                  </List.Header>
-                                  <List.Description as="a">
-                                    {disp.RecCity}
-                                  </List.Description>
-                                  <List.Description as="a">
-                                    {disp.RecAddress}
-                                  </List.Description>
-                                  <List.Description as="a">
-                                    {"Вес:" +
-                                      disp.Weight +
-                                      " (" +
-                                      Math.round(disp.Volume * 5) / 1000 +
-                                      ")"}
-                                  </List.Description>
-                                  {(disp.RecLat === "" || disp.RecLng === "") &&
-                                  disp.RecAddress !== "" ? (
-                                    <button
-                                      onClick={this.geocode.bind(
-                                        this,
-                                        disp.Num,
-                                        disp.RecCity + disp.RecAddress
-                                      )}
-                                    >
-                                      <i className="red ek-search" />
-                                    </button>
-                                  ) : null}
-                                </List.Content>
-                              </List.Item>
-                            );
-                          })}
-                        </List.List>
-                      ) : null}
-                    </List.Content>
-                  </List.Item>
+                                  >
+                                    <i className="ek-enlarge" />
+                                  </button>
+                                  {disp.StatusType === "У сотрудника" ? (
+                                    <i className="ek-truck" />
+                                  ) : (
+                                    <i className="red ek-checkbox-unchecked" />
+                                  )}
+                                </h4>
+                                <div>{disp.RecCity}</div>
+                                <div>{disp.RecAddress}</div>
+                                <div>
+                                  {"Вес:" +
+                                    disp.Weight +
+                                    " (" +
+                                    Math.round(disp.Volume * 5) / 1000 +
+                                    ")"}
+                                </div>
+                                {(disp.RecLat === "" || disp.RecLng === "") &&
+                                disp.RecAddress !== "" ? (
+                                  <button
+                                    onClick={this.geocode.bind(
+                                      this,
+                                      disp.Num,
+                                      disp.RecCity + disp.RecAddress
+                                    )}
+                                  >
+                                    <i className="red ek-search" />
+                                  </button>
+                                ) : null}
+                              </p>
+                            </ul>
+                          );
+                        })}
+                      </li>
+                    ) : null}
+                  </ul>
                 );
               }
               return null;
             })}
-          </List>
+          </li>
 
           {this.props.store.disp_map.errorMass.length > 0 ? (
             <div className="disp_map_error">

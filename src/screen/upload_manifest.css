@@ -1,7 +1,7 @@
 .upload_manifest_control_panel{
     display: grid;
     grid-template-rows: 1fr;
-    grid-template-columns: 130px 1fr 40px 180px 1fr 40px 130px 50px 40px 120px 1fr;
+    grid-template-columns: 130px 1fr 52px 180px 1fr 52px 130px 50px 52px 120px 1fr;
     margin-top: 5px;
 }
 

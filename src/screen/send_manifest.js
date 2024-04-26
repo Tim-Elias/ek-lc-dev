@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import "./send_manifest.css";
-import { Table } from "semantic-ui-react";
 
 import { get_data } from "./../common/common_modules";
 
@@ -136,40 +135,38 @@ class Screen extends React.Component {
         {this.props.store.storage.list.filter((el) => el.selected).length !==
         0 ? (
           <div>
-            <Table>
-              <Table.Header>
-                <Table.Row>
-                  <Table.HeaderCell>Дата</Table.HeaderCell>
-                  <Table.HeaderCell>Тип</Table.HeaderCell>
-                  <Table.HeaderCell>Заказчик</Table.HeaderCell>
-                  <Table.HeaderCell>Номер накладной</Table.HeaderCell>
-                  <Table.HeaderCell>Адрес</Table.HeaderCell>
-                  <Table.HeaderCell>Телефон</Table.HeaderCell>
-                  <Table.HeaderCell>Контактное лицо</Table.HeaderCell>
-                  <Table.HeaderCell>К оплате</Table.HeaderCell>
-                  <Table.HeaderCell>Количество мест</Table.HeaderCell>
-                  <Table.HeaderCell>Вес</Table.HeaderCell>
-                </Table.Row>
-              </Table.Header>
-              <Table.Body>
+            <table>
+              <thead>
+                <th>Дата</th>
+                <th>Тип</th>
+                <th>Заказчик</th>
+                <th>Номер накладной</th>
+                <th>Адрес</th>
+                <th>Телефон</th>
+                <th>Контактное лицо</th>
+                <th>К оплате</th>
+                <th>Количество мест</th>
+                <th>Вес</th>
+              </thead>
+              <tbody>
                 {this.props.store.storage.list
                   .filter((el) => el.selected)
                   .map((disp, index) => (
-                    <Table.Row key={index}>
-                      <Table.Cell>{disp.Date}</Table.Cell>
-                      <Table.Cell>{disp.Type}</Table.Cell>
-                      <Table.Cell>{disp.Customer}</Table.Cell>
-                      <Table.Cell>{disp.Number}</Table.Cell>
-                      <Table.Cell>{disp.Adress}</Table.Cell>
-                      <Table.Cell>{disp.Phone}</Table.Cell>
-                      <Table.Cell>{disp.Person}</Table.Cell>
-                      <Table.Cell>{disp.COD}</Table.Cell>
-                      <Table.Cell>{disp.total}</Table.Cell>
-                      <Table.Cell>{disp.weight}</Table.Cell>
-                    </Table.Row>
+                    <tr key={index}>
+                      <td>{disp.Date}</td>
+                      <td>{disp.Type}</td>
+                      <td>{disp.Customer}</td>
+                      <td>{disp.Number}</td>
+                      <td>{disp.Adress}</td>
+                      <td>{disp.Phone}</td>
+                      <td>{disp.Person}</td>
+                      <td>{disp.COD}</td>
+                      <td>{disp.total}</td>
+                      <td>{disp.weight}</td>
+                    </tr>
                   ))}
-              </Table.Body>
-            </Table>
+              </tbody>
+            </table>
           </div>
         ) : (
           ""

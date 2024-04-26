@@ -2,10 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import Select from "react-select";
 import { customStyles } from "./../common/common_style";
-import { Table } from "semantic-ui-react";
 import ReactToPrint from "react-to-print";
 import { get_data } from "./../common/common_modules";
-import "semantic-ui-css/semantic.min.css";
 import "./upload_manifest.css";
 import ComponentToPrint from "./disp_print";
 import StickerToPrint from "./sticker_print";
@@ -354,11 +352,9 @@ class Screen extends React.Component {
         }
 
         if (results.length > 0) {
-          header.push(
-            <Table.HeaderCell key={i}>{results[0]}</Table.HeaderCell>
-          );
+          header.push(<th key={i}>{results[0]}</th>);
         } else {
-          header.push(<Table.HeaderCell key={i}> </Table.HeaderCell>);
+          header.push(<th key={i}> </th>);
         }
       }
 
@@ -369,7 +365,7 @@ class Screen extends React.Component {
           element.forEach((cell, cell_index) => {
             if (cell === true || cell === false) {
               children.push(
-                <Table.Cell key={cell_index}>
+                <td key={cell_index}>
                   <input
                     type="checkbox"
                     className="input-checkbox"
@@ -380,23 +376,19 @@ class Screen extends React.Component {
                     )}
                     checked={cell}
                   />
-                </Table.Cell>
+                </td>
               );
             } else {
-              children.push(<Table.Cell key={cell_index}>{cell}</Table.Cell>);
+              children.push(<td key={cell_index}>{cell}</td>);
             }
           });
 
-          body.push(<Table.Row key={element_index}>{children}</Table.Row>);
+          body.push(<tr key={element_index}>{children}</tr>);
         }
       );
       let table = [];
-      table.push(
-        <Table.Header key="h1">
-          <Table.Row key="hr1">{header}</Table.Row>
-        </Table.Header>
-      );
-      table.push(<Table.Body key="b1">{body}</Table.Body>);
+      table.push(<thead key="hr1">{header}</thead>);
+      table.push(<tbody key="b1">{body}</tbody>);
 
       return table;
     }
@@ -1109,37 +1101,35 @@ class Screen extends React.Component {
               width="90%"
             >
               <div className="table-wrapper">
-                <Table celled compact="very">
-                  <Table.Header>
-                    <Table.Row>
-                      <Table.HeaderCell>Имя</Table.HeaderCell>
-                      <Table.HeaderCell>Город</Table.HeaderCell>
-                      <Table.HeaderCell>Адрес</Table.HeaderCell>
-                      <Table.HeaderCell>Телефон</Table.HeaderCell>
-                      <Table.HeaderCell>Конт. лицо</Table.HeaderCell>
-                      <Table.HeaderCell>Компания</Table.HeaderCell>
-                      <Table.HeaderCell>Доп. инфо</Table.HeaderCell>
-                      <Table.HeaderCell></Table.HeaderCell>
-                    </Table.Row>
-                  </Table.Header>
-                  <Table.Body>
+                <table>
+                  <thead>
+                    <th>Имя</th>
+                    <th>Город</th>
+                    <th>Адрес</th>
+                    <th>Телефон</th>
+                    <th>Конт. лицо</th>
+                    <th>Компания</th>
+                    <th>Доп. инфо</th>
+                    <th></th>
+                  </thead>
+                  <tbody>
                     {this.props.store.upload_manifest.disp_template_list.map(
                       (el, index) => (
-                        <Table.Row
+                        <tr
                           key={index}
                           onDoubleClick={this.upload_manifest_click_template_row.bind(
                             this,
                             el
                           )}
                         >
-                          <Table.Cell>{el.label}</Table.Cell>
-                          <Table.Cell>{el.City}</Table.Cell>
-                          <Table.Cell>{el.Adress}</Table.Cell>
-                          <Table.Cell>{el.Phone}</Table.Cell>
-                          <Table.Cell>{el.Person}</Table.Cell>
-                          <Table.Cell>{el.Company}</Table.Cell>
-                          <Table.Cell>{el.AddInfo}</Table.Cell>
-                          <Table.Cell>
+                          <td>{el.label}</td>
+                          <td>{el.City}</td>
+                          <td>{el.Adress}</td>
+                          <td>{el.Phone}</td>
+                          <td>{el.Person}</td>
+                          <td>{el.Company}</td>
+                          <td>{el.AddInfo}</td>
+                          <td>
                             <input
                               onChange={() =>
                                 this.props.upload_manifest_check_template_checkbox(
@@ -1150,12 +1140,12 @@ class Screen extends React.Component {
                               className="input-checkbox"
                               checked={el.selected}
                             ></input>
-                          </Table.Cell>
-                        </Table.Row>
+                          </td>
+                        </tr>
                       )
                     )}
-                  </Table.Body>
-                </Table>
+                  </tbody>
+                </table>
               </div>
               {this.props.store.upload_manifest.disp_template_list.filter(
                 (el) => {
@@ -1197,9 +1187,7 @@ class Screen extends React.Component {
         </div>
 
         <div>
-          <Table celled compact="very" size="small">
-            {this.create_table()}
-          </Table>
+          <table>{this.create_table()}</table>
         </div>
 
         <div>

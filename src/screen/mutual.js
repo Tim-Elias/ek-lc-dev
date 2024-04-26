@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import "./mutual.css";
-import { Table } from "semantic-ui-react";
 import { get_data } from "./../common/common_modules";
 
 class Screen extends React.Component {
@@ -98,17 +97,15 @@ class Screen extends React.Component {
         {this.props.store.mutual.data.length !== 0 ? (
           <div className="mutual_table">
             <div className="mutual_table_data">
-              <Table celled size="small" compact="very">
-                <Table.Header>
-                  <Table.Row>
-                    <Table.HeaderCell>Дата</Table.HeaderCell>
-                    <Table.HeaderCell>Номер</Table.HeaderCell>
-                    <Table.HeaderCell>Заказчик</Table.HeaderCell>
-                    <Table.HeaderCell>Исполнитель</Table.HeaderCell>
-                    <Table.HeaderCell>Сумма</Table.HeaderCell>
-                  </Table.Row>
-                </Table.Header>
-                <Table.Body>
+              <table>
+                <thead>
+                  <th>Дата</th>
+                  <th>Номер</th>
+                  <th>Заказчик</th>
+                  <th>Исполнитель</th>
+                  <th>Сумма</th>
+                </thead>
+                <tbody>
                   {this.props.store.mutual.data.map((el, index) => {
                     let row_className = "";
 
@@ -116,22 +113,22 @@ class Screen extends React.Component {
                       row_className = "active";
                     }
                     return (
-                      <Table.Row
+                      <tr
                         className={row_className}
                         key={el.Key}
                         onClick={this.tr_click.bind(this, index)}
                         onDoubleClick={this.tr_double_click.bind(this, el)}
                       >
-                        <Table.Cell>{el.Date}</Table.Cell>
-                        <Table.Cell>{el.Number}</Table.Cell>
-                        <Table.Cell>{el.Customer}</Table.Cell>
-                        <Table.Cell>{el.Executor}</Table.Cell>
-                        <Table.Cell>{el.Summ}</Table.Cell>
-                      </Table.Row>
+                        <td>{el.Date}</td>
+                        <td>{el.Number}</td>
+                        <td>{el.Customer}</td>
+                        <td>{el.Executor}</td>
+                        <td>{el.Summ}</td>
+                      </tr>
                     );
                   })}
-                </Table.Body>
-              </Table>
+                </tbody>
+              </table>
             </div>
           </div>
         ) : null}

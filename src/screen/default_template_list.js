@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Table } from "semantic-ui-react";
 
 class Screen extends React.Component {
   tr_double_click = (el) => {
@@ -20,33 +19,29 @@ class Screen extends React.Component {
             <b className="page_header">Шаблоны значений по умолчанию</b>
           </div>
         </div>
-        <Table celled size="small" compact="very">
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell>
-                <div className="small_table_data">Наименование шаблона</div>
-              </Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
+        <table>
+          <thead>
+            <th>
+              <div className="small_table_data">Наименование шаблона</div>
+            </th>
+          </thead>
+          <tbody>
             {this.props.store.upload_manifest.default_template_list.map(
               (el, index) => {
                 return (
-                  <Table.Row
-                    //className={row_className}
+                  <tr
                     key={el.Key}
-                    //onClick={this.tr_click.bind(this,index)}
                     onDoubleClick={this.tr_double_click.bind(this, el)}
                   >
-                    <Table.Cell>
+                    <td>
                       <div className="small_table_data">{el.label}</div>
-                    </Table.Cell>
-                  </Table.Row>
+                    </td>
+                  </tr>
                 );
               }
             )}
-          </Table.Body>
-        </Table>
+          </tbody>
+        </table>
       </div>
     );
   }

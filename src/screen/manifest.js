@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Table } from "semantic-ui-react";
 import { get_data } from "./../common/common_modules";
 
 class Screen extends React.Component {
@@ -88,37 +87,35 @@ class Screen extends React.Component {
               Накладные по манифесту:
             </div>
             <div className="disp_cargo_table_data">
-              <Table>
-                <Table.Header>
-                  <Table.Row>
-                    <Table.HeaderCell>Приниято</Table.HeaderCell>
-                    <Table.HeaderCell>Номер</Table.HeaderCell>
-                    <Table.HeaderCell>Заказчик</Table.HeaderCell>
-                    <Table.HeaderCell>Количество мест</Table.HeaderCell>
-                    <Table.HeaderCell>Вес</Table.HeaderCell>
-                  </Table.Row>
-                </Table.Header>
-                <Table.Body>
+              <table>
+                <thead>
+                  <th>Приниято</th>
+                  <th>Номер</th>
+                  <th>Заказчик</th>
+                  <th>Количество мест</th>
+                  <th>Вес</th>
+                </thead>
+                <tbody>
                   {this.props.store.manifest.data.dispatches.map(
                     (disp, index) => (
-                      <Table.Row key={index}>
-                        <Table.Cell>
+                      <tr key={index}>
+                        <td>
                           <input
                             type="checkbox"
                             className="input-checkbox"
                             checked={disp.selected}
                             onChange={this.check.bind(this, disp.num)}
                           ></input>
-                        </Table.Cell>
-                        <Table.Cell>{disp.num}</Table.Cell>
-                        <Table.Cell>{disp.customer}</Table.Cell>
-                        <Table.Cell>{disp.total}</Table.Cell>
-                        <Table.Cell>{disp.weight}</Table.Cell>
-                      </Table.Row>
+                        </td>
+                        <td>{disp.num}</td>
+                        <td>{disp.customer}</td>
+                        <td>{disp.total}</td>
+                        <td>{disp.weight}</td>
+                      </tr>
                     )
                   )}
-                </Table.Body>
-              </Table>
+                </tbody>
+              </table>
               <div className="disp_cargo_table_header">
                 Принято по манифесту:
               </div>

@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Table } from "semantic-ui-react";
 import { get_data } from "./../common/common_modules";
 
 class Screen extends React.Component {
@@ -67,73 +66,69 @@ class Screen extends React.Component {
           </div>
         </div>
 
-        <Table celled size="small" compact="very">
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell>
-                <div className="small_table_data">Имя</div>
-              </Table.HeaderCell>
-              <Table.HeaderCell>
-                <div className="small_table_data">Город</div>
-              </Table.HeaderCell>
-              <Table.HeaderCell>
-                <div className="small_table_data">Адрес</div>
-              </Table.HeaderCell>
-              <Table.HeaderCell>
-                <div className="small_table_data">Телефон</div>
-              </Table.HeaderCell>
-              <Table.HeaderCell>
-                <div className="small_table_data">Контактное лицо</div>
-              </Table.HeaderCell>
-              <Table.HeaderCell>
-                <div className="small_table_data">Компания</div>
-              </Table.HeaderCell>
-              <Table.HeaderCell>
-                <div className="small_table_data">Доп.инфо</div>
-              </Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
+        <table>
+          <thead>
+            <th>
+              <div className="small_table_data">Имя</div>
+            </th>
+            <th>
+              <div className="small_table_data">Город</div>
+            </th>
+            <th>
+              <div className="small_table_data">Адрес</div>
+            </th>
+            <th>
+              <div className="small_table_data">Телефон</div>
+            </th>
+            <th>
+              <div className="small_table_data">Контактное лицо</div>
+            </th>
+            <th>
+              <div className="small_table_data">Компания</div>
+            </th>
+            <th>
+              <div className="small_table_data">Доп.инфо</div>
+            </th>
+          </thead>
+          <tbody>
             {this.props.store.upload_manifest.disp_template_list.map(
               (el, index) => {
                 return (
-                  <Table.Row
-                    //className={row_className}
+                  <tr
                     key={el.Key}
-                    //onClick={this.tr_click.bind(this,index)}
                     onDoubleClick={this.tr_double_click.bind(this, el)}
                   >
-                    <Table.Cell>
+                    <td>
                       <div className="small_table_data">{el.label}</div>
-                    </Table.Cell>
-                    <Table.Cell>
+                    </td>
+                    <td>
                       <div className="small_table_data">{el.City}</div>
-                    </Table.Cell>
-                    <Table.Cell>
+                    </td>
+                    <td>
                       <div className="small_table_data">
                         {el.Terminal
                           ? el.CurrentTerminal + " (Cклад)"
                           : el.Adress}
                       </div>
-                    </Table.Cell>
-                    <Table.Cell>
+                    </td>
+                    <td>
                       <div className="small_table_data">{el.Phone}</div>
-                    </Table.Cell>
-                    <Table.Cell>
+                    </td>
+                    <td>
                       <div className="small_table_data">{el.Person}</div>
-                    </Table.Cell>
-                    <Table.Cell>
+                    </td>
+                    <td>
                       <div className="small_table_data">{el.Company}</div>
-                    </Table.Cell>
-                    <Table.Cell>
+                    </td>
+                    <td>
                       <div className="small_table_data">{el.AddInfo}</div>
-                    </Table.Cell>
-                  </Table.Row>
+                    </td>
+                  </tr>
                 );
               }
             )}
-          </Table.Body>
-        </Table>
+          </tbody>
+        </table>
         <button onClick={this.create_disp_template.bind(this)}>
           Создать шаблон
         </button>
