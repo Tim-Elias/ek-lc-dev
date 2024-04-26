@@ -63,7 +63,7 @@ class Screen extends Component {
   render() {
     return (
       <div id="pageFooter" className="footer">
-        <div className="footerleftel">{`© 2006-2022 ООО "Экспресс Кинетика"`}</div>
+        <div className="footerleftel">{`© 2006-2024 ООО "Экспресс Кинетика"`}</div>
         <div className="footercenterel">Новосибирск, Фабричная 10 корпус 6</div>
         <div className="footerrightel">
           {`Разработка сайта: ООО "Экспресс Кинетика"`}
