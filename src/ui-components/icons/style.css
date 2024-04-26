@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'ek-icons';
-  src:  url('fonts/ek-icons.eot?3wb6d7');
-  src:  url('fonts/ek-icons.eot?3wb6d7#iefix') format('embedded-opentype'),
-    url('fonts/ek-icons.ttf?3wb6d7') format('truetype'),
-    url('fonts/ek-icons.woff?3wb6d7') format('woff'),
-    url('fonts/ek-icons.svg?3wb6d7#ek-icons') format('svg');
+  src:  url('fonts/ek-icons.eot?46h3f1');
+  src:  url('fonts/ek-icons.eot?46h3f1#iefix') format('embedded-opentype'),
+    url('fonts/ek-icons.ttf?46h3f1') format('truetype'),
+    url('fonts/ek-icons.woff?46h3f1') format('woff'),
+    url('fonts/ek-icons.svg?46h3f1#ek-icons') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -166,6 +166,9 @@ i {
 .ek-spinner:before {
   content: "\e97b";
 }
+.ek-spinner11:before {
+  content: "\e984";
+}
 .ek-binoculars:before {
   content: "\e985";
 }
@@ -231,6 +234,9 @@ i {
 }
 .ek-list:before {
   content: "\e9ba";
+}
+.ek-menu:before {
+  content: "\e9bd";
 }
 .ek-cloud:before {
   content: "\e9c1";

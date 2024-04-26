@@ -3,8 +3,6 @@ import { connect } from "react-redux";
 import "./mobile.css";
 import "./mobile_storage.css";
 import { get_data } from "../common/common_modules";
-import update from "../common/update.png";
-import scanner from "../common/scanner.png";
 import Wait from "../screen/wait";
 import Scanner from "./scanner";
 
@@ -111,16 +109,9 @@ class Screen extends React.Component {
                     this.props.set_search_storagre(e.target.value);
                   }}
                 />
-                <img
-                  src={update}
-                  className="update"
-                  onClick={this.update.bind(this)}
-                  alt=""
-                />
-                <img
-                  alt="update"
-                  src={scanner}
-                  className="update"
+                <i className="ek-spinner11" onClick={this.update.bind(this)} />
+                <i
+                  className="ek-qrcode"
                   onClick={(e) =>
                     this.props.set_scann_active(
                       !this.props.store.storage.scann_active

@@ -2,7 +2,6 @@ import React from "react";
 import "../screen/reciept.css";
 import { connect } from "react-redux";
 import Scanner from "./scanner";
-import scanner from "../common/scanner.png";
 
 class Screen extends React.Component {
   search_reciept = () => {
@@ -39,15 +38,13 @@ class Screen extends React.Component {
                 onChange={(e) => this.props.set_search_reciept(e.target.value)}
               ></input>
             </div>
-            <img
-              src={scanner}
-              className="update"
+            <i
+              className="ek-qrcode"
               onClick={(e) =>
                 this.props.set_scann_active(
                   !this.props.store.storage.scann_active
                 )
               }
-              alt=""
             />
           </div>
           {this.props.store.storage.scann_active ? <Scanner /> : null}

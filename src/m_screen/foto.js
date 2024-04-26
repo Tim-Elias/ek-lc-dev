@@ -2,7 +2,6 @@ import React from "react";
 import CameraPhoto, { FACING_MODES } from "jslib-html5-camera-photo";
 import { connect } from "react-redux";
 import "./mobile.css";
-import foto from "../common/foto.png";
 
 class Screen extends React.Component {
   constructor(props, context) {
@@ -112,16 +111,14 @@ class Screen extends React.Component {
             autoPlay={true}
           />
 
-          <img
-            className={
-              this.props.store.disp.cameraActive ? "video_button" : "none"
-            }
-            src={foto}
-            onClick={() => {
-              this.takePhoto();
-            }}
-            alt=""
-          />
+          {this.props.store.disp.cameraActive && (
+            <i
+              className={"ek-camera"}
+              onClick={() => {
+                this.takePhoto();
+              }}
+            />
+          )}
         </div>
         <img className="foto" src={this.props.store.disp.foto} alt="" />
       </div>

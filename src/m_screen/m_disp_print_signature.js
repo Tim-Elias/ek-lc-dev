@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import ReactToPrint from "react-to-print";
 import "./mobile_check_print.css";
-import logo from "../common/logo.png";
 import QRCode from "qrcode.react";
 
 class Screen extends React.Component {
@@ -26,7 +25,7 @@ class Screen extends React.Component {
           <div ref={(el) => (this.componentRef = el)}>
             <div className="check_print_qr">
               <br />
-              <img src={logo} alt="" />
+              <i className={"ek-camera"} />
               <br />
               <br />
 
