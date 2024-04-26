@@ -125,7 +125,7 @@ class Screen extends React.Component {
           </button>
         </div>
         <div>
-          Текущий склад: {this.props.store.storage_reciept.storage.name}
+          Текущий склад: {this.props.store.storage_reciept.storage?.name}
         </div>
         <div>
           Зона хранения: {this.props.store.storage_reciept.selected_zone}
