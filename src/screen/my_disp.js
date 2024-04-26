@@ -280,6 +280,13 @@ class Screen extends React.Component {
               ></input>
             </div>
           ) : null}
+          <Button
+            style={{ marginTop: "-5px" }}
+            size="mini"
+            onClick={this.get_my_disp_data.bind(this)}
+          >
+            Получить данные
+          </Button>
         </div>
 
         <div className="my_disp_table">
