@@ -190,11 +190,7 @@ class Screen extends React.Component {
             {this.props.store.upload_manifest.disp_template_list.length}
           </div>
           <div className="setting_template_button">
-            <button
-              onClick={this.click_disp_template_list.bind(this)}
-              style={{ margin: "0 5px", padding: "6px" }}
-              size="mini"
-            >
+            <button onClick={this.click_disp_template_list.bind(this)}>
               Редактировать
             </button>
           </div>
