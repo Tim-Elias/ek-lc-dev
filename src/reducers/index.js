@@ -20,6 +20,7 @@ import movement from "./movement";
 import check from "./check";
 import m_create_disp from "./m_create_disp";
 import calc_price from "./calc_price";
+import home from "./home";
 
 export default combineReducers({
   login,
@@ -43,4 +44,5 @@ export default combineReducers({
   check,
   m_create_disp,
   calc_price,
+  home,
 });
