@@ -43,6 +43,12 @@ button:hover{
   background-color: #d0d0d0; 
   }
 
+
+.table-wrapper{
+  height: calc(100% - 28px);
+  overflow-x: auto;
+}
+
 :root{
   --logo-size:80px;
   --logo-half-size:40px;

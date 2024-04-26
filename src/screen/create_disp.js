@@ -4,8 +4,8 @@ import "./create_disp.css";
 import { get_data } from "./../common/common_modules";
 import Select from "react-select";
 import { customStyles } from "./../common/common_style";
-import { Table, Modal } from "semantic-ui-react";
-import "semantic-ui-css/semantic.min.css";
+import { Table } from "semantic-ui-react";
+import Modal from "../ui-components/modal/modal";
 
 const CargoInfoTypeList = [
   { label: "Указать итогвые значения", value: true },
@@ -845,75 +845,71 @@ class Screen extends React.Component {
                 }
                 open={this.props.store.create_disp.OpenModalSendTemplate}
                 onClose={this.SelectSendTemplate.bind(this, null)}
+                header="Заполнить отправителя из шаблона"
+                height="90%"
+                width="90%"
               >
-                <Modal.Header>Заполнить отправителя из шаблона</Modal.Header>
-                <Modal.Content>
-                  <Modal.Description>
-                    <div className="disp_data_el">
-                      <input
-                        className="create_disp_data_input"
-                        onChange={(e) =>
-                          this.props.SetFilterModalSendTemplate(e.target.value)
-                        }
-                        value={
-                          this.props.store.create_disp.FilterModalSendTemplate
-                        }
-                        type="text"
-                        placeholder="Поиск по наименованию"
-                      />
-                    </div>
+                <div className="disp_data_el">
+                  <input
+                    className="create_disp_data_input"
+                    onChange={(e) =>
+                      this.props.SetFilterModalSendTemplate(e.target.value)
+                    }
+                    value={this.props.store.create_disp.FilterModalSendTemplate}
+                    type="text"
+                    placeholder="Поиск по наименованию"
+                  />
+                </div>
 
-                    <div>
-                      <Table celled compact="very">
-                        <Table.Header className="create_disp_template_list_th">
-                          <Table.Row>
-                            <Table.HeaderCell>Имя</Table.HeaderCell>
-                            <Table.HeaderCell>Город</Table.HeaderCell>
-                            <Table.HeaderCell>Адрес</Table.HeaderCell>
-                            <Table.HeaderCell>Телефон</Table.HeaderCell>
-                            <Table.HeaderCell>Конт. лицо</Table.HeaderCell>
-                            <Table.HeaderCell>Компания</Table.HeaderCell>
-                            <Table.HeaderCell>Доп. инфо</Table.HeaderCell>
+                <div className="table-wrapper">
+                  <Table celled compact="very">
+                    <Table.Header className="create_disp_template_list_th">
+                      <Table.Row>
+                        <Table.HeaderCell>Имя</Table.HeaderCell>
+                        <Table.HeaderCell>Город</Table.HeaderCell>
+                        <Table.HeaderCell>Адрес</Table.HeaderCell>
+                        <Table.HeaderCell>Телефон</Table.HeaderCell>
+                        <Table.HeaderCell>Конт. лицо</Table.HeaderCell>
+                        <Table.HeaderCell>Компания</Table.HeaderCell>
+                        <Table.HeaderCell>Доп. инфо</Table.HeaderCell>
+                      </Table.Row>
+                    </Table.Header>
+                    <Table.Body>
+                      {this.props.store.upload_manifest.disp_template_list
+                        .filter(
+                          (el) =>
+                            this.props.store.create_disp
+                              .FilterModalSendTemplate === "" ||
+                            el.label.indexOf(
+                              this.props.store.create_disp
+                                .FilterModalSendTemplate
+                            ) !== -1
+                        )
+                        .map((el, index) => (
+                          <Table.Row
+                            className="create_disp_template_list_tr"
+                            key={index}
+                            onDoubleClick={this.SelectSendTemplate.bind(
+                              this,
+                              el
+                            )}
+                          >
+                            <Table.Cell>{el.label}</Table.Cell>
+                            <Table.Cell>{el.City}</Table.Cell>
+                            <Table.Cell>
+                              {el.Terminal
+                                ? el.CurrentTerminal + " (Cклад)"
+                                : el.Adress}
+                            </Table.Cell>
+                            <Table.Cell>{el.Phone}</Table.Cell>
+                            <Table.Cell>{el.Person}</Table.Cell>
+                            <Table.Cell>{el.Company}</Table.Cell>
+                            <Table.Cell>{el.AddInfo}</Table.Cell>
                           </Table.Row>
-                        </Table.Header>
-                        <Table.Body>
-                          {this.props.store.upload_manifest.disp_template_list
-                            .filter(
-                              (el) =>
-                                this.props.store.create_disp
-                                  .FilterModalSendTemplate === "" ||
-                                el.label.indexOf(
-                                  this.props.store.create_disp
-                                    .FilterModalSendTemplate
-                                ) !== -1
-                            )
-                            .map((el, index) => (
-                              <Table.Row
-                                className="create_disp_template_list_tr"
-                                key={index}
-                                onDoubleClick={this.SelectSendTemplate.bind(
-                                  this,
-                                  el
-                                )}
-                              >
-                                <Table.Cell>{el.label}</Table.Cell>
-                                <Table.Cell>{el.City}</Table.Cell>
-                                <Table.Cell>
-                                  {el.Terminal
-                                    ? el.CurrentTerminal + " (Cклад)"
-                                    : el.Adress}
-                                </Table.Cell>
-                                <Table.Cell>{el.Phone}</Table.Cell>
-                                <Table.Cell>{el.Person}</Table.Cell>
-                                <Table.Cell>{el.Company}</Table.Cell>
-                                <Table.Cell>{el.AddInfo}</Table.Cell>
-                              </Table.Row>
-                            ))}
-                        </Table.Body>
-                      </Table>
-                    </div>
-                  </Modal.Description>
-                </Modal.Content>
+                        ))}
+                    </Table.Body>
+                  </Table>
+                </div>
               </Modal>
             </div>
           </div>
@@ -935,74 +931,70 @@ class Screen extends React.Component {
                 }
                 open={this.props.store.create_disp.OpenModalRecTemplate}
                 onClose={this.SelectRecTemplate.bind(this, null)}
+                header="Заполнить получателя из шаблона"
+                height="90%"
+                width="90%"
               >
-                <Modal.Header>Заполнить получателя из шаблона</Modal.Header>
-                <Modal.Content>
-                  <Modal.Description>
-                    <div className="disp_data_el">
-                      <input
-                        className="create_disp_data_input"
-                        onChange={(e) =>
-                          this.props.SetFilterModalRecTemplate(e.target.value)
-                        }
-                        value={
-                          this.props.store.create_disp.FilterModalRecTemplate
-                        }
-                        type="text"
-                        placeholder="Поиск по наименованию"
-                      />
-                    </div>
-                    <div>
-                      <Table celled compact="very">
-                        <Table.Header className="create_disp_template_list_th">
-                          <Table.Row>
-                            <Table.HeaderCell>Имя</Table.HeaderCell>
-                            <Table.HeaderCell>Город</Table.HeaderCell>
-                            <Table.HeaderCell>Адрес</Table.HeaderCell>
-                            <Table.HeaderCell>Телефон</Table.HeaderCell>
-                            <Table.HeaderCell>Конт. лицо</Table.HeaderCell>
-                            <Table.HeaderCell>Компания</Table.HeaderCell>
-                            <Table.HeaderCell>Доп. инфо</Table.HeaderCell>
+                <div className="disp_data_el">
+                  <input
+                    className="create_disp_data_input"
+                    onChange={(e) =>
+                      this.props.SetFilterModalRecTemplate(e.target.value)
+                    }
+                    value={this.props.store.create_disp.FilterModalRecTemplate}
+                    type="text"
+                    placeholder="Поиск по наименованию"
+                  />
+                </div>
+                <div className="table-wrapper">
+                  <Table celled compact="very">
+                    <Table.Header className="create_disp_template_list_th">
+                      <Table.Row>
+                        <Table.HeaderCell>Имя</Table.HeaderCell>
+                        <Table.HeaderCell>Город</Table.HeaderCell>
+                        <Table.HeaderCell>Адрес</Table.HeaderCell>
+                        <Table.HeaderCell>Телефон</Table.HeaderCell>
+                        <Table.HeaderCell>Конт. лицо</Table.HeaderCell>
+                        <Table.HeaderCell>Компания</Table.HeaderCell>
+                        <Table.HeaderCell>Доп. инфо</Table.HeaderCell>
+                      </Table.Row>
+                    </Table.Header>
+                    <Table.Body>
+                      {this.props.store.upload_manifest.disp_template_list
+                        .filter(
+                          (el) =>
+                            this.props.store.create_disp
+                              .FilterModalRecTemplate === "" ||
+                            el.label.indexOf(
+                              this.props.store.create_disp
+                                .FilterModalRecTemplate
+                            ) !== -1
+                        )
+                        .map((el, index) => (
+                          <Table.Row
+                            className="create_disp_template_list_tr"
+                            key={index}
+                            onDoubleClick={this.SelectRecTemplate.bind(
+                              this,
+                              el
+                            )}
+                          >
+                            <Table.Cell>{el.label}</Table.Cell>
+                            <Table.Cell>{el.City}</Table.Cell>
+                            <Table.Cell>
+                              {el.Terminal
+                                ? el.CurrentTerminal + " (Cклад)"
+                                : el.Adress}
+                            </Table.Cell>
+                            <Table.Cell>{el.Phone}</Table.Cell>
+                            <Table.Cell>{el.Person}</Table.Cell>
+                            <Table.Cell>{el.Company}</Table.Cell>
+                            <Table.Cell>{el.AddInfo}</Table.Cell>
                           </Table.Row>
-                        </Table.Header>
-                        <Table.Body>
-                          {this.props.store.upload_manifest.disp_template_list
-                            .filter(
-                              (el) =>
-                                this.props.store.create_disp
-                                  .FilterModalRecTemplate === "" ||
-                                el.label.indexOf(
-                                  this.props.store.create_disp
-                                    .FilterModalRecTemplate
-                                ) !== -1
-                            )
-                            .map((el, index) => (
-                              <Table.Row
-                                className="create_disp_template_list_tr"
-                                key={index}
-                                onDoubleClick={this.SelectRecTemplate.bind(
-                                  this,
-                                  el
-                                )}
-                              >
-                                <Table.Cell>{el.label}</Table.Cell>
-                                <Table.Cell>{el.City}</Table.Cell>
-                                <Table.Cell>
-                                  {el.Terminal
-                                    ? el.CurrentTerminal + " (Cклад)"
-                                    : el.Adress}
-                                </Table.Cell>
-                                <Table.Cell>{el.Phone}</Table.Cell>
-                                <Table.Cell>{el.Person}</Table.Cell>
-                                <Table.Cell>{el.Company}</Table.Cell>
-                                <Table.Cell>{el.AddInfo}</Table.Cell>
-                              </Table.Row>
-                            ))}
-                        </Table.Body>
-                      </Table>
-                    </div>
-                  </Modal.Description>
-                </Modal.Content>
+                        ))}
+                    </Table.Body>
+                  </Table>
+                </div>
               </Modal>
             </div>
           </div>
@@ -1675,49 +1667,6 @@ class Screen extends React.Component {
             </button>
           )}
         </div>
-
-        <Modal
-          onClose={() => this.props.SetWarningAlert(false)}
-          open={this.props.store.create_disp.warningAlert}
-          size="mini"
-        >
-          {this.props.store.create_disp.TimeError
-            ? [
-                <Modal.Header key={"timeErrorHeader"}>
-                  {this.props.store.create_disp.warningMessage}
-                </Modal.Header>,
-                <Modal.Actions key={"timeErrorAction"}>
-                  <button
-                    onClick={() => {
-                      this.props.SetWarningAlert(false);
-                      this.props.SetTimeError(false);
-                    }}
-                  >
-                    Отмена
-                  </button>
-                </Modal.Actions>,
-              ]
-            : [
-                <Modal.Header key={"errorHeader"}>
-                  Вы не ввели {this.props.store.create_disp.warningMessage}
-                </Modal.Header>,
-                <Modal.Actions key={"errorAction"}>
-                  {this.props.store.login.necessarily_all_field ? null : (
-                    <button
-                      onClick={() => {
-                        this.props.SetWarningAlert(false);
-                        this.sent_disp();
-                      }}
-                    >
-                      Продолжить
-                    </button>
-                  )}
-                  <button onClick={() => this.props.SetWarningAlert(false)}>
-                    Отмена
-                  </button>
-                </Modal.Actions>,
-              ]}
-        </Modal>
       </div>
     );
   }

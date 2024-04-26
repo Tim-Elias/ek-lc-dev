@@ -5,7 +5,7 @@ import "./mobile.css";
 import { get_data } from "../common/common_modules";
 import md5 from "md5";
 import logo from "./../logo.svg";
-import { Header, Modal } from "semantic-ui-react";
+import Modal from "../ui-components/modal/modal";
 
 class Screen extends React.Component {
   handleKeyDown = (e) => {
@@ -49,14 +49,11 @@ class Screen extends React.Component {
     return (
       <div className="mobile_container">
         <Modal
-          closeIcon
           open={this.props.store.general.modal_show}
           onClose={this.close_modal_portal.bind(this)}
+          title={this.props.store.general.modal_header}
         >
-          <Header>{this.props.store.general.modal_header}</Header>
-          <Modal.Content>
-            <p>{this.props.store.general.modal_text}</p>
-          </Modal.Content>
+          <p>{this.props.store.general.modal_text}</p>
         </Modal>
 
         <div className="mobile_login_container">

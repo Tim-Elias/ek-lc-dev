@@ -1,10 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
 import { get_data } from "./../common/common_modules";
-import { Header, Modal } from "semantic-ui-react";
 import md5 from "md5";
 import logo from "./../logo.svg";
 import "./login.css";
+import Modal from "../ui-components/modal/modal";
 
 class Screen extends React.Component {
   componentDidMount() {
@@ -79,14 +79,11 @@ class Screen extends React.Component {
     return (
       <div className="login__container">
         <Modal
-          closeIcon
           open={this.props.store.general.modal_show}
           onClose={this.close_modal_portal.bind(this)}
+          header={this.props.store.general.modal_header}
         >
-          <Header>{this.props.store.general.modal_header}</Header>
-          <Modal.Content>
-            <p>{this.props.store.general.modal_text}</p>
-          </Modal.Content>
+          <p>{this.props.store.general.modal_text}</p>
         </Modal>
 
         <div className="login__row">

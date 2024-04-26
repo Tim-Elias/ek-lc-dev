@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Table, Modal, Loader, Dimmer } from "semantic-ui-react";
+import { Table, Loader, Dimmer } from "semantic-ui-react";
 import { get_data } from "./../common/common_modules";
 import ReactToPrint from "react-to-print";
 import "./disp.css";
@@ -9,6 +9,7 @@ import StickerToPrint from "./sticker_print";
 import GoogleMapReact from "google-map-react";
 import Sound from "react-sound";
 import test_sound from "./../common/Sound_11084.wav";
+import Modal from "../ui-components/modal/modal";
 
 let g_map;
 let g_maps;
@@ -700,85 +701,74 @@ class Screen extends React.Component {
               }
               open={this.props.store.disp.show_history}
               onClose={this.close_history.bind(this)}
+              header={`История накладной ${this.props.store.disp.data.Number}`}
             >
-              <Modal.Header>
-                История накладной {this.props.store.disp.data.Number}
-              </Modal.Header>
-              <Modal.Content>
-                <Modal.Description>
+              <div>
+                {this.props.store.disp.history_loading ? (
                   <div>
-                    {this.props.store.disp.history_loading ? (
-                      <div>
-                        <Dimmer active inverted>
-                          <Loader inverted content="Загрузка" />
-                        </Dimmer>
-                      </div>
-                    ) : (
-                      <Table celled compact="very">
-                        <Table.Header className="create_disp_template_list_th">
-                          <Table.Row>
-                            <Table.HeaderCell>Дата</Table.HeaderCell>
-                            <Table.HeaderCell>Статус</Table.HeaderCell>
-                            <Table.HeaderCell>Комментарий</Table.HeaderCell>
-                          </Table.Row>
-                        </Table.Header>
-
-                        <Table.Body>
-                          {this.props.store.disp.history.map((el, index) => (
-                            <Table.Row
-                              className="create_disp_template_list_tr"
-                              key={index}
-                            >
-                              <Table.Cell>{el.Date}</Table.Cell>
-                              <Table.Cell>
-                                {el.Status}
-                                {el.Skan !== 0 ? (
-                                  <Modal
-                                    trigger={
-                                      <button
-                                        className="disp_skan_button"
-                                        onClick={this.open_skan.bind(
-                                          this,
-                                          el.DocNumber
-                                        )}
-                                      >
-                                        (Получить скан)
-                                      </button>
-                                    }
-                                    open={this.props.store.disp.show_skan}
-                                    onClose={this.close_skan.bind(this)}
-                                  >
-                                    <Modal.Content>
-                                      <Modal.Description>
-                                        {this.props.store.disp.skan_loading ? (
-                                          <div className="loader_container">
-                                            <Dimmer active inverted>
-                                              <Loader size="large">
-                                                Загрузка
-                                              </Loader>
-                                            </Dimmer>
-                                          </div>
-                                        ) : (
-                                          <img
-                                            alt="skan"
-                                            className="disp_skan"
-                                            src={this.props.store.disp.skan}
-                                          />
-                                        )}
-                                      </Modal.Description>
-                                    </Modal.Content>
-                                  </Modal>
-                                ) : null}
-                              </Table.Cell>
-                              <Table.Cell>{el.Comment}</Table.Cell>
-                            </Table.Row>
-                          ))}
-                        </Table.Body>
-                      </Table>
-                    )}
+                    <Dimmer active inverted>
+                      <Loader inverted content="Загрузка" />
+                    </Dimmer>
                   </div>
-                </Modal.Description>
-              </Modal.Content>
+                ) : (
+                  <Table celled compact="very">
+                    <Table.Header className="create_disp_template_list_th">
+                      <Table.Row>
+                        <Table.HeaderCell>Дата</Table.HeaderCell>
+                        <Table.HeaderCell>Статус</Table.HeaderCell>
+                        <Table.HeaderCell>Комментарий</Table.HeaderCell>
+                      </Table.Row>
+                    </Table.Header>
+
+                    <Table.Body>
+                      {this.props.store.disp.history.map((el, index) => (
+                        <Table.Row
+                          className="create_disp_template_list_tr"
+                          key={index}
+                        >
+                          <Table.Cell>{el.Date}</Table.Cell>
+                          <Table.Cell>
+                            {el.Status}
+                            {el.Skan !== 0 ? (
+                              <Modal
+                                trigger={
+                                  <button
+                                    className="disp_skan_button"
+                                    onClick={this.open_skan.bind(
+                                      this,
+                                      el.DocNumber
+                                    )}
+                                  >
+                                    (Получить скан)
+                                  </button>
+                                }
+                                open={this.props.store.disp.show_skan}
+                                onClose={this.close_skan.bind(this)}
+                                header="Вложенное изображение"
+                              >
+                                {this.props.store.disp.skan_loading ? (
+                                  <div className="loader_container">
+                                    <Dimmer active inverted>
+                                      <Loader size="large">Загрузка</Loader>
+                                    </Dimmer>
+                                  </div>
+                                ) : (
+                                  <img
+                                    alt="skan"
+                                    className="disp_skan"
+                                    src={this.props.store.disp.skan}
+                                  />
+                                )}
+                              </Modal>
+                            ) : null}
+                          </Table.Cell>
+                          <Table.Cell>{el.Comment}</Table.Cell>
+                        </Table.Row>
+                      ))}
+                    </Table.Body>
+                  </Table>
+                )}
+              </div>
             </Modal>
             {this.props.store.login.create_disp &&
             (this.props.store.login.total_only || CargoInfoType) ? (
@@ -795,46 +785,11 @@ class Screen extends React.Component {
                 }
                 open={this.props.store.disp.show_remove_modal}
                 onClose={this.close_remove_modal.bind(this)}
+                header={`Удаление накладной ${this.props.store.disp.data.Number}`}
+                onCancel={this.close_remove_modal.bind(this)}
+                onConfirm={this.confirm_remove_disp.bind(this)}
               >
-                <Modal.Header>
-                  Удаление накладной {this.props.store.disp.data.Number}
-                </Modal.Header>
-                <Modal.Content>
-                  {this.props.store.disp.remove_confirm ? (
-                    <Modal.Description>
-                      {this.props.store.disp.history_loading ? (
-                        <div>
-                          <Dimmer active inverted>
-                            <Loader inverted content="Загрузка" />
-                          </Dimmer>
-                        </div>
-                      ) : (
-                        <div>{this.props.store.disp.text_remove_modal}</div>
-                      )}
-                    </Modal.Description>
-                  ) : (
-                    <Modal.Description>
-                      Действительно хотите удалить накладную{" "}
-                      {this.props.store.disp.data.Number} ?
-                    </Modal.Description>
-                  )}
-                </Modal.Content>
-                {this.props.store.disp.remove_confirm ? null : (
-                  <Modal.Actions>
-                    <button
-                      color="red"
-                      onClick={this.close_remove_modal.bind(this)}
-                    >
-                      Нет
-                    </button>
-                    <button
-                      color="green"
-                      onClick={this.confirm_remove_disp.bind(this)}
-                    >
-                      <i className="ek-bin" /> Да
-                    </button>
-                  </Modal.Actions>
-                )}
+                {`Подтверждаете удаление накладной ${this.props.store.disp.data.Number} ?`}
               </Modal>
             ) : null}
             {this.props.store.login.edit_disp &&

@@ -24,7 +24,7 @@ import StorageReciept from "./storage_reciept";
 import CalcPrice from "./calc_price";
 import DispNumber from "./disp_number";
 import HomeEk from "./home_ek";
-import { Header, Modal } from "semantic-ui-react";
+import Modal from "../ui-components/modal/modal";
 
 class Screen extends React.Component {
   back = () => {
@@ -53,14 +53,11 @@ class Screen extends React.Component {
     return (
       <div className={className}>
         <Modal
-          closeIcon
           open={this.props.store.general.modal_show}
           onClose={() => this.props.set_modal_show(false)}
+          header={this.props.store.general.modal_header}
         >
-          <Header>{this.props.store.general.modal_header}</Header>
-          <Modal.Content>
-            <p>{this.props.store.general.modal_text}</p>
-          </Modal.Content>
+          <p>{this.props.store.general.modal_text}</p>
         </Modal>
 
         {this.props.store.general.active_window === "home" &&

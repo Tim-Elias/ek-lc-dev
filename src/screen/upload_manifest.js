@@ -2,13 +2,14 @@ import React from "react";
 import { connect } from "react-redux";
 import Select from "react-select";
 import { customStyles } from "./../common/common_style";
-import { Header, Modal, Table } from "semantic-ui-react";
+import { Table } from "semantic-ui-react";
 import ReactToPrint from "react-to-print";
 import { get_data } from "./../common/common_modules";
 import "semantic-ui-css/semantic.min.css";
 import "./upload_manifest.css";
 import ComponentToPrint from "./disp_print";
 import StickerToPrint from "./sticker_print";
+import Modal from "../ui-components/modal/modal";
 
 const UploadInOneList = [
   { label: "Загрузка каждой накладной", value: false },
@@ -756,7 +757,6 @@ class Screen extends React.Component {
 
     return (
       <div>
-        {/* Загрузить манифест */}
         <div>
           <textarea
             onChange={(e) => this.props.set_text_area(e.target.value)}
@@ -853,162 +853,112 @@ class Screen extends React.Component {
                   <i className="ek-eye"></i>
                 </button>
               }
+              header="Шаблон импорта"
+              height="90%"
+              width="700px"
             >
-              <Modal.Header>Шаблон импорта</Modal.Header>
+              {this.props.store.upload_manifest.import_template.label}
 
-              <Modal.Content>
-                <Modal.Description>
-                  <Header>
-                    {this.props.store.upload_manifest.import_template.label}
-                  </Header>
-                  <div className="upload_mainfest_modal_info">
-                    <div className="disp_data_label">Номер накладной: </div>
-                    <div className="disp_data_el">
-                      {this.props.store.upload_manifest.import_template.Num}
-                    </div>
-                    <div className="disp_data_label">Город отправителя: </div>
-                    <div className="disp_data_el">
-                      {
-                        this.props.store.upload_manifest.import_template
-                          .SendCity
-                      }
-                    </div>
-                    <div className="disp_data_label">Адрес отправителя: </div>
-                    <div className="disp_data_el">
-                      {
-                        this.props.store.upload_manifest.import_template
-                          .SendAdress
-                      }
-                    </div>
-                    <div className="disp_data_label">
-                      Компания отправителя:{" "}
-                    </div>
-                    <div className="disp_data_el">
-                      {
-                        this.props.store.upload_manifest.import_template
-                          .SendCompany
-                      }
-                    </div>
-                    <div className="disp_data_label">
-                      Контактное лицо отправителя:{" "}
-                    </div>
-                    <div className="disp_data_el">
-                      {
-                        this.props.store.upload_manifest.import_template
-                          .SendPerson
-                      }
-                    </div>
-                    <div className="disp_data_label">
-                      Контактный телефон отправителя:{" "}
-                    </div>
-                    <div className="disp_data_el">
-                      {
-                        this.props.store.upload_manifest.import_template
-                          .SendPhone
-                      }
-                    </div>
-                    <div className="disp_data_label">
-                      Электронный адрес отправителя:{" "}
-                    </div>
-                    <div className="disp_data_el">
-                      {
-                        this.props.store.upload_manifest.import_template
-                          .SendEmail
-                      }
-                    </div>
-                    <div className="disp_data_label">
-                      Дополнительная информация отправителя:{" "}
-                    </div>
-                    <div className="disp_data_el">
-                      {
-                        this.props.store.upload_manifest.import_template
-                          .SendAddInfo
-                      }
-                    </div>
-                    <div className="disp_data_label">Город получателя: </div>
-                    <div className="disp_data_el">
-                      {this.props.store.upload_manifest.import_template.RecCity}
-                    </div>
-                    <div className="disp_data_label">Адрес отправителя: </div>
-                    <div className="disp_data_el">
-                      {
-                        this.props.store.upload_manifest.import_template
-                          .RecAdress
-                      }
-                    </div>
-                    <div className="disp_data_label">Компания получателя: </div>
-                    <div className="disp_data_el">
-                      {
-                        this.props.store.upload_manifest.import_template
-                          .RecCompany
-                      }
-                    </div>
-                    <div className="disp_data_label">
-                      Контактное лицо отправителя:{" "}
-                    </div>
-                    <div className="disp_data_el">
-                      {
-                        this.props.store.upload_manifest.import_template
-                          .RecPerson
-                      }
-                    </div>
-                    <div className="disp_data_label">
-                      Контактный телефон отправителя:{" "}
-                    </div>
-                    <div className="disp_data_el">
-                      {
-                        this.props.store.upload_manifest.import_template
-                          .RecPhone
-                      }
-                    </div>
-                    <div className="disp_data_label">
-                      Электронный адрес отправителя:{" "}
-                    </div>
-                    <div className="disp_data_el">
-                      {
-                        this.props.store.upload_manifest.import_template
-                          .RecEmail
-                      }
-                    </div>
-                    <div className="disp_data_label">
-                      Дополнительная информация отправителя:{" "}
-                    </div>
-                    <div className="disp_data_el">
-                      {
-                        this.props.store.upload_manifest.import_template
-                          .RecAddInfo
-                      }
-                    </div>
-                    <div className="disp_data_label">Страховая стоимость: </div>
-                    <div className="disp_data_el">
-                      {
-                        this.props.store.upload_manifest.import_template
-                          .InsureValue
-                      }
-                    </div>
-                    <div className="disp_data_label">
-                      Сумма наложенного платежа:{" "}
-                    </div>
-                    <div className="disp_data_el">
-                      {this.props.store.upload_manifest.import_template.COD}
-                    </div>
-                    <div className="disp_data_label">Количество мест: </div>
-                    <div className="disp_data_el">
-                      {this.props.store.upload_manifest.import_template.Total}
-                    </div>
-                    <div className="disp_data_label">
-                      Общий фактический вес:{" "}
-                    </div>
-                    <div className="disp_data_el">
-                      {this.props.store.upload_manifest.import_template.Weight}
-                    </div>
-                    <div className="disp_data_label">Общий объемный вес: </div>
-                    <div className="disp_data_el">
-                      {this.props.store.upload_manifest.import_template.Volume}
-                    </div>
-                  </div>
-                </Modal.Description>
-              </Modal.Content>
+              <div className="upload_mainfest_modal_info">
+                <div className="disp_data_label">Номер накладной: </div>
+                <div className="disp_data_el">
+                  {this.props.store.upload_manifest.import_template.Num}
+                </div>
+                <div className="disp_data_label">Город отправителя: </div>
+                <div className="disp_data_el">
+                  {this.props.store.upload_manifest.import_template.SendCity}
+                </div>
+                <div className="disp_data_label">Адрес отправителя: </div>
+                <div className="disp_data_el">
+                  {this.props.store.upload_manifest.import_template.SendAdress}
+                </div>
+                <div className="disp_data_label">Компания отправителя: </div>
+                <div className="disp_data_el">
+                  {this.props.store.upload_manifest.import_template.SendCompany}
+                </div>
+                <div className="disp_data_label">
+                  Контактное лицо отправителя:{" "}
+                </div>
+                <div className="disp_data_el">
+                  {this.props.store.upload_manifest.import_template.SendPerson}
+                </div>
+                <div className="disp_data_label">
+                  Контактный телефон отправителя:{" "}
+                </div>
+                <div className="disp_data_el">
+                  {this.props.store.upload_manifest.import_template.SendPhone}
+                </div>
+                <div className="disp_data_label">
+                  Электронный адрес отправителя:{" "}
+                </div>
+                <div className="disp_data_el">
+                  {this.props.store.upload_manifest.import_template.SendEmail}
+                </div>
+                <div className="disp_data_label">
+                  Дополнительная информация отправителя:{" "}
+                </div>
+                <div className="disp_data_el">
+                  {this.props.store.upload_manifest.import_template.SendAddInfo}
+                </div>
+                <div className="disp_data_label">Город получателя: </div>
+                <div className="disp_data_el">
+                  {this.props.store.upload_manifest.import_template.RecCity}
+                </div>
+                <div className="disp_data_label">Адрес отправителя: </div>
+                <div className="disp_data_el">
+                  {this.props.store.upload_manifest.import_template.RecAdress}
+                </div>
+                <div className="disp_data_label">Компания получателя: </div>
+                <div className="disp_data_el">
+                  {this.props.store.upload_manifest.import_template.RecCompany}
+                </div>
+                <div className="disp_data_label">
+                  Контактное лицо отправителя:{" "}
+                </div>
+                <div className="disp_data_el">
+                  {this.props.store.upload_manifest.import_template.RecPerson}
+                </div>
+                <div className="disp_data_label">
+                  Контактный телефон отправителя:{" "}
+                </div>
+                <div className="disp_data_el">
+                  {this.props.store.upload_manifest.import_template.RecPhone}
+                </div>
+                <div className="disp_data_label">
+                  Электронный адрес отправителя:{" "}
+                </div>
+                <div className="disp_data_el">
+                  {this.props.store.upload_manifest.import_template.RecEmail}
+                </div>
+                <div className="disp_data_label">
+                  Дополнительная информация отправителя:{" "}
+                </div>
+                <div className="disp_data_el">
+                  {this.props.store.upload_manifest.import_template.RecAddInfo}
+                </div>
+                <div className="disp_data_label">Страховая стоимость: </div>
+                <div className="disp_data_el">
+                  {this.props.store.upload_manifest.import_template.InsureValue}
+                </div>
+                <div className="disp_data_label">
+                  Сумма наложенного платежа:{" "}
+                </div>
+                <div className="disp_data_el">
+                  {this.props.store.upload_manifest.import_template.COD}
+                </div>
+                <div className="disp_data_label">Количество мест: </div>
+                <div className="disp_data_el">
+                  {this.props.store.upload_manifest.import_template.Total}
+                </div>
+                <div className="disp_data_label">Общий фактический вес: </div>
+                <div className="disp_data_el">
+                  {this.props.store.upload_manifest.import_template.Weight}
+                </div>
+                <div className="disp_data_label">Общий объемный вес: </div>
+                <div className="disp_data_el">
+                  {this.props.store.upload_manifest.import_template.Volume}
+                </div>
+              </div>
             </Modal>
           </div>
 
@@ -1028,160 +978,112 @@ class Screen extends React.Component {
                   <i className="ek-eye"></i>
                 </button>
               }
+              header="Шаблон значений по умалчанию"
+              height="90%"
+              width="700px"
             >
-              <Modal.Header>Шаблон значений по умалчанию</Modal.Header>
-              <Modal.Content>
-                <Modal.Description>
-                  <Header>
-                    {this.props.store.upload_manifest.default_template.label}
-                  </Header>
-                  <div className="upload_mainfest_modal_info">
-                    <div className="disp_data_label">Город отправителя: </div>
-                    <div className="disp_data_el">
-                      {
-                        this.props.store.upload_manifest.default_template
-                          .SendCity
-                      }
-                    </div>
-                    <div className="disp_data_label">Адрес отправителя: </div>
-                    <div className="disp_data_el">
-                      {
-                        this.props.store.upload_manifest.default_template
-                          .SendAdress
-                      }
-                    </div>
-                    <div className="disp_data_label">
-                      Компания отправителя:{" "}
-                    </div>
-                    <div className="disp_data_el">
-                      {
-                        this.props.store.upload_manifest.default_template
-                          .SendCompany
-                      }
-                    </div>
-                    <div className="disp_data_label">
-                      Контактное лицо отправителя:{" "}
-                    </div>
-                    <div className="disp_data_el">
-                      {
-                        this.props.store.upload_manifest.default_template
-                          .SendPerson
-                      }
-                    </div>
-                    <div className="disp_data_label">
-                      Контактный телефон отправителя:{" "}
-                    </div>
-                    <div className="disp_data_el">
-                      {
-                        this.props.store.upload_manifest.default_template
-                          .SendPhone
-                      }
-                    </div>
-                    <div className="disp_data_label">
-                      Электронный адрес отправителя:{" "}
-                    </div>
-                    <div className="disp_data_el">
-                      {
-                        this.props.store.upload_manifest.default_template
-                          .SendEmail
-                      }
-                    </div>
-                    <div className="disp_data_label">
-                      Дополнительная информация отправителя:{" "}
-                    </div>
-                    <div className="disp_data_el">
-                      {
-                        this.props.store.upload_manifest.default_template
-                          .SendAddInfo
-                      }
-                    </div>
-                    <div className="disp_data_label">Город получателя: </div>
-                    <div className="disp_data_el">
-                      {
-                        this.props.store.upload_manifest.default_template
-                          .RecCity
-                      }
-                    </div>
-                    <div className="disp_data_label">Адрес отправителя: </div>
-                    <div className="disp_data_el">
-                      {
-                        this.props.store.upload_manifest.default_template
-                          .RecAdress
-                      }
-                    </div>
-                    <div className="disp_data_label">Компания получателя: </div>
-                    <div className="disp_data_el">
-                      {
-                        this.props.store.upload_manifest.default_template
-                          .RecCompany
-                      }
-                    </div>
-                    <div className="disp_data_label">
-                      Контактное лицо отправителя:{" "}
-                    </div>
-                    <div className="disp_data_el">
-                      {
-                        this.props.store.upload_manifest.default_template
-                          .RecPerson
-                      }
-                    </div>
-                    <div className="disp_data_label">
-                      Контактный телефон отправителя:{" "}
-                    </div>
-                    <div className="disp_data_el">
-                      {
-                        this.props.store.upload_manifest.default_template
-                          .RecPhone
-                      }
-                    </div>
-                    <div className="disp_data_label">
-                      Электронный адрес отправителя:{" "}
-                    </div>
-                    <div className="disp_data_el">
-                      {
-                        this.props.store.upload_manifest.default_template
-                          .RecEmail
-                      }
-                    </div>
-                    <div className="disp_data_label">
-                      Дополнительная информация отправителя:{" "}
-                    </div>
-                    <div className="disp_data_el">
-                      {
-                        this.props.store.upload_manifest.default_template
-                          .RecAddInfo
-                      }
-                    </div>
-                    <div className="disp_data_label">Страховая стоимость: </div>
-                    <div className="disp_data_el">
-                      {
-                        this.props.store.upload_manifest.default_template
-                          .InsureValue
-                      }
-                    </div>
-                    <div className="disp_data_label">
-                      Сумма наложенного платежа:{" "}
-                    </div>
-                    <div className="disp_data_el">
-                      {this.props.store.upload_manifest.default_template.COD}
-                    </div>
-                    <div className="disp_data_label">Срочность доставки: </div>
-                    <div className="disp_data_el">
-                      {
-                        this.props.store.upload_manifest.default_template
-                          .DelType
-                      }
-                    </div>
-                    <div className="disp_data_label">Тип оплаты: </div>
-                    <div className="disp_data_el">
-                      {
-                        this.props.store.upload_manifest.default_template
-                          .PayType
-                      }
-                    </div>
-                  </div>
-                </Modal.Description>
-              </Modal.Content>
+              {this.props.store.upload_manifest.default_template.label}
+              <div className="upload_mainfest_modal_info">
+                <div className="disp_data_label">Город отправителя: </div>
+                <div className="disp_data_el">
+                  {this.props.store.upload_manifest.default_template.SendCity}
+                </div>
+                <div className="disp_data_label">Адрес отправителя: </div>
+                <div className="disp_data_el">
+                  {this.props.store.upload_manifest.default_template.SendAdress}
+                </div>
+                <div className="disp_data_label">Компания отправителя: </div>
+                <div className="disp_data_el">
+                  {
+                    this.props.store.upload_manifest.default_template
+                      .SendCompany
+                  }
+                </div>
+                <div className="disp_data_label">
+                  Контактное лицо отправителя:{" "}
+                </div>
+                <div className="disp_data_el">
+                  {this.props.store.upload_manifest.default_template.SendPerson}
+                </div>
+                <div className="disp_data_label">
+                  Контактный телефон отправителя:{" "}
+                </div>
+                <div className="disp_data_el">
+                  {this.props.store.upload_manifest.default_template.SendPhone}
+                </div>
+                <div className="disp_data_label">
+                  Электронный адрес отправителя:{" "}
+                </div>
+                <div className="disp_data_el">
+                  {this.props.store.upload_manifest.default_template.SendEmail}
+                </div>
+                <div className="disp_data_label">
+                  Дополнительная информация отправителя:{" "}
+                </div>
+                <div className="disp_data_el">
+                  {
+                    this.props.store.upload_manifest.default_template
+                      .SendAddInfo
+                  }
+                </div>
+                <div className="disp_data_label">Город получателя: </div>
+                <div className="disp_data_el">
+                  {this.props.store.upload_manifest.default_template.RecCity}
+                </div>
+                <div className="disp_data_label">Адрес отправителя: </div>
+                <div className="disp_data_el">
+                  {this.props.store.upload_manifest.default_template.RecAdress}
+                </div>
+                <div className="disp_data_label">Компания получателя: </div>
+                <div className="disp_data_el">
+                  {this.props.store.upload_manifest.default_template.RecCompany}
+                </div>
+                <div className="disp_data_label">
+                  Контактное лицо отправителя:{" "}
+                </div>
+                <div className="disp_data_el">
+                  {this.props.store.upload_manifest.default_template.RecPerson}
+                </div>
+                <div className="disp_data_label">
+                  Контактный телефон отправителя:{" "}
+                </div>
+                <div className="disp_data_el">
+                  {this.props.store.upload_manifest.default_template.RecPhone}
+                </div>
+                <div className="disp_data_label">
+                  Электронный адрес отправителя:{" "}
+                </div>
+                <div className="disp_data_el">
+                  {this.props.store.upload_manifest.default_template.RecEmail}
+                </div>
+                <div className="disp_data_label">
+                  Дополнительная информация отправителя:{" "}
+                </div>
+                <div className="disp_data_el">
+                  {this.props.store.upload_manifest.default_template.RecAddInfo}
+                </div>
+                <div className="disp_data_label">Страховая стоимость: </div>
+                <div className="disp_data_el">
+                  {
+                    this.props.store.upload_manifest.default_template
+                      .InsureValue
+                  }
+                </div>
+                <div className="disp_data_label">
+                  Сумма наложенного платежа:{" "}
+                </div>
+                <div className="disp_data_el">
+                  {this.props.store.upload_manifest.default_template.COD}
+                </div>
+                <div className="disp_data_label">Срочность доставки: </div>
+                <div className="disp_data_el">
+                  {this.props.store.upload_manifest.default_template.DelType}
+                </div>
+                <div className="disp_data_label">Тип оплаты: </div>
+                <div className="disp_data_el">
+                  {this.props.store.upload_manifest.default_template.PayType}
+                </div>
+              </div>
             </Modal>
           </div>
           <div className="disp_data_label">Шаблоны адресов:</div>
@@ -1202,83 +1104,81 @@ class Screen extends React.Component {
                 this.props.set_upload_manifest_open_modal_dt(false)
               }
               open={this.props.store.upload_manifest.open_modal_dt}
+              header="Шаблоны адресов"
+              height="90%"
+              width="90%"
             >
-              <Modal.Header>Шаблоны адресов</Modal.Header>
-              <Modal.Content>
-                <Modal.Description>
-                  <div>
-                    <Table celled compact="very">
-                      <Table.Header>
-                        <Table.Row>
-                          <Table.HeaderCell>Имя</Table.HeaderCell>
-                          <Table.HeaderCell>Город</Table.HeaderCell>
-                          <Table.HeaderCell>Адрес</Table.HeaderCell>
-                          <Table.HeaderCell>Телефон</Table.HeaderCell>
-                          <Table.HeaderCell>Конт. лицо</Table.HeaderCell>
-                          <Table.HeaderCell>Компания</Table.HeaderCell>
-                          <Table.HeaderCell>Доп. инфо</Table.HeaderCell>
-                          <Table.HeaderCell></Table.HeaderCell>
+              <div className="table-wrapper">
+                <Table celled compact="very">
+                  <Table.Header>
+                    <Table.Row>
+                      <Table.HeaderCell>Имя</Table.HeaderCell>
+                      <Table.HeaderCell>Город</Table.HeaderCell>
+                      <Table.HeaderCell>Адрес</Table.HeaderCell>
+                      <Table.HeaderCell>Телефон</Table.HeaderCell>
+                      <Table.HeaderCell>Конт. лицо</Table.HeaderCell>
+                      <Table.HeaderCell>Компания</Table.HeaderCell>
+                      <Table.HeaderCell>Доп. инфо</Table.HeaderCell>
+                      <Table.HeaderCell></Table.HeaderCell>
+                    </Table.Row>
+                  </Table.Header>
+                  <Table.Body>
+                    {this.props.store.upload_manifest.disp_template_list.map(
+                      (el, index) => (
+                        <Table.Row
+                          key={index}
+                          onDoubleClick={this.upload_manifest_click_template_row.bind(
+                            this,
+                            el
+                          )}
+                        >
+                          <Table.Cell>{el.label}</Table.Cell>
+                          <Table.Cell>{el.City}</Table.Cell>
+                          <Table.Cell>{el.Adress}</Table.Cell>
+                          <Table.Cell>{el.Phone}</Table.Cell>
+                          <Table.Cell>{el.Person}</Table.Cell>
+                          <Table.Cell>{el.Company}</Table.Cell>
+                          <Table.Cell>{el.AddInfo}</Table.Cell>
+                          <Table.Cell>
+                            <input
+                              onChange={() =>
+                                this.props.upload_manifest_check_template_checkbox(
+                                  el.Key
+                                )
+                              }
+                              type="checkbox"
+                              className="input-checkbox"
+                              checked={el.selected}
+                            ></input>
+                          </Table.Cell>
                         </Table.Row>
-                      </Table.Header>
-                      <Table.Body>
-                        {this.props.store.upload_manifest.disp_template_list.map(
-                          (el, index) => (
-                            <Table.Row
-                              key={index}
-                              onDoubleClick={this.upload_manifest_click_template_row.bind(
-                                this,
-                                el
-                              )}
-                            >
-                              <Table.Cell>{el.label}</Table.Cell>
-                              <Table.Cell>{el.City}</Table.Cell>
-                              <Table.Cell>{el.Adress}</Table.Cell>
-                              <Table.Cell>{el.Phone}</Table.Cell>
-                              <Table.Cell>{el.Person}</Table.Cell>
-                              <Table.Cell>{el.Company}</Table.Cell>
-                              <Table.Cell>{el.AddInfo}</Table.Cell>
-                              <Table.Cell>
-                                <input
-                                  onChange={() =>
-                                    this.props.upload_manifest_check_template_checkbox(
-                                      el.Key
-                                    )
-                                  }
-                                  type="checkbox"
-                                  className="input-checkbox"
-                                  checked={el.selected}
-                                ></input>
-                              </Table.Cell>
-                            </Table.Row>
-                          )
-                        )}
-                      </Table.Body>
-                    </Table>
-
-                    {this.props.store.upload_manifest.disp_template_list.filter(
+                      )
+                    )}
+                  </Table.Body>
+                </Table>
+              </div>
+              {this.props.store.upload_manifest.disp_template_list.filter(
+                (el) => {
+                  return el.selected;
+                }
+              ).length > 0 ? (
+                <button
+                  className="upload_manifest_create_button"
+                  onClick={this.create_disp_from_temlate.bind(this)}
+                >
+                  Cоздать (
+                  {
+                    this.props.store.upload_manifest.disp_template_list.filter(
                       (el) => {
                         return el.selected;
                       }
-                    ).length > 0 ? (
-                      <button
-                        onClick={this.create_disp_from_temlate.bind(this)}
-                      >
-                        Cоздать (
-                        {
-                          this.props.store.upload_manifest.disp_template_list.filter(
-                            (el) => {
-                              return el.selected;
-                            }
-                          ).length
-                        }
-                        )
-                      </button>
-                    ) : (
-                      <button disabled>Cоздать</button>
-                    )}
-                  </div>
-                </Modal.Description>
-              </Modal.Content>
+                    ).length
+                  }
+                  )
+                </button>
+              ) : (
+                <button disabled>Cоздать</button>
+              )}
             </Modal>
           </div>
           {this.props.store.login.consolidate_upload_manifest ? (
@@ -1299,14 +1199,6 @@ class Screen extends React.Component {
         <div>
           <Table celled compact="very" size="small">
             {this.create_table()}
-
-            {/* <Table.Footer>
-      <Table.Row>
-        <Table.HeaderCell>3 People</Table.HeaderCell>
-        <Table.HeaderCell>2 Approved</Table.HeaderCell>
-        <Table.HeaderCell />
-      </Table.Row>
-    </Table.Footer> */}
           </Table>
         </div>
 

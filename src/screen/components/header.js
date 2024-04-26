@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import logo from "./../../logo.svg";
 import { get_data } from "./../../common/common_modules";
-import { Header, Modal } from "semantic-ui-react";
 import md5 from "md5";
+import Modal from "../../ui-components/modal/modal";
 
 class Screen extends Component {
   handleKeyDown = (e) => {
@@ -85,24 +85,17 @@ class Screen extends Component {
     return (
       <div id="pageHeader" className="topnav">
         <Modal
-          closeIcon
           open={this.props.store.general.modal_show}
           onClose={this.close_modal_portal.bind(this)}
+          header={this.props.store.general.modal_header}
         >
-          <Header>{this.props.store.general.modal_header}</Header>
-          <Modal.Content>
-            <p>{this.props.store.general.modal_text}</p>
-          </Modal.Content>
+          <p>{this.props.store.general.modal_text}</p>
         </Modal>
 
         <div onClick={this.logo_click.bind(this)}>
           <img alt="header" className="header_logo" src={logo} />
         </div>
-        <div className="mainmenu">
-          {/* <div className="old"><a href='http://old.express-kinetika.ru'>Старая версия</a></div> */}
-          {/* <div className="main_menu_button">Расчет стоимости</div>
-                <div className="main_menu_button">Адреса и телефоны</div> */}
-        </div>
+        <div className="mainmenu"></div>
 
         {!this.props.store.login.logged ? (
           <div className="login-container">

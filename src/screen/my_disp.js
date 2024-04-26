@@ -1,7 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import { get_data } from "./../common/common_modules";
-import { Modal, Table, Dimmer, Loader } from "semantic-ui-react";
+import { Table, Dimmer, Loader, Modal } from "semantic-ui-react";
+
 import "./disp_map.css";
 import "./my_disp.css";
 import "./disp.css";
@@ -983,31 +984,27 @@ class Screen extends React.Component {
                                               this.props.store.my_disp.show_skan
                                             }
                                             onClose={this.close_skan.bind(this)}
+                                            header="Вложенное изображение"
                                           >
-                                            <Modal.Content>
-                                              <Modal.Description>
-                                                {this.props.store.my_disp
-                                                  .skan_loading ? (
-                                                  <div className="loader_container">
-                                                    <Dimmer active inverted>
-                                                      <Loader
-                                                        size="large"
-                                                        content="Загрузка"
-                                                      ></Loader>
-                                                    </Dimmer>
-                                                  </div>
-                                                ) : (
-                                                  <img
-                                                    alt="alt"
-                                                    className="disp_skan"
-                                                    src={
-                                                      this.props.store.my_disp
-                                                        .skan
-                                                    }
-                                                  />
-                                                )}
-                                              </Modal.Description>
-                                            </Modal.Content>
+                                            {this.props.store.my_disp
+                                              .skan_loading ? (
+                                              <div className="loader_container">
+                                                <Dimmer active inverted>
+                                                  <Loader
+                                                    size="large"
+                                                    content="Загрузка"
+                                                  ></Loader>
+                                                </Dimmer>
+                                              </div>
+                                            ) : (
+                                              <img
+                                                alt="alt"
+                                                className="disp_skan"
+                                                src={
+                                                  this.props.store.my_disp.skan
+                                                }
+                                              />
+                                            )}
                                           </Modal>
                                         ) : null}
                                       </div>
