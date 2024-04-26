@@ -105,6 +105,7 @@ class Screen extends React.Component {
                         <Table.Cell>
                           <input
                             type="checkbox"
+                            className="input-checkbox"
                             checked={disp.selected}
                             onChange={this.check.bind(this, disp.num)}
                           ></input>

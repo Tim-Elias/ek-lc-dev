@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Table, Modal, Loader, Dimmer, Checkbox } from "semantic-ui-react";
+import { Table, Modal, Loader, Dimmer } from "semantic-ui-react";
 import { get_data } from "./../common/common_modules";
 import ReactToPrint from "react-to-print";
 import "./disp.css";
@@ -986,14 +986,23 @@ class Screen extends React.Component {
         </div>
         <div className="disp_cargo_data">
           <div className="disp_data_label">Хрупкий груз:</div>
-          <Checkbox checked={this.props.store.disp.data.Fragile} />
+          <input
+            type="checkbox"
+            className="input-checkbox"
+            checked={this.props.store.disp.data.Fragile}
+          />
 
           {this.props.store.login.probably_termo
             ? [
                 <div key={1} className="disp_data_label">
                   Терморежим:
                 </div>,
-                <Checkbox key={2} checked={this.props.store.disp.data.Termo} />,
+                <input
+                  type="checkbox"
+                  className="input-checkbox"
+                  key={2}
+                  checked={this.props.store.disp.data.Termo}
+                />,
               ]
             : null}
 

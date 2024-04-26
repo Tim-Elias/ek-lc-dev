@@ -375,6 +375,7 @@ class Screen extends React.Component {
                                     <Table.Cell>
                                       <input
                                         type="checkbox"
+                                        className="input-checkbox"
                                         checked={el.check}
                                       />
                                     </Table.Cell>
@@ -498,6 +499,7 @@ class Screen extends React.Component {
                                     <Table.Cell>
                                       <input
                                         type="checkbox"
+                                        className="input-checkbox"
                                         checked={el.check}
                                       />
                                     </Table.Cell>
@@ -630,6 +632,7 @@ class Screen extends React.Component {
                                     <Table.Cell>
                                       <input
                                         type="checkbox"
+                                        className="input-checkbox"
                                         checked={el.check}
                                       />
                                     </Table.Cell>
@@ -730,6 +733,7 @@ class Screen extends React.Component {
                                     <Table.Cell>
                                       <input
                                         type="checkbox"
+                                        className="input-checkbox"
                                         checked={el.check}
                                       />
                                     </Table.Cell>

@@ -752,6 +752,7 @@ class Screen extends React.Component {
                   }
                   checked={this.props.store.disp_map.assignment_mode}
                   type="checkbox"
+                  className="input-checkbox"
                 ></input>
               </div>
             </div>

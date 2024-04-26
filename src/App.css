@@ -27,6 +27,11 @@ select{
   border-radius: 3px;
   }
 
+.input-checkbox{
+    width: 18px;
+    height: 18px;
+}
+
 button{
   padding: 8px 12px;
   border: none;

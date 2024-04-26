@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import Select from "react-select";
 import { customStyles } from "./../common/common_style";
-import { Header, Modal, Table, Checkbox } from "semantic-ui-react";
+import { Header, Modal, Table } from "semantic-ui-react";
 import ReactToPrint from "react-to-print";
 import { get_data } from "./../common/common_modules";
 import "semantic-ui-css/semantic.min.css";
@@ -233,9 +233,6 @@ class Screen extends React.Component {
       if (it.COD !== "0") {
         COD = el[it.COD - 1];
       }
-      // if(it.Total !== "0") {Total = el[it.Total-1]}
-      // if(it.Weight !== "0") {Weight = el[it.Weight-1]}
-      // if(it.Volume !== "0") {Volume = el[it.Volume-1]}
 
       if (RecCity === "") {
         const Recdispt =
@@ -372,7 +369,9 @@ class Screen extends React.Component {
             if (cell === true || cell === false) {
               children.push(
                 <Table.Cell key={cell_index}>
-                  <Checkbox
+                  <input
+                    type="checkbox"
+                    className="input-checkbox"
                     onChange={this.check_checkbox.bind(
                       this,
                       cell_index,
@@ -494,14 +493,9 @@ class Screen extends React.Component {
         this.upload_data();
       })
       .catch((err) => {});
-
-    //
   };
 
-  sent_disp = () => {
-    // console.log("start")
-    // console.log(this.props.store.create_disp.Number)
-  };
+  sent_disp = () => {};
 
   disp_print_data = (el) => {
     const data = {
@@ -512,9 +506,7 @@ class Screen extends React.Component {
     return data;
   };
 
-  upload_manifest_click_template_row = (el) => {
-    //console.log(el)
-  };
+  upload_manifest_click_template_row = (el) => {};
 
   create_disp_from_temlate = () => {
     let data = [];
@@ -537,12 +529,6 @@ class Screen extends React.Component {
 
         let CurIndex = index + max + 1;
 
-        // if (this.props.store.upload_manifest.upload_in_one.value && this.props.store.upload_manifest.consolidate_checkbox_index !== 0 && this.props.store.upload_manifest.import_template.ConsolidateImportTemplate !==0 && consolidate_data.length !== 0){
-        //   CurIndex = index+1
-        // } else {
-        //   CurIndex = index
-        // }
-        // console.log(el)
         let Num = "";
         let SendCity = "";
         let SendAdress = "";
@@ -563,11 +549,6 @@ class Screen extends React.Component {
         let Weight = "";
         let Volume = "";
 
-        //console.log(dt)
-
-        // if(it.Num !== 0) {Num = el[it.Num-1]}
-        // console.log(it.SendCity)
-        // console.log(dt.SendCity)
         SendCity = dt.SendCity;
         SendAdress = dt.SendAdress;
         SendCompany = dt.SendCompany;
@@ -581,40 +562,6 @@ class Screen extends React.Component {
         RecPerson = el.Person;
         RecPhone = el.Phone;
         RecAddInfo = el.AddInfo;
-
-        // if(it.InsureValue !== "0") {InsureValue = el[it.InsureValue-1]}
-        // if(it.COD !== "0") {COD = el[it.COD-1]}
-        // if(it.Total !== "0") {Total = el[it.Total-1]}
-        // if(it.Weight !== "0") {Weight = el[it.Weight-1]}
-        // if(it.Volume !== "0") {Volume = el[it.Volume-1]}
-
-        // if(RecCity === ""){
-        //   const Recdispt = this.props.store.upload_manifest.disp_template_list.find(el=>{
-        //     return el.label === RecAdress
-        //   })
-        //   if (Recdispt !== undefined){
-        //     RecCity = Recdispt.City
-        //     RecAdress = Recdispt.Adress
-        //     if (RecPhone === "") {RecPhone = Recdispt.Phone}
-        //     if (RecPerson === "") {RecPerson = Recdispt.Person}
-        //     if (RecCompany === "") {RecCompany = Recdispt.Company}
-        //     if (RecAddInfo === "") {RecAddInfo = Recdispt.AddInfo}
-        //   }
-        // }
-
-        // if(SendCity === ""){
-        //   const Senddispt = this.props.store.upload_manifest.disp_template_list.find(el=>{
-        //     return el.label === SendAdress
-        //   })
-        //   if (Senddispt !== undefined){
-        //     SendCity = Senddispt.City
-        //     SendAdress = Senddispt.Adress
-        //     if (SendPhone === "") {SendPhone = Senddispt.Phone}
-        //     if (SendPerson === "") {SendPerson = Senddispt.Person}
-        //     if (SendCompany === "") {SendCompany = Senddispt.Company}
-        //     if (SendAddInfo === "") {SendAddInfo = Senddispt.AddInfo}
-        //   }
-        // }
 
         let disp = {
           Num: Num,
@@ -1298,6 +1245,7 @@ class Screen extends React.Component {
                                     )
                                   }
                                   type="checkbox"
+                                  className="input-checkbox"
                                   checked={el.selected}
                                 ></input>
                               </Table.Cell>

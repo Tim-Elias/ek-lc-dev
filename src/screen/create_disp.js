@@ -4,7 +4,7 @@ import "./create_disp.css";
 import { get_data } from "./../common/common_modules";
 import Select from "react-select";
 import { customStyles } from "./../common/common_style";
-import { Table, Modal, Checkbox } from "semantic-ui-react";
+import { Table, Modal } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 
 const CargoInfoTypeList = [
@@ -1446,7 +1446,9 @@ class Screen extends React.Component {
 
               <div className="disp_cargo_data_fragile">
                 <div className="disp_data_label">Хрупкий груз:</div>
-                <Checkbox
+                <input
+                  type="checkbox"
+                  className="input-checkbox"
                   onChange={(e) =>
                     this.props.SetFragile(!this.props.store.create_disp.Fragile)
                   }
@@ -1457,7 +1459,9 @@ class Screen extends React.Component {
                       <div key={1} className="disp_data_label">
                         Терморежим:
                       </div>,
-                      <Checkbox
+                      <input
+                        type="checkbox"
+                        className="input-checkbox"
                         key={2}
                         onChange={(e) =>
                           this.props.SetTermo(
@@ -1517,7 +1521,9 @@ class Screen extends React.Component {
             [
               <div key={1} className="disp_cargo_data_fragile">
                 <div className="disp_data_label">Хрупкий груз:</div>
-                <Checkbox
+                <input
+                  type="checkbox"
+                  className="input-checkbox"
                   onChange={(e) =>
                     this.props.SetFragile(!this.props.store.create_disp.Fragile)
                   }
@@ -1528,7 +1534,9 @@ class Screen extends React.Component {
                       <div key={1} className="disp_data_label">
                         Терморежим:
                       </div>,
-                      <Checkbox
+                      <input
+                        type="checkbox"
+                        className="input-checkbox"
                         key={2}
                         onChange={(e) =>
                           this.props.SetTermo(
