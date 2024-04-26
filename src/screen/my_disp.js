@@ -1,11 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
 import { get_data } from "./../common/common_modules";
-import { Table, Dimmer, Loader, Modal } from "semantic-ui-react";
+import { Table } from "semantic-ui-react";
 
 import "./disp_map.css";
 import "./my_disp.css";
 import "./disp.css";
+import Dimmer from "../ui-components/dimmer/dimmer";
+import Modal from "../ui-components/modal/modal";
 
 class Screen extends React.Component {
   handleKeyDown = (e) => {
@@ -125,7 +127,6 @@ class Screen extends React.Component {
 
   open_skan = (DocNumber, dispNumber) => {
     this.props.set_my_disp_skan_loading(true);
-    this.props.set_my_disp_show_skan(true);
     const data = {
       num: dispNumber,
       userkey: this.props.store.login.userkey,
@@ -967,6 +968,8 @@ class Screen extends React.Component {
                                         {historyEl.Status}
                                         {historyEl.Skan !== 0 ? (
                                           <Modal
+                                            height="90%"
+                                            width="500px"
                                             trigger={
                                               <button
                                                 className="disp_skan_button"
@@ -980,21 +983,13 @@ class Screen extends React.Component {
                                                 (Получить скан)
                                               </button>
                                             }
-                                            open={
-                                              this.props.store.my_disp.show_skan
-                                            }
                                             onClose={this.close_skan.bind(this)}
                                             header="Вложенное изображение"
                                           >
                                             {this.props.store.my_disp
                                               .skan_loading ? (
                                               <div className="loader_container">
-                                                <Dimmer active inverted>
-                                                  <Loader
-                                                    size="large"
-                                                    content="Загрузка"
-                                                  ></Loader>
-                                                </Dimmer>
+                                                <Dimmer />
                                               </div>
                                             ) : (
                                               <img

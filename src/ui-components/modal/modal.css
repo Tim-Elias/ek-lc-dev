@@ -35,6 +35,7 @@
   }
   
   .modal-body {
+    overflow-x: auto;
     margin-bottom: 20px;
     height: 100%;
   }

@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Table, Loader, Dimmer } from "semantic-ui-react";
+import { Table } from "semantic-ui-react";
 import { get_data } from "./../common/common_modules";
 import ReactToPrint from "react-to-print";
 import "./disp.css";
@@ -10,6 +10,7 @@ import GoogleMapReact from "google-map-react";
 import Sound from "react-sound";
 import test_sound from "./../common/Sound_11084.wav";
 import Modal from "../ui-components/modal/modal";
+import Dimmer from "../ui-components/dimmer/dimmer";
 
 let g_map;
 let g_maps;
@@ -706,9 +707,7 @@ class Screen extends React.Component {
               <div>
                 {this.props.store.disp.history_loading ? (
                   <div>
-                    <Dimmer active inverted>
-                      <Loader inverted content="Загрузка" />
-                    </Dimmer>
+                    <Dimmer />
                   </div>
                 ) : (
                   <Table celled compact="very">
@@ -748,9 +747,7 @@ class Screen extends React.Component {
                               >
                                 {this.props.store.disp.skan_loading ? (
                                   <div className="loader_container">
-                                    <Dimmer active inverted>
-                                      <Loader size="large">Загрузка</Loader>
-                                    </Dimmer>
+                                    <Dimmer />
                                   </div>
                                 ) : (
                                   <img
