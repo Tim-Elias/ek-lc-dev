@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import GoogleMapReact from "google-map-react";
-import { List, Icon } from "semantic-ui-react";
+import { List } from "semantic-ui-react";
 import "./disp_map.css";
 import { get_data } from "./../common/common_modules";
 
@@ -672,17 +672,18 @@ class Screen extends React.Component {
                                 >
                                   <List.Header as="a">
                                     {disp.Num}
-                                    <Icon
-                                      name="expand"
+                                    <button
                                       onClick={this.open_disp.bind(
                                         this,
                                         disp.Num
                                       )}
-                                    ></Icon>
+                                    >
+                                      <i className="ek-enlarge" />
+                                    </button>
                                     {disp.StatusType === "У сотрудника" ? (
-                                      <Icon name="truck"></Icon>
+                                      <i className="ek-truck" />
                                     ) : (
-                                      <Icon color="red" name="pallet"></Icon>
+                                      <i className="red ek-checkbox-unchecked" />
                                     )}
                                   </List.Header>
                                   <List.Description as="a">
@@ -700,15 +701,15 @@ class Screen extends React.Component {
                                   </List.Description>
                                   {(disp.RecLat === "" || disp.RecLng === "") &&
                                   disp.RecAddress !== "" ? (
-                                    <Icon
-                                      name="search"
-                                      color="red"
+                                    <button
                                       onClick={this.geocode.bind(
                                         this,
                                         disp.Num,
                                         disp.RecCity + disp.RecAddress
                                       )}
-                                    ></Icon>
+                                    >
+                                      <i className="red ek-search" />
+                                    </button>
                                   ) : null}
                                 </List.Content>
                               </List.Item>

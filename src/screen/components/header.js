@@ -134,10 +134,9 @@ class Screen extends Component {
             <div className="topnavusername">
               {this.props.store.login.original_data.username}{" "}
             </div>
-            <div onClick={this.logout.bind(this)} className="logout">
-              {" "}
-              Выход{" "}
-            </div>
+            <button onClick={this.logout.bind(this)} className="logout">
+              Выход
+            </button>
           </div>
         )}
       </div>

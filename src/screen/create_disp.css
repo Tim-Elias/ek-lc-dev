@@ -31,9 +31,9 @@
   }
 
   .IconButton{
-    height: 22px;
-    width: 30px;
-    border-radius: 5px;
+    height: 32px;
+    width: 40px;
+    border-radius: 2px;
   }
 
 input::-webkit-outer-spin-button,

@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Icon, Table } from "semantic-ui-react";
+import { Table } from "semantic-ui-react";
 
 class Screen extends React.Component {
   tr_double_click = (el) => {
@@ -15,7 +15,7 @@ class Screen extends React.Component {
         <div className="disp_Number">
           <div>
             <button onClick={this.props.modules.back}>
-              <Icon name="arrow left" />
+              <i className="ek-arrow-left" />
             </button>
             <b className="page_header">Шаблоны импорта</b>
           </div>

@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import Select from "react-select";
 import { customStyles } from "./../common/common_style";
-import { Header, Modal, Table, Icon, Checkbox } from "semantic-ui-react";
+import { Header, Modal, Table, Checkbox } from "semantic-ui-react";
 import ReactToPrint from "react-to-print";
 import { get_data } from "./../common/common_modules";
 import "semantic-ui-css/semantic.min.css";
@@ -848,7 +848,7 @@ class Screen extends React.Component {
             <ReactToPrint
               trigger={() => (
                 <button className="ui button mini">
-                  <Icon name="print"></Icon> Печать всех накладных
+                  <i className="ek-printer" /> Печать всех накладных
                 </button>
               )}
               content={() => this.all_disp_print}
@@ -871,7 +871,7 @@ class Screen extends React.Component {
             <ReactToPrint
               trigger={() => (
                 <button className="ui button mini">
-                  <Icon name="print"></Icon> Печать всех наклеек
+                  <i className="ek-printer" /> Печать всех наклеек
                 </button>
               )}
               content={() => this.all_ticket_print}
@@ -903,7 +903,7 @@ class Screen extends React.Component {
             <Modal
               trigger={
                 <button className="ui icon button mini">
-                  <i className="eye icon"></i>
+                  <i className="ek-eye"></i>
                 </button>
               }
             >
@@ -1078,7 +1078,7 @@ class Screen extends React.Component {
             <Modal
               trigger={
                 <button className="ui icon button mini">
-                  <i className="eye icon"></i>
+                  <i className="ek-eye"></i>
                 </button>
               }
             >
@@ -1248,7 +1248,7 @@ class Screen extends React.Component {
               }}
               className="ui icon button mini"
             >
-              <i className="eye icon"></i>
+              <i className="ek-eye"></i>
             </button>
             <Modal
               onClose={() =>
@@ -1532,7 +1532,7 @@ class Screen extends React.Component {
                           trigger={() => (
                             <div className="upload_manifest_button_container">
                               <button size="mini">
-                                <Icon name="print"></Icon> Печать
+                                <i className="ek-printer" /> Печать
                               </button>
                             </div>
                           )}
@@ -1545,7 +1545,7 @@ class Screen extends React.Component {
                             this.props.upload_manifest_remove_disp(el.Key)
                           }
                         >
-                          <Icon name="remove"></Icon> Удалить
+                          <i className="ek-bin" /> Удалить
                         </button>
                       )}
 
@@ -1565,7 +1565,7 @@ class Screen extends React.Component {
                           trigger={() => (
                             <div className="upload_manifest_button_container">
                               <button size="mini">
-                                <Icon name="print"></Icon> Печать наклеек
+                                <i className="ek-printer" /> Печать наклеек
                               </button>
                             </div>
                           )}

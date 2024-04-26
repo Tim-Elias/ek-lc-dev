@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Icon } from "semantic-ui-react";
 import Select from "react-select";
 import { customStyles } from "./../common/common_style";
 import { get_data } from "./../common/common_modules";
@@ -129,7 +128,7 @@ class Screen extends React.Component {
         <div className="disp_Number">
           <div>
             <button onClick={this.props.modules.back}>
-              <Icon name="arrow left" />
+              <i className="ek-arrow-left" />
             </button>
             <b className="page_header">Шаблон отправителей и получателей </b>
             {this.props.store.templates.selected_disp_template.IsNew ? (

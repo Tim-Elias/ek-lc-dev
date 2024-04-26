@@ -1,4 +1,5 @@
 import "./App.css";
+import "./ui-components/icons/style.css";
 import React from "react";
 import { useSelector } from "react-redux";
 import Header from "./screen/components/header";

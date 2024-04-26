@@ -1,13 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import {
-  Table,
-  Icon,
-  Modal,
-  Loader,
-  Dimmer,
-  Checkbox,
-} from "semantic-ui-react";
+import { Table, Modal, Loader, Dimmer, Checkbox } from "semantic-ui-react";
 import { get_data } from "./../common/common_modules";
 import ReactToPrint from "react-to-print";
 import "./disp.css";
@@ -666,14 +659,14 @@ class Screen extends React.Component {
         <div className="disp_Number">
           <div>
             <button onClick={this.back.bind(this)}>
-              <Icon name="arrow left" />
+              <i className="ek-arrow-left" />
             </button>{" "}
             {this.props.store.disp.data.Type}{" "}
             <b>{this.props.store.disp.data.Number} </b>
             <ReactToPrint
               trigger={() => (
                 <button>
-                  <Icon name="print"></Icon> Печать
+                  <i className="ek-printer" /> Печать
                 </button>
               )}
               content={() => this.componentRef}
@@ -689,7 +682,7 @@ class Screen extends React.Component {
               <ReactToPrint
                 trigger={() => (
                   <button>
-                    <Icon name="print"></Icon> Печать наклеек
+                    <i className="ek-printer" /> Печать наклеек
                   </button>
                 )}
                 content={() => this.stickerRef}
@@ -832,13 +825,13 @@ class Screen extends React.Component {
                       color="red"
                       onClick={this.close_remove_modal.bind(this)}
                     >
-                      <Icon name="remove" /> Нет
+                      Нет
                     </button>
                     <button
                       color="green"
                       onClick={this.confirm_remove_disp.bind(this)}
                     >
-                      <Icon name="checkmark" /> Да
+                      <i className="ek-bin" /> Да
                     </button>
                   </Modal.Actions>
                 )}

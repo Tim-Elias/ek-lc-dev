@@ -3,6 +3,23 @@
   outline: 0 !important;
 }
 
+i{
+  font-size: 16px;
+  /* margin: 0 8px; */
+}
+
+.menu-icon{
+  margin: 0 8px;
+}
+
+.margin-right-8{
+  margin-right: 8px;
+}
+
+.red{
+color: red;
+}
+
 select{
   padding: 6px;
   margin: 0 4px;
@@ -14,6 +31,7 @@ button{
   padding: 8px 12px;
   border: none;
   border-radius: 3px;
+  margin: 0 6px;
 }
 
 button:hover{
@@ -84,24 +102,6 @@ table{
   width: 100%;
 }
 
-/* th {
-  background-color: #c2c2c2;
-  font-size: 12px;
-  text-align: left;
-  border: #808080 1px solid;
-  padding: 5px;
-}
-
-td {
-  font-size: 11px;
-  text-align: left;
-  border: #808080 1px solid;
-  padding: 5px;
-} */
-
-/* .active{
-  background-color: rgb(228, 201, 178);
-} */
 
 .leftmenuel{
   float: center;
@@ -145,7 +145,7 @@ td {
   padding: 5px 5px;
   text-decoration: none;
   font-size: 14px;
-  border-radius: .28571429rem;
+  border-radius: 3px;
   margin: 10px 5px;
 }
 
@@ -155,7 +155,7 @@ td {
   border: #d4d4d5 1px solid;
   padding: 5px 5px;
   text-decoration: none;
-  border-radius: .28571429rem;
+  border-radius: 3px;
   margin: 10px 5px;
  
 }
@@ -362,7 +362,7 @@ td {
 .logged_main_compact {
 
   display: grid;
-  grid-template-columns: 67px 1fr ;
+  grid-template-columns: 85px 1fr ;
   margin: 0;
 }
 

@@ -4,7 +4,7 @@ import { get_data } from "./../common/common_modules";
 import Select from "react-select";
 import "./home_ek.css";
 import { calcPriceStyle } from "./../common/calc_price_style";
-import { Icon, Table } from "semantic-ui-react";
+import { Table } from "semantic-ui-react";
 
 class Screen extends React.Component {
   componentDidMount() {
@@ -445,12 +445,7 @@ class Screen extends React.Component {
                             onClick={this.RemoveCargo.bind(this, index)}
                             className="IconButton"
                           >
-                            <Icon
-                              type="indicator"
-                              name="delete"
-                              width={15}
-                              height={15}
-                            />
+                            <i className="ek-bin" />
                           </button>
                         </Table.Cell>
                       )}

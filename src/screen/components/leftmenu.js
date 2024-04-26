@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { get_data } from "./../../common/common_modules";
-import { Icon } from "semantic-ui-react";
 
 class Screen extends Component {
   hide_menu = () => {
@@ -353,21 +352,21 @@ class Screen extends Component {
             <div className="leftmenubutton">
               <button onClick={this.hide_menu.bind(this)}>
                 <div className="leftmenubuttonicon">
-                  <Icon name="arrow right" />
+                  <i className="menu-icon ek-arrow-right" />
                 </div>
               </button>
             </div>
             <div className="leftmenubutton">
               <button onClick={this.button_click.bind(this, "my_disp")}>
                 <div className="leftmenubuttonicon">
-                  <Icon name="list" />
+                  <i className="menu-icon ek-list" />
                 </div>
               </button>
             </div>
             <div className="leftmenubutton">
               <button onClick={this.button_click.bind(this, "disp_number")}>
                 <div className="leftmenubuttonicon">
-                  <Icon name="search" />
+                  <i className="menu-icon ek-search" />
                 </div>
               </button>
             </div>
@@ -375,7 +374,7 @@ class Screen extends Component {
               <div className="leftmenubutton">
                 <button onClick={this.button_click.bind(this, "create_disp")}>
                   <div className="leftmenubuttonicon">
-                    <Icon name="edit outline" />
+                    <i className="menu-icon ek-plus" />
                   </div>
                 </button>
               </div>
@@ -384,7 +383,7 @@ class Screen extends Component {
               <div className="leftmenubutton">
                 <button onClick={this.button_click.bind(this, "calc_price")}>
                   <div className="leftmenubuttonicon">
-                    <Icon name="calculator" />
+                    <i className="menu-icon ek-calculator" />
                   </div>
                 </button>
               </div>
@@ -395,7 +394,7 @@ class Screen extends Component {
                   onClick={this.button_click.bind(this, "upload_manifest")}
                 >
                   <div className="leftmenubuttonicon">
-                    <Icon name="upload" />
+                    <i className="menu-icon ek-box-add" />
                   </div>
                 </button>
               </div>
@@ -404,7 +403,7 @@ class Screen extends Component {
               <div className="leftmenubutton">
                 <button onClick={this.button_click.bind(this, "mutual")}>
                   <div className="leftmenubuttonicon">
-                    <Icon name="money" />
+                    <i className="menu-icon ek-stack" />
                   </div>
                 </button>
               </div>
@@ -413,7 +412,7 @@ class Screen extends Component {
               <div className="leftmenubutton">
                 <button onClick={this.button_click.bind(this, "setting")}>
                   <div className="leftmenubuttonicon">
-                    <Icon name="setting" />
+                    <i className="menu-icon ek-cog" />
                   </div>
                 </button>
               </div>
@@ -424,7 +423,7 @@ class Screen extends Component {
             <div className="leftmenubutton">
               <button onClick={this.hide_menu.bind(this)}>
                 <div className="leftmenubuttonicon">
-                  <Icon name="arrow left" />
+                  <i className="menu-icon ek-arrow-left" />
                 </div>
               </button>
             </div>
@@ -432,13 +431,13 @@ class Screen extends Component {
               onClick={this.button_click.bind(this, "my_disp")}
               className="leftmenuel"
             >
-              <Icon name="list" /> Мои накладные
+              <i className="menu-icon ek-list" /> Мои накладные
             </div>
             <div
               onClick={this.button_click.bind(this, "disp_number")}
               className="leftmenuel"
             >
-              <Icon name="search" />
+              <i className="menu-icon ek-search" />
               Найти по номеру
             </div>
             {this.props.store.login.create_disp ? (
@@ -446,7 +445,7 @@ class Screen extends Component {
                 onClick={this.button_click.bind(this, "create_disp")}
                 className="leftmenuel"
               >
-                <Icon name="edit outline" /> Создать накладную
+                <i className="menu-icon ek-plus" /> Создать накладную
               </div>
             ) : null}
             {this.props.store.login.mutual ? (
@@ -454,7 +453,7 @@ class Screen extends Component {
                 onClick={this.button_click.bind(this, "calc_price")}
                 className="leftmenuel"
               >
-                <Icon name="calculator" />
+                <i className="menu-icon ek-calculator" />
                 Расчитать стоимость
               </div>
             ) : null}
@@ -463,17 +462,17 @@ class Screen extends Component {
                 onClick={this.button_click.bind(this, "upload_manifest")}
                 className="leftmenuel"
               >
-                <Icon name="upload" /> Загрузить манифест
+                <i className="menu-icon ek-box-add" /> Загрузить манифест
               </div>
             ) : null}
             {this.props.store.login.agent ? (
               <div onClick={this.storage.bind(this)} className="leftmenuel">
-                Доставки и Заявки
+                <i className="menu-icon ek-clipboard" /> Доставки и Заявки
               </div>
             ) : null}
             {this.props.store.login.agent ? (
               <div onClick={this.reciept.bind(this)} className="leftmenuel">
-                Принять от отправителя
+                <i className="menu-icon ek-user" /> Принять от отправителя
               </div>
             ) : null}
             {this.props.store.login.agent ? (
@@ -481,7 +480,7 @@ class Screen extends Component {
                 onClick={this.send_manifest.bind(this)}
                 className="leftmenuel"
               >
-                Отправка манифеста
+                <i className="menu-icon ek-upload" /> Отправка манифеста
               </div>
             ) : null}
             {this.props.store.login.agent ? (
@@ -489,7 +488,7 @@ class Screen extends Component {
                 onClick={this.get_manifest.bind(this)}
                 className="leftmenuel"
               >
-                Прием манифеста
+                <i className="menu-icon ek-download" /> Прием манифеста
               </div>
             ) : null}
             {this.props.store.login.mutual ? (
@@ -497,7 +496,7 @@ class Screen extends Component {
                 onClick={this.button_click.bind(this, "mutual")}
                 className="leftmenuel"
               >
-                <Icon name="money" /> Взаиморасчеты
+                <i className="menu-icon ek-stack" /> Взаиморасчеты
               </div>
             ) : null}
 
@@ -506,7 +505,7 @@ class Screen extends Component {
                 onClick={this.button_click.bind(this, "setting")}
                 className="leftmenuel"
               >
-                <Icon name="setting" /> Настройки
+                <i className="menu-icon ek-cog" /> Настройки
               </div>
             ) : null}
             {this.props.store.login.disp_map ? (
@@ -514,7 +513,7 @@ class Screen extends Component {
                 onClick={this.button_click.bind(this, "disp_map")}
                 className="leftmenuel"
               >
-                <Icon name="edit outline" /> Накладные на карте
+                <i className="menu-icon ek-map" /> Накладные на карте
               </div>
             ) : null}
             {this.props.store.login.disp_map ? (
@@ -522,16 +521,7 @@ class Screen extends Component {
                 onClick={this.button_click.bind(this, "storage_reciept")}
                 className="leftmenuel"
               >
-                <Icon name="edit outline" /> Прием на склад
-              </div>
-            ) : null}
-            {this.props.store.login.userkey === "000000234" ? (
-              <div
-                onClick={this.button_click.bind(this, "test")}
-                className="leftmenuel"
-              >
-                <Icon name="edit outline" />
-                Test
+                <i className="menu-icon ek-enter" /> Прием на склад
               </div>
             ) : null}
           </div>

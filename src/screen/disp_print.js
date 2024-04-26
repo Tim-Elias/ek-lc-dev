@@ -8,7 +8,7 @@ class ComponentToPrint extends React.Component {
   render() {
     let initialValue = 0;
     const today = new Date();
-    let mm = today.getMonth() + 1; // getMonth() is zero-based
+    let mm = today.getMonth() + 1;
     let dd = today.getDate();
 
     const year = today.getFullYear();
@@ -176,8 +176,6 @@ class ComponentToPrint extends React.Component {
                             {disp.data.InsureValue}
                           </div>
                         ) : null}
-                        {/* <div className="disp_print_data_label">Оплата получателем:</div>
-                                            <div className="disp_print_data_el">{disp.data.COD}</div> */}
                       </div>
 
                       <div className="disp_print_data_label--payment">

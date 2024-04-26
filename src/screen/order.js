@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Table, Icon } from "semantic-ui-react";
+import { Table } from "semantic-ui-react";
 import { get_data, get_file } from "./../common/common_modules";
 
 class Screen extends React.Component {
@@ -72,7 +72,7 @@ class Screen extends React.Component {
         <div className="disp_Number">
           <div>
             <button onClick={this.back.bind(this)}>
-              <Icon name="arrow left" />
+              <i className="ek-arrow-left" />
             </button>
             <b className="page_header">
               Реализация № {this.props.store.order.data.Number} от{" "}

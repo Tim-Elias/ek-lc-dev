@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Icon, Table } from "semantic-ui-react";
+import { Table } from "semantic-ui-react";
 import { get_data } from "./../common/common_modules";
 
 class Screen extends React.Component {
@@ -61,7 +61,7 @@ class Screen extends React.Component {
         <div className="disp_Number">
           <div>
             <button onClick={this.props.modules.back}>
-              <Icon name="arrow left" />
+              <i className="ek-arrow-left" />
             </button>
             <b className="page_header">Шаблоны отправителей и получателей</b>
           </div>

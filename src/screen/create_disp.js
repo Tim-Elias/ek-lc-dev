@@ -4,7 +4,7 @@ import "./create_disp.css";
 import { get_data } from "./../common/common_modules";
 import Select from "react-select";
 import { customStyles } from "./../common/common_style";
-import { Table, Modal, Icon, Checkbox } from "semantic-ui-react";
+import { Table, Modal, Checkbox } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 
 const CargoInfoTypeList = [
@@ -638,8 +638,8 @@ class Screen extends React.Component {
     return (
       <div>
         <div className="disp_Number">
-          <button onClick={this.props.modules.back}>
-            <Icon name="arrow left" />
+          <button className="margin-right-8" onClick={this.props.modules.back}>
+            <i className="ek-arrow-left" />
           </button>
           {this.props.store.create_disp.isNew ? (
             <b>Создание новой накладной</b>
@@ -1343,6 +1343,7 @@ class Screen extends React.Component {
                       <Table.HeaderCell>Итоговый вес</Table.HeaderCell>
                       <Table.HeaderCell>Итог. об. вес</Table.HeaderCell>
                       <Table.HeaderCell>Тип груза</Table.HeaderCell>
+                      <Table.HeaderCell></Table.HeaderCell>
                     </Table.Row>
                   </Table.Header>
                   <Table.Body>
@@ -1432,12 +1433,7 @@ class Screen extends React.Component {
                               onClick={this.RemoveCargo.bind(this, index)}
                               className="IconButton"
                             >
-                              <Icon
-                                type="indicator"
-                                name="delete"
-                                width={15}
-                                height={15}
-                              />
+                              <i className="ek-bin" />
                             </button>
                           </Table.Cell>
                         )}
