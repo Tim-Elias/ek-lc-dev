@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { get_data } from "./../common/common_modules";
-import { Modal, Table, Dimmer, Loader } from "semantic-ui-react";
+import { Modal, Table, Dimmer, Loader, Button } from "semantic-ui-react";
 import "./disp_map.css";
 import "./my_disp.css";
 import "./disp.css";
