@@ -507,7 +507,7 @@ margin: auto;
 
 .my_disp_control_panel{
   display: grid;
-  grid-template-columns: 130px 150px 20px 150px 1fr ;
+  grid-template-columns: 130px 150px 20px 150px 150px ;
   margin: 5px;
   align-items: center;
 }
