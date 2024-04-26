@@ -95,6 +95,7 @@ body {
 .scanner_close:hover {
   opacity: 1;
 }
+
 .scanner_close:before, .scanner_close:after {
   position: absolute;
   left: 15px;
@@ -103,9 +104,18 @@ body {
   width: 5px;
   background-color: rgb(0, 0, 0);
 }
+
 .scanner_close:before {
   transform: rotate(45deg);
 }
 .scanner_close:after {
   transform: rotate(-45deg);
+}
+
+.menu_icon {
+  position: absolute;
+  left: 22px;
+  top: 8px;
+  font-size: 24px;
+  color: #2443B5;
 }

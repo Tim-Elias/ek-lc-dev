@@ -13,69 +13,60 @@ class Screen extends React.Component {
   };
 
   render() {
+    const menuMap = {
+      m_disp: {
+        onClick: this.menu_active_arrow.bind(this, "m_storage"),
+      },
+
+      m_delivered: {
+        onClick: this.menu_active_arrow.bind(this, "m_disp"),
+      },
+
+      m_not_delivered: {
+        onClick: this.menu_active_arrow.bind(this, "m_disp"),
+      },
+
+      m_movement: {
+        onClick: this.menu_active_arrow.bind(this, "m_finance"),
+      },
+
+      m_bounty: {
+        onClick: this.menu_active_arrow.bind(this, "m_finance"),
+      },
+
+      m_manifest: {
+        onClick: this.menu_active_arrow.bind(this, "m_get_manifest"),
+      },
+
+      m_receiv_from_sender: {
+        onClick: this.menu_active_arrow.bind(this, "m_disp"),
+      },
+
+      m_check_print: {
+        onClick: this.menu_active_arrow.bind(this, "m_bounty"),
+      },
+    };
+
+    const active_window = this.props.store.general.active_window;
+
+    const menuItem = menuMap[active_window];
+
     return (
       <header className="header_mobile">
         <div className="mobile_container">
-          {this.props.store.general.active_window === "m_delivered" ||
-            (this.props.store.general.active_window === "m_not_delivered" && (
+          {active_window !== "Mmenu" &&
+            (menuItem ? (
               <i
-                className={"ek-arrow-left"}
-                onClick={this.menu_active_arrow.bind(this, "m_disp")}
+                className={"ek-arrow-left menu_icon"}
+                onClick={menuItem.onClick}
+              />
+            ) : (
+              <i
+                className={"ek-menu menu_icon"}
+                onClick={this.menu_active.bind(this)}
               />
             ))}
 
-          {this.props.store.general.active_window === "m_disp" && (
-            <i
-              className={"ek-arrow-left"}
-              onClick={this.menu_active_arrow.bind(this, "m_storage")}
-            />
-          )}
-          {!(
-            this.props.store.general.active_window === "Mmenu" ||
-            this.props.store.general.active_window === "m_disp" ||
-            this.props.store.general.active_window === "m_delivered" ||
-            this.props.store.general.active_window === "m_not_delivered" ||
-            this.props.store.general.active_window === "m_movement" ||
-            this.props.store.general.active_window === "m_bounty" ||
-            this.props.store.general.active_window === "m_manifest" ||
-            this.props.store.general.active_window === "m_receiv_from_sender" ||
-            this.props.store.general.active_window === "m_check_print"
-          ) && (
-            <i className={"ek-menu"} onClick={this.menu_active.bind(this)} />
-          )}
-          {this.props.store.general.active_window === "m_movement" && (
-            <i
-              className={"ek-arrow-left"}
-              onClick={this.menu_active_arrow.bind(this, "m_finance")}
-            />
-          )}
-          {this.props.store.general.active_window === "m_check_print" && (
-            <i
-              className={"ek-arrow-left"}
-              onClick={this.menu_active_arrow.bind(this, "m_bounty")}
-            />
-          )}
-
-          {this.props.store.general.active_window === "m_bounty" && (
-            <i
-              className={"ek-arrow-left"}
-              onClick={this.menu_active_arrow.bind(this, "m_finance")}
-            />
-          )}
-          {this.props.store.general.active_window === "m_manifest" && (
-            <i
-              className={"ek-arrow-left"}
-              onClick={this.menu_active_arrow.bind(this, "m_get_manifest")}
-            />
-          )}
-
-          {this.props.store.general.active_window ===
-            "m_receiv_from_sender" && (
-            <i
-              className={"ek-arrow-left"}
-              onClick={this.menu_active_arrow.bind(this, "m_disp")}
-            />
-          )}
           <img className="header_mobile_logo" src={logo} alt="" />
         </div>
       </header>
