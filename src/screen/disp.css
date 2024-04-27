@@ -2,8 +2,6 @@
     padding: 20px;
     margin: 0;
     page-break-inside: avoid !important; 
-    min-height: calc(50vh - 5mm);
-    max-width: calc(100vh - 5mm);
 }
 
 .disp_print_header{
@@ -202,8 +200,7 @@
     }
 
     .sticker{
-        width: 60mm;
-        height: 60mm;
+
         padding: 3px;
         break-after: always !important;
         page-break-after: always !important;

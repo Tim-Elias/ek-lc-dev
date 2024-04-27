@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import logo from "./../../logo.svg";
 import { get_data } from "./../../common/common_modules";
 import md5 from "md5";
 import Modal from "../../ui-components/modal/modal";
@@ -93,7 +92,7 @@ class Screen extends Component {
         </Modal>
 
         <div onClick={this.logo_click.bind(this)}>
-          <img alt="header" className="header_logo" src={logo} />
+          {/* <img alt="header" className="header_logo" src={logo} /> */}
         </div>
         <div className="mainmenu"></div>
 
