@@ -270,52 +270,7 @@ class Screen extends React.Component {
     } else {
       this.props.SetDispDate(this.props.store.create_disp.DispDate);
     }
-
-    if (this.props.store.login.necessarily_all_field) {
-      if (
-        this.props.store.create_disp.SendAdress.length < 2 &&
-        this.props.store.create_disp.SendTerminal === false
-      ) {
-        this.props.SetWarningMessage("адрес отправителя!");
-        this.props.SetWarningAlert(true);
-      } else if (this.props.store.create_disp.SendPhone.length < 6) {
-        this.props.SetWarningMessage("телефон отправителя!");
-        this.props.SetWarningAlert(true);
-      } else if (this.props.store.create_disp.SendPerson.length < 2) {
-        this.props.SetWarningMessage("контактное лицо отправителя!");
-        this.props.SetWarningAlert(true);
-      } else if (
-        this.props.store.create_disp.RecAdress.length < 2 &&
-        this.props.store.create_disp.RecTerminal === false
-      ) {
-        this.props.SetWarningMessage("адрес получателя!");
-        this.props.SetWarningAlert(true);
-      } else if (this.props.store.create_disp.RecPhone.length < 6) {
-        this.props.SetWarningMessage("телефон получателя!");
-        this.props.SetWarningAlert(true);
-      } else if (this.props.store.create_disp.RecPerson.length < 2) {
-        this.props.SetWarningMessage("контактное лицо получателя!");
-        this.props.SetWarningAlert(true);
-      } else {
-        this.sent_disp();
-      }
-    } else {
-      if (
-        this.props.store.create_disp.RecAdress.length < 2 &&
-        this.props.store.create_disp.RecTerminal === false
-      ) {
-        this.props.SetWarningMessage("адрес получателя!");
-        this.props.SetWarningAlert(true);
-      } else if (this.props.store.create_disp.RecPhone.length < 6) {
-        this.props.SetWarningMessage("телефон получателя!");
-        this.props.SetWarningAlert(true);
-      } else if (this.props.store.create_disp.RecPerson.length < 2) {
-        this.props.SetWarningMessage("контактное лицо получателя!");
-        this.props.SetWarningAlert(true);
-      } else {
-        this.sent_disp();
-      }
-    }
+    this.sent_disp();
   };
 
   sent_disp = () => {

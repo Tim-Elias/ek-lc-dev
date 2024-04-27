@@ -25,10 +25,9 @@ class StikerToPrint extends React.Component {
               height={30}
             />
           </div>
-          <div className="sticker_site">
-            {" "}
+          {/* <div className="sticker_site">
             <p className="page_break">www.express-kinetika.ru</p>
-          </div>
+          </div> */}
         </div>,
       );
     }

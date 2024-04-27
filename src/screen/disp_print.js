@@ -1,6 +1,5 @@
 import React from "react";
 import Barcode from "react-barcode";
-import logo from "./../logo.svg";
 import QRCode from "qrcode.react";
 import "./disp.css";
 
@@ -33,11 +32,11 @@ class ComponentToPrint extends React.Component {
                 <div className="disp_print">
                   <div className="disp_print_header">
                     <div className="logo_container">
-                      <img
+                      {/* <img
                         className="header_logo"
                         alt="header_logo"
                         src={logo}
-                      />
+                      /> */}
                     </div>
                     <div className="city_container">{disp.data.RecCity}</div>
                     <div className="qrcode_container">
@@ -190,7 +189,6 @@ class ComponentToPrint extends React.Component {
                         <table className="disp_print_cargo_table">
                           <thead>
                             <tr>
-                              <tr>
                                 <th className="disp_print_cargo_th top_left_border_radius">
                                   Вес
                                 </th>
@@ -207,7 +205,6 @@ class ComponentToPrint extends React.Component {
                                 <th className="disp_print_cargo_th top_right_border_radius">
                                   Коммент.
                                 </th>
-                              </tr>
                             </tr>
                           </thead>
                           <tbody>
