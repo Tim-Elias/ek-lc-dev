@@ -19,7 +19,7 @@ class Screen extends React.Component {
       (err) => {
         console.log(err);
         this.props.set_active_loader(false);
-      }
+      },
     );
   }
 
@@ -48,13 +48,13 @@ class Screen extends React.Component {
           (err) => {
             this.props.set_active_window("Mmenu");
             console.log(err);
-          }
+          },
         );
       },
       (err) => {
         this.props.set_active_window("send_manifest");
         this.props.set_search_error(err);
-      }
+      },
     );
   };
 
@@ -188,5 +188,5 @@ export default connect(
     set_list_storage: (param) => {
       dispatch({ type: "set_list_storage", payload: param });
     },
-  })
+  }),
 )(Screen);

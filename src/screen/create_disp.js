@@ -46,7 +46,7 @@ class Screen extends React.Component {
       (result) => {
         let sum = this.props.store.create_disp.Termo ? result * 1.3 : result;
         this.props.SetPrice(
-          this.props.store.create_disp.Fragile ? (sum += result * 0.5) : sum
+          this.props.store.create_disp.Fragile ? (sum += result * 0.5) : sum,
         );
       },
       (err) => {
@@ -57,7 +57,7 @@ class Screen extends React.Component {
         this.props.modules.set_modal_show(true);
         this.props.modules.set_modal_header("Ошибка");
         this.props.modules.set_modal_text(err);
-      }
+      },
     );
   };
 
@@ -158,7 +158,7 @@ class Screen extends React.Component {
         this.props.modules.set_modal_show(true);
         this.props.modules.set_modal_header("Ошибка");
         this.props.modules.set_modal_text(err);
-      }
+      },
     );
   };
 
@@ -186,7 +186,7 @@ class Screen extends React.Component {
         this.props.modules.set_modal_show(true);
         this.props.modules.set_modal_header("Ошибка");
         this.props.modules.set_modal_text(err);
-      }
+      },
     );
   };
 
@@ -347,7 +347,7 @@ class Screen extends React.Component {
       this.props.store.create_disp.Fragile &&
       this.props.store.create_disp.SendAddInfo.toLowerCase().indexOf(
         "хрупкий груз",
-        0
+        0,
       ) === -1
     ) {
       SendAddInfo = "Хрупкий груз " + this.props.store.create_disp.SendAddInfo;
@@ -423,7 +423,7 @@ class Screen extends React.Component {
             this.props.modules.set_modal_show(true);
             this.props.modules.set_modal_header("Ошибка");
             this.props.modules.set_modal_text(err);
-          }
+          },
         );
       },
       (err) => {
@@ -434,14 +434,14 @@ class Screen extends React.Component {
         this.props.modules.set_modal_show(true);
         this.props.modules.set_modal_header("Ошибка");
         this.props.modules.set_modal_text(err);
-      }
+      },
     );
   };
 
   SelectSendTemplate = (value) => {
     if (value !== null) {
       const city = this.props.store.create_disp.CityList.filter(
-        (el) => el.value === value.City
+        (el) => el.value === value.City,
       )[0];
 
       this.SelectSendCity(city);
@@ -460,7 +460,7 @@ class Screen extends React.Component {
   SelectRecTemplate = (value) => {
     if (value !== null && value !== undefined) {
       const city = this.props.store.create_disp.CityList.filter(
-        (el) => el.value === value.City
+        (el) => el.value === value.City,
       )[0];
 
       this.SelectRecCity(city);
@@ -496,7 +496,7 @@ class Screen extends React.Component {
   PayerSelect = (value) => {
     this.props.SetPayerSelect(value);
     let template = this.props.store.upload_manifest.disp_template_list.filter(
-      (e) => e.Key === value.template
+      (e) => e.Key === value.template,
     );
 
     this.SelectRecTemplate(template[0]);
@@ -560,7 +560,7 @@ class Screen extends React.Component {
         this.props.modules.set_modal_show(true);
         this.props.modules.set_modal_header("Ошибка");
         this.props.modules.set_modal_text(err);
-      }
+      },
     );
   }
 
@@ -589,14 +589,13 @@ class Screen extends React.Component {
             this.props.modules.set_modal_text(err);
           }
           this.props.SetCustomNumberLoader(false);
-        }
+        },
       );
     }
   };
 
   render() {
     const Q_only = this.props.store.login.Q_only;
-    document.onkeydown = function (event) {};
 
     let disabled = false;
     let total_weight =
@@ -604,8 +603,8 @@ class Screen extends React.Component {
         this.props.store.create_disp.Cargo.reduce(
           (accumulator, Cargo) =>
             accumulator + Math.ceil(Cargo.Weight * Cargo.Q * 1000) / 1000,
-          0
-        ) * 1000
+          0,
+        ) * 1000,
       ) / 1000;
     let total_volume =
       Math.ceil(
@@ -613,8 +612,8 @@ class Screen extends React.Component {
           (accumulator, Cargo) =>
             accumulator +
             Math.ceil((Cargo.L * Cargo.W * Cargo.H * Cargo.Q) / 5) / 1000,
-          0
-        ) * 1000
+          0,
+        ) * 1000,
       ) / 1000;
 
     if (
@@ -881,8 +880,8 @@ class Screen extends React.Component {
                               .FilterModalSendTemplate === "" ||
                             el.label.indexOf(
                               this.props.store.create_disp
-                                .FilterModalSendTemplate
-                            ) !== -1
+                                .FilterModalSendTemplate,
+                            ) !== -1,
                         )
                         .map((el, index) => (
                           <tr
@@ -890,7 +889,7 @@ class Screen extends React.Component {
                             key={index}
                             onDoubleClick={this.SelectSendTemplate.bind(
                               this,
-                              el
+                              el,
                             )}
                           >
                             <td>{el.label}</td>
@@ -966,8 +965,8 @@ class Screen extends React.Component {
                               .FilterModalRecTemplate === "" ||
                             el.label.indexOf(
                               this.props.store.create_disp
-                                .FilterModalRecTemplate
-                            ) !== -1
+                                .FilterModalRecTemplate,
+                            ) !== -1,
                         )
                         .map((el, index) => (
                           <tr
@@ -975,7 +974,7 @@ class Screen extends React.Component {
                             key={index}
                             onDoubleClick={this.SelectRecTemplate.bind(
                               this,
-                              el
+                              el,
                             )}
                           >
                             <td>{el.label}</td>
@@ -1407,7 +1406,7 @@ class Screen extends React.Component {
                         </td>
                         <td>
                           {Math.ceil(
-                            (Cargo.L * Cargo.W * Cargo.H * Cargo.Q) / 5
+                            (Cargo.L * Cargo.W * Cargo.H * Cargo.Q) / 5,
                           ) / 1000}
                         </td>
                         <td>
@@ -1460,7 +1459,7 @@ class Screen extends React.Component {
                         key={2}
                         onChange={(e) =>
                           this.props.SetTermo(
-                            !this.props.store.create_disp.Termo
+                            !this.props.store.create_disp.Termo,
                           )
                         }
                         checked={this.props.store.create_disp.Termo}
@@ -1501,7 +1500,7 @@ class Screen extends React.Component {
                 <div className="disp_data_el">
                   {this.props.store.create_disp.Cargo.reduce(
                     (accumulator, Cargo) => accumulator + Number(Cargo.Q),
-                    0
+                    0,
                   )}
                 </div>
                 <div className="disp_data_label">
@@ -1535,7 +1534,7 @@ class Screen extends React.Component {
                         key={2}
                         onChange={(e) =>
                           this.props.SetTermo(
-                            !this.props.store.create_disp.Termo
+                            !this.props.store.create_disp.Termo,
                           )
                         }
                         checked={this.props.store.create_disp.Termo}
@@ -1885,5 +1884,5 @@ export default connect(
     SetTimeError: (param) => {
       dispatch({ type: "SetTimeError", payload: param });
     },
-  })
+  }),
 )(Screen);

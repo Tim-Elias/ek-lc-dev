@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 
 class Screen extends React.Component {
   render() {
-    document.onkeydown = function (event) {};
     return (
       <div>
         <div className="disp_Number">
@@ -23,5 +22,5 @@ export default connect(
   (state) => ({
     store: state,
   }),
-  (dispatch) => ({})
+  (dispatch) => ({}),
 )(Screen);

@@ -22,7 +22,7 @@ class Screen extends Component {
       },
       (err) => {
         console.log(err);
-      }
+      },
     );
   };
 
@@ -48,7 +48,7 @@ class Screen extends Component {
         },
         (err) => {
           console.log(err);
-        }
+        },
       );
     } else {
       this.props.set_error("Необходимо ввести Имя пользователя и Пароль.");
@@ -108,5 +108,5 @@ export default connect(
     use_width: (param) => {
       dispatch({ type: "set_use_width", payload: param });
     },
-  })
+  }),
 )(Screen);

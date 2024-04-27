@@ -22,7 +22,7 @@ import m_create_disp from "./m_create_disp";
 import calc_price from "./calc_price";
 import home from "./home";
 
-export default combineReducers({
+export const rootReducer = combineReducers({
   login,
   general,
   storage,

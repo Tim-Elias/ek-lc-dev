@@ -16,7 +16,7 @@ class Screen extends React.Component {
       },
       (err) => {
         console.log(err);
-      }
+      },
     );
 
     get_data("citylist").then(
@@ -26,7 +26,7 @@ class Screen extends React.Component {
       },
       (err) => {
         console.log(err);
-      }
+      },
     );
   }
 
@@ -40,10 +40,10 @@ class Screen extends React.Component {
 
   select_template = (item) => {
     const send_city = this.props.store.m_create_disp.CityList.filter(
-      (el) => el.value === item.send_city
+      (el) => el.value === item.send_city,
     )[0];
     const rec_city = this.props.store.m_create_disp.CityList.filter(
-      (el) => el.value === item.rec_city
+      (el) => el.value === item.rec_city,
     )[0];
 
     const s_city = {
@@ -68,7 +68,7 @@ class Screen extends React.Component {
       (err) => {
         console.log("err");
         console.log(err);
-      }
+      },
     );
 
     get_data("terminallist", {
@@ -85,7 +85,7 @@ class Screen extends React.Component {
       (err) => {
         console.log("err");
         console.log(err);
-      }
+      },
     );
 
     let data = {
@@ -122,7 +122,7 @@ class Screen extends React.Component {
                     >
                       {item.name}
                     </button>
-                  )
+                  ),
                 )}
                 <button
                   className="m_disp_tempalate_item m_disp_tempalate_item--defult"
@@ -168,5 +168,5 @@ export default connect(
     SetRecTerminalListMobile: (param) => {
       dispatch({ type: "SetRecTerminalListMobile", payload: param });
     },
-  })
+  }),
 )(Screen);

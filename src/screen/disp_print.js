@@ -185,7 +185,7 @@ class ComponentToPrint extends React.Component {
                     <div className="disp_print_cargo_data">
                       {disp.cargo.reduce(
                         (accum, el) => accum + parseInt(el.Q),
-                        initialValue
+                        initialValue,
                       ) === parseInt(disp.data.Total) ? (
                         <table className="disp_print_cargo_table">
                           <thead>
@@ -305,7 +305,7 @@ class ComponentToPrint extends React.Component {
                     </table>
                   </div>
                 </div>
-              </div>
+              </div>,
             );
           }
           return disp_print_data;

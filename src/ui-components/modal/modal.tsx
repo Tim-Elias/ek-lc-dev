@@ -1,6 +1,19 @@
 import React, { useCallback, useEffect, useState } from "react";
 import "./modal.css";
 
+interface IModalProps {
+  open: boolean;
+  header: string;
+  onClose?: () => void;
+  onCancel?: () => void;
+  onConfirm?: () => void;
+  children?: React.JSX.Element;
+  trigger?: React.JSX.Element | null;
+  height?: string;
+  width?: string;
+  heightBody?: string;
+}
+
 const Modal = ({
   open,
   header,
@@ -12,7 +25,7 @@ const Modal = ({
   height = "250px",
   width = "500px",
   heightBody = "calc(100% - 123px)",
-}) => {
+}: IModalProps) => {
   const [isOpen, setOpen] = useState(false);
 
   const modalStyle = {

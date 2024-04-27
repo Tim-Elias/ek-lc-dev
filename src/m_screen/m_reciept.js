@@ -42,7 +42,7 @@ class Screen extends React.Component {
               className="ek-qrcode action_icon"
               onClick={(e) =>
                 this.props.set_scann_active(
-                  !this.props.store.storage.scann_active
+                  !this.props.store.storage.scann_active,
                 )
               }
             />
@@ -98,5 +98,5 @@ export default connect(
     set_search_storagre: (param) => {
       dispatch({ type: "set_search_storagre", payload: param });
     },
-  })
+  }),
 )(Screen);

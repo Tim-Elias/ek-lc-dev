@@ -32,7 +32,7 @@ class Screen extends React.Component {
           (err) => {
             console.log(err);
             alert(err);
-          }
+          },
         );
 
         // this.props.set_list_storage(result);
@@ -41,7 +41,7 @@ class Screen extends React.Component {
       (err) => {
         console.log(err);
         alert(err);
-      }
+      },
     );
   };
 
@@ -49,7 +49,6 @@ class Screen extends React.Component {
     this.props.check_manifest_disp(num);
   };
   render() {
-    document.onkeydown = function (event) {};
     return (
       <div>
         <div className="mobile_heading">
@@ -176,5 +175,5 @@ export default connect(
     set_action_manifest: (param) => {
       dispatch({ type: "set_action_manifest", payload: param });
     },
-  })
+  }),
 )(Screen);

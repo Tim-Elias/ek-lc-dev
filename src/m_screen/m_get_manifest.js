@@ -16,7 +16,7 @@ class Screen extends React.Component {
       (err) => {
         console.log(err);
         alert(err);
-      }
+      },
     );
   };
 
@@ -40,7 +40,7 @@ class Screen extends React.Component {
       (err) => {
         console.log(err);
         alert(err);
-      }
+      },
     );
   };
 
@@ -49,8 +49,6 @@ class Screen extends React.Component {
   }
 
   render() {
-    document.onkeydown = function (event) {};
-
     return (
       <div>
         <div className="mobile_heading">Входящие манифесты</div>
@@ -135,5 +133,5 @@ export default connect(
     set_active_loader: (param) => {
       dispatch({ type: "set_active_loader", payload: param });
     },
-  })
+  }),
 )(Screen);

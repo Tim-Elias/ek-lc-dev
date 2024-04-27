@@ -8,7 +8,7 @@ import Wait from "../screen/wait";
 class Screen extends React.Component {
   componentDidMount() {
     this.props.set_select_customer(
-      this.props.store.login.customers[0].customerKey
+      this.props.store.login.customers[0].customerKey,
     );
     this.props.set_active_loader(true);
 
@@ -22,7 +22,7 @@ class Screen extends React.Component {
       (err) => {
         console.log(err);
         this.props.set_active_loader(false);
-      }
+      },
     );
   }
 
@@ -51,13 +51,13 @@ class Screen extends React.Component {
           (err) => {
             this.props.set_active_window("Mmenu");
             console.log(err);
-          }
+          },
         );
       },
       (err) => {
         this.props.set_active_window("send_manifest");
         alert(err);
-      }
+      },
     );
   };
 
@@ -193,5 +193,5 @@ export default connect(
     set_select_customer: (param) => {
       dispatch({ type: "set_select_customer", payload: param });
     },
-  })
+  }),
 )(Screen);

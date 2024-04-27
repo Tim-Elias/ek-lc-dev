@@ -17,7 +17,7 @@ class Screen extends React.Component {
       },
       (err) => {
         console.log(err);
-      }
+      },
     );
 
     get_data("disptemplatelist", {
@@ -28,7 +28,7 @@ class Screen extends React.Component {
       },
       (err) => {
         console.log(err);
-      }
+      },
     );
 
     get_data("cargo", { userkey: this.props.store.login.userkey }).then(
@@ -37,7 +37,7 @@ class Screen extends React.Component {
       },
       (err) => {
         console.log(err);
-      }
+      },
     );
 
     // get_data('terminallist', { city: city, userkey: this.props.store.login.userkey }).then(
@@ -87,7 +87,7 @@ class Screen extends React.Component {
       (err) => {
         console.log("err");
         console.log(err);
-      }
+      },
     );
   };
 
@@ -120,7 +120,7 @@ class Screen extends React.Component {
       (err) => {
         console.log("err");
         console.log(err);
-      }
+      },
     );
   };
 
@@ -185,7 +185,7 @@ class Screen extends React.Component {
       (err) => {
         console.log("err");
         console.log(err);
-      }
+      },
     );
   };
 
@@ -230,13 +230,13 @@ class Screen extends React.Component {
       item.l.replace(",", "."),
       item.w.replace(",", "."),
       item.h.replace(",", "."),
-      item.name
+      item.name,
     );
   };
 
   RemoveCargoTemplate = (Template) => {
     const CargoSelectTemplate = this.props.store.m_create_disp.Cargo.findIndex(
-      (item) => item.Template === Template.name
+      (item) => item.Template === Template.name,
     );
 
     this.props.RemoveCargo(CargoSelectTemplate);
@@ -309,7 +309,7 @@ class Screen extends React.Component {
     H = "",
     Template = "",
     Type = "",
-    Comment = ""
+    Comment = "",
   ) => {
     let data = {
       Weight: Weight,
@@ -326,7 +326,7 @@ class Screen extends React.Component {
   RemoveCargo = (index, item) => {
     if (item.Template !== "") {
       let template = this.props.store.m_create_disp.Cargo_list.filter(
-        (el) => el.name === item.Template
+        (el) => el.name === item.Template,
       )[0];
       let data = {
         name: template.name,
@@ -342,7 +342,7 @@ class Screen extends React.Component {
 
   SelectSendTemplate = (value) => {
     const city = this.props.store.m_create_disp.CityList.filter(
-      (el) => el.value === value.City
+      (el) => el.value === value.City,
     )[0];
 
     this.SendCity(city, value.CurrentTerminal);
@@ -354,7 +354,7 @@ class Screen extends React.Component {
     this.SendTerminal(value.Terminal);
 
     const terminal = this.props.store.m_create_disp.SendTerminalList.filter(
-      (item) => item.label === value.CurrentTerminal
+      (item) => item.label === value.CurrentTerminal,
     );
     this.props.SetSendSelectTerminal(terminal[0]);
     this.receipt();
@@ -362,7 +362,7 @@ class Screen extends React.Component {
 
   SelectRecTemplate = (value) => {
     const city = this.props.store.m_create_disp.CityList.filter(
-      (el) => el.value === value.City
+      (el) => el.value === value.City,
     )[0];
 
     this.RecCity(city, value.CurrentTerminal);
@@ -374,7 +374,7 @@ class Screen extends React.Component {
     this.RecTerminal(value.Terminal);
 
     const terminal = this.props.store.m_create_disp.RecTerminalList.filter(
-      (item) => item.label === value.CurrentTerminal
+      (item) => item.label === value.CurrentTerminal,
     );
     this.props.SetRecSelectTerminal(terminal[0]);
     this.receipt();
@@ -441,7 +441,7 @@ class Screen extends React.Component {
       (err) => {
         alert(err);
         console.log(err);
-      }
+      },
     );
   };
 
@@ -468,7 +468,7 @@ class Screen extends React.Component {
       (err) => {
         alert(err);
         console.log(err);
-      }
+      },
     );
   };
 
@@ -479,8 +479,8 @@ class Screen extends React.Component {
         this.props.store.m_create_disp.Cargo.reduce(
           (accumulator, Cargo) =>
             accumulator + Math.ceil(Cargo.Weight * Cargo.Q * 1000) / 1000,
-          0
-        ) * 1000
+          0,
+        ) * 1000,
       ) / 1000;
     let total_volume =
       Math.ceil(
@@ -488,8 +488,8 @@ class Screen extends React.Component {
           (accumulator, Cargo) =>
             accumulator +
             Math.ceil((Cargo.L * Cargo.W * Cargo.H * Cargo.Q) / 5) / 1000,
-          0
-        ) * 1000
+          0,
+        ) * 1000,
       ) / 1000;
 
     if (
@@ -518,7 +518,7 @@ class Screen extends React.Component {
         this.props.active_window(
           this.props.store.general.last_window[
             this.props.store.general.last_window.length - 1
-          ]
+          ],
         );
         window.history.pushState(null, "", window.location.href);
       }
@@ -596,7 +596,7 @@ class Screen extends React.Component {
                       Выбрать
                     </button>
                   </div>
-                )
+                ),
               )}
             </div>
 
@@ -924,7 +924,7 @@ class Screen extends React.Component {
                           readOnly
                           value={
                             this.props.store.m_create_disp.Cargo.filter(
-                              (el) => el.Template === item.name
+                              (el) => el.Template === item.name,
                             ).length
                           }
                         ></input>
@@ -935,7 +935,7 @@ class Screen extends React.Component {
                           +
                         </button>
                       </div>
-                    )
+                    ),
                   )}
                 </div>
               ) : null}
@@ -1050,7 +1050,7 @@ class Screen extends React.Component {
                       className="mobile_table_el"
                       value={this.props.store.m_create_disp.Cargo.reduce(
                         (accumulator, Cargo) => accumulator + Number(Cargo.Q),
-                        0
+                        0,
                       )}
                       readOnly
                     />
@@ -1389,5 +1389,5 @@ export default connect(
     DischargeData: (param) => {
       dispatch({ type: "DischargeData", payload: param });
     },
-  })
+  }),
 )(Screen);

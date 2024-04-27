@@ -19,7 +19,7 @@ class Screen extends Component {
       },
       (err) => {
         console.log(err);
-      }
+      },
     );
   };
 
@@ -41,7 +41,7 @@ class Screen extends Component {
       },
       (err) => {
         console.log(err);
-      }
+      },
     );
   };
 
@@ -56,7 +56,7 @@ class Screen extends Component {
       },
       (err) => {
         console.log(err);
-      }
+      },
     );
   };
 
@@ -129,7 +129,7 @@ class Screen extends Component {
       (err) => {
         console.log("err");
         console.log(err);
-      }
+      },
     );
   };
 
@@ -152,7 +152,7 @@ class Screen extends Component {
       (err) => {
         console.log("err");
         console.log(err);
-      }
+      },
     );
   };
 
@@ -184,10 +184,10 @@ class Screen extends Component {
                   try {
                     const default_send =
                       this.props.store.upload_manifest.disp_template_list.find(
-                        (el) => el.Key === this.props.store.login.default_send
+                        (el) => el.Key === this.props.store.login.default_send,
                       );
                     const city = this.props.store.create_disp.CityList.filter(
-                      (el) => el.value === default_send.City
+                      (el) => el.value === default_send.City,
                     )[0];
                     this.SelectSendCity(city);
                     this.props.SetSendAdress(default_send.Adress);
@@ -205,11 +205,11 @@ class Screen extends Component {
                 if (this.props.store.login.default_rec !== "0") {
                   const default_rec =
                     this.props.store.upload_manifest.disp_template_list.find(
-                      (el) => el.Key === this.props.store.login.default_rec
+                      (el) => el.Key === this.props.store.login.default_rec,
                     );
 
                   const city = this.props.store.create_disp.CityList.filter(
-                    (el) => el.value === default_rec.City
+                    (el) => el.value === default_rec.City,
                   )[0];
                   this.SelectRecCity(city);
                   this.props.SetRecAdress(default_rec.Adress);
@@ -224,12 +224,12 @@ class Screen extends Component {
               },
               (err) => {
                 console.log(err);
-              }
+              },
             );
           },
           (err) => {
             console.log(err);
-          }
+          },
         );
 
         break;
@@ -257,7 +257,7 @@ class Screen extends Component {
           },
           (err) => {
             console.log(err);
-          }
+          },
         );
 
         this.props.set_active_window(target);
@@ -281,7 +281,7 @@ class Screen extends Component {
           },
           (err) => {
             console.log(err);
-          }
+          },
         );
         get_data("defaulttemplatelist", list_data).then(
           (result) => {
@@ -289,7 +289,7 @@ class Screen extends Component {
           },
           (err) => {
             console.log(err);
-          }
+          },
         );
         get_data("disptemplatelist", list_data).then(
           (result) => {
@@ -297,7 +297,7 @@ class Screen extends Component {
           },
           (err) => {
             console.log(err);
-          }
+          },
         );
 
         this.props.set_active_window(target);
@@ -312,7 +312,7 @@ class Screen extends Component {
           },
           (err) => {
             console.log(err);
-          }
+          },
         );
         get_data("citylist").then(
           (result) => {
@@ -320,7 +320,7 @@ class Screen extends Component {
           },
           (err) => {
             console.log(err);
-          }
+          },
         );
 
         break;
@@ -335,7 +335,7 @@ class Screen extends Component {
           (err) => {
             console.log(err);
             this.props.set_active_window(target);
-          }
+          },
         );
         break;
       default:
@@ -675,5 +675,5 @@ export default connect(
     storage_reciept_sound_off: () => {
       dispatch({ type: "storage_reciept_set_storage" });
     },
-  })
+  }),
 )(Screen);

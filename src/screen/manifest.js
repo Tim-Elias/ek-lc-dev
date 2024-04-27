@@ -37,7 +37,7 @@ class Screen extends React.Component {
             this.props.modules.set_modal_show(true);
             this.props.modules.set_modal_header("Ошибка");
             this.props.modules.set_modal_text(err);
-          }
+          },
         );
 
         // this.props.set_list_storage(result);
@@ -49,7 +49,7 @@ class Screen extends React.Component {
         this.props.modules.set_modal_show(true);
         this.props.modules.set_modal_header("Ошибка");
         this.props.modules.set_modal_text(err);
-      }
+      },
     );
   };
 
@@ -114,7 +114,7 @@ class Screen extends React.Component {
                         <td>{disp.total}</td>
                         <td>{disp.weight}</td>
                       </tr>
-                    )
+                    ),
                   )}
                 </tbody>
               </table>
@@ -178,5 +178,5 @@ export default connect(
     set_action_manifest: (param) => {
       dispatch({ type: "set_action_manifest", payload: param });
     },
-  })
+  }),
 )(Screen);

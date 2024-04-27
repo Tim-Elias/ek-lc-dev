@@ -28,7 +28,7 @@ class Screen extends React.Component {
         this.props.set_active_window("mutual");
         console.log(err);
         // this.props.set_mutual_error(err)
-      }
+      },
     );
   };
 
@@ -124,5 +124,5 @@ export default connect(
     set_mutual_error: (param) => {
       dispatch({ type: "set_mutual_error", payload: param });
     },
-  })
+  }),
 )(Screen);

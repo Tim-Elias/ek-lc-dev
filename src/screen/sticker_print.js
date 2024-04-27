@@ -29,7 +29,7 @@ class StikerToPrint extends React.Component {
             {" "}
             <p className="page_break">www.express-kinetika.ru</p>
           </div>
-        </div>
+        </div>,
       );
     }
     return table;

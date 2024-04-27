@@ -42,12 +42,12 @@ class Screen extends React.Component {
             },
             (err) => {
               console.log(err);
-            }
+            },
           );
         } else {
           this.props.set_erroe_mesage(
             "Не удалось найти накладную номер " +
-              this.props.store.my_disp.search
+              this.props.store.my_disp.search,
           );
           this.props.set_active_window("disp_number");
         }
@@ -55,7 +55,7 @@ class Screen extends React.Component {
       (err) => {
         console.log(err);
         this.props.set_erroe_mesage(
-          "Не удалось найти накладную номер " + this.props.store.my_disp.search
+          "Не удалось найти накладную номер " + this.props.store.my_disp.search,
         );
 
         this.props.modules.set_modal_show(true);
@@ -63,7 +63,7 @@ class Screen extends React.Component {
         this.props.modules.set_modal_text(err);
 
         this.props.set_active_window("disp_number");
-      }
+      },
     );
   };
 
@@ -205,5 +205,5 @@ export default connect(
     set_erroe_mesage: (param) => {
       dispatch({ type: "set_erroe_mesage", payload: param });
     },
-  })
+  }),
 )(Screen);

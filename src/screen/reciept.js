@@ -27,12 +27,11 @@ class Screen extends React.Component {
 
         this.props.set_active_window("reciept");
         this.props.set_search_error(err);
-      }
+      },
     );
   };
 
   render() {
-    document.onkeydown = function (event) {};
     return (
       <div>
         <div className="search_reciept">
@@ -85,5 +84,5 @@ export default connect(
     set_data_disp: (param) => {
       dispatch({ type: "set_data_disp", payload: param });
     },
-  })
+  }),
 )(Screen);

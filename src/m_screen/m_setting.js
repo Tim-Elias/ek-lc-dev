@@ -30,7 +30,7 @@ class Screen extends React.Component {
       (err) => {
         console.log("err");
         console.log(err);
-      }
+      },
     );
   };
 
@@ -40,8 +40,6 @@ class Screen extends React.Component {
       this.settings_window("Mmenu");
       window.history.pushState(null, "", window.location.href);
     }.bind(this);
-
-    document.onkeydown = function (event) {};
 
     return (
       <div className="mobile_setting">
@@ -128,5 +126,5 @@ export default connect(
     set_active_window: (param) => {
       dispatch({ type: "set_active_window", payload: param });
     },
-  })
+  }),
 )(Screen);

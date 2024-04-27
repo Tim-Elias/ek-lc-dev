@@ -177,5 +177,5 @@ export default connect(
     set_message: (param) => {
       dispatch({ type: "set_message", payload: param });
     },
-  })
+  }),
 )(Screen);

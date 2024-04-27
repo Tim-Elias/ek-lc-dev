@@ -35,7 +35,7 @@ class Screen extends React.Component {
         this.props.modules.set_modal_show(true);
         this.props.modules.set_modal_header("Ошибка");
         this.props.modules.set_modal_text(err);
-      }
+      },
     );
   };
 
@@ -63,7 +63,7 @@ class Screen extends React.Component {
         this.props.modules.set_modal_show(true);
         this.props.modules.set_modal_header("Ошибка");
         this.props.modules.set_modal_text(err);
-      }
+      },
     );
   };
 
@@ -75,7 +75,7 @@ class Screen extends React.Component {
     //console.log("click_up")
     if (this.props.store.my_disp.active_row > 0) {
       this.props.set_my_disp_active_row(
-        this.props.store.my_disp.active_row - 1
+        this.props.store.my_disp.active_row - 1,
       );
     }
   };
@@ -84,14 +84,14 @@ class Screen extends React.Component {
     const max_index = this.props.store.my_disp.data.length - 1;
     if (this.props.store.my_disp.active_row < max_index) {
       this.props.set_my_disp_active_row(
-        this.props.store.my_disp.active_row + 1
+        this.props.store.my_disp.active_row + 1,
       );
     }
   };
 
   click_enter = () => {
     const disp = this.props.store.my_disp.data.filter(
-      (el, index) => index === this.props.store.my_disp.active_row
+      (el, index) => index === this.props.store.my_disp.active_row,
     )[0];
     if (disp) {
       this.tr_double_click(disp);
@@ -100,7 +100,7 @@ class Screen extends React.Component {
 
   show_history = (Number) => {
     const dispatch = this.props.store.my_disp.data.find(
-      (disp) => disp.Num === Number
+      (disp) => disp.Num === Number,
     );
 
     if (dispatch.history) {
@@ -119,7 +119,7 @@ class Screen extends React.Component {
           this.props.modules.set_modal_show(true);
           this.props.modules.set_modal_header("Ошибка");
           this.props.modules.set_modal_text(err);
-        }
+        },
       );
     }
   };
@@ -143,7 +143,7 @@ class Screen extends React.Component {
 
         console.log(err);
         this.props.set_my_disp_skan_loading(false);
-      }
+      },
     );
   };
 
@@ -155,12 +155,12 @@ class Screen extends React.Component {
   show_all = () => {
     if (this.props.store.my_disp.show_all) {
       this.props.store.my_disp.data.map((item) =>
-        this.props.set_show_my_disp_history({ Num: item.Num, value: false })
+        this.props.set_show_my_disp_history({ Num: item.Num, value: false }),
       );
       this.props.set_my_disp_show_all(false);
     } else {
       const data = this.props.store.my_disp.data.map(
-        (item) => (item = item.Num)
+        (item) => (item = item.Num),
       );
 
       get_data("historymass", { data: data }).then(
@@ -169,7 +169,7 @@ class Screen extends React.Component {
             this.props.set_my_disp_history({
               Num: item.Disp,
               history: item.Data,
-            })
+            }),
           );
 
           this.props.set_my_disp_show_all(true);
@@ -181,7 +181,7 @@ class Screen extends React.Component {
 
           console.log(err);
           this.props.set_my_disp_skan_loading(false);
-        }
+        },
       );
     }
   };
@@ -200,7 +200,7 @@ class Screen extends React.Component {
       this.props.store.my_disp.rec_city_filter.length;
     const del_method_filter_check_lenght =
       this.props.store.my_disp.del_method_filter.filter(
-        (el) => el.check
+        (el) => el.check,
       ).length;
     const del_method_filter_length =
       this.props.store.my_disp.del_method_filter.length;
@@ -341,7 +341,7 @@ class Screen extends React.Component {
                             className="margin_right my_disp_button"
                             onClick={() => {
                               this.props.set_my_disp_send_city_filter_default(
-                                "select"
+                                "select",
                               );
                             }}
                           >
@@ -366,7 +366,7 @@ class Screen extends React.Component {
                                     key={index}
                                     onClick={() =>
                                       this.props.set_check_my_disp_send_city(
-                                        el.id
+                                        el.id,
                                       )
                                     }
                                   >
@@ -382,7 +382,7 @@ class Screen extends React.Component {
                                     </td>
                                   </tr>
                                 );
-                              }
+                              },
                             )}
                           </tbody>
                         </table>
@@ -421,7 +421,7 @@ class Screen extends React.Component {
                           value={this.props.store.my_disp.sender_address}
                           onChange={(e) =>
                             this.props.set_my_disp_sender_address(
-                              e.target.value
+                              e.target.value,
                             )
                           }
                         ></input>
@@ -465,7 +465,7 @@ class Screen extends React.Component {
                           className="my_disp_button"
                           onClick={() => {
                             this.props.set_my_disp_rec_city_filter_default(
-                              "select"
+                              "select",
                             );
                           }}
                         >
@@ -489,7 +489,7 @@ class Screen extends React.Component {
                                     key={index}
                                     onClick={() =>
                                       this.props.set_check_my_disp_rec_city(
-                                        el.id
+                                        el.id,
                                       )
                                     }
                                   >
@@ -506,7 +506,7 @@ class Screen extends React.Component {
                                     </td>
                                   </tr>
                                 );
-                              }
+                              },
                             )}
                           </tbody>
                         </table>
@@ -515,7 +515,7 @@ class Screen extends React.Component {
                           onClick={() => {
                             this.props.set_my_disp_focus_input_rec_city();
                             this.props.filter_common_string(
-                              this.props.store.my_disp.rec_city_filter
+                              this.props.store.my_disp.rec_city_filter,
                             );
                           }}
                         >
@@ -598,7 +598,7 @@ class Screen extends React.Component {
                           className="my_disp_button"
                           onClick={() =>
                             this.props.set_my_disp_del_method_filter_default(
-                              "select"
+                              "select",
                             )
                           }
                         >
@@ -622,7 +622,7 @@ class Screen extends React.Component {
                                     key={index}
                                     onClick={() =>
                                       this.props.set_check_my_disp_del_method(
-                                        el.id
+                                        el.id,
                                       )
                                     }
                                   >
@@ -639,7 +639,7 @@ class Screen extends React.Component {
                                     </td>
                                   </tr>
                                 );
-                              }
+                              },
                             )}
                           </tbody>
                         </table>
@@ -701,7 +701,7 @@ class Screen extends React.Component {
                           className="my_disp_button"
                           onClick={() => {
                             this.props.set_my_disp_status_filter_default(
-                              "select"
+                              "select",
                             );
                           }}
                         >
@@ -740,7 +740,7 @@ class Screen extends React.Component {
                                     </td>
                                   </tr>
                                 );
-                              }
+                              },
                             )}
                           </tbody>
                         </table>
@@ -818,7 +818,7 @@ class Screen extends React.Component {
                       this.props.store.my_disp.send_city_filter.filter(
                         (el1) => {
                           return el1.check;
-                        }
+                        },
                       );
                     const FindSendCityRes = selectedSendCities.find((el2) => {
                       return el2.name === el.SendCity;
@@ -830,7 +830,7 @@ class Screen extends React.Component {
                       this.props.store.my_disp.del_method_filter.filter(
                         (el1) => {
                           return el1.check;
-                        }
+                        },
                       );
                     const FindDelMethodsRes = selectedDelMethods.find((el2) => {
                       return el2.name === el.DelMethod;
@@ -975,7 +975,7 @@ class Screen extends React.Component {
                                                 onClick={() =>
                                                   this.open_skan(
                                                     historyEl.DocNumber,
-                                                    el.Num
+                                                    el.Num,
                                                   )
                                                 }
                                               >
@@ -1146,5 +1146,5 @@ export default connect(
     set_check_my_disp_status: (param) => {
       dispatch({ type: "set_check_my_disp_status", payload: param });
     },
-  })
+  }),
 )(Screen);

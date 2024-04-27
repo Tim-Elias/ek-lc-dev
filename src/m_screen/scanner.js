@@ -45,5 +45,5 @@ export default connect(
     set_search_reciept: (param) => {
       dispatch({ type: "set_search_reciept", payload: param });
     },
-  })
+  }),
 )(Screen);

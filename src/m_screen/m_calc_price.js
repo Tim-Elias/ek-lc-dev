@@ -14,7 +14,7 @@ class Screen extends React.Component {
         },
         (err) => {
           console.log(err);
-        }
+        },
       );
     }
   }
@@ -70,7 +70,7 @@ class Screen extends React.Component {
               this.props.store.home_ek.calc_send_city +
               " - " +
               this.props.store.home_ek.calc_rec_city +
-              " не удалось рассчитать тариф"
+              " не удалось рассчитать тариф",
           );
           this.props.set_calc_result([]);
         } else {
@@ -83,7 +83,7 @@ class Screen extends React.Component {
         this.props.set_home_error_mesage("Не удалось рассчитать тариф");
         this.props.set_calc_result([]);
         console.log(err);
-      }
+      },
     );
   };
 
@@ -334,5 +334,5 @@ export default connect(
     set_calc_result: (param) => {
       dispatch({ type: "set_calc_result", payload: param });
     },
-  })
+  }),
 )(Screen);

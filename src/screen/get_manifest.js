@@ -17,7 +17,7 @@ class Screen extends React.Component {
         this.props.modules.set_modal_show(true);
         this.props.modules.set_modal_header("Ошибка");
         this.props.modules.set_modal_text(err);
-      }
+      },
     );
   };
 
@@ -45,7 +45,7 @@ class Screen extends React.Component {
         this.props.modules.set_modal_show(true);
         this.props.modules.set_modal_header("Ошибка");
         this.props.modules.set_modal_text(err);
-      }
+      },
     );
   };
 
@@ -66,7 +66,7 @@ class Screen extends React.Component {
           event.preventDefault();
           console.log("Вверх");
           let currentId = parseInt(
-            document.getElementsByClassName("active")[0].getAttribute("id")
+            document.getElementsByClassName("active")[0].getAttribute("id"),
           );
           let updisp = document.getElementById((currentId - 1).toString());
           if (updisp !== null) {
@@ -77,7 +77,7 @@ class Screen extends React.Component {
           event.preventDefault();
           console.log("Вниз");
           let currentId = parseInt(
-            document.getElementsByClassName("active")[0].getAttribute("id")
+            document.getElementsByClassName("active")[0].getAttribute("id"),
           );
           let updisp = document.getElementById((currentId + 1).toString());
           if (updisp !== null) {
@@ -86,7 +86,7 @@ class Screen extends React.Component {
         }
         if (event.keyCode === 13) {
           tr_double_click(
-            document.getElementsByClassName("active")[0].getAttribute("name")
+            document.getElementsByClassName("active")[0].getAttribute("name"),
           );
         }
       } catch (error) {
@@ -127,7 +127,7 @@ class Screen extends React.Component {
                         onClick={this.tr_click.bind(this, disp.num)}
                         onDoubleClick={this.tr_double_click.bind(
                           this,
-                          disp.num
+                          disp.num,
                         )}
                         key={index}
                       >
@@ -189,5 +189,5 @@ export default connect(
     set_data_manifest: (param) => {
       dispatch({ type: "set_data_manifest", payload: param });
     },
-  })
+  }),
 )(Screen);

@@ -8,7 +8,7 @@ const get_data = (url, data) => {
         JSON.stringify(data),
         {
           headers: { "Content-Type": "text/plain" },
-        }
+        },
       )
       .then((result) => {
         if (result.data.status === "error") {
@@ -84,7 +84,7 @@ const get_file = (userkey, file_type, file_num, filename) => {
     (err) => {
       console.log("err");
       console.log(err);
-    }
+    },
   );
 };
 

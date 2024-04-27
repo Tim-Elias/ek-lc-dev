@@ -26,7 +26,7 @@ class Screen extends React.Component {
       (err) => {
         alert("Ошибка!!!");
         console.log(err);
-      }
+      },
     );
   };
 
@@ -41,7 +41,7 @@ class Screen extends React.Component {
       (err) => {
         alert("Ошибка!!!");
         console.log(err);
-      }
+      },
     );
   };
 
@@ -117,5 +117,5 @@ export default connect(
     set_profit: (param) => {
       dispatch({ type: "set_profit", payload: param });
     },
-  })
+  }),
 )(Screen);

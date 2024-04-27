@@ -68,7 +68,7 @@ class Screen extends React.Component {
     get_data("getdispatch", data).then(
       (result) => {
         this.props.set_popup_message(
-          `Накладная ${this.props.store.disp.data.Number} успешно принята от отправителя`
+          `Накладная ${this.props.store.disp.data.Number} успешно принята от отправителя`,
         );
         this.props.set_active_window("m_reciept");
       },
@@ -76,7 +76,7 @@ class Screen extends React.Component {
         this.props.set_popup_message("Не удалось принять накладную");
         this.props.set_active_window("m_disp");
         console.log(err);
-      }
+      },
     );
   };
 
@@ -121,7 +121,7 @@ class Screen extends React.Component {
                 },
                 (err) => {
                   console.log(err);
-                }
+                },
               );
             }
           },
@@ -129,14 +129,14 @@ class Screen extends React.Component {
             this.props.set_active_loader(false);
             console.log(err);
             alert(err);
-          }
+          },
         );
       },
       (err) => {
         this.props.set_active_window("m_disp");
         alert(err);
         console.log(err);
-      }
+      },
     );
   };
 
@@ -339,5 +339,5 @@ export default connect(
     set_popup_message: (param) => {
       dispatch({ type: "set_popup_message", payload: param });
     },
-  })
+  }),
 )(Screen);

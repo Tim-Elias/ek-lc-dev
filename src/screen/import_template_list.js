@@ -41,7 +41,7 @@ class Screen extends React.Component {
                     </td>
                   </tr>
                 );
-              }
+              },
             )}
           </tbody>
         </table>
@@ -58,5 +58,5 @@ export default connect(
     set_last_window: (param) => {
       dispatch({ type: "set_last_window", payload: param });
     },
-  })
+  }),
 )(Screen);

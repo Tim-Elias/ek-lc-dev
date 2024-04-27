@@ -134,5 +134,5 @@ export default connect(
     login: (param) => {
       dispatch({ type: "LOGIN", payload: param });
     },
-  })
+  }),
 )(Screen);

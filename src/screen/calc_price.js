@@ -16,7 +16,7 @@ class Screen extends React.Component {
         this.props.modules.set_modal_show(true);
         this.props.modules.set_modal_header("Ошибка");
         this.props.modules.set_modal_text(err);
-      }
+      },
     );
   }
 
@@ -50,7 +50,7 @@ class Screen extends React.Component {
         this.props.modules.set_modal_show(true);
         this.props.modules.set_modal_header("Ошибка");
         this.props.modules.set_modal_text(err);
-      }
+      },
     );
   };
 
@@ -80,7 +80,7 @@ class Screen extends React.Component {
         this.props.modules.set_modal_show(true);
         this.props.modules.set_modal_header("Ошибка");
         this.props.modules.set_modal_text(err);
-      }
+      },
     );
   };
 
@@ -93,7 +93,7 @@ class Screen extends React.Component {
       this.props.modules.set_modal_show(true);
       this.props.modules.set_modal_header("Ошибка");
       this.props.modules.set_modal_text(
-        "Не указан город отправления или город получения!"
+        "Не указан город отправления или город получения!",
       );
     } else {
       let Volume =
@@ -106,8 +106,8 @@ class Screen extends React.Component {
               this.props.store.calc_price.CargoList.reduce(
                 (accumulator, Cargo) =>
                   accumulator + Math.ceil(Cargo.Weight * Cargo.Q * 1000) / 1000,
-                0
-              ) * 1000
+                0,
+              ) * 1000,
             ) / 1000;
       let Weight =
         this.props.store.calc_price.calc_price_cargo_info_type.key === 1
@@ -119,8 +119,8 @@ class Screen extends React.Component {
                 (accumulator, Cargo) =>
                   accumulator +
                   Math.ceil((Cargo.L * Cargo.W * Cargo.H * Cargo.Q) / 5) / 1000,
-                0
-              ) * 1000
+                0,
+              ) * 1000,
             ) / 1000;
 
       const calcPriceData = {
@@ -144,7 +144,7 @@ class Screen extends React.Component {
 
           console.log(err);
           this.props.modules.set_modal_text(err);
-        }
+        },
       );
     }
   };
@@ -199,8 +199,8 @@ class Screen extends React.Component {
         this.props.store.calc_price.CargoList.reduce(
           (accumulator, Cargo) =>
             accumulator + Math.ceil(Cargo.Weight * Cargo.Q * 1000) / 1000,
-          0
-        ) * 1000
+          0,
+        ) * 1000,
       ) / 1000;
     let total_volume =
       Math.ceil(
@@ -208,8 +208,8 @@ class Screen extends React.Component {
           (accumulator, Cargo) =>
             accumulator +
             Math.ceil((Cargo.L * Cargo.W * Cargo.H * Cargo.Q) / 5) / 1000,
-          0
-        ) * 1000
+          0,
+        ) * 1000,
       ) / 1000;
 
     return (
@@ -355,19 +355,22 @@ class Screen extends React.Component {
           {this.props.store.calc_price.calc_price_cargo_info_type.key === 2 ? (
             <div className="disp_cargo_table_data">
               <table>
-                <thead><tr>
-                  <th>Вес (кг)</th>
-                  <th>Длина (см)</th>
-                  <th>Ширина (см)</th>
-                  <th>Высота (см)</th>
-                  <th>Об. вес</th>
-                  <th>Количество</th>
-                  <th>Итоговый вес</th>
-                  <th>Итог. об. вес</th>
-                  {this.props.store.calc_price.CargoList.length === 1 ? null : (
-                    <th></th>
-                  )}
-                </tr></thead>
+                <thead>
+                  <tr>
+                    <th>Вес (кг)</th>
+                    <th>Длина (см)</th>
+                    <th>Ширина (см)</th>
+                    <th>Высота (см)</th>
+                    <th>Об. вес</th>
+                    <th>Количество</th>
+                    <th>Итоговый вес</th>
+                    <th>Итог. об. вес</th>
+                    {this.props.store.calc_price.CargoList.length ===
+                    1 ? null : (
+                      <th></th>
+                    )}
+                  </tr>
+                </thead>
                 <tbody>
                   {this.props.store.calc_price.CargoList.map((Cargo, index) => (
                     <tr key={index}>
@@ -427,7 +430,7 @@ class Screen extends React.Component {
                       <td>{Math.ceil(Cargo.Weight * Cargo.Q * 1000) / 1000}</td>
                       <td>
                         {Math.ceil(
-                          (Cargo.L * Cargo.W * Cargo.H * Cargo.Q) / 5
+                          (Cargo.L * Cargo.W * Cargo.H * Cargo.Q) / 5,
                         ) / 1000}
                       </td>
 
@@ -651,5 +654,5 @@ export default connect(
     remove_calc_price_cargo: (param) => {
       dispatch({ type: "remove_calc_price_cargo", payload: param });
     },
-  })
+  }),
 )(Screen);

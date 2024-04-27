@@ -11,10 +11,8 @@ class Screen extends React.Component {
 
   tr_double_click = (el) => {
     const city = this.props.store.create_disp.CityList.filter(
-      (list_el) => list_el.value === el.City
+      (list_el) => list_el.value === el.City,
     )[0];
-
-    //console.log(city)
 
     const city_label = city.label;
     this.props.modules.set_active_window("wait");
@@ -30,7 +28,7 @@ class Screen extends React.Component {
         } else {
           if (el.Terminal) {
             crrent_terminal = result.filter(
-              (list_el) => list_el.value === el.CurrentTerminal
+              (list_el) => list_el.value === el.CurrentTerminal,
             )[0];
             //this.props.set_selected_disp_template_CurrentTerminal(crrent_terminal)
           }
@@ -49,12 +47,11 @@ class Screen extends React.Component {
         this.props.modules.set_modal_show(true);
         this.props.modules.set_modal_header("Ошибка");
         this.props.modules.set_modal_text(err);
-      }
+      },
     );
   };
 
   render() {
-    document.onkeydown = function (event) {};
     return (
       <div>
         <div className="disp_Number">
@@ -93,42 +90,40 @@ class Screen extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {this.props.store.upload_manifest.disp_template_list.map(
-              (el, index) => {
-                return (
-                  <tr
-                    key={el.Key}
-                    onDoubleClick={this.tr_double_click.bind(this, el)}
-                  >
-                    <td>
-                      <div className="small_table_data">{el.label}</div>
-                    </td>
-                    <td>
-                      <div className="small_table_data">{el.City}</div>
-                    </td>
-                    <td>
-                      <div className="small_table_data">
-                        {el.Terminal
-                          ? el.CurrentTerminal + " (Cклад)"
-                          : el.Adress}
-                      </div>
-                    </td>
-                    <td>
-                      <div className="small_table_data">{el.Phone}</div>
-                    </td>
-                    <td>
-                      <div className="small_table_data">{el.Person}</div>
-                    </td>
-                    <td>
-                      <div className="small_table_data">{el.Company}</div>
-                    </td>
-                    <td>
-                      <div className="small_table_data">{el.AddInfo}</div>
-                    </td>
-                  </tr>
-                );
-              }
-            )}
+            {this.props.store.upload_manifest.disp_template_list.map((el) => {
+              return (
+                <tr
+                  key={el.Key}
+                  onDoubleClick={this.tr_double_click.bind(this, el)}
+                >
+                  <td>
+                    <div className="small_table_data">{el.label}</div>
+                  </td>
+                  <td>
+                    <div className="small_table_data">{el.City}</div>
+                  </td>
+                  <td>
+                    <div className="small_table_data">
+                      {el.Terminal
+                        ? el.CurrentTerminal + " (Cклад)"
+                        : el.Adress}
+                    </div>
+                  </td>
+                  <td>
+                    <div className="small_table_data">{el.Phone}</div>
+                  </td>
+                  <td>
+                    <div className="small_table_data">{el.Person}</div>
+                  </td>
+                  <td>
+                    <div className="small_table_data">{el.Company}</div>
+                  </td>
+                  <td>
+                    <div className="small_table_data">{el.AddInfo}</div>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
         <button onClick={this.create_disp_template.bind(this)}>
@@ -165,5 +160,5 @@ export default connect(
     reset_selected_disp_template: (param) => {
       dispatch({ type: "reset_selected_disp_template", payload: param });
     },
-  })
+  }),
 )(Screen);

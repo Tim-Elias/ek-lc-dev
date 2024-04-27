@@ -80,5 +80,5 @@ export default connect(
     set_mobile_menu: (param) => {
       dispatch({ type: "set_mobile_menu", payload: param });
     },
-  })
+  }),
 )(Screen);

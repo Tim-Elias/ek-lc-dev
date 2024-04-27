@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import Header from "./screen/components/header";
 import Footer from "./screen/components/footer";
 import LeftMenu from "./screen/components/leftmenu";
-import Content from "./screen/content";
+import { Content } from "./screen/content";
 import MContent from "./m_screen/m_content";
 import MLogin from "./m_screen/m_login";
 

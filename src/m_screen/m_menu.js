@@ -23,7 +23,7 @@ class Screen extends React.Component {
         (err) => {
           console.log(err);
           this.props.set_active_window(window);
-        }
+        },
       );
     } else if (window === "m_send_manifest") {
       this.props.set_active_window("wait");
@@ -37,7 +37,7 @@ class Screen extends React.Component {
         },
         (err) => {
           console.log(err);
-        }
+        },
       );
     } else if (window === "m_storage") {
       this.props.set_active_window("m_storage");
@@ -208,5 +208,5 @@ export default connect(
     set_list_get_manifest: (param) => {
       dispatch({ type: "set_list_get_manifest", payload: param });
     },
-  })
+  }),
 )(Screen);

@@ -2,13 +2,12 @@ import React from "react";
 import { connect } from "react-redux";
 
 class Screen extends React.Component {
-  tr_double_click = (el) => {
+  tr_double_click = () => {
     this.props.modules.set_active_window("default_template");
     this.props.modules.set_last_window("default_template_list");
   };
 
   render() {
-    document.onkeydown = function (event) {};
     return (
       <div>
         <div className="disp_Number">
@@ -29,7 +28,7 @@ class Screen extends React.Component {
           </thead>
           <tbody>
             {this.props.store.upload_manifest.default_template_list.map(
-              (el, index) => {
+              (el) => {
                 return (
                   <tr
                     key={el.Key}
@@ -40,7 +39,7 @@ class Screen extends React.Component {
                     </td>
                   </tr>
                 );
-              }
+              },
             )}
           </tbody>
         </table>
@@ -57,5 +56,5 @@ export default connect(
     set_last_window: (param) => {
       dispatch({ type: "set_last_window", payload: param });
     },
-  })
+  }),
 )(Screen);

@@ -47,7 +47,7 @@ class Screen extends React.Component {
           this.props.set_modal_header("Ошибка");
 
           console.log(err);
-        }
+        },
       );
     } else {
       this.props.set_modal_show(true);
@@ -67,7 +67,7 @@ class Screen extends React.Component {
         this.props.modules.set_modal_show(true);
         this.props.modules.set_modal_header("Ошибка");
         this.props.modules.set_modal_text(err);
-      }
+      },
     );
   };
 
@@ -154,5 +154,5 @@ export default connect(
     set_modal_header: (param) => {
       dispatch({ type: "set_modal_header", payload: param });
     },
-  })
+  }),
 )(Screen);

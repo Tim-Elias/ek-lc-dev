@@ -40,7 +40,7 @@ class Screen extends React.Component {
           this.props.store.disp_map.disp_for_del.filter((el) => {
             return el.Customer === value;
           }),
-          true
+          true,
         );
       }
     }
@@ -161,7 +161,7 @@ class Screen extends React.Component {
             .filter((el) => !el.selected)
             .map((el) => {
               return el.Num;
-            })
+            }),
         );
         this.reset();
       },
@@ -170,7 +170,7 @@ class Screen extends React.Component {
         this.props.modules.set_modal_show(true);
         this.props.modules.set_modal_header("Ошибка");
         this.props.modules.set_modal_text(err);
-      }
+      },
     );
   };
 
@@ -208,7 +208,7 @@ class Screen extends React.Component {
         this.props.modules.set_modal_show(true);
         this.props.modules.set_modal_header("Ошибка");
         this.props.modules.set_modal_text(err);
-      }
+      },
     );
   };
 
@@ -251,7 +251,7 @@ class Screen extends React.Component {
             this.props.modules.set_modal_show(true);
             this.props.modules.set_modal_header("Ошибка");
             this.props.modules.set_modal_text(err);
-          }
+          },
         );
       }
     });
@@ -263,7 +263,7 @@ class Screen extends React.Component {
     let geocoder = new g_maps.Geocoder();
     const userkey = this.props.store.login.userkey;
     const array = this.props.store.disp_map.disp_for_del.filter(
-      (el) => el.RecLat === "" || el.RecLng === ""
+      (el) => el.RecLat === "" || el.RecLng === "",
     );
     const not_modify = this.props.store.disp_map.disp_for_del
       .filter((el) => el.RecLat !== "" && el.RecLng !== "")
@@ -272,7 +272,7 @@ class Screen extends React.Component {
       });
     const loadingNumber = () => {
       this.props.set_disp_map_loadingNumber(
-        this.props.store.disp_map.loadingNumber--
+        this.props.store.disp_map.loadingNumber--,
       );
     };
 
@@ -304,10 +304,10 @@ class Screen extends React.Component {
                     this.props.modules.set_modal_show(true);
                     this.props.modules.set_modal_header("Ошибка");
                     this.props.modules.set_modal_text(err);
-                  }
+                  },
                 );
               }
-            }
+            },
           );
           loadingNumber();
         }
@@ -343,7 +343,7 @@ class Screen extends React.Component {
         this.props.modules.set_modal_show(true);
         this.props.modules.set_modal_header("Ошибка");
         this.props.modules.set_modal_text(err);
-      }
+      },
     );
   };
 
@@ -364,7 +364,7 @@ class Screen extends React.Component {
             var latLng = new g_maps.LatLng({ lat: lat, lng: lng });
             var inside = g_maps.geometry.poly.containsLocation(
               latLng,
-              bermudaTriangle
+              bermudaTriangle,
             );
             if (inside) {
               arr.push(el.Num);
@@ -440,7 +440,7 @@ class Screen extends React.Component {
                 this.render_markers.bind(
                   this,
                   this.props.store.disp_map.disp_for_del,
-                  true
+                  true,
                 );
               }}
             >
@@ -592,7 +592,7 @@ class Screen extends React.Component {
                 .filter(
                   (el) =>
                     el.Customer === this.props.store.disp_map.input_customer ||
-                    this.props.store.disp_map.input_customer === ""
+                    this.props.store.disp_map.input_customer === "",
                 )
                 .filter((el) => {
                   const filter_num = el.Num.toUpperCase();
@@ -606,10 +606,10 @@ class Screen extends React.Component {
                   );
                 });
               const courier_disp_work = courier_disp.filter(
-                (el) => el.StatusType === "У сотрудника"
+                (el) => el.StatusType === "У сотрудника",
               ).length;
               const courier_disp_not_work = courier_disp.filter(
-                (el) => el.StatusType !== "У сотрудника"
+                (el) => el.StatusType !== "У сотрудника",
               ).length;
               const q = courier_disp.length;
               if (q > 0) {
@@ -662,7 +662,7 @@ class Screen extends React.Component {
                                 style={{ backgroundColor: color_row }}
                                 onClick={this.marker_onClick.bind(
                                   this,
-                                  disp.Num
+                                  disp.Num,
                                 )}
                               >
                                 <h4>
@@ -670,7 +670,7 @@ class Screen extends React.Component {
                                   <button
                                     onClick={this.open_disp.bind(
                                       this,
-                                      disp.Num
+                                      disp.Num,
                                     )}
                                   >
                                     <i className="ek-enlarge" />
@@ -696,7 +696,7 @@ class Screen extends React.Component {
                                     onClick={this.geocode.bind(
                                       this,
                                       disp.Num,
-                                      disp.RecCity + disp.RecAddress
+                                      disp.RecCity + disp.RecAddress,
                                     )}
                                   >
                                     <i className="red ek-search" />
@@ -847,7 +847,7 @@ class Screen extends React.Component {
                   Количество:{" "}
                   {
                     this.props.store.disp_map.disp_for_del.filter(
-                      (el) => el.selected
+                      (el) => el.selected,
                     ).length
                   }
                 </div>
@@ -990,5 +990,5 @@ export default connect(
     set_disp_map_errorMass_clear: (param) => {
       dispatch({ type: "set_disp_map_errorMass_clear", payload: param });
     },
-  })
+  }),
 )(Screen);

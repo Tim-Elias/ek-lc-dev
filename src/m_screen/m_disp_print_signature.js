@@ -221,5 +221,5 @@ export default connect(
     set_disp_list: (param) => {
       dispatch({ type: "set_disp_list", payload: param });
     },
-  })
+  }),
 )(Screen);

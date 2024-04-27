@@ -58,7 +58,7 @@ export default function dispatch(state = initialState, action) {
       return {
         ...state,
         disp_list: state.disp_list.filter(
-          (item, index) => index !== action.payload
+          (item, index) => index !== action.payload,
         ),
       };
 

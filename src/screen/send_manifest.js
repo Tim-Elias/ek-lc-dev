@@ -10,21 +10,21 @@ class Screen extends React.Component {
     const num = this.props.store.send_manifest.search;
     if (
       this.props.store.storage.list.filter(
-        (el) => el.selected && el.Number === num
+        (el) => el.selected && el.Number === num,
       ).length === 1
     ) {
       this.props.set_search_send_manifest_error(
-        `Накладная ${num} уже добавлена`
+        `Накладная ${num} уже добавлена`,
       );
     } else if (
       this.props.store.storage.list.filter(
-        (el) => !el.selected && el.Number === num
+        (el) => !el.selected && el.Number === num,
       ).length === 1
     ) {
       this.props.select_disp(num);
     } else if (
       this.props.store.storage.list.filter(
-        (el) => !el.selected && el.Number === num
+        (el) => !el.selected && el.Number === num,
       ).length === 0
     ) {
       this.props.set_search_send_manifest_error(`Накладная ${num} не найдена`);
@@ -60,7 +60,7 @@ class Screen extends React.Component {
 
             this.props.set_active_window("storage");
             console.log(err);
-          }
+          },
         );
       },
       (err) => {
@@ -70,13 +70,11 @@ class Screen extends React.Component {
 
         this.props.set_active_window("send_manifest");
         this.props.set_search_error(err);
-      }
+      },
     );
   };
 
   render() {
-    document.onkeydown = function (event) {};
-
     const search = () => {
       this.search();
     };
@@ -219,5 +217,5 @@ export default connect(
     set_list_storage: (param) => {
       dispatch({ type: "set_list_storage", payload: param });
     },
-  })
+  }),
 )(Screen);

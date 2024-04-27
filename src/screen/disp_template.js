@@ -27,7 +27,7 @@ class Screen extends React.Component {
             this.props.modules.set_modal_show(true);
             this.props.modules.set_modal_header("Ошибка");
             this.props.modules.set_modal_text(err);
-          }
+          },
         );
       },
       (err) => {
@@ -36,7 +36,7 @@ class Screen extends React.Component {
         this.props.modules.set_modal_show(true);
         this.props.modules.set_modal_header("Ошибка");
         this.props.modules.set_modal_text(err);
-      }
+      },
     );
   };
 
@@ -65,7 +65,7 @@ class Screen extends React.Component {
         this.props.modules.set_modal_show(true);
         this.props.modules.set_modal_header("Ошибка");
         this.props.modules.set_modal_text(err);
-      }
+      },
     );
   };
 
@@ -101,7 +101,7 @@ class Screen extends React.Component {
             this.props.modules.set_modal_show(true);
             this.props.modules.set_modal_header("Ошибка");
             this.props.modules.set_modal_text(err);
-          }
+          },
         );
       },
       (err) => {
@@ -110,7 +110,7 @@ class Screen extends React.Component {
         this.props.modules.set_modal_show(true);
         this.props.modules.set_modal_header("Ошибка");
         this.props.modules.set_modal_text(err);
-      }
+      },
     );
   };
 
@@ -186,7 +186,7 @@ class Screen extends React.Component {
                 type="radio"
                 onChange={this.set_selected_disp_template_Terminal.bind(
                   this,
-                  true
+                  true,
                 )}
                 disabled={
                   this.props.store.templates.disp_template_terminal_list
@@ -210,7 +210,7 @@ class Screen extends React.Component {
                 type="radio"
                 onChange={this.set_selected_disp_template_Terminal.bind(
                   this,
-                  false
+                  false,
                 )}
                 checked={
                   !this.props.store.templates.selected_disp_template.Terminal
@@ -356,5 +356,5 @@ export default connect(
     set_disp_template_terminal_list: (param) => {
       dispatch({ type: "set_disp_template_terminal_list", payload: param });
     },
-  })
+  }),
 )(Screen);

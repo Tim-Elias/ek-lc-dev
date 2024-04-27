@@ -34,14 +34,14 @@ class Screen extends React.Component {
           (err) => {
             console.log(err);
             alert("Ошибка!");
-          }
+          },
         );
       },
       (err) => {
         this.props.set_active_window("m_disp");
         alert("Ошибка!");
         console.log(err);
-      }
+      },
     );
   };
 
@@ -142,5 +142,5 @@ export default connect(
     set_active_window: (param) => {
       dispatch({ type: "set_active_window", payload: param });
     },
-  })
+  }),
 )(Screen);

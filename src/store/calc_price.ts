@@ -185,8 +185,6 @@ export default function dispatch(state = initialState, action) {
         error_mesage: "",
         calc_price_result: "",
 
-        // focus_calc_price_input_send_city: false,
-        // focus_calc_price_input_rec_city: false,
         calc_price_send_city: "",
         calc_price_rec_city: "",
 

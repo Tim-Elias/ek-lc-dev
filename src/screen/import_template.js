@@ -23,5 +23,5 @@ export default connect(
   (state) => ({
     store: state,
   }),
-  (dispatch) => ({})
+  (dispatch) => ({}),
 )(Screen);

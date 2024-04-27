@@ -25,14 +25,14 @@ class Screen extends React.Component {
     ) {
       let zone = this.props.store.storage_reciept.barcode.substring(10);
       let find_zone = this.props.store.storage_reciept.zone_list.find(
-        (el) => el === zone
+        (el) => el === zone,
       );
       console.log(find_zone);
       if (find_zone === undefined) {
         this.props.storage_reciept_set_barcode("");
         this.props.storage_reciept_set_status_type("err");
         this.props.storage_reciept_set_status_message(
-          "Зона хранения не найдена"
+          "Зона хранения не найдена",
         );
         this.err_sound_play();
       } else {
@@ -74,7 +74,7 @@ class Screen extends React.Component {
             status_message: err,
           });
           this.err_sound_play();
-        }
+        },
       );
     }
   };
@@ -194,5 +194,5 @@ export default connect(
     storage_reciept_set_status_type: (param) => {
       dispatch({ type: "storage_reciept_set_status_type", payload: param });
     },
-  })
+  }),
 )(Screen);

@@ -34,7 +34,7 @@ class Screen extends React.Component {
       },
       (err) => {
         console.log(err);
-      }
+      },
     );
   };
 
@@ -75,7 +75,7 @@ class Screen extends React.Component {
       },
       (err) => {
         console.log(err);
-      }
+      },
     );
   }
 
@@ -117,7 +117,7 @@ class Screen extends React.Component {
                   className="ek-qrcode action_icon"
                   onClick={(e) =>
                     this.props.set_scann_active(
-                      !this.props.store.storage.scann_active
+                      !this.props.store.storage.scann_active,
                     )
                   }
                 />
@@ -222,5 +222,5 @@ export default connect(
     set_search_reciept: (param) => {
       dispatch({ type: "set_search_reciept", payload: param });
     },
-  })
+  }),
 )(Screen);

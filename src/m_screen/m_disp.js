@@ -12,7 +12,7 @@ class Screen extends React.Component {
 
   loadData = (
     num = this.props.store.disp.key.num,
-    status = this.props.store.disp.key.status
+    status = this.props.store.disp.key.status,
   ) => {
     this.props.set_active_loader(true);
 
@@ -40,7 +40,7 @@ class Screen extends React.Component {
         console.log(err);
         // alert(err)
         this.settings_window("m_storage");
-      }
+      },
     );
   };
 
@@ -69,7 +69,7 @@ class Screen extends React.Component {
       (err) => {
         console.log(err);
         alert(err);
-      }
+      },
     );
   };
 
@@ -95,10 +95,10 @@ class Screen extends React.Component {
         // const rec_city = this.props.store.m_create_disp.CityList.filter((el) => el.value === this.props.store.disp.data.RecCity);
 
         const send_city = result.filter(
-          (el) => el.value === this.props.store.disp.data.SendCity
+          (el) => el.value === this.props.store.disp.data.SendCity,
         )[0];
         const rec_city = result.filter(
-          (el) => el.value === this.props.store.disp.data.RecCity
+          (el) => el.value === this.props.store.disp.data.RecCity,
         )[0];
 
         const s_city = {
@@ -122,7 +122,7 @@ class Screen extends React.Component {
           (err) => {
             console.log("err");
             console.log(err);
-          }
+          },
         );
 
         get_data("terminallist", {
@@ -139,7 +139,7 @@ class Screen extends React.Component {
           (err) => {
             console.log("err");
             console.log(err);
-          }
+          },
         );
         let data = {
           data: {
@@ -165,7 +165,7 @@ class Screen extends React.Component {
       },
       (err) => {
         console.log(err);
-      }
+      },
     );
   };
 
@@ -175,7 +175,7 @@ class Screen extends React.Component {
       this.settings_window(
         this.props.store.general.last_window[
           this.props.store.general.last_window.length - 1
-        ]
+        ],
       );
       window.history.pushState(null, "", window.location.href);
     }.bind(this);
@@ -221,7 +221,7 @@ class Screen extends React.Component {
                   className="mobile_disp_button_item mobile_disp_button_item--full"
                   onClick={this.settings_window.bind(
                     this,
-                    "m_receiv_from_sender"
+                    "m_receiv_from_sender",
                   )}
                 >
                   Получить от отправителя
@@ -275,7 +275,7 @@ class Screen extends React.Component {
                       className="mobile_disp_button_item--not mobile_disp_button_item"
                       onClick={this.settings_window.bind(
                         this,
-                        "m_not_delivered"
+                        "m_not_delivered",
                       )}
                     >
                       Не доставлено
@@ -536,5 +536,5 @@ export default connect(
     set_popup_message: (param) => {
       dispatch({ type: "set_popup_message", payload: param });
     },
-  })
+  }),
 )(Screen);

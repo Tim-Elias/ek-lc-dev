@@ -36,7 +36,7 @@ class Screen extends React.Component {
         this.props.modules.set_modal_show(true);
         this.props.modules.set_modal_header("Ошибка");
         this.props.modules.set_modal_text(err);
-      }
+      },
     );
   };
 
@@ -56,21 +56,20 @@ class Screen extends React.Component {
   };
 
   render() {
-    document.onkeydown = function (event) {};
     let default_send_template = {};
     let default_rec_template = {};
 
     if (this.props.store.login.default_send !== "0") {
       default_send_template =
         this.props.store.upload_manifest.disp_template_list.find(
-          (el) => el.Key === this.props.store.login.default_send
+          (el) => el.Key === this.props.store.login.default_send,
         );
     }
 
     if (this.props.store.login.default_rec !== "0") {
       default_rec_template =
         this.props.store.upload_manifest.disp_template_list.find(
-          (el) => el.Key === this.props.store.login.default_rec
+          (el) => el.Key === this.props.store.login.default_rec,
         );
     }
 
@@ -221,5 +220,5 @@ export default connect(
     save_changes_user_data: (param) => {
       dispatch({ type: "save_changes_user_data", payload: param });
     },
-  })
+  }),
 )(Screen);

@@ -43,14 +43,14 @@ class Screen extends React.Component {
           (err) => {
             console.log(err);
             alert("Ошибка!");
-          }
+          },
         );
       },
       (err) => {
         this.props.set_active_window("m_disp");
         alert("Ошибка!");
         console.log(err);
-      }
+      },
     );
   };
 
@@ -94,7 +94,7 @@ class Screen extends React.Component {
                 },
                 (err) => {
                   console.log(err);
-                }
+                },
               );
             }
           },
@@ -102,14 +102,14 @@ class Screen extends React.Component {
             this.props.set_active_loader(false);
             console.log(err);
             alert(err);
-          }
+          },
         );
       },
       (err) => {
         this.props.set_active_window("m_disp");
         alert(err);
         console.log(err);
-      }
+      },
     );
   };
 
@@ -449,5 +449,5 @@ export default connect(
     set_popup_foto: (param) => {
       dispatch({ type: "set_popup_foto", payload: param });
     },
-  })
+  }),
 )(Screen);

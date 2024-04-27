@@ -35,5 +35,5 @@ export default connect(
     set_popup_message: (param) => {
       dispatch({ type: "set_popup_message", payload: param });
     },
-  })
+  }),
 )(Screen);

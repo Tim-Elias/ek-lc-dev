@@ -135,5 +135,5 @@ export default connect(
     camera_active: (param) => {
       dispatch({ type: "set_camera_active", payload: param });
     },
-  })
+  }),
 )(Screen);

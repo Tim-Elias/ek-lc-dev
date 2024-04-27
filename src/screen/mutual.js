@@ -25,7 +25,7 @@ class Screen extends React.Component {
         this.props.modules.set_modal_show(true);
         this.props.modules.set_modal_header("Ошибка");
         this.props.modules.set_modal_text(err);
-      }
+      },
     );
   };
 
@@ -56,7 +56,7 @@ class Screen extends React.Component {
         this.props.set_active_window("mutual");
         console.log(err);
         // this.props.set_mutual_error(err)
-      }
+      },
     );
   };
 
@@ -168,5 +168,5 @@ export default connect(
     set_last_window: (param) => {
       dispatch({ type: "set_last_window", payload: param });
     },
-  })
+  }),
 )(Screen);

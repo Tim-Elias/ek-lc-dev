@@ -12,7 +12,7 @@ class Screen extends React.Component {
   handleButtonPress() {
     this.buttonPressTimer = setTimeout(
       () => alert("long press activated"),
-      1500
+      1500,
     );
   }
 
@@ -35,7 +35,7 @@ class Screen extends React.Component {
         this.props.modules.set_modal_show(true);
         this.props.modules.set_modal_header("Ошибка");
         this.props.modules.set_modal_text(err);
-      }
+      },
     );
   };
 
@@ -67,13 +67,11 @@ class Screen extends React.Component {
         this.props.modules.set_modal_show(true);
         this.props.modules.set_modal_header("Ошибка");
         this.props.modules.set_modal_text(err);
-      }
+      },
     );
   };
 
   render() {
-    document.onkeydown = function (event) {};
-
     const tr_click = (name) => {
       this.tr_click(name);
     };
@@ -88,7 +86,7 @@ class Screen extends React.Component {
           event.preventDefault();
           console.log("Вверх");
           let currentId = parseInt(
-            document.getElementsByClassName("active")[0].getAttribute("id")
+            document.getElementsByClassName("active")[0].getAttribute("id"),
           );
           let updisp = document.getElementById((currentId - 1).toString());
           if (updisp !== null) {
@@ -99,7 +97,7 @@ class Screen extends React.Component {
           event.preventDefault();
           console.log("Вниз");
           let currentId = parseInt(
-            document.getElementsByClassName("active")[0].getAttribute("id")
+            document.getElementsByClassName("active")[0].getAttribute("id"),
           );
           let updisp = document.getElementById((currentId + 1).toString());
           if (updisp !== null) {
@@ -172,7 +170,7 @@ class Screen extends React.Component {
                   .filter(
                     (el) =>
                       this.props.store.storage.search === "" ||
-                      el.Number.indexOf(this.props.store.storage.search) !== -1
+                      el.Number.indexOf(this.props.store.storage.search) !== -1,
                   )
                   .map((disp, index) => (
                     <tbody key={index}>
@@ -258,5 +256,5 @@ export default connect(
     set_action: (param) => {
       dispatch({ type: "set_action", payload: param });
     },
-  })
+  }),
 )(Screen);

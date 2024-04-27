@@ -38,7 +38,7 @@ class Screen extends React.Component {
           this.props.set_modal_header("Ошибка");
 
           console.log(err);
-        }
+        },
       );
     } else {
       this.props.set_error("Необходимо ввести Имя пользователя и Пароль.");
@@ -112,5 +112,5 @@ export default connect(
     set_modal_header: (param) => {
       dispatch({ type: "set_modal_header", payload: param });
     },
-  })
+  }),
 )(Screen);

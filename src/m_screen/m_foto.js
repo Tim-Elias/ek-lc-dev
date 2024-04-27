@@ -66,5 +66,5 @@ export default connect(
     take_foto: (param) => {
       dispatch({ type: "set_disp_foto", payload: param });
     },
-  })
+  }),
 )(Screen);

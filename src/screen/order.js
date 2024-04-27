@@ -24,7 +24,7 @@ class Screen extends React.Component {
         this.props.modules.set_modal_show(true);
         this.props.modules.set_modal_header("Ошибка");
         this.props.modules.set_modal_text(err);
-      }
+      },
     );
   };
 
@@ -42,7 +42,7 @@ class Screen extends React.Component {
       this.props.store.login.userkey,
       "order",
       this.props.store.order.data.Key,
-      "Счёт " + this.props.store.order.data.Number + ".pdf"
+      "Счёт " + this.props.store.order.data.Number + ".pdf",
     );
   };
 
@@ -51,7 +51,7 @@ class Screen extends React.Component {
       this.props.store.login.userkey,
       "act",
       this.props.store.order.data.Key,
-      "Акт " + this.props.store.order.data.Number + ".pdf"
+      "Акт " + this.props.store.order.data.Number + ".pdf",
     );
   };
 
@@ -60,7 +60,7 @@ class Screen extends React.Component {
       this.props.store.login.userkey,
       "cf",
       this.props.store.order.data.Key,
-      "СФ " + this.props.store.order.data.Number + ".pdf"
+      "СФ " + this.props.store.order.data.Number + ".pdf",
     );
   };
 
@@ -233,5 +233,5 @@ export default connect(
     pop_last_window: () => {
       dispatch({ type: "pop_last_window" });
     },
-  })
+  }),
 )(Screen);

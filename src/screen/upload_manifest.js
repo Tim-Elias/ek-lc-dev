@@ -7,7 +7,7 @@ import { get_data } from "./../common/common_modules";
 import "./upload_manifest.css";
 import ComponentToPrint from "./disp_print";
 import StickerToPrint from "./sticker_print";
-import Modal from "../ui-components/modal/modal";
+import Modal from "../ui-components/modal/modal.tsx";
 
 const UploadInOneList = [
   { label: "Загрузка каждой накладной", value: false },
@@ -152,7 +152,7 @@ class Screen extends React.Component {
           arr.filter(
             (cur_el, cur_index) =>
               cur_el[it.RecAdress - 1] === el[it.RecAdress - 1] &&
-              cur_index < index
+              cur_index < index,
           ).length > 0
         ) {
           push_it = false;
@@ -160,28 +160,29 @@ class Screen extends React.Component {
           arr.filter(
             (cur_el, cur_index) =>
               cur_el[it.RecAdress - 1] === el[it.RecAdress - 1] &&
-              cur_index > index
+              cur_index > index,
           ).length > 0
         ) {
           let cons_arr = arr.filter(
-            (cur_el) => cur_el[it.RecAdress - 1] === el[it.RecAdress - 1]
+            (cur_el) => cur_el[it.RecAdress - 1] === el[it.RecAdress - 1],
           );
 
           if (it.Total !== "0") {
             cons_arr.forEach(
-              (total_el) => (Total = Total + parseFloat(total_el[it.Total - 1]))
+              (total_el) =>
+                (Total = Total + parseFloat(total_el[it.Total - 1])),
             );
           }
           if (it.Weight !== "0") {
             cons_arr.forEach(
               (total_el) =>
-                (Weight = Weight + parseFloat(total_el[it.Weight - 1]))
+                (Weight = Weight + parseFloat(total_el[it.Weight - 1])),
             );
           }
           if (it.Volume !== "0") {
             cons_arr.forEach(
               (total_el) =>
-                (Volume = Volume + parseFloat(total_el[it.Volume - 1]))
+                (Volume = Volume + parseFloat(total_el[it.Volume - 1])),
             );
           }
           if (it.SendAddInfo !== "0") {
@@ -190,7 +191,7 @@ class Screen extends React.Component {
                 (SendAddInfo =
                   SendAddInfo +
                   total_el[it.SendAddInfo - 1] +
-                  String.fromCharCode(10))
+                  String.fromCharCode(10)),
             );
           }
         } else {
@@ -336,7 +337,7 @@ class Screen extends React.Component {
       });
 
       const import_keys = Object.keys(
-        this.props.store.upload_manifest.import_template
+        this.props.store.upload_manifest.import_template,
       );
 
       let header = [];
@@ -372,11 +373,11 @@ class Screen extends React.Component {
                     onChange={this.check_checkbox.bind(
                       this,
                       cell_index,
-                      element_index
+                      element_index,
                     )}
                     checked={cell}
                   />
-                </td>
+                </td>,
               );
             } else {
               children.push(<td key={cell_index}>{cell}</td>);
@@ -384,13 +385,13 @@ class Screen extends React.Component {
           });
 
           body.push(<tr key={element_index}>{children}</tr>);
-        }
+        },
       );
       let table = [];
       table.push(
         <thead key="hr1">
           <tr>{header}</tr>
-        </thead>
+        </thead>,
       );
       table.push(<tbody key="b1">{body}</tbody>);
 
@@ -401,13 +402,13 @@ class Screen extends React.Component {
   upload_data = () => {
     if (
       this.props.store.upload_manifest.disp_data.filter(
-        (el) => el.Status === "Не загружено" && el.Total > 0
+        (el) => el.Status === "Не загружено" && el.Total > 0,
       ).length > 0
     ) {
       this.upload_disp(
         this.props.store.upload_manifest.disp_data.filter(
-          (el) => el.Status === "Не загружено" && el.Total > 0
-        )[0]
+          (el) => el.Status === "Не загружено" && el.Total > 0,
+        )[0],
       );
     }
   };
@@ -465,7 +466,7 @@ class Screen extends React.Component {
                   Status: "Загружено",
                   Num: result.Number,
                   print_data: result_print_data,
-                })
+                }),
               );
             },
             (err) => {
@@ -474,7 +475,7 @@ class Screen extends React.Component {
               this.props.modules.set_modal_show(true);
               this.props.modules.set_modal_header("Ошибка");
               this.props.modules.set_modal_text(err);
-            }
+            },
           );
         },
         (err) => {
@@ -483,7 +484,7 @@ class Screen extends React.Component {
           this.props.modules.set_modal_show(true);
           this.props.modules.set_modal_header("Ошибка");
           this.props.modules.set_modal_text(err);
-        }
+        },
       );
     })
       .then((result) => {
@@ -519,7 +520,7 @@ class Screen extends React.Component {
             }
             return cur.Key;
           },
-          0
+          0,
         );
 
         console.log(max);
@@ -630,11 +631,11 @@ class Screen extends React.Component {
     this.stickerRef = [];
 
     const complited = this.props.store.upload_manifest.disp_data.filter(
-      (el) => el.Status === "Загружено"
+      (el) => el.Status === "Загружено",
     );
 
     const complitedData = this.props.store.upload_manifest.disp_data.filter(
-      (el) => el.Status === "Загружено"
+      (el) => el.Status === "Загружено",
     );
 
     let ExcelData = [];
@@ -693,7 +694,7 @@ class Screen extends React.Component {
 
       let sendAddInfo = complitedData[i].SendAddInfo.replace(
         /\/s/g,
-        ""
+        "",
       ).replace(/\r?\n/g, " ");
 
       ExcelData[i] = [
@@ -779,7 +780,7 @@ class Screen extends React.Component {
             disabled={
               this.props.store.upload_manifest.disp_data.length === 0 ||
               this.props.store.upload_manifest.disp_data.filter(
-                (el) => el.RecCity === ""
+                (el) => el.RecCity === "",
               ).length !== 0
             }
             onClick={this.upload_data.bind(this)}
@@ -1125,7 +1126,7 @@ class Screen extends React.Component {
                           key={index}
                           onDoubleClick={this.upload_manifest_click_template_row.bind(
                             this,
-                            el
+                            el,
                           )}
                         >
                           <td>{el.label}</td>
@@ -1139,7 +1140,7 @@ class Screen extends React.Component {
                             <input
                               onChange={() =>
                                 this.props.upload_manifest_check_template_checkbox(
-                                  el.Key
+                                  el.Key,
                                 )
                               }
                               type="checkbox"
@@ -1148,7 +1149,7 @@ class Screen extends React.Component {
                             ></input>
                           </td>
                         </tr>
-                      )
+                      ),
                     )}
                   </tbody>
                 </table>
@@ -1156,7 +1157,7 @@ class Screen extends React.Component {
               {this.props.store.upload_manifest.disp_template_list.filter(
                 (el) => {
                   return el.selected;
-                }
+                },
               ).length > 0 ? (
                 <button
                   className="upload_manifest_create_button"
@@ -1167,7 +1168,7 @@ class Screen extends React.Component {
                     this.props.store.upload_manifest.disp_template_list.filter(
                       (el) => {
                         return el.selected;
-                      }
+                      },
                     ).length
                   }
                   )
@@ -1240,7 +1241,7 @@ class Screen extends React.Component {
                           onChange={(e) => {
                             this.props.set_upload_manifest_disp_data_total(
                               el.Key,
-                              e.target.value
+                              e.target.value,
                             );
                           }}
                         ></input>
@@ -1254,7 +1255,7 @@ class Screen extends React.Component {
                           onChange={(e) => {
                             this.props.set_upload_manifest_disp_data_weight(
                               el.Key,
-                              e.target.value
+                              e.target.value,
                             );
                           }}
                         ></input>
@@ -1268,7 +1269,7 @@ class Screen extends React.Component {
                           onChange={(e) => {
                             this.props.set_upload_manifest_disp_data_volume(
                               el.Key,
-                              e.target.value
+                              e.target.value,
                             );
                           }}
                         ></input>
@@ -1496,5 +1497,5 @@ export default connect(
       dispatch({ type: "upload_manifest_remove_disp", payload: param });
     },
     //add_data_upload_manifest: (param) => { dispatch({ type: 'add_data_upload_manifest', payload: param }) },
-  })
+  }),
 )(Screen);
