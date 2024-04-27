@@ -2,6 +2,7 @@
     border: none;
     width: 100%;
     font-size: 11px;
+    padding: 0;
    
   }
 
@@ -79,6 +80,10 @@ text-align: right;
 
 .create_disp_template_list_tr{
   font-size: 10px;
+}
+
+.create_disp_template_list_tr:hover{
+  background-color: #f0f0f0;
 }
 
 .create_disp_template_list_th{

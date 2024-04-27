@@ -842,10 +842,7 @@ class Screen extends React.Component {
                           <tr
                             className="create_disp_template_list_tr"
                             key={index}
-                            onDoubleClick={this.SelectSendTemplate.bind(
-                              this,
-                              el,
-                            )}
+                            onClick={this.SelectSendTemplate.bind(this, el)}
                           >
                             <td>{el.label}</td>
                             <td>{el.City}</td>
@@ -927,10 +924,7 @@ class Screen extends React.Component {
                           <tr
                             className="create_disp_template_list_tr"
                             key={index}
-                            onDoubleClick={this.SelectRecTemplate.bind(
-                              this,
-                              el,
-                            )}
+                            onClick={this.SelectRecTemplate.bind(this, el)}
                           >
                             <td>{el.label}</td>
                             <td>{el.City}</td>

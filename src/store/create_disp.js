@@ -349,19 +349,16 @@ export default function dispatch(state = initialState, action) {
       };
 
     case "AddCargo":
-      state.Cargo.push({
+      const newItem = {
         Weight: 0,
         L: 0,
         W: 0,
         H: 0,
-
         Q: 1,
-
         CargoType: 0,
-        Comment: "",
-      });
+      };
 
-      return { ...state, Cargo: state.Cargo };
+      return { ...state, Cargo: [...state.Cargo, newItem] };
 
     case "SetCargoInfoType":
       return { ...state, CargoInfoType: action.payload };
