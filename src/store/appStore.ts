@@ -22,3 +22,4 @@ export const persistor = persistStore(store);
 
 export type AppDispatch = typeof store.dispatch;
 export type AppStore = typeof store;
+export type AppAction = { type: string; payload: any };

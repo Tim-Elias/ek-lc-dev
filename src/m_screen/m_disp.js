@@ -60,7 +60,7 @@ class Screen extends React.Component {
     };
 
     get_data("setorderstatus", data).then(
-      (result) => {
+      () => {
         this.loadData();
         if (stat === "Выполнено") {
           this.settings_window("m_storage");
@@ -120,7 +120,6 @@ class Screen extends React.Component {
             this.props.SetSendTerminalList(data);
           },
           (err) => {
-            console.log("err");
             console.log(err);
           },
         );
@@ -137,7 +136,6 @@ class Screen extends React.Component {
             this.props.SetRecTerminalList(data);
           },
           (err) => {
-            console.log("err");
             console.log(err);
           },
         );

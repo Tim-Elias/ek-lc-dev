@@ -42,7 +42,7 @@ class Screen extends React.Component {
         this.props.modules.set_last_window("disp_template_list");
       },
       (err) => {
-        console.log("err", err);
+        console.log(err);
 
         this.props.modules.set_modal_show(true);
         this.props.modules.set_modal_header("Ошибка");

@@ -60,7 +60,7 @@ export default function dispatch(state = initialState, action) {
     case "set_show_my_disp_history":
       return {
         ...state,
-        data: state.data.map((item, index) => {
+        data: state.data.map((item) => {
           if (item.Num === action.payload.Num) {
             return { ...item, showHistory: action.payload.value };
           } else {
@@ -72,7 +72,7 @@ export default function dispatch(state = initialState, action) {
     case "set_my_disp_history":
       return {
         ...state,
-        data: state.data.map((item, index) => {
+        data: state.data.map((item) => {
           if (item.Num === action.payload.Num) {
             return {
               ...item,

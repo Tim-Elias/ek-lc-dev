@@ -132,7 +132,7 @@ export default function dispatch(state = initialState, action) {
     case "set_disp_status":
       return {
         ...state,
-        disp_data: state.disp_data.map((el, index) => {
+        disp_data: state.disp_data.map((el) => {
           if (el.Key === action.payload.Key) {
             return {
               ...el,

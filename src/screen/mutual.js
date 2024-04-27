@@ -14,7 +14,6 @@ class Screen extends React.Component {
 
     get_data("order", data).then(
       (result) => {
-        console.log(result);
         this.props.set_order_data(result);
         this.props.set_active_window("order");
         this.props.set_last_window("mutual");
@@ -41,10 +40,8 @@ class Screen extends React.Component {
       date_from: this.props.store.mutual.date_from,
       date_to: this.props.store.mutual.date_to,
     };
-    console.log(data);
     get_data("mutuallist", data).then(
       (result) => {
-        console.log(result);
         this.props.set_data_mutual(result);
         this.props.set_active_window("mutual");
       },
@@ -61,7 +58,6 @@ class Screen extends React.Component {
   };
 
   render() {
-    document.onkeydown = function (event) {};
     return (
       <div>
         <div className="my_disp_control_panel">

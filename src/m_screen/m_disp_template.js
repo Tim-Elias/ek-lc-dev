@@ -66,7 +66,6 @@ class Screen extends React.Component {
         this.props.SetSendTerminalListMobile(data);
       },
       (err) => {
-        console.log("err");
         console.log(err);
       },
     );
@@ -83,7 +82,6 @@ class Screen extends React.Component {
         this.props.SetRecTerminalListMobile(data);
       },
       (err) => {
-        console.log("err");
         console.log(err);
       },
     );

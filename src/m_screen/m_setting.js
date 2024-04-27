@@ -28,7 +28,6 @@ class Screen extends React.Component {
         this.props.modules.set_modal_header("Успешно");
       },
       (err) => {
-        console.log("err");
         console.log(err);
       },
     );

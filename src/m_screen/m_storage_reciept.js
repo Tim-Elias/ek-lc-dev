@@ -104,8 +104,8 @@ class Screen extends React.Component {
         if (event.keyCode === 13) {
           send_req();
         }
-      } catch (e) {
-        console.log(e);
+      } catch (err) {
+        console.log(err);
       }
     };
 

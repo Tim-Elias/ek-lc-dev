@@ -1,4 +1,42 @@
-const initialState = {
+interface calc_price_store_interface {
+  error_mesage: string;
+  calc_price_result: string;
+
+  calc_price_send_city: string;
+  calc_price_rec_city: string;
+
+  calc_price_send_terminal_city: boolean;
+  calc_price_rec_terminal_city: boolean;
+
+  calc_price_send_terminal: boolean;
+  calc_price_rec_terminal: boolean;
+  calc_price_weight: string;
+
+  calc_price_h: string;
+  calc_price_w: string;
+  calc_price_l: string;
+
+  calc_price_send_terminal_list: any[];
+  calc_price_rec_terminal_list: any[];
+
+  calc_price_select_send_terminal: any;
+  calc_price_select_rec_terminal: any;
+
+  calc_price_cargo_info_type: {
+    key: number;
+    label: string;
+    value: string;
+  };
+  CargoList: Array<{
+    Weight: number;
+    L: number;
+    W: number;
+    H: number;
+    Q: number;
+  }>;
+}
+
+const initialState: calc_price_store_interface = {
   error_mesage: "",
   calc_price_result: "",
 
@@ -38,7 +76,10 @@ const initialState = {
   ],
 };
 
-export default function dispatch(state = initialState, action) {
+export default function dispatch(
+  state = initialState,
+  action: { type: string; payload: any },
+) {
   switch (action.type) {
     case "set_calc_price_cargo_info_type":
       return {

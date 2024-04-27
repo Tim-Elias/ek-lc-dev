@@ -52,7 +52,7 @@ export default function dispatch(state = initialState, action) {
     case "set_Cargo_list_quantity":
       return {
         ...state,
-        Cargo_list: state.Cargo_list.map((item, index) => {
+        Cargo_list: state.Cargo_list.map((item) => {
           if (action.payload.name === item.name) {
             return { ...item, quantity: action.payload.quantity };
           } else {

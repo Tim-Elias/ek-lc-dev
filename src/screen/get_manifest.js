@@ -34,7 +34,6 @@ class Screen extends React.Component {
 
     get_data("manifestenroute", data).then(
       (result) => {
-        console.log(result);
         this.props.set_data_manifest(result);
         this.props.set_active_window("manifest");
         this.props.set_action_manifest("get");
@@ -50,8 +49,6 @@ class Screen extends React.Component {
   };
 
   render() {
-    document.onkeydown = function (event) {};
-
     const tr_click = (name) => {
       this.tr_click(name);
     };
@@ -64,7 +61,6 @@ class Screen extends React.Component {
       try {
         if (event.keyCode === 38) {
           event.preventDefault();
-          console.log("Вверх");
           let currentId = parseInt(
             document.getElementsByClassName("active")[0].getAttribute("id"),
           );
@@ -75,7 +71,6 @@ class Screen extends React.Component {
         }
         if (event.keyCode === 40) {
           event.preventDefault();
-          console.log("Вниз");
           let currentId = parseInt(
             document.getElementsByClassName("active")[0].getAttribute("id"),
           );

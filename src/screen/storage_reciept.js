@@ -27,7 +27,6 @@ class Screen extends React.Component {
       let find_zone = this.props.store.storage_reciept.zone_list.find(
         (el) => el === zone,
       );
-      console.log(find_zone);
       if (find_zone === undefined) {
         this.props.storage_reciept_set_barcode("");
         this.props.storage_reciept_set_status_type("err");
@@ -107,8 +106,8 @@ class Screen extends React.Component {
         if (event.keyCode === 13) {
           send_req();
         }
-      } catch (e) {
-        console.log(e);
+      } catch (error) {
+        console.log(error);
       }
     };
 

@@ -32,11 +32,11 @@ class Screen extends React.Component {
       partially: type,
     };
     get_data("delivered", data).then(
-      (result) => {
+      () => {
         const list_data = { userkey: this.props.store.login.userkey };
 
         get_data("list", list_data).then(
-          (result) => {
+          () => {
             this.props.set_popup_message("Данные отправлены!");
             this.props.set_active_window("m_storage");
           },
@@ -69,7 +69,7 @@ class Screen extends React.Component {
       num: this.props.store.disp.data.Number,
     };
     get_data("createcheck", data).then(
-      (result) => {
+      () => {
         const list_data = { userkey: this.props.store.login.userkey };
 
         get_data("list", list_data).then(

@@ -8,16 +8,16 @@ import LeftMenu from "./screen/components/leftmenu";
 import { Content } from "./screen/content";
 import MContent from "./m_screen/m_content";
 import MLogin from "./m_screen/m_login";
+import { IState } from "./store";
 
 export const HomeContainer = () => {
-  const logged = useSelector((state) => state.login.logged);
-
+  const logged = useSelector((state: IState) => state.login.logged);
   const width = window.screen.width;
 
-  const use_width = useSelector((state) => state.general.use_width);
-  const mobile = useSelector((state) => state.general.mobile);
-  const full_screen = useSelector((state) => state.general.full_screen);
-  const hidemenu = useSelector((state) => state.general.hidemenu);
+  const use_width = useSelector((state: IState) => state.general.use_width);
+  const mobile = useSelector((state: IState) => state.general.mobile);
+  const full_screen = useSelector((state: IState) => state.general.full_screen);
+  const hidemenu = useSelector((state: IState) => state.general.hidemenu);
 
   return (
     <div>

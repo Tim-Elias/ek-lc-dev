@@ -13,7 +13,7 @@ class Screen extends React.Component {
     };
 
     get_data("removedisptemplate", data).then(
-      (result) => {
+      () => {
         get_data("disptemplatelist", {
           userkey: this.props.store.login.userkey,
         }).then(
@@ -31,7 +31,7 @@ class Screen extends React.Component {
         );
       },
       (err) => {
-        console.log("err", err);
+        console.log(err);
 
         this.props.modules.set_modal_show(true);
         this.props.modules.set_modal_header("Ошибка");
@@ -60,7 +60,7 @@ class Screen extends React.Component {
         }
       },
       (err) => {
-        console.log("err", err);
+        console.log(err);
 
         this.props.modules.set_modal_show(true);
         this.props.modules.set_modal_header("Ошибка");
@@ -87,7 +87,7 @@ class Screen extends React.Component {
     };
 
     get_data("editdisptemplate", data).then(
-      (result) => {
+      () => {
         get_data("disptemplatelist", {
           userkey: this.props.store.login.userkey,
         }).then(
@@ -105,7 +105,7 @@ class Screen extends React.Component {
         );
       },
       (err) => {
-        console.log("err", err);
+        console.log(err);
 
         this.props.modules.set_modal_show(true);
         this.props.modules.set_modal_header("Ошибка");
@@ -115,7 +115,6 @@ class Screen extends React.Component {
   };
 
   render() {
-    document.onkeydown = function (event) {};
     let changed = false;
     if (
       JSON.stringify(this.props.store.templates.selected_disp_template) !==

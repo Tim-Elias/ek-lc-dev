@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import "./modal.css";
 
 interface IModalProps {
-  open: boolean;
+  open?: boolean;
   header: string;
   onClose?: () => void;
   onCancel?: () => void;
@@ -38,7 +38,7 @@ const Modal = ({
   };
 
   useEffect(() => {
-    if (open) {
+    if (open !== undefined) {
       setOpen(open);
     }
   }, [open]);

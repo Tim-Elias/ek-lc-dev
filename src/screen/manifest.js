@@ -16,10 +16,8 @@ class Screen extends React.Component {
         }),
     };
 
-    console.log(getmanifest_data);
-
     get_data("getmanifest", getmanifest_data).then(
-      (result) => {
+      () => {
         const data = {
           userkey: this.props.store.login.userkey,
           num: this.props.store.manifest.data.num,
@@ -27,7 +25,6 @@ class Screen extends React.Component {
 
         get_data("manifestenroute", data).then(
           (result) => {
-            console.log(result);
             this.props.set_data_manifest(result);
             this.props.set_action_manifest("get");
           },
@@ -58,7 +55,6 @@ class Screen extends React.Component {
   };
 
   render() {
-    document.onkeydown = function (event) {};
     return (
       <div>
         <div className="disp_Number">

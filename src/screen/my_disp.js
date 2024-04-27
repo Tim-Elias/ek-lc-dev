@@ -72,7 +72,6 @@ class Screen extends React.Component {
   };
 
   click_up = () => {
-    //console.log("click_up")
     if (this.props.store.my_disp.active_row > 0) {
       this.props.set_my_disp_active_row(
         this.props.store.my_disp.active_row - 1,
@@ -219,10 +218,11 @@ class Screen extends React.Component {
       try {
         if (event.keyCode === 38) {
           event.preventDefault();
-          //console.log("Вверх")
+          // Вверх
           click_up();
         }
         if (event.keyCode === 40) {
+          // Вниз
           event.preventDefault();
           click_down();
         }

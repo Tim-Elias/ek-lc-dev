@@ -26,7 +26,7 @@ class Screen extends Component {
         />
         <span
           className="scanner_close"
-          onClick={(e) => this.props.set_scann_active(false)}
+          onClick={() => this.props.set_scann_active(false)}
         />
       </div>
     );

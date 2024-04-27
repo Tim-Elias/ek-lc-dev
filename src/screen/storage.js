@@ -40,7 +40,6 @@ class Screen extends React.Component {
   };
 
   tr_click(num) {
-    console.log("num is ", num);
     this.props.set_active_storage(num);
   }
 
@@ -55,7 +54,6 @@ class Screen extends React.Component {
 
     get_data("dispatch", data).then(
       (result) => {
-        console.log(result);
         this.props.set_data_disp(result);
         this.props.set_active_window("disp");
         this.props.set_last_window("storage");
@@ -83,8 +81,8 @@ class Screen extends React.Component {
     document.onkeydown = function (event) {
       try {
         if (event.keyCode === 38) {
+          //Вверх
           event.preventDefault();
-          console.log("Вверх");
           let currentId = parseInt(
             document.getElementsByClassName("active")[0].getAttribute("id"),
           );
@@ -94,8 +92,8 @@ class Screen extends React.Component {
           }
         }
         if (event.keyCode === 40) {
+          // Вниз
           event.preventDefault();
-          console.log("Вниз");
           let currentId = parseInt(
             document.getElementsByClassName("active")[0].getAttribute("id"),
           );
@@ -111,7 +109,6 @@ class Screen extends React.Component {
           const status = document
             .getElementsByClassName("active")[0]
             .getAttribute("status");
-          console.log("Enter");
           tr_double_click({ Number: num, Type: status });
         }
       } catch (error) {
@@ -125,19 +122,10 @@ class Screen extends React.Component {
           <h3>Накладные на складе</h3>
         </div>
         <div>
-          {this.props.store.storage.active !== null ? (
-            <div>
-              <button onClick={this.update.bind(this)}>Обновить данные</button>
-              {/* <button >Скопировать</button>
-                      <button >Печать</button> */}
-            </div>
-          ) : (
-            <div>
-              <button onClick={this.update.bind(this)}>Обновить данные</button>
-              {/* <button disabled >Скопировать</button>
-                      <button disabled >Печать</button> */}
-            </div>
-          )}
+          <div>
+            <button onClick={this.update.bind(this)}>Обновить данные</button>
+          </div>
+
           <div className="search_storage">
             <div className="disp_data_label">Поиск по номеру</div>
             <div className="disp_data_input">
@@ -179,8 +167,6 @@ class Screen extends React.Component {
                           className="active"
                           id={index}
                           name={disp.Number}
-                          // status={disp.Type}
-                          onKeyDown={console.log("Key down")}
                           onClick={this.tr_click.bind(this, disp.Number)}
                           onTouchStart={this.handleButtonPress.bind(this)}
                           onTouchEnd={this.handleButtonRelease.bind(this)}

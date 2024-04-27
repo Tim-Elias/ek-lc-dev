@@ -57,7 +57,7 @@ thead.my_disp_data_input{
 }
 
 .my_disp_table {
-    height: calc(100vh - 187px);
+    height: calc(100vh - 193px);
     overflow-y: scroll;
 }
 

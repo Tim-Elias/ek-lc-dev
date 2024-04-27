@@ -57,7 +57,7 @@ class Screen extends React.Component {
       icon: "../wait.svg",
     });
 
-    notification.onclick = (e) => {
+    notification.onclick = () => {
       this.settings_window("m_disp");
     };
   };
@@ -115,7 +115,7 @@ class Screen extends React.Component {
                 />
                 <i
                   className="ek-qrcode action_icon"
-                  onClick={(e) =>
+                  onClick={() =>
                     this.props.set_scann_active(
                       !this.props.store.storage.scann_active,
                     )

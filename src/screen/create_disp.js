@@ -152,7 +152,7 @@ class Screen extends React.Component {
         }
       },
       (err) => {
-        console.log("err", err);
+        console.log(err);
         this.props.set_last_window("create_disp");
         this.props.set_active_window("");
         this.props.modules.set_modal_show(true);
@@ -179,7 +179,7 @@ class Screen extends React.Component {
         }
       },
       (err) => {
-        console.log("err", err);
+        console.log(err);
         this.props.set_last_window("create_disp");
         this.props.set_active_window("");
 
@@ -246,7 +246,7 @@ class Screen extends React.Component {
     this.props.SetRecTerminal(data);
   };
 
-  dataСhecking = () => {
+  dataChecking = () => {
     const currentToday = new Date();
     let mm = currentToday.getMonth() + 1;
     let dd = currentToday.getDate();
@@ -530,7 +530,7 @@ class Screen extends React.Component {
     } else {
       this.props.SetCyrillic(false);
       get_data("history", { Number: this.props.store.create_disp.Number }).then(
-        (result) => {
+        () => {
           this.props.SetAvailableNumber(false);
           this.props.SetCustomNumberLoader(false);
         },
@@ -741,7 +741,7 @@ class Screen extends React.Component {
           "БезналичнаяОплатаПолучателем" ? (
             <div className="disp_data_el">
               <Select
-                options={this.props.store.login.customers.map((item, index) => {
+                options={this.props.store.login.customers.map((item) => {
                   return {
                     label: item.customer,
                     value: item.customerKey,
@@ -1398,7 +1398,7 @@ class Screen extends React.Component {
                 <input
                   type="checkbox"
                   className="input-checkbox"
-                  onChange={(e) =>
+                  onChange={() =>
                     this.props.SetFragile(!this.props.store.create_disp.Fragile)
                   }
                   checked={this.props.store.create_disp.Fragile}
@@ -1412,7 +1412,7 @@ class Screen extends React.Component {
                         type="checkbox"
                         className="input-checkbox"
                         key={2}
-                        onChange={(e) =>
+                        onChange={() =>
                           this.props.SetTermo(
                             !this.props.store.create_disp.Termo,
                           )
@@ -1473,7 +1473,7 @@ class Screen extends React.Component {
                 <input
                   type="checkbox"
                   className="input-checkbox"
-                  onChange={(e) =>
+                  onChange={() =>
                     this.props.SetFragile(!this.props.store.create_disp.Fragile)
                   }
                   checked={this.props.store.create_disp.Fragile}
@@ -1487,7 +1487,7 @@ class Screen extends React.Component {
                         type="checkbox"
                         className="input-checkbox"
                         key={2}
-                        onChange={(e) =>
+                        onChange={() =>
                           this.props.SetTermo(
                             !this.props.store.create_disp.Termo,
                           )
@@ -1611,11 +1611,11 @@ class Screen extends React.Component {
           </div>
 
           {this.props.store.create_disp.isNew ? (
-            <button disabled={disabled} onClick={this.dataСhecking.bind(this)}>
+            <button disabled={disabled} onClick={this.dataChecking.bind(this)}>
               Создать накладную
             </button>
           ) : (
-            <button disabled={disabled} onClick={this.dataСhecking.bind(this)}>
+            <button disabled={disabled} onClick={this.dataChecking.bind(this)}>
               Сохранить изменения
             </button>
           )}

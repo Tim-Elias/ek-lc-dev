@@ -155,7 +155,7 @@ class Screen extends React.Component {
     };
 
     get_data("setcourier", set_courier_data).then(
-      (result) => {
+      () => {
         this.get_map_data(
           this.props.store.disp_map.disp_for_del
             .filter((el) => !el.selected)
@@ -217,110 +217,110 @@ class Screen extends React.Component {
     this.reset();
   };
 
-  geocode = (Num, Address) => {
-    let geocoder = new g_maps.Geocoder();
-    let position;
-    const userkey = this.props.store.login.userkey;
-    const get_map_data = this.get_map_data;
-    const reset = this.reset;
-    const not_modify = this.props.store.disp_map.disp_for_del
-      .filter((el) => el.Num !== Num)
-      .map((el) => {
-        return el.Num;
-      });
-    geocoder.geocode({ address: Address }, function (results, status) {
-      if (status === "OK") {
-        position = results[0].geometry.location;
+  // geocode = (Num, Address) => {
+  //   let geocoder = new g_maps.Geocoder();
+  //   let position;
+  //   const userkey = this.props.store.login.userkey;
+  //   const get_map_data = this.get_map_data;
+  //   const reset = this.reset;
+  //   const not_modify = this.props.store.disp_map.disp_for_del
+  //     .filter((el) => el.Num !== Num)
+  //     .map((el) => {
+  //       return el.Num;
+  //     });
+  //   geocoder.geocode({ address: Address }, function (results, status) {
+  //     if (status === "OK") {
+  //       position = results[0].geometry.location;
 
-        const lat_lng_data = {
-          userkey: userkey,
-          dispatch: Num,
-          lat: position.lat(),
-          lng: position.lng(),
-        };
+  //       const lat_lng_data = {
+  //         userkey: userkey,
+  //         dispatch: Num,
+  //         lat: position.lat(),
+  //         lng: position.lng(),
+  //       };
 
-        get_data("setreclatlng", lat_lng_data).then(
-          (result) => {
-            console.log(result);
-            get_map_data(not_modify);
-            reset();
-          },
-          (err) => {
-            console.log(err);
+  //       get_data("setreclatlng", lat_lng_data).then(
+  //         (result) => {
+  //           console.log(result);
+  //           get_map_data(not_modify);
+  //           reset();
+  //         },
+  //         (err) => {
+  //           console.log(err);
 
-            this.props.modules.set_modal_show(true);
-            this.props.modules.set_modal_header("Ошибка");
-            this.props.modules.set_modal_text(err);
-          },
-        );
-      }
-    });
-  };
+  //           this.props.modules.set_modal_show(true);
+  //           this.props.modules.set_modal_header("Ошибка");
+  //           this.props.modules.set_modal_text(err);
+  //         },
+  //       );
+  //     }
+  //   });
+  // };
 
-  geocode_all = async () => {
-    this.props.set_disp_map_errorMass_clear();
+  // geocode_all = async () => {
+  //   this.props.set_disp_map_errorMass_clear();
 
-    let geocoder = new g_maps.Geocoder();
-    const userkey = this.props.store.login.userkey;
-    const array = this.props.store.disp_map.disp_for_del.filter(
-      (el) => el.RecLat === "" || el.RecLng === "",
-    );
-    const not_modify = this.props.store.disp_map.disp_for_del
-      .filter((el) => el.RecLat !== "" && el.RecLng !== "")
-      .map((el) => {
-        return el.Num;
-      });
-    const loadingNumber = () => {
-      this.props.set_disp_map_loadingNumber(
-        this.props.store.disp_map.loadingNumber--,
-      );
-    };
+  //   let geocoder = new g_maps.Geocoder();
+  //   const userkey = this.props.store.login.userkey;
+  //   const array = this.props.store.disp_map.disp_for_del.filter(
+  //     (el) => el.RecLat === "" || el.RecLng === "",
+  //   );
+  //   const not_modify = this.props.store.disp_map.disp_for_del
+  //     .filter((el) => el.RecLat !== "" && el.RecLng !== "")
+  //     .map((el) => {
+  //       return el.Num;
+  //     });
+  //   const loadingNumber = () => {
+  //     this.props.set_disp_map_loadingNumber(
+  //       this.props.store.disp_map.loadingNumber--,
+  //     );
+  //   };
 
-    this.props.set_disp_map_loading(true);
+  //   this.props.set_disp_map_loading(true);
 
-    for (const el of array) {
-      try {
-        if (el.RecAddress !== "") {
-          await geocoder.geocode(
-            { address: el.RecCity + el.RecAddress },
-            function (results, status) {
-              if (status === "OK") {
-                const position = results[0].geometry.location;
+  //   for (const el of array) {
+  //     try {
+  //       if (el.RecAddress !== "") {
+  //         await geocoder.geocode(
+  //           { address: el.RecCity + el.RecAddress },
+  //           function (results, status) {
+  //             if (status === "OK") {
+  //               const position = results[0].geometry.location;
 
-                const lat_lng_data = {
-                  userkey: userkey,
-                  dispatch: el.Num,
-                  lat: position.lat(),
-                  lng: position.lng(),
-                };
+  //               const lat_lng_data = {
+  //                 userkey: userkey,
+  //                 dispatch: el.Num,
+  //                 lat: position.lat(),
+  //                 lng: position.lng(),
+  //               };
 
-                get_data("setreclatlng", lat_lng_data).then(
-                  (result) => {
-                    console.log(result);
-                  },
-                  (err) => {
-                    console.log(err);
+  //               get_data("setreclatlng", lat_lng_data).then(
+  //                 (result) => {
+  //                   console.log(result);
+  //                 },
+  //                 (err) => {
+  //                   console.log(err);
 
-                    this.props.modules.set_modal_show(true);
-                    this.props.modules.set_modal_header("Ошибка");
-                    this.props.modules.set_modal_text(err);
-                  },
-                );
-              }
-            },
-          );
-          loadingNumber();
-        }
-      } catch (err) {
-        this.props.set_disp_map_errorMass(el);
-        console.log(err);
-      }
-    }
+  //                   this.props.modules.set_modal_show(true);
+  //                   this.props.modules.set_modal_header("Ошибка");
+  //                   this.props.modules.set_modal_text(err);
+  //                 },
+  //               );
+  //             }
+  //           },
+  //         );
+  //         loadingNumber();
+  //       }
+  //     } catch (err) {
+  //       this.props.set_disp_map_errorMass(el);
+  //       console.log(err);
+  //     }
+  //   }
 
-    this.props.set_disp_map_loading(false);
-    this.get_map_data(not_modify);
-    this.reset();
-  };
+  //   this.props.set_disp_map_loading(false);
+  //   this.get_map_data(not_modify);
+  //   this.reset();
+  // };
 
   open_disp = async (Num) => {
     this.props.set_active_window("wait");
@@ -449,7 +449,7 @@ class Screen extends React.Component {
           </div>
 
           <div className="disp_map_button disp_map_button--flex">
-            {this.props.store.disp_map.loading ? (
+            {/* {this.props.store.disp_map.loading ? (
               <button className="ui button mini" loading>
                 Получить все координаты (
                 {
@@ -472,7 +472,7 @@ class Screen extends React.Component {
                 }
                 )
               </button>
-            )}
+            )} */}
           </div>
 
           <div className="disp_map_button">
@@ -690,7 +690,7 @@ class Screen extends React.Component {
                                     Math.round(disp.Volume * 5) / 1000 +
                                     ")"}
                                 </div>
-                                {(disp.RecLat === "" || disp.RecLng === "") &&
+                                {/* {(disp.RecLat === "" || disp.RecLng === "") &&
                                 disp.RecAddress !== "" ? (
                                   <button
                                     onClick={this.geocode.bind(
@@ -701,7 +701,7 @@ class Screen extends React.Component {
                                   >
                                     <i className="red ek-search" />
                                   </button>
-                                ) : null}
+                                ) : null} */}
                               </p>
                             </ul>
                           );

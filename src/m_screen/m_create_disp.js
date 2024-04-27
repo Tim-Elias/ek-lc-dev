@@ -49,7 +49,7 @@ class Screen extends React.Component {
     //         }
     //     },
     //     (err) => {
-    //         console.log("err", err)
+    //         console.log(err)
     //     }
     // );
   }
@@ -292,7 +292,6 @@ class Screen extends React.Component {
       value: value,
       index: index,
     };
-    // console.log(data)
     this.props.SetCargoType(data);
   };
   CargoComm = (value, index) => {

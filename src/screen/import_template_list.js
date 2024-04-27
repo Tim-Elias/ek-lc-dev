@@ -2,13 +2,12 @@ import React from "react";
 import { connect } from "react-redux";
 
 class Screen extends React.Component {
-  tr_double_click = (el) => {
+  tr_double_click = () => {
     this.props.modules.set_active_window("import_template");
     this.props.modules.set_last_window("import_template_list");
   };
 
   render() {
-    document.onkeydown = function (event) {};
     return (
       <div>
         <div className="disp_Number">
@@ -29,20 +28,18 @@ class Screen extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {this.props.store.upload_manifest.import_template_list.map(
-              (el, index) => {
-                return (
-                  <tr
-                    key={el.Key}
-                    onDoubleClick={this.tr_double_click.bind(this, el)}
-                  >
-                    <td>
-                      <div className="small_table_data">{el.label}</div>
-                    </td>
-                  </tr>
-                );
-              },
-            )}
+            {this.props.store.upload_manifest.import_template_list.map((el) => {
+              return (
+                <tr
+                  key={el.Key}
+                  onDoubleClick={this.tr_double_click.bind(this, el)}
+                >
+                  <td>
+                    <div className="small_table_data">{el.label}</div>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

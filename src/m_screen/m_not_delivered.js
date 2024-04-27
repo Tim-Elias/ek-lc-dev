@@ -23,11 +23,11 @@ class Screen extends React.Component {
     };
 
     get_data("notdelivered", data).then(
-      (result) => {
+      () => {
         const list_data = { userkey: this.props.store.login.userkey };
 
         get_data("list", list_data).then(
-          (result) => {
+          () => {
             alert("Данные отправлены!");
             this.props.set_active_window("m_storage");
           },

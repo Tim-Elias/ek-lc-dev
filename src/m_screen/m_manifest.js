@@ -18,7 +18,7 @@ class Screen extends React.Component {
     };
 
     get_data("getmanifest", getmanifest_data).then(
-      (result) => {
+      () => {
         const data = {
           userkey: this.props.store.login.userkey,
           num: this.props.store.manifest.data.num,
@@ -34,9 +34,6 @@ class Screen extends React.Component {
             alert(err);
           },
         );
-
-        // this.props.set_list_storage(result);
-        // this.props.set_active_window("storage");
       },
       (err) => {
         console.log(err);
@@ -74,21 +71,6 @@ class Screen extends React.Component {
           <div className="disp_cargo_table">
             <div className="disp_cargo_table_data">
               {this.props.store.manifest.data.dispatches.map((disp, index) => (
-                // <div key={index}>
-                //     <div className="disp_address_data_header">Накладные по манифесту</div>
-                //     <div className="disp_address_data_el">
-                //         <div className="mobile_disp_data_label">Приниято:</div>
-                //         <div className="mobile_disp_data_el"><input type="checkbox" checked={disp.selected} onChange={this.check.bind(this, disp.num)} /></div>
-                //         <div className="mobile_disp_data_label">Номер:</div>
-                //         <div className="mobile_disp_data_el">{disp.num}</div>
-                //         <div className="mobile_disp_data_label">Заказчик:</div>
-                //         <div className="mobile_disp_data_el">{disp.customer}</div>
-                //         <div className="mobile_disp_data_label">Количество мест:</div>
-                //         <div className="mobile_disp_data_el">{disp.total}</div>
-                //         <div className="mobile_disp_data_label">Вес:</div>
-                //         <div className="mobile_disp_data_el">{disp.weight}</div>
-                //     </div>
-                // </div>
                 <div
                   key={index}
                   className="mobile_storage_item"

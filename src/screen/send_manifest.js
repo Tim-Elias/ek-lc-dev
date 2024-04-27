@@ -46,7 +46,7 @@ class Screen extends React.Component {
     };
 
     get_data("sendmanifest", data).then(
-      (result) => {
+      () => {
         get_data("list", { userkey: this.props.store.login.userkey }).then(
           (result) => {
             this.props.set_list_storage(result);

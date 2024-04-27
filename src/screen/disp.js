@@ -128,7 +128,7 @@ const Disp = () => {
     };
 
     get_data("setreclatlng", lat_lng_data).then(
-      (result) => {
+      () => {
         set_active_window("wait");
 
         const data = {
@@ -173,7 +173,7 @@ const Disp = () => {
       rec: document.getElementById("recient").value,
     };
     get_data("delivered", data).then(
-      (result) => {
+      () => {
         const list_data = { userkey: userkey };
 
         get_data("list", list_data).then(
@@ -205,7 +205,7 @@ const Disp = () => {
       num: dispData.data.Number,
     };
     get_data("getdispatch", data).then(
-      (result) => {
+      () => {
         set_active_window("reciept");
         set_search_error(
           `Накладная ${dispData.data.Number} успешно принята на склад`,
@@ -580,7 +580,6 @@ const Disp = () => {
     CargoInfoType = true;
   }
 
-  const render_markers = this.render_markers;
   // const set_disp_lat_lng = set_disp_lat_lng;
   const onGoogleApiLoaded = (map, maps) => {
     g_map = map;

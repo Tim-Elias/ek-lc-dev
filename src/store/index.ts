@@ -46,3 +46,5 @@ export const rootReducer = combineReducers({
   calc_price,
   home,
 });
+
+export type IState = ReturnType<typeof rootReducer>;

@@ -16,7 +16,6 @@ class Screen extends React.Component {
 
     get_data("mutual", data).then(
       (result) => {
-        console.log(result);
         this.props.set_data_mutual(result);
         this.props.set_active_window("mutual");
       },
@@ -27,13 +26,11 @@ class Screen extends React.Component {
 
         this.props.set_active_window("mutual");
         console.log(err);
-        // this.props.set_mutual_error(err)
       },
     );
   };
 
   render() {
-    document.onkeydown = function (event) {};
     return (
       <div>
         <div className="mutual_int">

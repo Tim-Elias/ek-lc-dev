@@ -66,7 +66,6 @@ class Screen extends React.Component {
       } else {
         CurIndex = index;
       }
-      // console.log(el)
       let Num = "";
       let SendCity = "";
       let SendAdress = "";
@@ -323,8 +322,7 @@ class Screen extends React.Component {
   };
 
   create_table = () => {
-    const { Key, ConsolidateImportTemplate, ...newData } =
-      this.props.store.upload_manifest.import_template;
+    const { ...newData } = this.props.store.upload_manifest.import_template;
 
     const ObjVal = Object.values(newData);
     if (ObjVal.length > 0) {
@@ -449,7 +447,7 @@ class Screen extends React.Component {
       CargoInfoType: true,
     };
 
-    new Promise((resolve, reject) => {
+    new Promise((resolve) => {
       get_data("createcustomerdisp", create_disp_data).then(
         (result) => {
           const data = {
@@ -487,13 +485,15 @@ class Screen extends React.Component {
         },
       );
     })
-      .then((result) => {
+      .then(() => {
         this.upload_data();
       })
-      .catch((err) => {});
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
-  sent_disp = () => {};
+  // sent_disp = () => {};
 
   disp_print_data = (el) => {
     const data = {
@@ -504,7 +504,7 @@ class Screen extends React.Component {
     return data;
   };
 
-  upload_manifest_click_template_row = (el) => {};
+  // upload_manifest_click_template_row = (el) => {};
 
   create_disp_from_temlate = () => {
     let data = [];
@@ -593,8 +593,6 @@ class Screen extends React.Component {
   };
 
   render() {
-    document.onkeydown = function (event) {};
-
     const CellStyle = {
       border: {
         top: { style: "thin", color: { rgb: "000" } },

@@ -38,7 +38,7 @@ class Screen extends React.Component {
     };
 
     get_data("sendmanifest", data).then(
-      (result) => {
+      () => {
         get_data("list", { userkey: this.props.store.login.userkey }).then(
           (result) => {
             this.props.set_list_storage(result);
@@ -98,7 +98,7 @@ class Screen extends React.Component {
               .filter((item) => item.Type === "Доставка")
               .map((disp, index) => (
                 <div
-                  onClick={(e) => this.props.select_m_disp(disp.Number)}
+                  onClick={() => this.props.select_m_disp(disp.Number)}
                   key={index}
                   className="mobile_storage_item"
                 >
