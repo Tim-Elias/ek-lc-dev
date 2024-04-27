@@ -52,8 +52,7 @@ export default function general(state = initialState, action: AppAction) {
     case "set_modal_header":
       return { ...state, modal_header: action.payload };
     case "set_last_window":
-      state.last_window.push(action.payload);
-      return { ...state, last_window: state.last_window };
+      return { ...state, last_window: [...state.last_window, action.payload] };
     case "pop_last_window":
       const windows = [...state.last_window];
       windows.pop();

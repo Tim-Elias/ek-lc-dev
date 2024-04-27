@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { get_data } from "./../common/common_modules";
-import ReactToPrint from "react-to-print";
+import ReactToPrint, { useReactToPrint } from "react-to-print";
 import "./disp.css";
 import ComponentToPrint from "./disp_print";
 import StickerToPrint from "./sticker_print";
@@ -15,6 +15,17 @@ let g_maps;
 let marker;
 
 const Disp = () => {
+  const dispForPrint = useRef();
+  const stickerForPrint = useRef();
+
+  const handleDispPrint = useReactToPrint({
+    content: () => dispForPrint.current,
+  });
+
+  const handleStickerPrint = useReactToPrint({
+    content: () => stickerForPrint.current,
+  });
+
   const dispData = useSelector((state) => state.disp);
   const userkey = useSelector((state) => state.login.userkey);
   const login = useSelector((state) => state.login);
@@ -26,9 +37,6 @@ const Disp = () => {
   const dispatch = useDispatch();
   const modules = useModules();
 
-  const set_list_storage = (param) => {
-    dispatch({ type: "set_list_storage", payload: param });
-  };
   const set_active_window = (param) => {
     dispatch({ type: "set_active_window", payload: param });
   };
@@ -161,42 +169,44 @@ const Disp = () => {
     );
   };
 
-  const sendpod = () => {
-    set_active_window("wait");
-    const data = {
-      userkey: userkey,
-      num: dispData.data.Number,
-      date: document.getElementById("date").value,
-      time: document.getElementById("time").value,
-      summ: document.getElementById("summ").value,
-      comment: document.getElementById("comment").value,
-      rec: document.getElementById("recient").value,
-    };
-    get_data("delivered", data).then(
-      () => {
-        const list_data = { userkey: userkey };
+  // TODO: починить отправку подов. нужно сделать store с данными. document.getElementById не работает
 
-        get_data("list", list_data).then(
-          (result) => {
-            set_list_storage(result);
-            set_active_window("storage");
-          },
-          (err) => {
-            modules.set_modal_show(true);
-            modules.set_modal_header("Ошибка");
-            modules.set_modal_text(err);
-          },
-        );
-      },
-      (err) => {
-        modules.set_modal_show(true);
-        modules.set_modal_header("Ошибка");
-        modules.set_modal_text(err);
+  // const sendpod = () => {
+  //   set_active_window("wait");
+  //   const data = {
+  //     userkey: userkey,
+  //     num: dispData.data.Number,
+  //     // date: document.getElementById("date").value,
+  //     // time: document.getElementById("time").value,
+  //     // summ: document.getElementById("summ").value,
+  //     // comment: document.getElementById("comment").value,
+  //     // rec: document.getElementById("recient").value,
+  //   };
+  //   get_data("delivered", data).then(
+  //     () => {
+  //       const list_data = { userkey: userkey };
 
-        set_active_window("disp");
-      },
-    );
-  };
+  //       get_data("list", list_data).then(
+  //         (result) => {
+  //           set_list_storage(result);
+  //           set_active_window("storage");
+  //         },
+  //         (err) => {
+  //           modules.set_modal_show(true);
+  //           modules.set_modal_header("Ошибка");
+  //           modules.set_modal_text(err);
+  //         },
+  //       );
+  //     },
+  //     (err) => {
+  //       modules.set_modal_show(true);
+  //       modules.set_modal_header("Ошибка");
+  //       modules.set_modal_text(err);
+
+  //       set_active_window("disp");
+  //     },
+  //   );
+  // };
 
   const reciept = () => {
     set_active_window("wait");
@@ -645,46 +655,34 @@ const Disp = () => {
     <div>
       <div className="disp_Number">
         <div className="disp_actions">
-          <button onClick={modules.back()}>
+          <button onClick={modules.back}>
             <i className="ek-arrow-left" />
           </button>{" "}
           {dispData.data.Type} <b>{dispData.data.Number} </b>
-          <ReactToPrint
-            trigger={() => (
-              <button>
-                <i className="ek-printer" /> Печать
-              </button>
-            )}
-            content={() => this.componentRef}
-          />
+          <button onClick={handleDispPrint}>
+            <i className="ek-printer" /> Печать
+          </button>
           <div style={{ display: "none" }}>
             <ComponentToPrint
               userkey={userkey}
               disp={[dispData]}
-              ref={(el) => (this.componentRef = el)}
+              ref={dispForPrint}
             />
           </div>
           {login.print_ticket ? (
-            <ReactToPrint
-              trigger={() => (
-                <button>
-                  <i className="ek-printer" /> Печать наклеек
-                </button>
-              )}
-              content={() => this.stickerRef}
-            />
+            <button onClick={handleStickerPrint}>
+              <i className="ek-printer" /> Печать наклеек
+            </button>
           ) : null}
           <div style={{ display: "none" }}>
-            <StickerToPrint
-              disp={[dispData]}
-              ref={(el) => (this.stickerRef = el)}
-            />
+            <StickerToPrint disp={[dispData]} ref={stickerForPrint} />
           </div>
           <Modal
-            trigger={<button onClick={openHistory()}>История</button>}
+            trigger={<button onClick={openHistory}>История</button>}
             open={dispData.show_history}
-            onClose={closeHistory()}
+            onClose={closeHistory}
             header={`История накладной ${dispData.data.Number}`}
+            height="600px"
           >
             <div>
               {dispData.history_loading ? (
@@ -712,13 +710,15 @@ const Disp = () => {
                               trigger={
                                 <button
                                   className="disp_skan_button"
-                                  onClick={openSkan(el.DocNumber)}
+                                  onClick={() => {
+                                    openSkan(el.DocNumber);
+                                  }}
                                 >
                                   (Получить скан)
                                 </button>
                               }
                               open={dispData.show_skan}
-                              onClose={closeSkan()}
+                              onClose={closeSkan}
                               header="Вложенное изображение"
                             >
                               {dispData.skan_loading ? (
@@ -744,25 +744,37 @@ const Disp = () => {
             </div>
           </Modal>
           {login.create_disp && (login.total_only || CargoInfoType) ? (
-            <button onClick={copyDisp(false)}>Скопировать</button>
+            <button
+              onClick={() => {
+                copyDisp(false);
+              }}
+            >
+              Скопировать
+            </button>
           ) : null}
           {login.edit_disp &&
           dispData.data.Status === "Ожидается от отправителя" ? (
             <Modal
               closeIcon
-              trigger={<button onClick={removeDisp()}>Удалить</button>}
+              trigger={<button onClick={removeDisp}>Удалить</button>}
               open={dispData.show_remove_modal}
-              onClose={closeRemoveModal()}
+              onClose={closeRemoveModal}
               header={`Удаление накладной ${dispData.data.Number}`}
-              onCancel={closeRemoveModal()}
-              onConfirm={confirmRemoveDisp()}
+              onCancel={closeRemoveModal}
+              onConfirm={confirmRemoveDisp}
             >
               {`Подтверждаете удаление накладной ${dispData.data.Number} ?`}
             </Modal>
           ) : null}
           {login.edit_disp &&
           dispData.data.Status === "Ожидается от отправителя" ? (
-            <button onClick={copyDisp(true)}>Редактировать</button>
+            <button
+              onClick={() => {
+                copyDisp(true);
+              }}
+            >
+              Редактировать
+            </button>
           ) : null}
         </div>
       </div>
@@ -921,7 +933,10 @@ const Disp = () => {
         <div className="disp_data_label">Наложенный платеж:</div>
         <div className="disp_data_el">{dispData.data.COD}</div>
       </div>
-      {dispData.action === "deliver" && dispData.data.Type === "Доставка" ? (
+
+      {/* TODO: починить отправку подов. нужно сделать store с данными. document.getElementById не работает */}
+
+      {/* {dispData.action === "deliver" && dispData.data.Type === "Доставка" ? (
         <div>
           <div className="pod_header">Внести данные о доставке:</div>
           <div className="pod_data">
@@ -946,15 +961,15 @@ const Disp = () => {
               <input id="comment" className="pod_input" type="text"></input>
             </div>
           </div>
-          <button onClick={sendpod()} className="send_pod">
+          <button onClick={sendpod} className="send_pod">
             Отметить доставленным и закрыть
           </button>
         </div>
-      ) : null}
+      ) : null} */}
 
       {dispData.action === "reciept" ? (
         <div>
-          <button onClick={reciept()} className="send_pod">
+          <button onClick={reciept} className="send_pod">
             Принять на склад и закрыть
           </button>
         </div>
@@ -967,7 +982,7 @@ const Disp = () => {
             value={dispData.search_box}
             onChange={(e) => set_disp_search_box(e.target.value)}
           ></input>
-          <button className="search_button" onClick={search()}>
+          <button className="search_button" onClick={search}>
             Найти
           </button>
         </div>
@@ -987,7 +1002,7 @@ const Disp = () => {
         </div>
       ) : null}
       {login.disp_map ? (
-        <button className="search_box" onClick={save_lat_lng()}>
+        <button className="search_box" onClick={save_lat_lng}>
           Сохранить
         </button>
       ) : null}
