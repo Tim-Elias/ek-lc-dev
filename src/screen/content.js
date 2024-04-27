@@ -29,6 +29,7 @@ import { ContentModal } from "../components/contentModal";
 
 export const Content = () => {
   const active_window = useSelector((state) => state.general.active_window);
+  const logged = useSelector((state) => state.login.logged);
 
   const modules = useModules();
   let className = "content_window";
@@ -40,7 +41,7 @@ export const Content = () => {
     <div className={className}>
       <ContentModal />
 
-      {active_window === "home" && !this.props.store.login.logged ? (
+      {active_window === "home" && !logged ? (
         <HomeEk modules={modules} />
       ) : null}
       {active_window === "my_disp" ? <MyDisp modules={modules} /> : null}

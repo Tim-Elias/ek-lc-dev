@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { get_data } from "./../common/common_modules";
-import ReactToPrint, { useReactToPrint } from "react-to-print";
+import { useReactToPrint } from "react-to-print";
 import "./disp.css";
 import ComponentToPrint from "./disp_print";
 import StickerToPrint from "./sticker_print";

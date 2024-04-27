@@ -322,18 +322,21 @@ class Screen extends React.Component {
   };
 
   create_table = () => {
-    const { ...newData } = this.props.store.upload_manifest.import_template;
+    const import_template = this.props.store.upload_manifest.import_template;
+    const ObjKeys = Object.keys(import_template);
 
-    const ObjVal = Object.values(newData);
-    if (ObjVal.length > 0) {
-      const Parseint = ObjVal.map((el) => {
-        return parseInt(el);
-      });
+    const excludedKeys = ["ConsolidateImportTemplate", "Key"];
+
+    if (ObjKeys.length > 0) {
+      const Parseint = ObjKeys.filter((key) => !excludedKeys.includes(key)).map(
+        (key) => {
+          return parseInt(import_template[key]);
+        },
+      );
       const filteObj = Parseint.filter((fel) => fel > 0);
       const max = filteObj.reduce(function (a, b) {
         return Math.max(a, b);
       });
-
       const import_keys = Object.keys(
         this.props.store.upload_manifest.import_template,
       );
@@ -1122,10 +1125,10 @@ class Screen extends React.Component {
                       (el, index) => (
                         <tr
                           key={index}
-                          onDoubleClick={this.upload_manifest_click_template_row.bind(
-                            this,
-                            el,
-                          )}
+                          // onDoubleClick={this.upload_manifest_click_template_row.bind(
+                          //   this,
+                          //   el,
+                          // )}
                         >
                           <td>{el.label}</td>
                           <td>{el.City}</td>
