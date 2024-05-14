@@ -63,7 +63,7 @@ class Screen extends React.Component {
           </div>
         </div>
 
-        <table>
+        <table className="bordered">
           <thead>
             <tr>
               <th>

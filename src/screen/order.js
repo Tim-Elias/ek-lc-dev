@@ -94,7 +94,7 @@ class Screen extends React.Component {
           </div>
         </div>
         {this.props.store.order.data.UseNomenclature ? (
-          <table>
+          <table className="bordered">
             <thead>
               <tr>
                 <th>
@@ -123,7 +123,7 @@ class Screen extends React.Component {
             </tbody>
           </table>
         ) : (
-          <table>
+          <table className="bordered">
             <thead>
               <tr>
                 <th>

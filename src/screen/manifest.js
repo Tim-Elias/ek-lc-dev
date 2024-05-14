@@ -83,7 +83,7 @@ class Screen extends React.Component {
               Накладные по манифесту:
             </div>
             <div className="disp_cargo_table_data">
-              <table>
+              <table className="bordered">
                 <thead>
                   <tr>
                     <th>Приниято</th>

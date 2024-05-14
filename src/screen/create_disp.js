@@ -815,7 +815,7 @@ class Screen extends React.Component {
                 </div>
 
                 <div className="table-wrapper">
-                  <table>
+                  <table className="bordered">
                     <thead className="create_disp_template_list_th">
                       <tr>
                         <th>Имя</th>
@@ -897,7 +897,7 @@ class Screen extends React.Component {
                   />
                 </div>
                 <div className="table-wrapper">
-                  <table>
+                  <table className="bordered">
                     <thead className="create_disp_template_list_th">
                       <tr>
                         <th>Имя</th>
@@ -1274,7 +1274,7 @@ class Screen extends React.Component {
           {!this.props.store.create_disp.CargoInfoType.value ? (
             <div>
               <div className="disp_cargo_table_data">
-                <table>
+                <table className="bordered">
                   <thead>
                     <tr>
                       <th>Вес (кг)</th>

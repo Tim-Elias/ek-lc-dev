@@ -66,7 +66,7 @@ class Screen extends React.Component {
           <div className="mutual_table">
             <div className="mutual_int_label">Начисления за период:</div>
             <div className="mutual_table_data">
-              <table>
+              <table className="bordered">
                 <thead>
                   <tr>
                     <tr>

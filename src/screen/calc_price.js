@@ -354,7 +354,7 @@ class Screen extends React.Component {
 
           {this.props.store.calc_price.calc_price_cargo_info_type.key === 2 ? (
             <div className="disp_cargo_table_data">
-              <table>
+              <table className="bordered">
                 <thead>
                   <tr>
                     <th>Вес (кг)</th>

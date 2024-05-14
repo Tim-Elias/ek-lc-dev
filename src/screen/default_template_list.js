@@ -18,7 +18,7 @@ class Screen extends React.Component {
             <b className="page_header">Шаблоны значений по умолчанию</b>
           </div>
         </div>
-        <table>
+        <table className="bordered">
           <thead>
             <tr>
               <th>

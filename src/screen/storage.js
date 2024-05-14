@@ -138,7 +138,7 @@ class Screen extends React.Component {
           </div>
           {this.props.store.storage.list.length !== 0 ? (
             <div>
-              <table>
+              <table className="bordered">
                 <thead>
                   <tr>
                     <th>Дата</th>

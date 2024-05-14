@@ -29,7 +29,7 @@ select{
   padding: 6px;
   margin: 0 4px;
   border: 1px solid #d0d0d0;
-  border-radius: 3px;
+  border-radius: 4px;
   }
 
 .input-checkbox{
@@ -40,7 +40,7 @@ select{
 button{
   padding: 8px 12px;
   border: none;
-  border-radius: 3px;
+  border-radius: 4px;
 }
 
 button:hover{
@@ -53,20 +53,77 @@ button:hover{
   overflow-x: auto;
 }
 
-table{
-  border: 1px solid #c0c0c0;
-  
+table {
+  border-collapse: separate !important;
+  border-spacing: 0;
+  margin: 10px 0;
+  width: 100%;
 }
 
+.bordered {
+  border: solid #ccc 1px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+
+}
+.bordered tr:hover {
+  background: #ECECEC;    
+
+}
+.bordered td {
+  font-size: 12px;
+  border-left: 1px solid #ccc;
+  border-top: 1px solid #ccc;
+  padding: 6px;
+  text-align: left;
+}
+
+.bordered th {
+  font-size: 12px;
+  border-left: 1px solid #ccc;
+  border-top: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+  background-color: #f8f8f8;
+  border-top: none;
+}
+.bordered td:first-child, .bordered th:first-child {
+  border-left: none;
+}
+.bordered th:first-child {
+  -moz-border-radius: 4px 0 0 0;
+  -webkit-border-radius: 4px 0 0 0;
+  border-radius: 4px 0 0 0;
+}
+.bordered th:last-child {
+  -moz-border-radius: 0 6px 0 0;
+  -webkit-border-radius: 0 6px 0 0;
+  border-radius: 0 6px 0 0;
+}
+.bordered th:only-child{
+  -moz-border-radius: 4px 6px 0 0;
+  -webkit-border-radius: 4px 6px 0 0;
+  border-radius: 4px 6px 0 0;
+}
+.bordered tr:last-child td:first-child {
+  -moz-border-radius: 0 0 0 6px;
+  -webkit-border-radius: 0 0 0 6px;
+  border-radius: 0 0 0 6px;
+}
+.bordered tr:last-child td:last-child {
+  -moz-border-radius: 0 0 6px 0;
+  -webkit-border-radius: 0 0 6px 0;
+  border-radius: 0 0 6px 0;
+} 
+
 td{
-  padding: 2px 4px;
-  border: 1px solid #c0c0c0;
+  padding: 4px;
 }
 
 th{
   padding: 8px;
   font-weight: 600;
-  border: 1px solid #c0c0c0;
 }
 
 tr.active{
@@ -118,7 +175,7 @@ tr.active{
 
 .send_pod{
 height: 25px;
-border-radius: 3px;
+border-radius: 4px;
 background-color:  rgb(255, 205, 162);
 margin: 5px
 }
@@ -128,14 +185,6 @@ margin: 5px
   color: #303030;
   padding: 5px;
   border-bottom: #303030 solid 1px;
-}
-
-table{
-  margin: 10px 0;
-  
-  border-collapse: collapse;
-  border-radius: 10%;
-  width: 100%;
 }
 
 
@@ -148,7 +197,7 @@ table{
   padding: 10px 10px;
   text-decoration: none;
   font-size: 12px;
-  border-radius: 3px;
+  border-radius: 4px;
   margin: 10px 5px;
   cursor: pointer;
 }
@@ -181,7 +230,7 @@ table{
   padding: 5px 5px;
   text-decoration: none;
   font-size: 14px;
-  border-radius: 3px;
+  border-radius: 4px;
   margin: 10px 5px;
 }
 
@@ -191,7 +240,7 @@ table{
   border: #d4d4d5 1px solid;
   padding: 5px 5px;
   text-decoration: none;
-  border-radius: 3px;
+  border-radius: 4px;
   margin: 10px 5px;
  
 }
@@ -212,7 +261,7 @@ table{
   background-color: #F0F0F0;
   text-align: center;
   padding: 10px;
-  border-radius: 3px;
+  border-radius: 4px;
  
   border: #c0c0c0 1px solid;
 
@@ -466,7 +515,7 @@ table{
   padding: 10px 10px;
   text-decoration: none;
   font-size: 14px;
-  border-radius: 3px;
+  border-radius: 4px;
 
 }
 
@@ -485,7 +534,7 @@ table{
   padding: 10px 10px;
   text-decoration: none;
   font-size: 14px;
-  border-radius: 3px;
+  border-radius: 4px;
   margin: 10px 5px;
 }
 
@@ -513,7 +562,7 @@ table{
 .topnav input {
   padding: 10px;
   margin: 10px 5px;
-  border-radius: 5px;
+  border-radius: 4px;
   width: 150px; /* adjust as needed (as long as it doesn't break the topnav) */
 }
 
@@ -558,10 +607,10 @@ margin: auto;
   font-size: 10px;
 }
 
-.my_disp_control_panel{
-  display: grid;
-  grid-template-columns: 130px 150px 20px 150px 150px ;
-  margin: 5px;
+.control_panel{
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
   align-items: center;
 }
 
@@ -597,7 +646,7 @@ margin: auto;
   padding: 10px 10px;
   text-decoration: none;
   font-size: 12px;
-  border-radius: 3px;
+  border-radius: 4px;
   cursor: pointer;
 }
 
@@ -669,10 +718,9 @@ margin: auto;
       width: 200px;
       height: 30px;
       background-color: #cacbcd;
-      box-shadow: 0 0 0 1px transparent inset,0 0 0 0 rgba(34,36,38,.15) inset;
       color: rgba(0,0,0,.8);
       border: none;
-      border-radius: 3px;
+      border-radius: 4px;
     }
 
     .disp_data_el {

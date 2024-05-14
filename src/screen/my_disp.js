@@ -1,14 +1,26 @@
 import React from "react";
 import { connect } from "react-redux";
 import { get_data } from "./../common/common_modules";
-
+import * as XLSX from "xlsx/xlsx.mjs";
+import * as fs from "fs";
+import { Readable } from "stream";
 import "./disp_map.css";
 import "./my_disp.css";
 import "./disp.css";
 import Dimmer from "../ui-components/dimmer/dimmer";
 import Modal from "../ui-components/modal/modal";
 
+XLSX.set_fs(fs);
+XLSX.stream.set_readable(Readable);
+
 class Screen extends React.Component {
+  hadleSaveXLSX = () => {
+    const table_elt = document.getElementById("data-to-excel");
+    const workbook = XLSX.utils.table_to_book(table_elt);
+
+    XLSX.writeFile(workbook, "Мои накладные ЭК.xlsx");
+  };
+
   handleKeyDown = (e) => {
     if (e.key === "Enter") {
       this.get_my_disp_data();
@@ -234,14 +246,81 @@ class Screen extends React.Component {
       }
     };
 
+    const tableData = this.props.store.my_disp.data
+      .filter((el) => {
+        return (
+          el.Num.indexOf(this.props.store.my_disp.num_filter) > -1 ||
+          this.props.store.my_disp.num_filter === ""
+        );
+      })
+      .filter((el) => {
+        const filter_sender_address =
+          this.props.store.my_disp.sender_address.toUpperCase();
+        const sender_address = el.SendAdress.toUpperCase();
+        return (
+          sender_address.indexOf(filter_sender_address) > -1 ||
+          this.props.store.my_disp.sender_address === ""
+        );
+      })
+      .filter((el) => {
+        const filter_rec_address =
+          this.props.store.my_disp.rec_address.toUpperCase();
+        const rec_address = el.RecAdress.toUpperCase();
+        return (
+          rec_address.indexOf(filter_rec_address) > -1 ||
+          this.props.store.my_disp.rec_address === ""
+        );
+      })
+      .filter((el) => {
+        const selectedRecCities =
+          this.props.store.my_disp.rec_city_filter.filter((el1) => {
+            return el1.check;
+          });
+        const FindRecCityRes = selectedRecCities.find((el2) => {
+          return el2.name === el.RecCity;
+        });
+        return FindRecCityRes !== undefined;
+      })
+      .filter((el) => {
+        const selectedSendCities =
+          this.props.store.my_disp.send_city_filter.filter((el1) => {
+            return el1.check;
+          });
+        const FindSendCityRes = selectedSendCities.find((el2) => {
+          return el2.name === el.SendCity;
+        });
+        return FindSendCityRes !== undefined;
+      })
+      .filter((el) => {
+        const selectedDelMethods =
+          this.props.store.my_disp.del_method_filter.filter((el1) => {
+            return el1.check;
+          });
+        const FindDelMethodsRes = selectedDelMethods.find((el2) => {
+          return el2.name === el.DelMethod;
+        });
+        return FindDelMethodsRes !== undefined;
+      })
+      .filter((el) => {
+        const selectedStatus = this.props.store.my_disp.status_filter.filter(
+          (el1) => {
+            return el1.check;
+          },
+        );
+        const FindStatusRes = selectedStatus.find((el2) => {
+          return el2.name === el.Status;
+        });
+        return FindStatusRes !== undefined;
+      });
+
     return (
       <div>
         <div
           onKeyDown={this.handleKeyDown.bind(this)}
           className={
             this.props.store.my_disp.type_search
-              ? "my_disp_control_panel"
-              : "my_disp_control_panel my_disp_control_panel--small"
+              ? "control_panel"
+              : "control_panel my_disp_control_panel--small"
           }
         >
           <select
@@ -281,18 +360,17 @@ class Screen extends React.Component {
               ></input>
             </div>
           ) : null}
-          <button
-            style={{ marginTop: "-5px" }}
-            size="mini"
-            onClick={this.get_my_disp_data.bind(this)}
-          >
+          <button size="mini" onClick={this.get_my_disp_data.bind(this)}>
             Получить данные
+          </button>
+          <button onClick={() => this.hadleSaveXLSX()}>
+            Сохранить в Excel
           </button>
         </div>
 
         <div className="my_disp_table">
           {this.props.store.my_disp.data.length === 0 ? null : (
-            <table>
+            <table className="bordered">
               <thead>
                 <tr>
                   <th>
@@ -356,7 +434,7 @@ class Screen extends React.Component {
                             Отменить все
                           </button>
                         </div>
-                        <table>
+                        <table className="bordered">
                           <tbody>
                             {this.props.store.my_disp.send_city_filter.map(
                               (el, index) => {
@@ -479,7 +557,7 @@ class Screen extends React.Component {
                         >
                           Отменить все
                         </button>
-                        <table>
+                        <table className="bordered">
                           <tbody>
                             {this.props.store.my_disp.rec_city_filter.map(
                               (el, index) => {
@@ -612,7 +690,7 @@ class Screen extends React.Component {
                         >
                           Отменить все
                         </button>
-                        <table>
+                        <table className="bordered">
                           <tbody>
                             {this.props.store.my_disp.del_method_filter.map(
                               (el, index) => {
@@ -715,7 +793,7 @@ class Screen extends React.Component {
                         >
                           Отменить все
                         </button>
-                        <table>
+                        <table className="bordered">
                           <tbody>
                             {this.props.store.my_disp.status_filter.map(
                               (el, index) => {
@@ -777,246 +855,171 @@ class Screen extends React.Component {
                   </th>
                 </tr>
               </thead>
-              <tbody>
-                {this.props.store.my_disp.data
-                  .filter((el) => {
-                    return (
-                      el.Num.indexOf(this.props.store.my_disp.num_filter) >
-                        -1 || this.props.store.my_disp.num_filter === ""
-                    );
-                  })
-                  .filter((el) => {
-                    const filter_sender_address =
-                      this.props.store.my_disp.sender_address.toUpperCase();
-                    const sender_address = el.SendAdress.toUpperCase();
-                    return (
-                      sender_address.indexOf(filter_sender_address) > -1 ||
-                      this.props.store.my_disp.sender_address === ""
-                    );
-                  })
-                  .filter((el) => {
-                    const filter_rec_address =
-                      this.props.store.my_disp.rec_address.toUpperCase();
-                    const rec_address = el.RecAdress.toUpperCase();
-                    return (
-                      rec_address.indexOf(filter_rec_address) > -1 ||
-                      this.props.store.my_disp.rec_address === ""
-                    );
-                  })
-                  .filter((el) => {
-                    const selectedRecCities =
-                      this.props.store.my_disp.rec_city_filter.filter((el1) => {
-                        return el1.check;
-                      });
-                    const FindRecCityRes = selectedRecCities.find((el2) => {
-                      return el2.name === el.RecCity;
-                    });
-                    return FindRecCityRes !== undefined;
-                  })
-                  .filter((el) => {
-                    const selectedSendCities =
-                      this.props.store.my_disp.send_city_filter.filter(
-                        (el1) => {
-                          return el1.check;
-                        },
-                      );
-                    const FindSendCityRes = selectedSendCities.find((el2) => {
-                      return el2.name === el.SendCity;
-                    });
-                    return FindSendCityRes !== undefined;
-                  })
-                  .filter((el) => {
-                    const selectedDelMethods =
-                      this.props.store.my_disp.del_method_filter.filter(
-                        (el1) => {
-                          return el1.check;
-                        },
-                      );
-                    const FindDelMethodsRes = selectedDelMethods.find((el2) => {
-                      return el2.name === el.DelMethod;
-                    });
-                    return FindDelMethodsRes !== undefined;
-                  })
-                  .filter((el) => {
-                    const selectedStatus =
-                      this.props.store.my_disp.status_filter.filter((el1) => {
-                        return el1.check;
-                      });
-                    const FindStatusRes = selectedStatus.find((el2) => {
-                      return el2.name === el.Status;
-                    });
-                    return FindStatusRes !== undefined;
-                  })
-                  .map((el, index) => {
-                    let row_className = "";
+              <tbody id="data-to-excel">
+                {tableData.map((el, index) => {
+                  let row_className = "";
 
-                    if (index === this.props.store.my_disp.active_row) {
-                      row_className = "active";
-                    }
+                  if (index === this.props.store.my_disp.active_row) {
+                    row_className = "active";
+                  }
 
-                    return [
-                      <tr
-                        className={row_className}
-                        key={index}
-                        onClick={this.tr_click.bind(this, index)}
-                        onDoubleClick={this.tr_double_click.bind(this, el)}
-                      >
-                        <td>
-                          <div className="small_table_data">{el.Date}</div>
-                        </td>
-                        <td>
-                          <div className="small_table_data">{el.Num}</div>
-                        </td>
-                        <td>
-                          <div className="small_table_data">{el.SendCity}</div>
-                        </td>
-                        <td>
-                          <div className="small_table_data">
-                            {el.SendAdress}
-                          </div>
-                        </td>
-                        <td>
-                          <div className="small_table_data">
-                            {el.SendCompany}
-                          </div>
-                        </td>
-                        <td>
-                          <div className="small_table_data">{el.RecCity}</div>
-                        </td>
-                        <td>
-                          <div className="small_table_data">{el.RecAdress}</div>
-                        </td>
-                        <td>
-                          <div className="small_table_data">
-                            {el.RecCompany}
-                          </div>
-                        </td>
-                        <td>
-                          <div className="small_table_data">{el.Total}</div>
-                        </td>
-                        <td>
-                          <div className="small_table_data">{el.Weight}</div>
-                        </td>
-                        <td>
-                          <div className="small_table_data">{el.Volume}</div>
-                        </td>
-                        <td>
-                          <div className="small_table_data">{el.DelMethod}</div>
-                        </td>
-                        <td>
-                          <div className="small_table_data">{el.Price}</div>
-                        </td>
-                        <td>
+                  return [
+                    <tr
+                      className={row_className}
+                      key={index}
+                      onClick={this.tr_click.bind(this, index)}
+                      onDoubleClick={this.tr_double_click.bind(this, el)}
+                    >
+                      <td>
+                        <div className="small_table_data">{el.Date}</div>
+                      </td>
+                      <td>
+                        <div className="small_table_data">{el.Num}</div>
+                      </td>
+                      <td>
+                        <div className="small_table_data">{el.SendCity}</div>
+                      </td>
+                      <td>
+                        <div className="small_table_data">{el.SendAdress}</div>
+                      </td>
+                      <td>
+                        <div className="small_table_data">{el.SendCompany}</div>
+                      </td>
+                      <td>
+                        <div className="small_table_data">{el.RecCity}</div>
+                      </td>
+                      <td>
+                        <div className="small_table_data">{el.RecAdress}</div>
+                      </td>
+                      <td>
+                        <div className="small_table_data">{el.RecCompany}</div>
+                      </td>
+                      <td>
+                        <div className="small_table_data">{el.Total}</div>
+                      </td>
+                      <td>
+                        <div className="small_table_data">{el.Weight}</div>
+                      </td>
+                      <td>
+                        <div className="small_table_data">{el.Volume}</div>
+                      </td>
+                      <td>
+                        <div className="small_table_data">{el.DelMethod}</div>
+                      </td>
+                      <td>
+                        <div className="small_table_data">{el.Price}</div>
+                      </td>
+                      <td>
+                        <div
+                          className="small_table_data"
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          {el.Status}
                           <div
-                            className="small_table_data"
+                            className={
+                              el.showHistory
+                                ? "open my_disp_button_more"
+                                : "my_disp_button_more"
+                            }
+                            onClick={() => this.show_history(el.Num)}
+                          >
+                            <span className="my_disp_button_more-left"></span>
+                            <span className="my_disp_button_more-right"></span>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <div className="small_table_data">{el.Recient}</div>
+                      </td>
+                      <td>
+                        <div className="small_table_data">{el.RecDate}</div>
+                      </td>
+                    </tr>,
+                    el.history && el.showHistory ? (
+                      <tr key={index + "history"}>
+                        <td colSpan="16">
+                          <table
                             style={{
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "space-between",
+                              width: "calc(100% - 80px)",
+                              margin: "0 auto",
                             }}
                           >
-                            {el.Status}
-                            <div
-                              className={
-                                el.showHistory
-                                  ? "open my_disp_button_more"
-                                  : "my_disp_button_more"
-                              }
-                              onClick={() => this.show_history(el.Num)}
-                            >
-                              <span className="my_disp_button_more-left"></span>
-                              <span className="my_disp_button_more-right"></span>
-                            </div>
-                          </div>
-                        </td>
-                        <td>
-                          <div className="small_table_data">{el.Recient}</div>
-                        </td>
-                        <td>
-                          <div className="small_table_data">{el.RecDate}</div>
-                        </td>
-                      </tr>,
-                      el.history && el.showHistory ? (
-                        <tr key={index + "history"}>
-                          <td colSpan="16">
-                            <table
-                              style={{
-                                width: "calc(100% - 80px)",
-                                margin: "0 auto",
-                              }}
-                            >
-                              <thead>
+                            <thead>
+                              <tr>
                                 <tr>
-                                  <tr>
-                                    <th>Дата</th>
-                                    <th>Статус</th>
-                                    <th>Комментарий</th>
-                                  </tr>
+                                  <th>Дата</th>
+                                  <th>Статус</th>
+                                  <th>Комментарий</th>
                                 </tr>
-                              </thead>
-                              <tbody>
-                                {el.history.map((historyEl, historyElIndex) => (
-                                  <tr key={historyElIndex}>
-                                    <td>
-                                      <div className="small_table_data">
-                                        {historyEl.Date}
-                                      </div>
-                                    </td>
-                                    <td>
-                                      <div className="small_table_data">
-                                        {historyEl.Status}
-                                        {historyEl.Skan !== 0 ? (
-                                          <Modal
-                                            height="90%"
-                                            width="500px"
-                                            trigger={
-                                              <button
-                                                className="disp_skan_button"
-                                                onClick={() =>
-                                                  this.open_skan(
-                                                    historyEl.DocNumber,
-                                                    el.Num,
-                                                  )
-                                                }
-                                              >
-                                                (Получить скан)
-                                              </button>
-                                            }
-                                            onClose={this.close_skan.bind(this)}
-                                            header="Вложенное изображение"
-                                          >
-                                            {this.props.store.my_disp
-                                              .skan_loading ? (
-                                              <div className="loader_container">
-                                                <Dimmer />
-                                              </div>
-                                            ) : (
-                                              <img
-                                                alt="alt"
-                                                className="disp_skan"
-                                                src={
-                                                  this.props.store.my_disp.skan
-                                                }
-                                              />
-                                            )}
-                                          </Modal>
-                                        ) : null}
-                                      </div>
-                                    </td>
-                                    <td>
-                                      <div className="small_table_data">
-                                        {historyEl.Comment}
-                                      </div>
-                                    </td>
-                                  </tr>
-                                ))}
-                              </tbody>
-                            </table>
-                          </td>
-                        </tr>
-                      ) : null,
-                    ];
-                  })}
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {el.history.map((historyEl, historyElIndex) => (
+                                <tr key={historyElIndex}>
+                                  <td>
+                                    <div className="small_table_data">
+                                      {historyEl.Date}
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div className="small_table_data">
+                                      {historyEl.Status}
+                                      {historyEl.Skan !== 0 ? (
+                                        <Modal
+                                          height="90%"
+                                          width="500px"
+                                          trigger={
+                                            <button
+                                              className="disp_skan_button"
+                                              onClick={() =>
+                                                this.open_skan(
+                                                  historyEl.DocNumber,
+                                                  el.Num,
+                                                )
+                                              }
+                                            >
+                                              (Получить скан)
+                                            </button>
+                                          }
+                                          onClose={this.close_skan.bind(this)}
+                                          header="Вложенное изображение"
+                                        >
+                                          {this.props.store.my_disp
+                                            .skan_loading ? (
+                                            <div className="loader_container">
+                                              <Dimmer />
+                                            </div>
+                                          ) : (
+                                            <img
+                                              alt="alt"
+                                              className="disp_skan"
+                                              src={
+                                                this.props.store.my_disp.skan
+                                              }
+                                            />
+                                          )}
+                                        </Modal>
+                                      ) : null}
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div className="small_table_data">
+                                      {historyEl.Comment}
+                                    </div>
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>
+                    ) : null,
+                  ];
+                })}
               </tbody>
             </table>
           )}

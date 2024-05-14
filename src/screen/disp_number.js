@@ -72,7 +72,7 @@ class Screen extends React.Component {
       <div>
         <div
           onKeyDown={this.handleKeyDown.bind(this)}
-          className="my_disp_control_panel my_disp_control_panel--s"
+          className="control_panel my_disp_control_panel--s"
         >
           <input
             className="pod_input"

@@ -99,7 +99,7 @@ class Screen extends React.Component {
 
           {this.props.store.get_manifest.list.length !== 0 ? (
             <div>
-              <table>
+              <table className="bordered">
                 <thead>
                   <tr>
                     <th>Дата отправления</th>

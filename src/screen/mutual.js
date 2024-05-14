@@ -93,7 +93,7 @@ class Screen extends React.Component {
         {this.props.store.mutual.data.length !== 0 ? (
           <div className="mutual_table">
             <div className="mutual_table_data">
-              <table>
+              <table className="bordered">
                 <thead>
                   <tr>
                     <th>Дата</th>

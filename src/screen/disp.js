@@ -690,7 +690,7 @@ const Disp = () => {
                   <Dimmer />
                 </div>
               ) : (
-                <table>
+                <table className="bordered">
                   <thead className="create_disp_template_list_th">
                     <tr>
                       <th>Дата</th>
@@ -846,7 +846,7 @@ const Disp = () => {
         <div className="disp_cargo_table_header">Данные о грузах:</div>
         <div className="disp_cargo_table_data">
           {CargoInfoType ? (
-            <table>
+            <table className="bordered">
               <thead>
                 <tr>
                   <th>Вес</th>

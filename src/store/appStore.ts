@@ -7,6 +7,28 @@ const persistConfig = {
   key: "root",
   storage,
   debug: true,
+  blacklist: [
+    "general",
+    "storage",
+    "disp",
+    "manifest",
+    "get_manifest",
+    "reciept",
+    "send_manifest",
+    "mutual",
+    "create_disp",
+    "upload_manifest",
+    "my_disp",
+    "order",
+    "disp_map",
+    "home_ek",
+    "storage_reciept",
+    "movement",
+    "check",
+    "m_create_disp",
+    "calc_price",
+    "home",
+  ],
 };
 
 export const store = configureStore({

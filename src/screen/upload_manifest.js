@@ -8,6 +8,12 @@ import "./upload_manifest.css";
 import ComponentToPrint from "./disp_print";
 import StickerToPrint from "./sticker_print";
 import Modal from "../ui-components/modal/modal.tsx";
+import * as XLSX from "xlsx/xlsx.mjs";
+import * as fs from "fs";
+import { Readable } from "stream";
+
+XLSX.set_fs(fs);
+XLSX.stream.set_readable(Readable);
 
 const UploadInOneList = [
   { label: "Загрузка каждой накладной", value: false },
@@ -39,6 +45,15 @@ const translate = {
 };
 
 class Screen extends React.Component {
+  hadleSaveXLSX = () => {
+    const workbook = XLSX.utils.book_new();
+    const worksheet = XLSX.utils.json_to_sheet(
+      this.props.store.upload_manifest.disp_data,
+    );
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Manifest");
+    XLSX.writeFile(workbook, "Manifest.xlsx");
+  };
+
   convert_data = () => {
     this.props.reset_disp_data();
     const it = this.props.store.upload_manifest.import_template;
@@ -609,7 +624,7 @@ class Screen extends React.Component {
             type="text"
           ></textarea>
         </div>
-        <div>
+        <div className="control_panel">
           <button
             className="ui button mini"
             onClick={this.read_text.bind(this)}
@@ -634,6 +649,19 @@ class Screen extends React.Component {
             onClick={this.upload_data.bind(this)}
           >
             Загрузить данные
+          </button>
+
+          <button
+            className="ui button mini"
+            disabled={
+              this.props.store.upload_manifest.disp_data.length === 0 ||
+              this.props.store.upload_manifest.disp_data.filter(
+                (el) => el.RecCity === "",
+              ).length !== 0
+            }
+            onClick={this.hadleSaveXLSX}
+          >
+            Сохранить в Excel
           </button>
 
           {complited.length !== 0 ? (
@@ -954,7 +982,7 @@ class Screen extends React.Component {
               width="90%"
             >
               <div className="table-wrapper">
-                <table>
+                <table className="bordered">
                   <thead>
                     <tr>
                       <th>Имя</th>
@@ -1042,7 +1070,7 @@ class Screen extends React.Component {
         </div>
 
         <div>
-          <table>{this.create_table()}</table>
+          <table className="bordered">{this.create_table()}</table>
         </div>
 
         <div>
