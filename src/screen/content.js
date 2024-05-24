@@ -10,7 +10,7 @@ import GetManifest from "./get_manifest";
 import Disp from "./disp";
 import Manifest from "./manifest";
 import Wait from "./wait";
-import UploadMainfest from "./upload_manifest";
+import { UploadManifest } from "./upload_manifest";
 import Setting from "./setting";
 import Order from "./order";
 import ImportTemplateList from "./import_template_list";
@@ -61,7 +61,7 @@ export const Content = () => {
       {active_window === "manifest" ? <Manifest modules={modules} /> : null}
       {active_window === "wait" ? <Wait modules={modules} /> : null}
       {active_window === "upload_manifest" ? (
-        <UploadMainfest modules={modules} />
+        <UploadManifest modules={modules} />
       ) : null}
       {active_window === "setting" ? <Setting modules={modules} /> : null}
       {active_window === "order" ? <Order modules={modules} /> : null}

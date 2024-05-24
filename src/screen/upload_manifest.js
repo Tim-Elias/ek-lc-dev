@@ -1,8 +1,7 @@
-import React from "react";
-import { connect } from "react-redux";
+import React, { useRef } from "react";
 import Select from "react-select";
 import { customStyles } from "./../common/common_style";
-import ReactToPrint from "react-to-print";
+import { useReactToPrint } from "react-to-print";
 import { get_data } from "./../common/common_modules";
 import "./upload_manifest.css";
 import ComponentToPrint from "./disp_print";
@@ -11,6 +10,7 @@ import Modal from "../ui-components/modal/modal.tsx";
 import * as XLSX from "xlsx/xlsx.mjs";
 import * as fs from "fs";
 import { Readable } from "stream";
+import { useDispatch, useSelector } from "react-redux";
 
 XLSX.set_fs(fs);
 XLSX.stream.set_readable(Readable);
@@ -44,25 +44,98 @@ const translate = {
   SendPhone: "Основной контактный телефон отправителя",
 };
 
-class Screen extends React.Component {
-  hadleSaveXLSX = () => {
+export const UploadManifest = () => {
+  const dispatch = useDispatch();
+  const all_disp_print = useRef();
+  const all_ticket_print = useRef();
+
+  const handleDispPrint = useReactToPrint({
+    content: () => all_disp_print.current,
+  });
+
+  const handleStickerPrint = useReactToPrint({
+    content: () => all_ticket_print.current,
+  });
+
+  const set_text_area = (param) => {
+    dispatch({ type: "set_text_area", payload: param });
+  };
+  const set_data_upload_manifest = () => {
+    dispatch({ type: "set_data_upload_manifest" });
+  };
+  const set_default_template = (param) => {
+    dispatch({ type: "set_default_template", payload: param });
+  };
+  const set_import_template = (param) => {
+    dispatch({ type: "set_import_template", payload: param });
+  };
+  const set_disp_data = (param) => {
+    dispatch({ type: "set_disp_data", payload: param });
+  };
+  const reset_disp_data = () => {
+    dispatch({ type: "reset_disp_data" });
+  };
+  const set_disp_status = (param) => {
+    dispatch({ type: "set_disp_status", payload: param });
+  };
+  const set_upload_in_one = (param) => {
+    dispatch({ type: "set_upload_in_one", payload: param });
+  };
+  const set_upload_manifest_open_modal_dt = (param) => {
+    dispatch({ type: "set_upload_manifest_open_modal_dt", payload: param });
+  };
+  const upload_manifest_check_template_checkbox = (param) => {
+    dispatch({
+      type: "upload_manifest_check_template_checkbox",
+      payload: param,
+    });
+  };
+  const upload_manifest_check_checkbox = (param) => {
+    dispatch({ type: "upload_manifest_check_checkbox", payload: param });
+  };
+  const upload_manifest_reset_template_checkbox = () => {
+    dispatch({ type: "upload_manifest_reset_template_checkbox" });
+  };
+  const set_upload_manifest_disp_data_total = (key, value) => {
+    dispatch({
+      type: "set_upload_manifest_disp_data_total",
+      payload: { key: key, value: value },
+    });
+  };
+  const set_upload_manifest_disp_data_weight = (key, value) => {
+    dispatch({
+      type: "set_upload_manifest_disp_data_weight",
+      payload: { key: key, value: value },
+    });
+  };
+  const set_upload_manifest_disp_data_volume = (key, value) => {
+    dispatch({
+      type: "set_upload_manifest_disp_data_volume",
+      payload: { key: key, value: value },
+    });
+  };
+  const upload_manifest_remove_disp = (param) => {
+    dispatch({ type: "upload_manifest_remove_disp", payload: param });
+  };
+
+  const login = useSelector((state) => state.login);
+  const upload_manifest = useSelector((state) => state.upload_manifest);
+  const hadleSaveXLSX = () => {
     const workbook = XLSX.utils.book_new();
-    const worksheet = XLSX.utils.json_to_sheet(
-      this.props.store.upload_manifest.disp_data,
-    );
+    const worksheet = XLSX.utils.json_to_sheet(upload_manifest.disp_data);
     XLSX.utils.book_append_sheet(workbook, worksheet, "Manifest");
     XLSX.writeFile(workbook, "Manifest.xlsx");
   };
 
-  convert_data = () => {
-    this.props.reset_disp_data();
-    const it = this.props.store.upload_manifest.import_template;
-    const dt = this.props.store.upload_manifest.default_template;
+  const convert_data = () => {
+    reset_disp_data();
+    const it = upload_manifest.import_template;
+    const dt = upload_manifest.default_template;
     let consolidate_data = [];
     let data = [];
     let sourse_data;
 
-    sourse_data = this.props.store.upload_manifest.data;
+    sourse_data = upload_manifest.data;
     sourse_data.forEach((el, index, arr) => {
       let push_it = true;
       if (el.length === 1) {
@@ -71,10 +144,9 @@ class Screen extends React.Component {
       let CurIndex;
 
       if (
-        this.props.store.upload_manifest.upload_in_one.value &&
-        this.props.store.upload_manifest.consolidate_checkbox_index !== 0 &&
-        this.props.store.upload_manifest.import_template
-          .ConsolidateImportTemplate !== 0 &&
+        upload_manifest.upload_in_one.value &&
+        upload_manifest.consolidate_checkbox_index !== 0 &&
+        upload_manifest.import_template.ConsolidateImportTemplate !== 0 &&
         consolidate_data.length !== 0
       ) {
         CurIndex = index + 1;
@@ -161,7 +233,7 @@ class Screen extends React.Component {
         RecAddInfo = dt.RecAddInfo;
       }
 
-      if (this.props.store.upload_manifest.upload_in_one.value) {
+      if (upload_manifest.upload_in_one.value) {
         if (
           arr.filter(
             (cur_el, cur_index) =>
@@ -249,10 +321,9 @@ class Screen extends React.Component {
       }
 
       if (RecCity === "") {
-        const Recdispt =
-          this.props.store.upload_manifest.disp_template_list.find((el) => {
-            return el.label === RecAdress;
-          });
+        const Recdispt = upload_manifest.disp_template_list.find((el) => {
+          return el.label === RecAdress;
+        });
         if (Recdispt !== undefined) {
           RecCity = Recdispt.City;
           RecAdress = Recdispt.Adress;
@@ -272,10 +343,9 @@ class Screen extends React.Component {
       }
 
       if (SendCity === "") {
-        const Senddispt =
-          this.props.store.upload_manifest.disp_template_list.find((el) => {
-            return el.label === SendAdress;
-          });
+        const Senddispt = upload_manifest.disp_template_list.find((el) => {
+          return el.label === SendAdress;
+        });
         if (Senddispt !== undefined) {
           SendCity = Senddispt.City;
           SendAdress = Senddispt.Adress;
@@ -322,22 +392,22 @@ class Screen extends React.Component {
       }
     });
 
-    this.props.set_disp_data(data);
+    set_disp_data(data);
   };
 
-  read_text = () => {
-    this.props.set_data_upload_manifest();
+  const read_text = () => {
+    set_data_upload_manifest();
   };
 
-  check_checkbox = (cell_index, element_index) => {
-    this.props.upload_manifest_check_checkbox({
+  const check_checkbox = (cell_index, element_index) => {
+    upload_manifest_check_checkbox({
       cell_index: cell_index,
       element_index: element_index,
     });
   };
 
-  create_table = () => {
-    const import_template = this.props.store.upload_manifest.import_template;
+  const create_table = () => {
+    const import_template = upload_manifest.import_template;
     const ObjKeys = Object.keys(import_template);
 
     const excludedKeys = ["ConsolidateImportTemplate", "Key"];
@@ -352,9 +422,7 @@ class Screen extends React.Component {
       const max = filteObj.reduce(function (a, b) {
         return Math.max(a, b);
       });
-      const import_keys = Object.keys(
-        this.props.store.upload_manifest.import_template,
-      );
+      const import_keys = Object.keys(upload_manifest.import_template);
 
       let header = [];
 
@@ -376,33 +444,27 @@ class Screen extends React.Component {
       }
 
       let body = [];
-      this.props.store.upload_manifest.data.forEach(
-        (element, element_index) => {
-          let children = [];
-          element.forEach((cell, cell_index) => {
-            if (cell === true || cell === false) {
-              children.push(
-                <td key={cell_index}>
-                  <input
-                    type="checkbox"
-                    className="input-checkbox"
-                    onChange={this.check_checkbox.bind(
-                      this,
-                      cell_index,
-                      element_index,
-                    )}
-                    checked={cell}
-                  />
-                </td>,
-              );
-            } else {
-              children.push(<td key={cell_index}>{cell}</td>);
-            }
-          });
+      upload_manifest.data.forEach((element, element_index) => {
+        let children = [];
+        element.forEach((cell, cell_index) => {
+          if (cell === true || cell === false) {
+            children.push(
+              <td key={cell_index}>
+                <input
+                  type="checkbox"
+                  className="input-checkbox"
+                  onChange={check_checkbox(cell_index, element_index)}
+                  checked={cell}
+                />
+              </td>,
+            );
+          } else {
+            children.push(<td key={cell_index}>{cell}</td>);
+          }
+        });
 
-          body.push(<tr key={element_index}>{children}</tr>);
-        },
-      );
+        body.push(<tr key={element_index}>{children}</tr>);
+      });
       let table = [];
       table.push(
         <thead key="hr1">
@@ -415,23 +477,19 @@ class Screen extends React.Component {
     }
   };
 
-  upload_data = () => {
-    if (
-      this.props.store.upload_manifest.disp_data.filter(
-        (el) => el.Status === "Не загружено" && el.Total > 0,
-      ).length > 0
-    ) {
-      this.upload_disp(
-        this.props.store.upload_manifest.disp_data.filter(
-          (el) => el.Status === "Не загружено" && el.Total > 0,
-        )[0],
-      );
+  const upload_data = async () => {
+    const dispForUpload = upload_manifest.disp_data.filter(
+      (el) => el.Status === "Не загружено" && el.Total > 0,
+    );
+
+    for (const disp of dispForUpload) {
+      await upload_disp(disp);
     }
   };
 
-  upload_disp = (disp) => {
+  const upload_disp = async (disp) => {
     const create_disp_data = {
-      userkey: this.props.store.login.userkey,
+      userkey: login.userkey,
       Number: 0,
       PayType: "Безналичная Оплата",
 
@@ -465,81 +523,35 @@ class Screen extends React.Component {
       CargoInfoType: true,
     };
 
-    new Promise((resolve) => {
-      get_data("createcustomerdisp", create_disp_data).then(
-        (result) => {
-          const data = {
-            userkey: this.props.store.login.userkey,
-            status: "Накладная",
-            num: result.Number,
-          };
-
-          get_data("dispatch", data).then(
-            (result_print_data) => {
-              resolve(
-                this.props.set_disp_status({
-                  Key: disp.Key,
-                  Status: "Загружено",
-                  Num: result.Number,
-                  print_data: result_print_data,
-                }),
-              );
-            },
-            (err) => {
-              console.log(err);
-
-              this.props.modules.set_modal_show(true);
-              this.props.modules.set_modal_header("Ошибка");
-              this.props.modules.set_modal_text(err);
-            },
-          );
-        },
-        (err) => {
-          console.log(err);
-
-          this.props.modules.set_modal_show(true);
-          this.props.modules.set_modal_header("Ошибка");
-          this.props.modules.set_modal_text(err);
-        },
-      );
-    })
-      .then(() => {
-        this.upload_data();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  // sent_disp = () => {};
-
-  disp_print_data = (el) => {
+    const result = await get_data("createcustomerdisp", create_disp_data);
     const data = {
-      disp: {
-        data: el,
-      },
+      userkey: login.userkey,
+      status: "Накладная",
+      num: result.Number,
     };
-    return data;
+
+    const result_print_data = await get_data("dispatch", data);
+    set_disp_status({
+      Key: disp.Key,
+      Status: "Загружено",
+      Num: result.Number,
+      print_data: result_print_data,
+    });
   };
 
-  // upload_manifest_click_template_row = (el) => {};
-
-  create_disp_from_temlate = () => {
+  const create_disp_from_temlate = () => {
     let data = [];
-    const dt = this.props.store.upload_manifest.default_template;
+    const dt = upload_manifest.default_template;
 
-    this.props.store.upload_manifest.disp_template_list
+    upload_manifest.disp_template_list
       .filter((el) => el.selected)
       .forEach((el, index) => {
-        const max = this.props.store.upload_manifest.disp_data.reduce(
-          (prev, cur) => {
-            if (prev.Key > cur.Key) {
-              return prev.Key;
-            }
-            return cur.Key;
-          },
-          0,
-        );
+        const max = upload_manifest.disp_data.reduce((prev, cur) => {
+          if (prev.Key > cur.Key) {
+            return prev.Key;
+          }
+          return cur.Key;
+        }, 0);
 
         console.log(max);
 
@@ -605,772 +617,577 @@ class Screen extends React.Component {
 
         data.push(disp);
       });
-    this.props.set_disp_data(data);
-    this.props.set_upload_manifest_open_modal_dt(false);
-    this.props.upload_manifest_reset_template_checkbox();
+    set_disp_data(data);
+    set_upload_manifest_open_modal_dt(false);
+    upload_manifest_reset_template_checkbox();
   };
 
-  render() {
-    const complited = this.props.store.upload_manifest.disp_data.filter(
-      (el) => el.Status === "Загружено",
-    );
+  const complited = upload_manifest.disp_data.filter(
+    (el) => el.Status === "Загружено",
+  );
 
-    return (
+  const control_panel = (
+    <div className="control_panel">
+      <button className="ui button mini" onClick={read_text}>
+        Прочитать
+      </button>
+      <button
+        className="ui button mini"
+        disabled={upload_manifest.data.length === 0}
+        onClick={convert_data}
+      >
+        Преобразовать
+      </button>
+      <button
+        className="ui button mini"
+        disabled={
+          upload_manifest.disp_data.length === 0 ||
+          upload_manifest.disp_data.filter((el) => el.RecCity === "").length !==
+            0
+        }
+        onClick={upload_data}
+      >
+        Загрузить данные
+      </button>
+
+      <button
+        className="ui button mini"
+        disabled={
+          upload_manifest.disp_data.length === 0 ||
+          upload_manifest.disp_data.filter((el) => el.RecCity === "").length !==
+            0
+        }
+        onClick={hadleSaveXLSX}
+      >
+        Сохранить в Excel
+      </button>
+
+      {complited.length !== 0 ? (
+        <button className="ui button mini" onClick={handleDispPrint}>
+          <i className="ek-printer" /> Печать всех накладных
+        </button>
+      ) : null}
+
+      {complited.length !== 0 ? (
+        <div style={{ display: "none" }}>
+          <ComponentToPrint
+            userkey={login.userkey}
+            disp={complited.map((el) => {
+              return el.print_data;
+            })}
+            ref={all_disp_print}
+          />
+        </div>
+      ) : null}
+
+      {complited.length !== 0 && login.print_ticket ? (
+        <button className="ui button mini" onClick={handleStickerPrint}>
+          <i className="ek-printer" /> Печать всех наклеек
+        </button>
+      ) : null}
+
+      {complited.length !== 0 && login.print_ticket ? (
+        <div style={{ display: "none" }}>
+          <StickerToPrint
+            disp={complited.map((el) => {
+              return el.print_data;
+            })}
+            ref={all_ticket_print}
+          />
+        </div>
+      ) : null}
+    </div>
+  );
+
+  const templates = (
+    <div className="upload_manifest_control_panel">
+      <div className="disp_data_label">Шаблон импорта:</div>
+      <div className="disp_data_el">
+        <Select
+          options={upload_manifest.import_template_list}
+          styles={customStyles}
+          value={upload_manifest.import_template}
+          onChange={(values) => set_import_template(values)}
+        />
+      </div>
       <div>
-        <div>
-          <textarea
-            onChange={(e) => this.props.set_text_area(e.target.value)}
-            value={this.props.store.upload_manifest.text_area}
-            type="text"
-          ></textarea>
-        </div>
-        <div className="control_panel">
-          <button
-            className="ui button mini"
-            onClick={this.read_text.bind(this)}
-          >
-            Прочитать
-          </button>
-          <button
-            className="ui button mini"
-            disabled={this.props.store.upload_manifest.data.length === 0}
-            onClick={this.convert_data.bind(this)}
-          >
-            Преобразовать
-          </button>
-          <button
-            className="ui button mini"
-            disabled={
-              this.props.store.upload_manifest.disp_data.length === 0 ||
-              this.props.store.upload_manifest.disp_data.filter(
-                (el) => el.RecCity === "",
-              ).length !== 0
-            }
-            onClick={this.upload_data.bind(this)}
-          >
-            Загрузить данные
-          </button>
-
-          <button
-            className="ui button mini"
-            disabled={
-              this.props.store.upload_manifest.disp_data.length === 0 ||
-              this.props.store.upload_manifest.disp_data.filter(
-                (el) => el.RecCity === "",
-              ).length !== 0
-            }
-            onClick={this.hadleSaveXLSX}
-          >
-            Сохранить в Excel
-          </button>
-
-          {complited.length !== 0 ? (
-            <ReactToPrint
-              trigger={() => (
-                <button className="ui button mini">
-                  <i className="ek-printer" /> Печать всех накладных
-                </button>
-              )}
-              content={() => this.all_disp_print}
-            />
-          ) : null}
-
-          {complited.length !== 0 ? (
-            <div style={{ display: "none" }}>
-              <ComponentToPrint
-                userkey={this.props.store.login.userkey}
-                disp={complited.map((el) => {
-                  return el.print_data;
-                })}
-                ref={(cur_el) => (this.all_disp_print = cur_el)}
-              />
-            </div>
-          ) : null}
-
-          {complited.length !== 0 && this.props.store.login.print_ticket ? (
-            <ReactToPrint
-              trigger={() => (
-                <button className="ui button mini">
-                  <i className="ek-printer" /> Печать всех наклеек
-                </button>
-              )}
-              content={() => this.all_ticket_print}
-            />
-          ) : null}
-
-          {complited.length !== 0 && this.props.store.login.print_ticket ? (
-            <div style={{ display: "none" }}>
-              <StickerToPrint
-                disp={complited.map((el) => {
-                  return el.print_data;
-                })}
-                ref={(cur_el) => (this.all_ticket_print = cur_el)}
-              />
-            </div>
-          ) : null}
-        </div>
-        <div className="upload_manifest_control_panel">
-          <div className="disp_data_label">Шаблон импорта:</div>
-          <div className="disp_data_el">
-            <Select
-              options={this.props.store.upload_manifest.import_template_list}
-              styles={customStyles}
-              value={this.props.store.upload_manifest.import_template}
-              onChange={(values) => this.props.set_import_template(values)}
-            />
-          </div>
-          <div>
-            <Modal
-              trigger={
-                <button className="ui icon button mini">
-                  <i className="ek-eye"></i>
-                </button>
-              }
-              header="Шаблон импорта"
-              height="90%"
-              width="700px"
-            >
-              {this.props.store.upload_manifest.import_template.label}
-
-              <div className="upload_mainfest_modal_info">
-                <div className="disp_data_label">Номер накладной: </div>
-                <div className="disp_data_el">
-                  {this.props.store.upload_manifest.import_template.Num}
-                </div>
-                <div className="disp_data_label">Город отправителя: </div>
-                <div className="disp_data_el">
-                  {this.props.store.upload_manifest.import_template.SendCity}
-                </div>
-                <div className="disp_data_label">Адрес отправителя: </div>
-                <div className="disp_data_el">
-                  {this.props.store.upload_manifest.import_template.SendAdress}
-                </div>
-                <div className="disp_data_label">Компания отправителя: </div>
-                <div className="disp_data_el">
-                  {this.props.store.upload_manifest.import_template.SendCompany}
-                </div>
-                <div className="disp_data_label">
-                  Контактное лицо отправителя:{" "}
-                </div>
-                <div className="disp_data_el">
-                  {this.props.store.upload_manifest.import_template.SendPerson}
-                </div>
-                <div className="disp_data_label">
-                  Контактный телефон отправителя:{" "}
-                </div>
-                <div className="disp_data_el">
-                  {this.props.store.upload_manifest.import_template.SendPhone}
-                </div>
-                <div className="disp_data_label">
-                  Электронный адрес отправителя:{" "}
-                </div>
-                <div className="disp_data_el">
-                  {this.props.store.upload_manifest.import_template.SendEmail}
-                </div>
-                <div className="disp_data_label">
-                  Дополнительная информация отправителя:{" "}
-                </div>
-                <div className="disp_data_el">
-                  {this.props.store.upload_manifest.import_template.SendAddInfo}
-                </div>
-                <div className="disp_data_label">Город получателя: </div>
-                <div className="disp_data_el">
-                  {this.props.store.upload_manifest.import_template.RecCity}
-                </div>
-                <div className="disp_data_label">Адрес отправителя: </div>
-                <div className="disp_data_el">
-                  {this.props.store.upload_manifest.import_template.RecAdress}
-                </div>
-                <div className="disp_data_label">Компания получателя: </div>
-                <div className="disp_data_el">
-                  {this.props.store.upload_manifest.import_template.RecCompany}
-                </div>
-                <div className="disp_data_label">
-                  Контактное лицо отправителя:{" "}
-                </div>
-                <div className="disp_data_el">
-                  {this.props.store.upload_manifest.import_template.RecPerson}
-                </div>
-                <div className="disp_data_label">
-                  Контактный телефон отправителя:{" "}
-                </div>
-                <div className="disp_data_el">
-                  {this.props.store.upload_manifest.import_template.RecPhone}
-                </div>
-                <div className="disp_data_label">
-                  Электронный адрес отправителя:{" "}
-                </div>
-                <div className="disp_data_el">
-                  {this.props.store.upload_manifest.import_template.RecEmail}
-                </div>
-                <div className="disp_data_label">
-                  Дополнительная информация отправителя:{" "}
-                </div>
-                <div className="disp_data_el">
-                  {this.props.store.upload_manifest.import_template.RecAddInfo}
-                </div>
-                <div className="disp_data_label">Страховая стоимость: </div>
-                <div className="disp_data_el">
-                  {this.props.store.upload_manifest.import_template.InsureValue}
-                </div>
-                <div className="disp_data_label">
-                  Сумма наложенного платежа:{" "}
-                </div>
-                <div className="disp_data_el">
-                  {this.props.store.upload_manifest.import_template.COD}
-                </div>
-                <div className="disp_data_label">Количество мест: </div>
-                <div className="disp_data_el">
-                  {this.props.store.upload_manifest.import_template.Total}
-                </div>
-                <div className="disp_data_label">Общий фактический вес: </div>
-                <div className="disp_data_el">
-                  {this.props.store.upload_manifest.import_template.Weight}
-                </div>
-                <div className="disp_data_label">Общий объемный вес: </div>
-                <div className="disp_data_el">
-                  {this.props.store.upload_manifest.import_template.Volume}
-                </div>
-              </div>
-            </Modal>
-          </div>
-
-          <div className="disp_data_label">Значения по умолчанию:</div>
-          <div className="disp_data_el">
-            <Select
-              options={this.props.store.upload_manifest.default_template_list}
-              styles={customStyles}
-              value={this.props.store.upload_manifest.default_template}
-              onChange={(values) => this.props.set_default_template(values)}
-            />
-          </div>
-          <div>
-            <Modal
-              trigger={
-                <button className="ui icon button mini">
-                  <i className="ek-eye"></i>
-                </button>
-              }
-              header="Шаблон значений по умалчанию"
-              height="90%"
-              width="700px"
-            >
-              {this.props.store.upload_manifest.default_template.label}
-              <div className="upload_mainfest_modal_info">
-                <div className="disp_data_label">Город отправителя: </div>
-                <div className="disp_data_el">
-                  {this.props.store.upload_manifest.default_template.SendCity}
-                </div>
-                <div className="disp_data_label">Адрес отправителя: </div>
-                <div className="disp_data_el">
-                  {this.props.store.upload_manifest.default_template.SendAdress}
-                </div>
-                <div className="disp_data_label">Компания отправителя: </div>
-                <div className="disp_data_el">
-                  {
-                    this.props.store.upload_manifest.default_template
-                      .SendCompany
-                  }
-                </div>
-                <div className="disp_data_label">
-                  Контактное лицо отправителя:{" "}
-                </div>
-                <div className="disp_data_el">
-                  {this.props.store.upload_manifest.default_template.SendPerson}
-                </div>
-                <div className="disp_data_label">
-                  Контактный телефон отправителя:{" "}
-                </div>
-                <div className="disp_data_el">
-                  {this.props.store.upload_manifest.default_template.SendPhone}
-                </div>
-                <div className="disp_data_label">
-                  Электронный адрес отправителя:{" "}
-                </div>
-                <div className="disp_data_el">
-                  {this.props.store.upload_manifest.default_template.SendEmail}
-                </div>
-                <div className="disp_data_label">
-                  Дополнительная информация отправителя:{" "}
-                </div>
-                <div className="disp_data_el">
-                  {
-                    this.props.store.upload_manifest.default_template
-                      .SendAddInfo
-                  }
-                </div>
-                <div className="disp_data_label">Город получателя: </div>
-                <div className="disp_data_el">
-                  {this.props.store.upload_manifest.default_template.RecCity}
-                </div>
-                <div className="disp_data_label">Адрес отправителя: </div>
-                <div className="disp_data_el">
-                  {this.props.store.upload_manifest.default_template.RecAdress}
-                </div>
-                <div className="disp_data_label">Компания получателя: </div>
-                <div className="disp_data_el">
-                  {this.props.store.upload_manifest.default_template.RecCompany}
-                </div>
-                <div className="disp_data_label">
-                  Контактное лицо отправителя:{" "}
-                </div>
-                <div className="disp_data_el">
-                  {this.props.store.upload_manifest.default_template.RecPerson}
-                </div>
-                <div className="disp_data_label">
-                  Контактный телефон отправителя:{" "}
-                </div>
-                <div className="disp_data_el">
-                  {this.props.store.upload_manifest.default_template.RecPhone}
-                </div>
-                <div className="disp_data_label">
-                  Электронный адрес отправителя:{" "}
-                </div>
-                <div className="disp_data_el">
-                  {this.props.store.upload_manifest.default_template.RecEmail}
-                </div>
-                <div className="disp_data_label">
-                  Дополнительная информация отправителя:{" "}
-                </div>
-                <div className="disp_data_el">
-                  {this.props.store.upload_manifest.default_template.RecAddInfo}
-                </div>
-                <div className="disp_data_label">Страховая стоимость: </div>
-                <div className="disp_data_el">
-                  {
-                    this.props.store.upload_manifest.default_template
-                      .InsureValue
-                  }
-                </div>
-                <div className="disp_data_label">
-                  Сумма наложенного платежа:{" "}
-                </div>
-                <div className="disp_data_el">
-                  {this.props.store.upload_manifest.default_template.COD}
-                </div>
-                <div className="disp_data_label">Срочность доставки: </div>
-                <div className="disp_data_el">
-                  {this.props.store.upload_manifest.default_template.DelType}
-                </div>
-                <div className="disp_data_label">Тип оплаты: </div>
-                <div className="disp_data_el">
-                  {this.props.store.upload_manifest.default_template.PayType}
-                </div>
-              </div>
-            </Modal>
-          </div>
-          <div className="disp_data_label">Шаблоны адресов:</div>
-          <div className="disp_data_el">
-            {this.props.store.upload_manifest.disp_template_list.length}
-          </div>
-          <div>
-            <button
-              onClick={() => {
-                this.props.set_upload_manifest_open_modal_dt(true);
-              }}
-              className="ui icon button mini"
-            >
+        <Modal
+          trigger={
+            <button className="ui icon button mini">
               <i className="ek-eye"></i>
             </button>
-            <Modal
-              onClose={() =>
-                this.props.set_upload_manifest_open_modal_dt(false)
-              }
-              open={this.props.store.upload_manifest.open_modal_dt}
-              header="Шаблоны адресов"
-              height="90%"
-              width="90%"
-            >
-              <div className="table-wrapper">
-                <table className="bordered">
-                  <thead>
-                    <tr>
-                      <th>Имя</th>
-                      <th>Город</th>
-                      <th>Адрес</th>
-                      <th>Телефон</th>
-                      <th>Конт. лицо</th>
-                      <th>Компания</th>
-                      <th>Доп. инфо</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {this.props.store.upload_manifest.disp_template_list.map(
-                      (el, index) => (
-                        <tr
-                          key={index}
-                          // onDoubleClick={this.upload_manifest_click_template_row.bind(
-                          //   this,
-                          //   el,
-                          // )}
-                        >
-                          <td>{el.label}</td>
-                          <td>{el.City}</td>
-                          <td>{el.Adress}</td>
-                          <td>{el.Phone}</td>
-                          <td>{el.Person}</td>
-                          <td>{el.Company}</td>
-                          <td>{el.AddInfo}</td>
-                          <td>
-                            <input
-                              onChange={() =>
-                                this.props.upload_manifest_check_template_checkbox(
-                                  el.Key,
-                                )
-                              }
-                              type="checkbox"
-                              className="input-checkbox"
-                              checked={el.selected}
-                            ></input>
-                          </td>
-                        </tr>
-                      ),
-                    )}
-                  </tbody>
-                </table>
-              </div>
-              {this.props.store.upload_manifest.disp_template_list.filter(
-                (el) => {
-                  return el.selected;
-                },
-              ).length > 0 ? (
-                <button
-                  className="upload_manifest_create_button"
-                  onClick={this.create_disp_from_temlate.bind(this)}
-                >
-                  Cоздать (
-                  {
-                    this.props.store.upload_manifest.disp_template_list.filter(
-                      (el) => {
-                        return el.selected;
-                      },
-                    ).length
-                  }
-                  )
-                </button>
-              ) : (
-                <button disabled>Cоздать</button>
-              )}
-            </Modal>
-          </div>
-          {this.props.store.login.consolidate_upload_manifest ? (
-            <div className="disp_data_label">Тип загрузки:</div>
-          ) : null}
-          {this.props.store.login.consolidate_upload_manifest ? (
+          }
+          header="Шаблон импорта"
+          height="90%"
+          width="700px"
+        >
+          {upload_manifest.import_template.label}
+
+          <div className="upload_mainfest_modal_info">
+            <div className="disp_data_label">Номер накладной: </div>
             <div className="disp_data_el">
-              <Select
-                options={UploadInOneList}
-                styles={customStyles}
-                value={this.props.store.upload_manifest.upload_in_one}
-                onChange={(values) => this.props.set_upload_in_one(values)}
-              />
+              {upload_manifest.import_template.Num}
             </div>
-          ) : null}
-        </div>
+            <div className="disp_data_label">Город отправителя: </div>
+            <div className="disp_data_el">
+              {upload_manifest.import_template.SendCity}
+            </div>
+            <div className="disp_data_label">Адрес отправителя: </div>
+            <div className="disp_data_el">
+              {upload_manifest.import_template.SendAdress}
+            </div>
+            <div className="disp_data_label">Компания отправителя: </div>
+            <div className="disp_data_el">
+              {upload_manifest.import_template.SendCompany}
+            </div>
+            <div className="disp_data_label">Контактное лицо отправителя: </div>
+            <div className="disp_data_el">
+              {upload_manifest.import_template.SendPerson}
+            </div>
+            <div className="disp_data_label">
+              Контактный телефон отправителя:{" "}
+            </div>
+            <div className="disp_data_el">
+              {upload_manifest.import_template.SendPhone}
+            </div>
+            <div className="disp_data_label">
+              Электронный адрес отправителя:{" "}
+            </div>
+            <div className="disp_data_el">
+              {upload_manifest.import_template.SendEmail}
+            </div>
+            <div className="disp_data_label">
+              Дополнительная информация отправителя:{" "}
+            </div>
+            <div className="disp_data_el">
+              {upload_manifest.import_template.SendAddInfo}
+            </div>
+            <div className="disp_data_label">Город получателя: </div>
+            <div className="disp_data_el">
+              {upload_manifest.import_template.RecCity}
+            </div>
+            <div className="disp_data_label">Адрес отправителя: </div>
+            <div className="disp_data_el">
+              {upload_manifest.import_template.RecAdress}
+            </div>
+            <div className="disp_data_label">Компания получателя: </div>
+            <div className="disp_data_el">
+              {upload_manifest.import_template.RecCompany}
+            </div>
+            <div className="disp_data_label">Контактное лицо отправителя: </div>
+            <div className="disp_data_el">
+              {upload_manifest.import_template.RecPerson}
+            </div>
+            <div className="disp_data_label">
+              Контактный телефон отправителя:{" "}
+            </div>
+            <div className="disp_data_el">
+              {upload_manifest.import_template.RecPhone}
+            </div>
+            <div className="disp_data_label">
+              Электронный адрес отправителя:{" "}
+            </div>
+            <div className="disp_data_el">
+              {upload_manifest.import_template.RecEmail}
+            </div>
+            <div className="disp_data_label">
+              Дополнительная информация отправителя:{" "}
+            </div>
+            <div className="disp_data_el">
+              {upload_manifest.import_template.RecAddInfo}
+            </div>
+            <div className="disp_data_label">Страховая стоимость: </div>
+            <div className="disp_data_el">
+              {upload_manifest.import_template.InsureValue}
+            </div>
+            <div className="disp_data_label">Сумма наложенного платежа: </div>
+            <div className="disp_data_el">
+              {upload_manifest.import_template.COD}
+            </div>
+            <div className="disp_data_label">Количество мест: </div>
+            <div className="disp_data_el">
+              {upload_manifest.import_template.Total}
+            </div>
+            <div className="disp_data_label">Общий фактический вес: </div>
+            <div className="disp_data_el">
+              {upload_manifest.import_template.Weight}
+            </div>
+            <div className="disp_data_label">Общий объемный вес: </div>
+            <div className="disp_data_el">
+              {upload_manifest.import_template.Volume}
+            </div>
+          </div>
+        </Modal>
+      </div>
 
-        <div>
-          <table className="bordered">{this.create_table()}</table>
+      <div className="disp_data_label">Значения по умолчанию:</div>
+      <div className="disp_data_el">
+        <Select
+          options={upload_manifest.default_template_list}
+          styles={customStyles}
+          value={upload_manifest.default_template}
+          onChange={(values) => set_default_template(values)}
+        />
+      </div>
+      <div>
+        <Modal
+          trigger={
+            <button className="ui icon button mini">
+              <i className="ek-eye"></i>
+            </button>
+          }
+          header="Шаблон значений по умалчанию"
+          height="90%"
+          width="700px"
+        >
+          {upload_manifest.default_template.label}
+          <div className="upload_mainfest_modal_info">
+            <div className="disp_data_label">Город отправителя: </div>
+            <div className="disp_data_el">
+              {upload_manifest.default_template.SendCity}
+            </div>
+            <div className="disp_data_label">Адрес отправителя: </div>
+            <div className="disp_data_el">
+              {upload_manifest.default_template.SendAdress}
+            </div>
+            <div className="disp_data_label">Компания отправителя: </div>
+            <div className="disp_data_el">
+              {upload_manifest.default_template.SendCompany}
+            </div>
+            <div className="disp_data_label">Контактное лицо отправителя: </div>
+            <div className="disp_data_el">
+              {upload_manifest.default_template.SendPerson}
+            </div>
+            <div className="disp_data_label">
+              Контактный телефон отправителя:{" "}
+            </div>
+            <div className="disp_data_el">
+              {upload_manifest.default_template.SendPhone}
+            </div>
+            <div className="disp_data_label">
+              Электронный адрес отправителя:{" "}
+            </div>
+            <div className="disp_data_el">
+              {upload_manifest.default_template.SendEmail}
+            </div>
+            <div className="disp_data_label">
+              Дополнительная информация отправителя:{" "}
+            </div>
+            <div className="disp_data_el">
+              {upload_manifest.default_template.SendAddInfo}
+            </div>
+            <div className="disp_data_label">Город получателя: </div>
+            <div className="disp_data_el">
+              {upload_manifest.default_template.RecCity}
+            </div>
+            <div className="disp_data_label">Адрес отправителя: </div>
+            <div className="disp_data_el">
+              {upload_manifest.default_template.RecAdress}
+            </div>
+            <div className="disp_data_label">Компания получателя: </div>
+            <div className="disp_data_el">
+              {upload_manifest.default_template.RecCompany}
+            </div>
+            <div className="disp_data_label">Контактное лицо отправителя: </div>
+            <div className="disp_data_el">
+              {upload_manifest.default_template.RecPerson}
+            </div>
+            <div className="disp_data_label">
+              Контактный телефон отправителя:{" "}
+            </div>
+            <div className="disp_data_el">
+              {upload_manifest.default_template.RecPhone}
+            </div>
+            <div className="disp_data_label">
+              Электронный адрес отправителя:{" "}
+            </div>
+            <div className="disp_data_el">
+              {upload_manifest.default_template.RecEmail}
+            </div>
+            <div className="disp_data_label">
+              Дополнительная информация отправителя:{" "}
+            </div>
+            <div className="disp_data_el">
+              {upload_manifest.default_template.RecAddInfo}
+            </div>
+            <div className="disp_data_label">Страховая стоимость: </div>
+            <div className="disp_data_el">
+              {upload_manifest.default_template.InsureValue}
+            </div>
+            <div className="disp_data_label">Сумма наложенного платежа: </div>
+            <div className="disp_data_el">
+              {upload_manifest.default_template.COD}
+            </div>
+            <div className="disp_data_label">Срочность доставки: </div>
+            <div className="disp_data_el">
+              {upload_manifest.default_template.DelType}
+            </div>
+            <div className="disp_data_label">Тип оплаты: </div>
+            <div className="disp_data_el">
+              {upload_manifest.default_template.PayType}
+            </div>
+          </div>
+        </Modal>
+      </div>
+      <div className="disp_data_label">Шаблоны адресов:</div>
+      <div className="disp_data_el">
+        {upload_manifest.disp_template_list.length}
+      </div>
+      <div>
+        <button
+          onClick={() => {
+            set_upload_manifest_open_modal_dt(true);
+          }}
+          className="ui icon button mini"
+        >
+          <i className="ek-eye"></i>
+        </button>
+        <Modal
+          onClose={() => set_upload_manifest_open_modal_dt(false)}
+          open={upload_manifest.open_modal_dt}
+          header="Шаблоны адресов"
+          height="90%"
+          width="90%"
+        >
+          <div className="table-wrapper">
+            <table className="bordered">
+              <thead>
+                <tr>
+                  <th>Имя</th>
+                  <th>Город</th>
+                  <th>Адрес</th>
+                  <th>Телефон</th>
+                  <th>Конт. лицо</th>
+                  <th>Компания</th>
+                  <th>Доп. инфо</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {upload_manifest.disp_template_list.map((el, index) => (
+                  <tr key={index}>
+                    <td>{el.label}</td>
+                    <td>{el.City}</td>
+                    <td>{el.Adress}</td>
+                    <td>{el.Phone}</td>
+                    <td>{el.Person}</td>
+                    <td>{el.Company}</td>
+                    <td>{el.AddInfo}</td>
+                    <td>
+                      <input
+                        onChange={() =>
+                          upload_manifest_check_template_checkbox(el.Key)
+                        }
+                        type="checkbox"
+                        className="input-checkbox"
+                        checked={el.selected}
+                      ></input>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          {upload_manifest.disp_template_list.filter((el) => {
+            return el.selected;
+          }).length > 0 ? (
+            <button
+              className="upload_manifest_create_button"
+              onClick={create_disp_from_temlate()}
+            >
+              Cоздать (
+              {
+                upload_manifest.disp_template_list.filter((el) => {
+                  return el.selected;
+                }).length
+              }
+              )
+            </button>
+          ) : (
+            <button disabled>Cоздать</button>
+          )}
+        </Modal>
+      </div>
+      {login.consolidate_upload_manifest ? (
+        <div className="disp_data_label">Тип загрузки:</div>
+      ) : null}
+      {login.consolidate_upload_manifest ? (
+        <div className="disp_data_el">
+          <Select
+            options={UploadInOneList}
+            styles={customStyles}
+            value={upload_manifest.upload_in_one}
+            onChange={(values) => set_upload_in_one(values)}
+          />
         </div>
+      ) : null}
+    </div>
+  );
 
-        <div>
-          {this.props.store.upload_manifest.disp_data.length > 0 ? (
-            <div className="upload_manifest_disp_data">
-              <div className="upload_manifest_disp_data_header">
-                <div className="upload_manifest_data_label_header">
-                  Данные по грузу:
+  const tableData = create_table();
+
+  const result = (
+    <div>
+      {upload_manifest.disp_data.length > 0 ? (
+        <div className="upload_manifest_disp_data">
+          <div className="upload_manifest_disp_data_header">
+            <div className="upload_manifest_data_label_header">
+              Данные по грузу:
+            </div>
+            <div></div>
+            <div className="upload_manifest_data_label_header">
+              Данные отправителя:
+            </div>
+            <div></div>
+            <div className="upload_manifest_data_label_header">
+              Данные получателя:
+            </div>
+            <div></div>
+            <div className="upload_manifest_data_label_header">
+              Состояние загрузки:
+            </div>
+          </div>
+
+          {upload_manifest.disp_data.map((el, index) => {
+            let RowClassName = "upload_manifest_disp_data_body";
+            if (el.Comment === "Консолидация") {
+              RowClassName = "upload_manifest_disp_data_body consolidate_row";
+            }
+
+            return (
+              <div className={RowClassName} key={index}>
+                <div className="upload_manifest_cargo_data upload_manifest_disp_data_body_item">
+                  <div className="upload_manifest_data_label">
+                    Номер накладной:
+                  </div>
+                  <div className="upload_manifest_data_el">{el.Num}</div>
+                  <div className="upload_manifest_data_label">Итого мест:</div>
+                  <div className="upload_manifest_data_el">
+                    <input
+                      value={el.Total}
+                      onChange={(e) => {
+                        set_upload_manifest_disp_data_total(
+                          el.Key,
+                          e.target.value,
+                        );
+                      }}
+                    ></input>
+                  </div>
+                  <div className="upload_manifest_data_label">
+                    Фактический вес:
+                  </div>
+                  <div className="upload_manifest_data_el">
+                    <input
+                      value={el.Weight}
+                      onChange={(e) => {
+                        set_upload_manifest_disp_data_weight(
+                          el.Key,
+                          e.target.value,
+                        );
+                      }}
+                    ></input>
+                  </div>
+                  <div className="upload_manifest_data_label">
+                    Объемный вес:
+                  </div>
+                  <div className="upload_manifest_data_el">
+                    <input
+                      value={el.Volume}
+                      onChange={(e) => {
+                        set_upload_manifest_disp_data_volume(
+                          el.Key,
+                          e.target.value,
+                        );
+                      }}
+                    ></input>
+                  </div>
+                  <div className="upload_manifest_data_label">
+                    Страховая стоимость:
+                  </div>
+                  <div className="upload_manifest_data_el">
+                    {el.InsureValue}
+                  </div>
+                  <div className="upload_manifest_data_label">
+                    Налож. платеж:
+                  </div>
+                  <div className="upload_manifest_data_el">{el.COD}</div>
                 </div>
                 <div></div>
-                <div className="upload_manifest_data_label_header">
-                  Данные отправителя:
+                <div className="upload_manifest_rec_send_data upload_manifest_disp_data_body_item">
+                  <div className="upload_manifest_data_label">Город:</div>
+                  <div className="upload_manifest_data_el">{el.SendCity}</div>
+                  <div className="upload_manifest_data_label">Адрес:</div>
+                  <div className="upload_manifest_data_el">{el.SendAdress}</div>
+                  <div className="upload_manifest_data_label">Компания:</div>
+                  <div className="upload_manifest_data_el">
+                    {el.SendCompany}
+                  </div>
+                  <div className="upload_manifest_data_label">Конт.лицо:</div>
+                  <div className="upload_manifest_data_el">{el.SendPerson}</div>
+                  <div className="upload_manifest_data_label">Телефон:</div>
+                  <div className="upload_manifest_data_el">{el.SendPhone}</div>
+                  <div className="upload_manifest_data_label">Доп.инфо:</div>
+                  <div className="upload_manifest_data_el">
+                    {el.SendAddInfo}
+                  </div>
                 </div>
                 <div></div>
-                <div className="upload_manifest_data_label_header">
-                  Данные получателя:
+                <div className="upload_manifest_rec_send_data upload_manifest_disp_data_body_item">
+                  <div className="upload_manifest_data_label">Город:</div>
+                  <div className="upload_manifest_data_el">{el.RecCity}</div>
+                  <div className="upload_manifest_data_label">Адрес:</div>
+                  <div className="upload_manifest_data_el">{el.RecAdress}</div>
+                  <div className="upload_manifest_data_label">Компания:</div>
+                  <div className="upload_manifest_data_el">{el.RecCompany}</div>
+                  <div className="upload_manifest_data_label">Конт.лицо:</div>
+                  <div className="upload_manifest_data_el">{el.RecPerson}</div>
+                  <div className="upload_manifest_data_label">Телефон:</div>
+                  <div className="upload_manifest_data_el">{el.RecPhone}</div>
+                  <div className="upload_manifest_data_label">Доп.инфо:</div>
+                  <div className="upload_manifest_data_el">{el.RecAddInfo}</div>
                 </div>
                 <div></div>
-                <div className="upload_manifest_data_label_header">
-                  Состояние загрузки:
+                <div className="upload_manifest_disp_data_body_item">
+                  <div className="upload_manifest_data_el">
+                    Статус: {el.Status}
+                  </div>
+                  {el.Comment === "" ? null : (
+                    <div className="upload_manifest_data_el">{el.Comment}</div>
+                  )}
+
+                  {el.Status === "Загружено" ? null : (
+                    <button
+                      size="mini"
+                      onClick={() => upload_manifest_remove_disp(el.Key)}
+                    >
+                      <i className="ek-bin" /> Удалить
+                    </button>
+                  )}
                 </div>
               </div>
-
-              {this.props.store.upload_manifest.disp_data.map((el, index) => {
-                let RowClassName = "upload_manifest_disp_data_body";
-                if (el.Comment === "Консолидация") {
-                  RowClassName =
-                    "upload_manifest_disp_data_body consolidate_row";
-                }
-
-                return (
-                  <div className={RowClassName} key={index}>
-                    <div className="upload_manifest_cargo_data upload_manifest_disp_data_body_item">
-                      <div className="upload_manifest_data_label">
-                        Номер накладной:
-                      </div>
-                      <div className="upload_manifest_data_el">{el.Num}</div>
-                      <div className="upload_manifest_data_label">
-                        Итого мест:
-                      </div>
-                      <div className="upload_manifest_data_el">
-                        <input
-                          value={el.Total}
-                          onChange={(e) => {
-                            this.props.set_upload_manifest_disp_data_total(
-                              el.Key,
-                              e.target.value,
-                            );
-                          }}
-                        ></input>
-                      </div>
-                      <div className="upload_manifest_data_label">
-                        Фактический вес:
-                      </div>
-                      <div className="upload_manifest_data_el">
-                        <input
-                          value={el.Weight}
-                          onChange={(e) => {
-                            this.props.set_upload_manifest_disp_data_weight(
-                              el.Key,
-                              e.target.value,
-                            );
-                          }}
-                        ></input>
-                      </div>
-                      <div className="upload_manifest_data_label">
-                        Объемный вес:
-                      </div>
-                      <div className="upload_manifest_data_el">
-                        <input
-                          value={el.Volume}
-                          onChange={(e) => {
-                            this.props.set_upload_manifest_disp_data_volume(
-                              el.Key,
-                              e.target.value,
-                            );
-                          }}
-                        ></input>
-                      </div>
-                      <div className="upload_manifest_data_label">
-                        Страховая стоимость:
-                      </div>
-                      <div className="upload_manifest_data_el">
-                        {el.InsureValue}
-                      </div>
-                      <div className="upload_manifest_data_label">
-                        Налож. платеж:
-                      </div>
-                      <div className="upload_manifest_data_el">{el.COD}</div>
-                    </div>
-                    <div></div>
-                    <div className="upload_manifest_rec_send_data upload_manifest_disp_data_body_item">
-                      <div className="upload_manifest_data_label">Город:</div>
-                      <div className="upload_manifest_data_el">
-                        {el.SendCity}
-                      </div>
-                      <div className="upload_manifest_data_label">Адрес:</div>
-                      <div className="upload_manifest_data_el">
-                        {el.SendAdress}
-                      </div>
-                      <div className="upload_manifest_data_label">
-                        Компания:
-                      </div>
-                      <div className="upload_manifest_data_el">
-                        {el.SendCompany}
-                      </div>
-                      <div className="upload_manifest_data_label">
-                        Конт.лицо:
-                      </div>
-                      <div className="upload_manifest_data_el">
-                        {el.SendPerson}
-                      </div>
-                      <div className="upload_manifest_data_label">Телефон:</div>
-                      <div className="upload_manifest_data_el">
-                        {el.SendPhone}
-                      </div>
-                      <div className="upload_manifest_data_label">
-                        Доп.инфо:
-                      </div>
-                      <div className="upload_manifest_data_el">
-                        {el.SendAddInfo}
-                      </div>
-                    </div>
-                    <div></div>
-                    <div className="upload_manifest_rec_send_data upload_manifest_disp_data_body_item">
-                      <div className="upload_manifest_data_label">Город:</div>
-                      <div className="upload_manifest_data_el">
-                        {el.RecCity}
-                      </div>
-                      <div className="upload_manifest_data_label">Адрес:</div>
-                      <div className="upload_manifest_data_el">
-                        {el.RecAdress}
-                      </div>
-                      <div className="upload_manifest_data_label">
-                        Компания:
-                      </div>
-                      <div className="upload_manifest_data_el">
-                        {el.RecCompany}
-                      </div>
-                      <div className="upload_manifest_data_label">
-                        Конт.лицо:
-                      </div>
-                      <div className="upload_manifest_data_el">
-                        {el.RecPerson}
-                      </div>
-                      <div className="upload_manifest_data_label">Телефон:</div>
-                      <div className="upload_manifest_data_el">
-                        {el.RecPhone}
-                      </div>
-                      <div className="upload_manifest_data_label">
-                        Доп.инфо:
-                      </div>
-                      <div className="upload_manifest_data_el">
-                        {el.RecAddInfo}
-                      </div>
-                    </div>
-                    <div></div>
-                    <div className="upload_manifest_disp_data_body_item">
-                      <div className="upload_manifest_data_el">
-                        Статус: {el.Status}
-                      </div>
-                      {el.Comment === "" ? null : (
-                        <div className="upload_manifest_data_el">
-                          {el.Comment}
-                        </div>
-                      )}
-
-                      {el.Status === "Загружено" ? (
-                        <ReactToPrint
-                          trigger={() => (
-                            <div className="upload_manifest_button_container">
-                              <button size="mini">
-                                <i className="ek-printer" /> Печать
-                              </button>
-                            </div>
-                          )}
-                          content={() => this.componentRef[el.Key]}
-                        />
-                      ) : (
-                        <button
-                          size="mini"
-                          onClick={() =>
-                            this.props.upload_manifest_remove_disp(el.Key)
-                          }
-                        >
-                          <i className="ek-bin" /> Удалить
-                        </button>
-                      )}
-
-                      {el.Status === "Загружено" ? (
-                        <div style={{ display: "none" }}>
-                          <ComponentToPrint
-                            disp={[el.print_data]}
-                            ref={(cur_el) =>
-                              (this.componentRef[el.Key] = cur_el)
-                            }
-                          />
-                        </div>
-                      ) : null}
-
-                      {el.Status === "Загружено" ? (
-                        <ReactToPrint
-                          trigger={() => (
-                            <div className="upload_manifest_button_container">
-                              <button size="mini">
-                                <i className="ek-printer" /> Печать наклеек
-                              </button>
-                            </div>
-                          )}
-                          content={() => this.stickerRef[el.Key]}
-                        />
-                      ) : null}
-
-                      {el.Status === "Загружено" ? (
-                        <div style={{ display: "none" }}>
-                          <StickerToPrint
-                            disp={[el.print_data]}
-                            ref={(cur_el) => (this.stickerRef[el.Key] = cur_el)}
-                          />
-                        </div>
-                      ) : null}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          ) : null}
+            );
+          })}
         </div>
+      ) : null}
+    </div>
+  );
+  return (
+    <div>
+      <div>
+        <textarea
+          onChange={(e) => set_text_area(e.target.value)}
+          value={upload_manifest.text_area}
+          type="text"
+        ></textarea>
       </div>
-    );
-  }
-}
+      {control_panel}
+      {templates}
 
-export default connect(
-  (state) => ({
-    store: state,
-  }),
-  (dispatch) => ({
-    set_text_area: (param) => {
-      dispatch({ type: "set_text_area", payload: param });
-    },
-    set_data_upload_manifest: () => {
-      dispatch({ type: "set_data_upload_manifest" });
-    },
-    set_default_template: (param) => {
-      dispatch({ type: "set_default_template", payload: param });
-    },
-    set_import_template: (param) => {
-      dispatch({ type: "set_import_template", payload: param });
-    },
-    set_disp_data: (param) => {
-      dispatch({ type: "set_disp_data", payload: param });
-    },
-    reset_disp_data: () => {
-      dispatch({ type: "reset_disp_data" });
-    },
-    set_disp_status: (param) => {
-      dispatch({ type: "set_disp_status", payload: param });
-    },
-    set_upload_in_one: (param) => {
-      dispatch({ type: "set_upload_in_one", payload: param });
-    },
-    set_upload_manifest_open_modal_dt: (param) => {
-      dispatch({ type: "set_upload_manifest_open_modal_dt", payload: param });
-    },
-    upload_manifest_check_template_checkbox: (param) => {
-      dispatch({
-        type: "upload_manifest_check_template_checkbox",
-        payload: param,
-      });
-    },
-    upload_manifest_check_checkbox: (param) => {
-      dispatch({ type: "upload_manifest_check_checkbox", payload: param });
-    },
-    set_consolidate_checkbox_index: (param) => {
-      dispatch({ type: "set_consolidate_checkbox_index", payload: param });
-    },
-    upload_manifest_reset_template_checkbox: () => {
-      dispatch({ type: "upload_manifest_reset_template_checkbox" });
-    },
-    set_upload_manifest_disp_data_total: (key, value) => {
-      dispatch({
-        type: "set_upload_manifest_disp_data_total",
-        payload: { key: key, value: value },
-      });
-    },
-    set_upload_manifest_disp_data_weight: (key, value) => {
-      dispatch({
-        type: "set_upload_manifest_disp_data_weight",
-        payload: { key: key, value: value },
-      });
-    },
-    set_upload_manifest_disp_data_volume: (key, value) => {
-      dispatch({
-        type: "set_upload_manifest_disp_data_volume",
-        payload: { key: key, value: value },
-      });
-    },
-    upload_manifest_remove_disp: (param) => {
-      dispatch({ type: "upload_manifest_remove_disp", payload: param });
-    },
-  }),
-)(Screen);
+      <div>
+        <table className="bordered">{tableData}</table>
+      </div>
+
+      {result}
+    </div>
+  );
+};
