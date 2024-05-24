@@ -1,5 +1,5 @@
 import React from "react";
-import Barcode from "react-barcode";
+import QRCode from "qrcode.react";
 import "./disp.css";
 
 class StikerToPrint extends React.Component {
@@ -14,20 +14,18 @@ class StikerToPrint extends React.Component {
           <div className="sticker_info">{disp.data.RecAdress}</div>
           <div className="sticker_info">{disp.data.DelMethod}</div>
           <div className="sticker_info">{disp.data.Customer}</div>
-          <div className="sticker_cargo">
-            {i + 1} из {disp.data.Total}
+          <div className="sticker_code_wrapper">
+            <div className="sticker_cargo_wrapper">
+              <div className="sticker_cargo">
+                {i + 1} из {disp.data.Total}
+              </div>
+              <div className="sticker_number">{disp.data.Number}</div>
+              <div className="sticker_site">express-kinetika.ru</div>
+            </div>
+            <div className="sticker_barcode">
+              <QRCode size={96} value={disp.data.Number} />
+            </div>
           </div>
-          <div className="sticker_barcode">
-            <Barcode
-              value={disp.data.Number}
-              format="CODE39"
-              width={1}
-              height={30}
-            />
-          </div>
-          {/* <div className="sticker_site">
-            <p className="page_break">www.express-kinetika.ru</p>
-          </div> */}
         </div>,
       );
     }
