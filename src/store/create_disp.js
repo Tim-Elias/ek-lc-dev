@@ -9,10 +9,6 @@ if (dd < 10) {
   dd = "0" + dd;
 }
 
-// const hours = today.getUTCHours() + 7;
-
-// const date = y + '-' + mm + '-' + dd;
-
 const initialState = {
   warningAlert: false,
   warningMessage: "",
@@ -441,10 +437,7 @@ export default function dispatch(state = initialState, action) {
         SendPerson: action.payload.SendPerson,
         SendAddInfo: action.payload.SendAddInfo,
         SendEmail: action.payload.SendEmail,
-
-        SendTerminal: action.payload.SendTerminal,
-        // SendSelectTerminal: {},
-
+        SendTerminal: !!action.payload.SendTerminal,
         InsureValue: action.payload.InsureValue,
         COD: action.payload.COD,
         RecAdress: action.payload.RecAdress,
@@ -454,8 +447,7 @@ export default function dispatch(state = initialState, action) {
         RecAddInfo: action.payload.RecAddInfo,
         RecEmail: action.payload.RecEmail,
 
-        RecTerminal: action.payload.RecTerminal,
-        // RecSelectTerminal: {},
+        RecTerminal: !!action.payload.RecTerminal,
         Fragile: action.payload.Fragile,
         TMax: action.payload.TMax,
         TMin: action.payload.TMin,

@@ -10,7 +10,7 @@ import MContent from "./m_screen/m_content";
 import MLogin from "./m_screen/m_login";
 import { IState } from "./store";
 
-export const HomeContainer = () => {
+export const App = () => {
   const logged = useSelector((state: IState) => state.login.logged);
   const width = window.screen.width;
 

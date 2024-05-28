@@ -208,12 +208,13 @@
     }
 
     .sticker_info{
-        font-size: 10pt;
+        font-size: 12px;
+        height: 12px;
     }
 
     .sticker_number{
         text-align: center;
-        font-size: 11pt;
+        font-size: 14px;
         font-weight: 600;
         width: 100%;
     }
@@ -249,9 +250,9 @@
 
     .sticker_rec_city{
         text-align: center;
-        font-size: 18pt;
-        height: 28px;
-        padding: 5px;
+        font-size: 20px;
+        height: 24px;
+        padding: 1px;
         
     }
 

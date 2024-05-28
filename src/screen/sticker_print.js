@@ -23,7 +23,7 @@ class StikerToPrint extends React.Component {
               <div className="sticker_site">express-kinetika.ru</div>
             </div>
             <div className="sticker_barcode">
-              <QRCode size={96} value={disp.data.Number} />
+              <QRCode size={96} value={`${disp.data.Number}%${i + 1}`} />
             </div>
           </div>
         </div>,
