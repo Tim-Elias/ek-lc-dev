@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import MHeader from "./m_header";
 import MMenu from "./m_menu";
 import "./mobile.css";
-import MStorage from "./m_storage";
+import { MStorage } from "./m_storage";
 import Wait from "../screen/wait";
 import MSetting from "./m_setting";
 import MDisp from "./m_disp";

@@ -1,224 +1,191 @@
-import React from "react";
-import { connect } from "react-redux";
+import React, { useMemo, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { get_data } from "./../common/common_modules";
 import Select from "react-select";
 import { customStyles } from "./../common/common_style";
 
-class Screen extends React.Component {
-  clear_default_send = () => {
-    this.props.set_user_default_send("0");
-  };
+const Screen = () => {
+  const dispatch = useDispatch();
+  const store = useSelector((state) => state);
 
-  clear_default_rec = () => {
-    this.props.set_user_default_rec("0");
-  };
+  const handleInputChange = useCallback(
+    (type, value) => {
+      dispatch({ type, payload: value });
+    },
+    [dispatch],
+  );
 
-  save_changes_user_data = () => {
+  const saveChangesUserData = useCallback(async () => {
     const data = {
-      userkey: this.props.store.login.userkey,
-      phone: this.props.store.login.phone,
-      email: this.props.store.login.email,
-      name: this.props.store.login.alias,
-      default_send: this.props.store.login.default_send,
-      default_rec: this.props.store.login.default_rec,
+      userkey: store.login.userkey,
+      phone: store.login.phone,
+      email: store.login.email,
+      name: store.login.alias,
+      default_send: store.login.default_send,
+      default_rec: store.login.default_rec,
     };
 
-    get_data("edituserdata", data).then(
-      (result) => {
-        this.props.save_changes_user_data(result);
-        this.props.modules.set_modal_show(true);
-        this.props.modules.set_modal_text("Данные успешно сохранены");
-        this.props.modules.set_modal_header("Успешно");
-      },
-      (err) => {
-        console.log(err);
-
-        this.props.modules.set_modal_show(true);
-        this.props.modules.set_modal_header("Ошибка");
-        this.props.modules.set_modal_text(err);
-      },
-    );
-  };
-
-  click_import_template_list = () => {
-    this.props.modules.set_active_window("import_template_list");
-    this.props.modules.set_last_window("setting");
-  };
-
-  click_disp_template_list = () => {
-    this.props.modules.set_active_window("disp_template_list");
-    this.props.modules.set_last_window("setting");
-  };
-
-  click_default_template_list = () => {
-    this.props.modules.set_active_window("default_template_list");
-    this.props.modules.set_last_window("setting");
-  };
-
-  render() {
-    let default_send_template = {};
-    let default_rec_template = {};
-
-    if (this.props.store.login.default_send !== "0") {
-      default_send_template =
-        this.props.store.upload_manifest.disp_template_list.find(
-          (el) => el.Key === this.props.store.login.default_send,
-        );
+    try {
+      const result = await get_data("edituserdata", data);
+      dispatch({ type: "save_changes_user_data", payload: result });
+      dispatch({ type: "set_modal_show", payload: true });
+      dispatch({ type: "set_modal_text", payload: "Данные успешно сохранены" });
+      dispatch({ type: "set_modal_header", payload: "Успешно" });
+    } catch (err) {
+      console.log(err);
+      dispatch({ type: "set_modal_show", payload: true });
+      dispatch({ type: "set_modal_header", payload: "Ошибка" });
+      dispatch({ type: "set_modal_text", payload: err });
     }
+  }, [dispatch, store.login]);
 
-    if (this.props.store.login.default_rec !== "0") {
-      default_rec_template =
-        this.props.store.upload_manifest.disp_template_list.find(
-          (el) => el.Key === this.props.store.login.default_rec,
-        );
-    }
+  const handleTemplateChange = useCallback(
+    (type, values) => {
+      dispatch({ type, payload: values.Key });
+    },
+    [dispatch],
+  );
 
+  const default_send_template = useMemo(() => {
+    return store.login.default_send !== "0"
+      ? store.upload_manifest.disp_template_list.find(
+          (el) => el.Key === store.login.default_send,
+        )
+      : null;
+  }, [store.login.default_send, store.upload_manifest.disp_template_list]);
+
+  const default_rec_template = useMemo(() => {
+    return store.login.default_rec !== "0"
+      ? store.upload_manifest.disp_template_list.find(
+          (el) => el.Key === store.login.default_rec,
+        )
+      : null;
+  }, [store.login.default_rec, store.upload_manifest.disp_template_list]);
+
+  const isUserDataChanged = useMemo(() => {
+    const { original_data, ...currentData } = store.login;
     return (
-      <div>
-        <div className="disp_Number">
-          <div>
-            Основные настройки{" "}
-            {this.props.store.login.email !==
-              this.props.store.login.original_data.email ||
-            this.props.store.login.alias !==
-              this.props.store.login.original_data.username ||
-            this.props.store.login.default_send !==
-              this.props.store.login.original_data.default_send ||
-            this.props.store.login.default_rec !==
-              this.props.store.login.original_data.default_rec ||
-            this.props.store.login.phone !==
-              this.props.store.login.original_data.phone ? (
-              <button
-                style={{ margin: "0 5px", padding: "8px" }}
-                size="mini"
-                onClick={this.save_changes_user_data.bind(this)}
-              >
-                Сохранить изменения
-              </button>
-            ) : (
-              <button
-                style={{ margin: "0 5px", padding: "8px" }}
-                size="mini"
-                disabled
-              >
-                Сохранить изменения
-              </button>
-            )}
-          </div>
-        </div>
-        <div className="setting_general_data">
-          <div className="disp_data_label">Код пользователя:</div>
-          <div className="setting_data_el">
-            {this.props.store.login.userkey}
-          </div>
-          <div className="disp_data_label">Имя пользователя:</div>
-          <div className="setting_data_el">
-            <input
-              maxLength="100"
-              className="create_disp_data_input"
-              onChange={(e) => this.props.set_user_name(e.target.value)}
-              value={this.props.store.login.alias}
-              type="text"
-              placeholder="введите имя пользователя..."
-            />
-          </div>
-          <div className="disp_data_label">E-mail:</div>
-          <div className="setting_data_el">
-            <input
-              maxLength="100"
-              className="create_disp_data_input"
-              onChange={(e) => this.props.set_user_email(e.target.value)}
-              value={this.props.store.login.email}
-              type="text"
-              placeholder="введите e-mail..."
-            />
-          </div>
-          <div className="disp_data_label">Телефон</div>
-          <div className="setting_data_el">
-            <input
-              maxLength="11"
-              className="create_disp_data_input"
-              onChange={(e) => this.props.set_user_phone(e.target.value)}
-              value={this.props.store.login.phone}
-              type="text"
-              placeholder="введите номер телефона..."
-            />
-          </div>
-        </div>
-        <div className="setting_general_data_template">
-          <div className="disp_data_label">Шаблон отправителя по умолчанию</div>
-          <div className="setting_data_el">
-            <Select
-              options={this.props.store.upload_manifest.disp_template_list}
-              styles={customStyles}
-              value={default_send_template}
-              onChange={(values) =>
-                this.props.set_user_default_send(values.Key)
-              }
-            />
-          </div>
-          <div className="setting_template_button">
-            <button onClick={this.clear_default_send.bind(this)} size="mini">
-              X
-            </button>
-          </div>
-          <div className="disp_data_label">Шаблон получателя по умолчанию</div>
-          <div className="setting_data_el">
-            <Select
-              options={this.props.store.upload_manifest.disp_template_list}
-              styles={customStyles}
-              value={default_rec_template}
-              onChange={(values) => this.props.set_user_default_rec(values.Key)}
-            />
-          </div>
-          <div className="setting_template_button">
-            <button onClick={this.clear_default_rec.bind(this)} size="mini">
-              X
-            </button>
-          </div>
-        </div>
+      currentData.email !== original_data.email ||
+      currentData.alias !== original_data.username ||
+      currentData.default_send !== original_data.default_send ||
+      currentData.default_rec !== original_data.default_rec ||
+      currentData.phone !== original_data.phone
+    );
+  }, [store.login]);
 
-        <div className="disp_Number">
-          <div>Настройки шаблонов</div>
-        </div>
-        <div className="setting_template_data">
-          <div className="disp_data_label">
-            Шаблоны отправителей и получателей:
-          </div>
-          <div className="setting_data_el">
-            {this.props.store.upload_manifest.disp_template_list.length}
-          </div>
-          <div className="setting_template_button">
-            <button onClick={this.click_disp_template_list.bind(this)}>
-              Редактировать
-            </button>
-          </div>
+  return (
+    <div>
+      <div className="disp_Number">
+        <div>
+          Основные настройки{" "}
+          <button
+            style={{ margin: "0 5px", padding: "8px" }}
+            size="mini"
+            onClick={saveChangesUserData}
+            disabled={!isUserDataChanged}
+          >
+            Сохранить изменения
+          </button>
         </div>
       </div>
-    );
-  }
-}
+      <div className="setting_general_data">
+        <div className="disp_data_label">Код пользователя:</div>
+        <div className="setting_data_el">{store.login.userkey}</div>
+        <div className="disp_data_label">Имя пользователя:</div>
+        <div className="setting_data_el">
+          <input
+            maxLength="100"
+            className="create_disp_data_input"
+            onChange={(e) => handleInputChange("set_user_name", e.target.value)}
+            value={store.login.alias}
+            type="text"
+            placeholder="введите имя пользователя..."
+          />
+        </div>
+        <div className="disp_data_label">E-mail:</div>
+        <div className="setting_data_el">
+          <input
+            maxLength="100"
+            className="create_disp_data_input"
+            onChange={(e) =>
+              handleInputChange("set_user_email", e.target.value)
+            }
+            value={store.login.email}
+            type="text"
+            placeholder="введите e-mail..."
+          />
+        </div>
+        <div className="disp_data_label">Телефон</div>
+        <div className="setting_data_el">
+          <input
+            maxLength="11"
+            className="create_disp_data_input"
+            onChange={(e) =>
+              handleInputChange("set_user_phone", e.target.value)
+            }
+            value={store.login.phone}
+            type="text"
+            placeholder="введите номер телефона..."
+          />
+        </div>
+      </div>
+      <div className="setting_general_data_template">
+        <div className="disp_data_label">Шаблон отправителя по умолчанию</div>
+        <div className="setting_data_el">
+          <Select
+            options={store.upload_manifest.disp_template_list}
+            styles={customStyles}
+            value={default_send_template}
+            onChange={(values) =>
+              handleTemplateChange("set_user_default_send", values)
+            }
+          />
+        </div>
+        <div className="setting_template_button">
+          <button
+            onClick={() => handleInputChange("set_user_default_send", "0")}
+            size="mini"
+          >
+            X
+          </button>
+        </div>
+        <div className="disp_data_label">Шаблон получателя по умолчанию</div>
+        <div className="setting_data_el">
+          <Select
+            options={store.upload_manifest.disp_template_list}
+            styles={customStyles}
+            value={default_rec_template}
+            onChange={(values) =>
+              handleTemplateChange("set_user_default_rec", values)
+            }
+          />
+        </div>
+        <div className="setting_template_button">
+          <button
+            onClick={() => handleInputChange("set_user_default_rec", "0")}
+            size="mini"
+          >
+            X
+          </button>
+        </div>
+      </div>
 
-export default connect(
-  (state) => ({ store: state }),
-  (dispatch) => ({
-    set_user_email: (param) => {
-      dispatch({ type: "set_user_email", payload: param });
-    },
-    set_user_phone: (param) => {
-      dispatch({ type: "set_user_phone", payload: param });
-    },
-    set_user_name: (param) => {
-      dispatch({ type: "set_user_name", payload: param });
-    },
-    set_user_default_send: (param) => {
-      dispatch({ type: "set_user_default_send", payload: param });
-    },
-    set_user_default_rec: (param) => {
-      dispatch({ type: "set_user_default_rec", payload: param });
-    },
-    save_changes_user_data: (param) => {
-      dispatch({ type: "save_changes_user_data", payload: param });
-    },
-  }),
-)(Screen);
+      <div className="disp_Number">
+        <div>Настройки шаблонов</div>
+      </div>
+      <div className="setting_template_data">
+        <div className="disp_data_label">
+          Шаблоны отправителей и получателей:
+        </div>
+        <div className="setting_data_el">
+          {store.upload_manifest.disp_template_list.length}
+        </div>
+        <div className="setting_template_button">
+          <button onClick={click_disp_template_list}>Редактировать</button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Screen;

@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import MyDisp from "./my_disp";
-import CreateDisp from "./create_disp";
+import { CreateDisp } from "./create_disp";
 import Mutual from "./mutual";
 import Storage from "./storage";
 import Reciept from "./reciept";

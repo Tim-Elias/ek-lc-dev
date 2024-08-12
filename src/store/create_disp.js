@@ -17,7 +17,7 @@ const initialState = {
 
   CityList: [],
   CargoInfoType: { label: "Внести информацию о каждом грузе", value: false },
-  PayType: { label: "Безналичная оплата", value: "Безналичная оплата" },
+  PayType: undefined,
   PayerSelect: {},
   PayerList: [],
   Payer: { name: "", id: "" },

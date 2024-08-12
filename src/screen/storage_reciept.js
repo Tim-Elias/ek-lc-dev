@@ -1,107 +1,106 @@
-import React from "react";
-import { connect } from "react-redux";
+import React, { useEffect, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Sound from "react-sound";
 import done_sound from "./../common/ping.mp3";
 import err_sound from "./../common/err.mp3";
 import funk_sound from "./../common/funk.mp3";
 import { get_data } from "./../common/common_modules";
 
-class Screen extends React.Component {
-  done_sound_play = () => {
-    this.props.storage_reciept_set_done_sound(Sound.status.PLAYING);
-  };
+const Screen = () => {
+  const dispatch = useDispatch();
+  const store = useSelector((state) => state);
 
-  err_sound_play = () => {
-    this.props.storage_reciept_set_err_sound(Sound.status.PLAYING);
-  };
+  const done_sound_play = useCallback(() => {
+    dispatch({
+      type: "storage_reciept_set_done_sound",
+      payload: Sound.status.PLAYING,
+    });
+  }, [dispatch]);
 
-  funk_sound_play = () => {
-    this.props.storage_reciept_set_funk_sound(Sound.status.PLAYING);
-  };
+  const err_sound_play = useCallback(() => {
+    dispatch({
+      type: "storage_reciept_set_err_sound",
+      payload: Sound.status.PLAYING,
+    });
+  }, [dispatch]);
 
-  send_req = () => {
-    if (
-      this.props.store.storage_reciept.barcode.substring(0, 9) === "0000-0000"
-    ) {
-      let zone = this.props.store.storage_reciept.barcode.substring(10);
-      let find_zone = this.props.store.storage_reciept.zone_list.find(
-        (el) => el === zone,
-      );
+  const funk_sound_play = useCallback(() => {
+    dispatch({
+      type: "storage_reciept_set_funk_sound",
+      payload: Sound.status.PLAYING,
+    });
+  }, [dispatch]);
+
+  const send_req = useCallback(() => {
+    const { barcode, zone_list, selected_zone, storage } =
+      store.storage_reciept;
+
+    if (barcode.substring(0, 9) === "0000-0000") {
+      let zone = barcode.substring(10);
+      let find_zone = zone_list.find((el) => el === zone);
+
       if (find_zone === undefined) {
-        this.props.storage_reciept_set_barcode("");
-        this.props.storage_reciept_set_status_type("err");
-        this.props.storage_reciept_set_status_message(
-          "Зона хранения не найдена",
-        );
-        this.err_sound_play();
+        dispatch({ type: "storage_reciept_set_barcode", payload: "" });
+        dispatch({ type: "storage_reciept_set_status_type", payload: "err" });
+        dispatch({
+          type: "storage_reciept_set_status_message",
+          payload: "Зона хранения не найдена",
+        });
+        err_sound_play();
       } else {
-        this.props.storage_reciept_set_selected_zone(zone);
-        this.props.storage_reciept_set_barcode("");
-        this.props.storage_reciept_set_status_message("");
-        this.props.storage_reciept_set_status_type(null);
-        this.funk_sound_play();
+        dispatch({ type: "storage_reciept_set_selected_zone", payload: zone });
+        dispatch({ type: "storage_reciept_set_barcode", payload: "" });
+        dispatch({ type: "storage_reciept_set_status_message", payload: "" });
+        dispatch({ type: "storage_reciept_set_status_type", payload: null });
+        funk_sound_play();
       }
     } else {
-      this.props.modules.set_active_window("wait");
+      dispatch({ type: "set_active_window", payload: "wait" });
 
       const data = {
-        userkey: this.props.store.login.userkey,
-        barcode: this.props.store.storage_reciept.barcode,
-        zone: this.props.store.storage_reciept.selected_zone,
-        storage: this.props.store.storage_reciept.storage.id,
+        userkey: store.login.userkey,
+        barcode,
+        zone: selected_zone,
+        storage: storage.id,
       };
 
       get_data("storagereciept", data).then(
         (result) => {
-          this.props.modules.set_active_window("storage_reciept");
-          this.props.storage_reciept_set_result(result);
-          this.props.storage_reciept_set_barcode("");
+          dispatch({ type: "set_active_window", payload: "storage_reciept" });
+          dispatch({ type: "storage_reciept_set_result", payload: result });
+          dispatch({ type: "storage_reciept_set_barcode", payload: "" });
+
           if (result.status_type === "ok") {
-            this.done_sound_play();
+            done_sound_play();
           } else {
-            this.err_sound_play();
+            err_sound_play();
           }
         },
         (err) => {
-          this.props.modules.set_modal_show(true);
-          this.props.modules.set_modal_header("Ошибка");
-          this.props.modules.set_modal_text(err);
+          dispatch({ type: "set_modal_show", payload: true });
+          dispatch({ type: "set_modal_header", payload: "Ошибка" });
+          dispatch({ type: "set_modal_text", payload: err });
 
-          this.props.modules.set_active_window("storage_reciept");
-          this.props.storage_reciept_set_result({
-            status_type: "err",
-            status_message: err,
+          dispatch({ type: "set_active_window", payload: "storage_reciept" });
+          dispatch({
+            type: "storage_reciept_set_result",
+            payload: { status_type: "err", status_message: err },
           });
-          this.err_sound_play();
+          err_sound_play();
         },
       );
     }
-  };
+  }, [
+    dispatch,
+    store.login.userkey,
+    store.storage_reciept,
+    err_sound_play,
+    done_sound_play,
+    funk_sound_play,
+  ]);
 
-  render() {
-    let done_sound_status;
-    if (this.props.store.storage_reciept.done_sound === undefined) {
-      done_sound_status = Sound.status.STOPPED;
-    } else {
-      done_sound_status = this.props.store.storage_reciept.done_sound;
-    }
-
-    let funk_sound_status;
-    if (this.props.store.storage_reciept.funk_sound === undefined) {
-      funk_sound_status = Sound.status.STOPPED;
-    } else {
-      funk_sound_status = this.props.store.storage_reciept.funk_sound;
-    }
-
-    let err_sound_status;
-    if (this.props.store.storage_reciept.err_sound === undefined) {
-      err_sound_status = Sound.status.STOPPED;
-    } else {
-      err_sound_status = this.props.store.storage_reciept.err_sound;
-    }
-
-    const send_req = this.send_req;
-    document.onkeydown = function (event) {
+  useEffect(() => {
+    const handleKeyDown = (event) => {
       try {
         if (event.keyCode === 13) {
           send_req();
@@ -111,87 +110,62 @@ class Screen extends React.Component {
       }
     };
 
-    return (
-      <div>
-        <div className="disp_map_button">
-          <button
-            className="ui button mini"
-            onClick={() => {
-              this.props.set_full_screen();
-            }}
-          >
-            Полноэкранный режим
-          </button>
-        </div>
-        <div>
-          Текущий склад: {this.props.store.storage_reciept.storage?.name}
-        </div>
-        <div>
-          Зона хранения: {this.props.store.storage_reciept.selected_zone}
-        </div>
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [send_req]);
 
-        <input
-          autoFocus
-          value={this.props.store.storage_reciept.barcode}
-          onChange={(e) => {
-            this.props.storage_reciept_set_barcode(e.target.value);
-          }}
-        />
-        {this.props.store.storage_reciept.status_type === "ok" ? (
-          <div>
-            <div>Накладная: {this.props.store.storage_reciept.num} </div>
-            <div>Задача: {this.props.store.storage_reciept.task_type} </div>
-            <div>Дата: {this.props.store.storage_reciept.task_date}</div>
-            <div>Курьер: {this.props.store.storage_reciept.task_value}</div>
-            <div>Заказчик: {this.props.store.storage_reciept.customer}</div>
-            <div>Город: {this.props.store.storage_reciept.rec_city}</div>
-            <div>Адрес: {this.props.store.storage_reciept.rec_adress}</div>
-            <div>Район: {this.props.store.storage_reciept.rec_district}</div>
-            <div>Получатель: {this.props.store.storage_reciept.rec_name}</div>
-          </div>
-        ) : null}
-        {this.props.store.storage_reciept.status_type === "err" ? (
-          <div>{this.props.store.storage_reciept.status_message}</div>
-        ) : null}
-        <Sound url={done_sound} playStatus={done_sound_status} />
-        <Sound url={err_sound} playStatus={err_sound_status} />
-        <Sound url={funk_sound} playStatus={funk_sound_status} />
+  const { storage, selected_zone, barcode, status_type, status_message } =
+    store.storage_reciept;
+  const done_sound_status =
+    store.storage_reciept.done_sound || Sound.status.STOPPED;
+  const funk_sound_status =
+    store.storage_reciept.funk_sound || Sound.status.STOPPED;
+  const err_sound_status =
+    store.storage_reciept.err_sound || Sound.status.STOPPED;
+
+  return (
+    <div>
+      <div className="disp_map_button">
+        <button
+          className="ui button mini"
+          onClick={() => dispatch({ type: "set_full_screen" })}
+        >
+          Полноэкранный режим
+        </button>
       </div>
-    );
-  }
-}
+      <div>Текущий склад: {storage?.name}</div>
+      <div>Зона хранения: {selected_zone}</div>
+      <input
+        autoFocus
+        value={barcode}
+        onChange={(e) =>
+          dispatch({
+            type: "storage_reciept_set_barcode",
+            payload: e.target.value,
+          })
+        }
+      />
+      {status_type === "ok" && (
+        <div>
+          <div>Накладная: {store.storage_reciept.num} </div>
+          <div>Задача: {store.storage_reciept.task_type} </div>
+          <div>Дата: {store.storage_reciept.task_date}</div>
+          <div>Курьер: {store.storage_reciept.task_value}</div>
+          <div>Заказчик: {store.storage_reciept.customer}</div>
+          <div>Город: {store.storage_reciept.rec_city}</div>
+          <div>Адрес: {store.storage_reciept.rec_adress}</div>
+          <div>Район: {store.storage_reciept.rec_district}</div>
+          <div>Получатель: {store.storage_reciept.rec_name}</div>
+        </div>
+      )}
+      {status_type === "err" && <div>{status_message}</div>}
+      <Sound url={done_sound} playStatus={done_sound_status} />
+      <Sound url={err_sound} playStatus={err_sound_status} />
+      <Sound url={funk_sound} playStatus={funk_sound_status} />
+    </div>
+  );
+};
 
-export default connect(
-  (state) => ({
-    store: state,
-  }),
-  (dispatch) => ({
-    storage_reciept_set_barcode: (param) => {
-      dispatch({ type: "storage_reciept_set_barcode", payload: param });
-    },
-    storage_reciept_set_result: (param) => {
-      dispatch({ type: "storage_reciept_set_result", payload: param });
-    },
-    storage_reciept_set_selected_zone: (param) => {
-      dispatch({ type: "storage_reciept_set_selected_zone", payload: param });
-    },
-    set_full_screen: () => {
-      dispatch({ type: "set_full_screen" });
-    },
-    storage_reciept_set_done_sound: (param) => {
-      dispatch({ type: "storage_reciept_set_done_sound", payload: param });
-    },
-    storage_reciept_set_err_sound: (param) => {
-      dispatch({ type: "storage_reciept_set_err_sound", payload: param });
-    },
-    storage_reciept_set_funk_sound: (param) => {
-      dispatch({ type: "storage_reciept_set_funk_sound", payload: param });
-    },
-    storage_reciept_set_status_message: (param) => {
-      dispatch({ type: "storage_reciept_set_status_message", payload: param });
-    },
-    storage_reciept_set_status_type: (param) => {
-      dispatch({ type: "storage_reciept_set_status_type", payload: param });
-    },
-  }),
-)(Screen);
+export default Screen;

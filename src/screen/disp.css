@@ -200,7 +200,7 @@
     }
 
     .sticker{
-
+        height: 200px;
         padding: 3px;
         break-after: always !important;
         page-break-after: always !important;

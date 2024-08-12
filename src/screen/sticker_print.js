@@ -2,8 +2,8 @@ import React from "react";
 import QRCode from "qrcode.react";
 import "./disp.css";
 
-class StikerToPrint extends React.Component {
-  create_table = (disp) => {
+const StikerToPrint = ({ disp }) => {
+  const create_table = (disp) => {
     let table = [];
 
     for (let i = 0; i < disp.data.Total; i++) {
@@ -32,19 +32,15 @@ class StikerToPrint extends React.Component {
     return table;
   };
 
-  render() {
-    return (
-      <div>
-        {this.props.disp.map((el, index) => {
-          return (
-            <div key={index} className="sticker_list">
-              {this.create_table(el)}
-            </div>
-          );
-        })}
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      {disp.map((el, index) => (
+        <div key={index} className="sticker_list">
+          {create_table(el)}
+        </div>
+      ))}
+    </div>
+  );
+};
 
 export default StikerToPrint;

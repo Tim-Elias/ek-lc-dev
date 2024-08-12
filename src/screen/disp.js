@@ -425,7 +425,6 @@ const Disp = () => {
         )[0];
 
         const PayTypeList = [
-          { label: "Безналичная оплата", value: "БезналичнаяОплата" },
           {
             label: "Оплата наличными при отправлении",
             value: "ОплатаНаличнымиПриОтправлении",
@@ -435,6 +434,12 @@ const Disp = () => {
             value: "ОплатаНаличнымиПриПолучении",
           },
         ];
+        if (!login.cashOnly) {
+          PayTypeList.unshift({
+            label: "Безналичная оплата",
+            value: "БезналичнаяОплата",
+          });
+        }
         let PayType;
         let PayerSelect;
         if (current_disp_data.CustomerKey === login.customer_key) {
@@ -753,7 +758,8 @@ const Disp = () => {
             </button>
           ) : null}
           {login.edit_disp &&
-          dispData.data.Status === "Ожидается от отправителя" ? (
+          (dispData.data.Status === "Ожидается от отправителя" ||
+            dispData.data.Status === "Заявка на забор") ? (
             <Modal
               closeIcon
               trigger={<button onClick={removeDisp}>Удалить</button>}
@@ -767,7 +773,8 @@ const Disp = () => {
             </Modal>
           ) : null}
           {login.edit_disp &&
-          dispData.data.Status === "Ожидается от отправителя" ? (
+          (dispData.data.Status === "Ожидается от отправителя" ||
+            dispData.data.Status === "Заявка на забор") ? (
             <button
               onClick={() => {
                 copyDisp(true);

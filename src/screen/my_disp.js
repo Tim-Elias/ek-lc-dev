@@ -14,10 +14,51 @@ XLSX.set_fs(fs);
 XLSX.stream.set_readable(Readable);
 
 class Screen extends React.Component {
-  hadleSaveXLSX = () => {
-    const table_elt = document.getElementById("data-to-excel");
-    const workbook = XLSX.utils.table_to_book(table_elt);
+  hadleSaveXLSX = (tableData) => {
+    const workbook = XLSX.utils.book_new();
+    const workbookHeader = [
+      [
+        "Дата",
+        "Номер",
+        "Город отправителя",
+        "Адрес отправителя",
+        "Компания отправителя",
+        "Город получателя",
+        "Адрес получателя",
+        "Компания получателя",
+        "Мест",
+        "Вес",
+        "V Вес",
+        "Вид доставки",
+        "Цена",
+        "Статус",
+        "Получатель",
+        "Вручено",
+      ],
+    ];
 
+    const convertedData = tableData.map((el) => [
+      el.Date,
+      el.Num,
+      el.SendCity,
+      el.SendAdress,
+      el.SendCompany,
+      el.RecCity,
+      el.RecAdress,
+      el.RecCompany,
+      el.Total,
+      el.Weight,
+      el.Volume,
+      el.DelMethod,
+      el.Price,
+      el.Status,
+      el.Recient,
+      el.RecDate,
+    ]);
+    const workbookData = workbookHeader.concat(convertedData);
+    const worksheet = XLSX.utils.aoa_to_sheet(workbookData);
+
+    XLSX.utils.book_append_sheet(workbook, worksheet, "parcels");
     XLSX.writeFile(workbook, "Мои накладные ЭК.xlsx");
   };
 
@@ -363,7 +404,7 @@ class Screen extends React.Component {
           <button size="mini" onClick={this.get_my_disp_data.bind(this)}>
             Получить данные
           </button>
-          <button onClick={() => this.hadleSaveXLSX()}>
+          <button onClick={() => this.hadleSaveXLSX(tableData)}>
             Сохранить в Excel
           </button>
         </div>

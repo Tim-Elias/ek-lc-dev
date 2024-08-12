@@ -64,6 +64,7 @@ export default function login(state = initialState, action) {
         customer_key: action.payload.customer_key,
         probably_termo: action.payload.probably_termo,
         necessarily_all_field: action.payload.necessarily_all_field,
+        cashOnly: action.payload.cashOnly,
       };
     case "SET_USERNAME":
       return { ...state, username: action.payload };
@@ -103,6 +104,7 @@ export default function login(state = initialState, action) {
         customer_key: action.payload.customer_key,
         probably_termo: action.payload.probably_termo,
         necessarily_all_field: action.payload.necessarily_all_field,
+        cashOnly: action.payload.cashOnly,
       };
     case "LOGOUT":
       return {

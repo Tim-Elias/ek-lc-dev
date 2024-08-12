@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'ek-icons';
-  src:  url('fonts/ek-icons.eot?46h3f1');
-  src:  url('fonts/ek-icons.eot?46h3f1#iefix') format('embedded-opentype'),
-    url('fonts/ek-icons.ttf?46h3f1') format('truetype'),
-    url('fonts/ek-icons.woff?46h3f1') format('woff'),
-    url('fonts/ek-icons.svg?46h3f1#ek-icons') format('svg');
+  src:  url('fonts/ek-icons.eot?y2wip6');
+  src:  url('fonts/ek-icons.eot?y2wip6#iefix') format('embedded-opentype'),
+    url('fonts/ek-icons.ttf?y2wip6') format('truetype'),
+    url('fonts/ek-icons.woff?y2wip6') format('woff'),
+    url('fonts/ek-icons.svg?y2wip6#ek-icons') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -27,6 +27,12 @@ i {
 
 .ek-logo:before {
   content: "\e901";
+}
+.ek-fragile:before {
+  content: "\e902";
+}
+.ek-thermometer-icon:before {
+  content: "\e904";
 }
 .ek-home:before {
   content: "\e900";

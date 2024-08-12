@@ -77,11 +77,11 @@ class Screen extends React.Component {
     const data = {
       userkey: this.props.store.login.userkey,
       status: "Ожидается",
-      num: this.props.store.disp.data.OrdersDisp[0],
+      num: this.props.store.disp.data.Number,
     };
     this.props.set_key(data);
 
-    this.loadData(this.props.store.disp.data.OrdersDisp[0], "Ожидается");
+    this.loadData(this.props.store.disp.data.Number, "Ожидается");
   };
 
   create_disp = () => {
@@ -184,36 +184,30 @@ class Screen extends React.Component {
     return (
       <div>
         <div className="mobile_heading">
-          {this.props.store.disp.data.Type} №{this.props.store.disp.data.Number}
+          {`${this.props.store.disp.data.Type} № ${this.props.store.disp.data.Number}`}
         </div>
 
         {this.props.store.general.active_loader ? (
           <Wait />
         ) : (
+          // TODO Воткнуть уведомление с примечанием, например Забор от частного лица убедись в что всё норм...
           <div>
-            {this.props.store.disp.data.Type === "Заявка" ? (
-              this.props.store.disp.data.OrdersDisp.length > 0 ? (
-                <div className="mobile_disp_button">
-                  <button
-                    onClick={this.search_reciept.bind(this)}
-                    className="mobile_disp_button_item mobile_disp_button_item--full"
-                  >
-                    Получить накладную от отправителя
-                  </button>
-                </div>
-              ) : (
-                <div className="mobile_disp_button">
-                  <button
-                    onClick={this.create_disp.bind(this)}
-                    className="mobile_disp_button_item mobile_disp_button_item--full"
-                  >
-                    Создать накладную
-                  </button>
-                </div>
-              )
-            ) : null}
+            {/* {this.props.store.disp.data.Type === "Заявка" ? (
+              <div className="mobile_disp_button">
+                <button
+                  className="mobile_disp_button_item mobile_disp_button_item--full"
+                  onClick={this.settings_window.bind(
+                    this,
+                    "m_receiv_from_sender",
+                  )}
+                >
+                  Получить от отправителя
+                </button>
+              </div>
+            ) : null} */}
 
-            {this.props.store.disp.key.status === "Ожидается" ? (
+            {this.props.store.disp.key.status === "Ожидается" ||
+            this.props.store.disp.data.Type === "Заявка" ? (
               <div className="mobile_disp_button">
                 <button
                   className="mobile_disp_button_item mobile_disp_button_item--full"
@@ -248,16 +242,6 @@ class Screen extends React.Component {
                     >
                       Подтвердить
                     </button>
-                    {/* <div className="mobile_disp_button">
-                                        <button className={+this.props.store.disp.cash_accepted > 0 && this.props.store.login.kkm && this.props.store.disp.data.CheckEnabled && this.props.store.disp.data.ChangeSumm === false ? ("mobile_disp_button_item mobile_disp_button_item--blue") : ("none")} onClick={this.receipt.bind(this)}>
-                                            Чек
-                                        </button>
-
-                                        <div className="mobile_del_row">
-                                            <div className="mobile_del_data_label">Принятая сумма</div>
-                                            <input className="mobile_del_input" value={this.props.store.disp.cash_accepted} onChange={e => this.props.set_disp_cash(e.target.value)} type="number"></input>
-                                        </div>
-                                    </div> */}
                   </div>
                 ) : null}
 
@@ -309,6 +293,8 @@ class Screen extends React.Component {
                 {this.props.store.disp.data.COD}
               </div>
             </div>
+
+            {/* TODO сюда Иконки и текст  */}
 
             <div className="mobile_disp_address_data">
               <div className="disp_address_data_header">Данные получателя</div>

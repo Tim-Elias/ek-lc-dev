@@ -122,7 +122,56 @@ export const UploadManifest = () => {
   const upload_manifest = useSelector((state) => state.upload_manifest);
   const hadleSaveXLSX = () => {
     const workbook = XLSX.utils.book_new();
-    const worksheet = XLSX.utils.json_to_sheet(upload_manifest.disp_data);
+
+    const workbookHeader = [
+      ["Отправитель:", login.alias],
+      ["Дата отгрузки:", "___________________________"],
+      [
+        "Номер накладной",
+        "Доп.информация",
+        "Кол-во мест",
+        "Факт. вес",
+        "Грузополучатель",
+        "Адрес доставки",
+      ],
+    ];
+
+    const workbookFooter = [
+      [],
+      ["Итого накладных:", upload_manifest.disp_data.length],
+      [
+        "Итого мест",
+        upload_manifest.disp_data.reduce(
+          (summ, el) => summ + parseInt(el.Total),
+          0,
+        ),
+      ],
+      [
+        "Общий факт. вес",
+        upload_manifest.disp_data.reduce(
+          (summ, el) => summ + parseInt(el.Weight),
+          0,
+        ),
+      ],
+      [],
+      ["Получатель", "___________________________"],
+      [],
+      ["Курьер", "___________________________"],
+    ];
+
+    const convertedData = upload_manifest.disp_data.map((el) => [
+      el.Num,
+      el.SendAddInfo,
+      el.Total,
+      el.Weight,
+      el.RecCompany,
+      `${el.RecCity}, ${el.RecAdress}`,
+    ]);
+
+    const workbookData = workbookHeader.concat(convertedData, workbookFooter);
+
+    const worksheet = XLSX.utils.aoa_to_sheet(workbookData);
+
     XLSX.utils.book_append_sheet(workbook, worksheet, "Manifest");
     XLSX.writeFile(workbook, "Manifest.xlsx");
   };
