@@ -1,0 +1,106 @@
+.upload_manifest_control_panel{
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 130px 1fr 52px 180px 1fr 52px 130px 50px 52px 120px 1fr;
+    margin-top: 5px;
+}
+
+.upload_manifest_button{
+    height: 30px;
+    border-radius: 5px;
+    
+}
+
+.upload_mainfest_modal_info{
+    display: grid;
+   
+    grid-template-columns: 400px 1fr;  
+    overflow-x: auto;
+    height: 100%;
+}
+
+
+.upload_manifest_disp_data_body{
+    display: grid;
+    margin-top: 5px;
+    grid-template-columns: 2fr 5px 2fr 5px 2fr 5px 1fr;
+    width: 100%;
+    /* border: solid 1px black; */
+}
+
+.upload_manifest_disp_data_header{
+    display: grid;
+    grid-template-columns: 2fr 5px 2fr 5px 2fr 5px 1fr;
+    width: 100%;
+    
+}
+
+.upload_manifest_disp_data{
+    margin: 7px 0;
+    
+}
+
+/* .upload_manifest_disp_data_body:hover{
+    
+    background-color: #F0F0F0;
+} */
+
+.upload_manifest_data_label_header{
+font-size: 14px;
+  background-color: #F0F0F0;
+  text-align: center;
+  padding: 10px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  border: #c0c0c0 1px solid;
+  
+  
+}
+
+.upload_manifest_disp_data_body_item{
+    
+    padding: 3px 3px;
+    
+    border: #c0c0c0 1px solid;
+    
+    
+}
+
+.upload_manifest_rec_send_data{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+}
+
+.upload_manifest_cargo_data{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.upload_manifest_data_label{
+    margin: 3px;
+    font-size: 13px;
+    border-bottom: #c0c0c0 solid 1px;
+}
+
+.upload_manifest_data_el{
+    font-size: 11px;
+    margin: 3px;
+    border-bottom: #c0c0c0 solid 1px;
+}
+
+.consolidate_row{
+    background-color: bisque;
+}
+
+.upload_manifest_button_container{
+    margin: 2px;
+}
+/* .upload_manifest_command_panel{
+    display: grid;
+    grid-template-columns: 150px 150px 150px 150px 1fr;
+} */
+
+.upload_manifest_create_button{
+    margin-top: 8px;
+    
+}

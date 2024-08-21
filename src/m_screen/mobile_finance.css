@@ -1,0 +1,53 @@
+.finance_row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0 20px 0;
+}
+
+.finance_item {
+    width: 45%;
+    border-bottom: 1px black solid;
+    padding: 0 0 10px 0;
+}
+
+.mobile_finance_button {
+    width: 45%;
+    margin: 0 0 20px 0;
+    padding: 15px 20px;
+    border: 0;
+    background-color: rgb(123, 191, 255);
+    box-shadow: 0 0 0 60px rgba(0,0,0,0) inset, .1em .1em .2em rgb(122, 122, 122);
+}
+.mobile_finance_button:active {
+    background-color: rgb(68, 150, 226);
+    box-shadow: 0 0 0 60px rgba(0,0,0,.05) inset;
+}
+
+.mobile_finance_button--b {
+    display: block;
+    width: 90%;
+    margin: 0 auto 20px auto;
+    padding: 15px 20px;
+    border: 0;
+    background-color: rgb(123, 191, 255);
+    box-shadow: 0 0 0 60px rgba(0,0,0,0) inset, .1em .1em .2em rgb(122, 122, 122);
+}
+.mobile_finance_button--b:active {
+    background-color: rgb(68, 150, 226);
+    box-shadow: 0 0 0 60px rgba(0,0,0,.05) inset;
+}
+
+.mobile_movememt_date {
+    width: 45%;
+    height: 33px;
+}
+
+.finance_list {
+    border-top: 1px black solid;
+    border-bottom: 1px black solid;
+    border: 1px #f0f0f0 solid;
+}
+
+
+

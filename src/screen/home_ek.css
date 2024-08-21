@@ -1,0 +1,695 @@
+.home_content{
+    width: 100%; 
+    z-index: 1;
+    position: relative;
+    
+}
+
+.home_content input{
+    border: none;
+    padding: 20px;
+}
+
+.service_info_window{
+    max-width: 1200px;
+    margin: auto;
+}
+
+.service_info_window_button{
+    min-width: 200px;
+    min-height: 40px;
+    background-color: #2444B5;
+    color: #FFF;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    margin-left: 960px;
+}
+.service_info_window_button:hover {
+    border: 4px solid #2444B5;
+    background-color: white;
+    color: #2444B5;
+}
+
+.service_info_window_wrapper{
+    margin: 0 20px;
+    padding: 20px
+}
+
+.calc_city_input{
+ height: 0px;
+ width: 340px;
+ margin: 5px;
+}
+
+
+
+.calc_city_reset_button{
+    margin-right: -35px;
+}
+
+.font_16{
+    font-size: 16px;
+}
+
+.font_36{
+    font-size: 36px;
+}
+
+.font_24{
+    font-size: 24px;
+}
+
+.shadow{
+box-shadow: -3px 3px 20px rgba(0, 0, 0, 0.1);
+}
+
+.home_content_element{
+
+    margin: 80px 20px;
+  
+    
+}
+
+.home_menu{
+    
+    display: flex;
+    overflow-y: hidden;
+    margin-top: 0;
+}
+
+.home_menu_element{
+    padding: 5px 15px;
+    border-bottom: 1px solid #BBB  ;
+    cursor: pointer;
+}
+
+.home_menu_element:hover{
+    padding: 5px 15px;
+    border-bottom: 1px solid #E87B1A  ;
+}
+
+.home_main_offer{
+   
+    height: 350px;
+    
+    background-size: auto 350px ;
+    background-repeat: no-repeat;
+    background-position: right;
+   
+    display: grid;
+    grid-template-rows: 1fr 1fr 60px;
+
+}
+
+.home_main_offer_label{
+font-size: 36pt;
+line-height: 90%;
+}
+
+.home_main_offer_list{
+    height: 100%;
+    font-size: 16px;
+}
+
+.home_main_offer_button{
+  width: 200px;
+  height: 40px;
+  margin: 5px 0;
+  color: white;
+  background-color: #E87B1A;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+
+.home_main_offer_list_element{
+    display: grid;
+    grid-template-columns: 30px 1fr;
+    word-spacing: 3px;
+    margin: 10px 0;
+}
+
+.home_service_selector{
+    height: 170px;
+    margin: 70px -25px 45px -25px;
+    background-color: #2444B5;
+
+}
+
+.home_service_content{
+    width: 1200px;
+    margin: auto;
+    display: grid;
+    grid-template-rows: 40px 1fr;
+    height: 130px;
+}
+
+.home_service_selector_menu{
+    
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.home_service_selector_menu_element{
+    position: relative;
+    text-align: center;
+    padding: 5px;
+    color: #2444B5;
+    background-color: white;
+    cursor: pointer;
+}
+.home_service_selector_menu_element:hover {
+    background-color: #f0f0f0;
+}
+.home_service_selector_menu_element p {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: 50%;
+}
+
+.home_service_selector_menu_element_selected{
+    position: relative;
+    text-align: center;
+    padding: 5px;
+    color: white;
+    background-color: #2444B5;
+}
+.home_service_selector_menu_element_selected p {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: 50%;
+}
+
+
+.home_service_selector_content{
+background-color: #2444B5;
+color: white;
+}
+
+.home_service_selector_content_calc{
+    /* margin: 40px; */
+    margin: 40px 0 40px 0;
+    height: 50px;
+    display: grid;
+    grid-template-columns: 2fr 2fr 1fr 220px;
+}
+
+.home_service_selector_content_order{
+    margin: 40px;
+    height: 50px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 250px;
+}
+
+.home_service_selector_content_track{
+    /* margin: 40px; */
+    margin: 40px 0 40px 0;
+    height: 50px;
+    display: grid;
+    grid-template-columns: 1fr 150px 1fr;
+}
+
+.home_service_selector_content_input{
+    margin: 5px;
+    height: 40px;
+}
+
+.home_service_selector_content_button{
+    margin: 5px;
+    height: 40px;
+    background-color: #2444B5;
+    border: #FFF solid 2px;
+    color: #FFF;
+    cursor: pointer;
+}
+
+.home_service_selector_content_button:hover{
+    margin: 5px;
+    height: 40px;
+    background-color: #FFF;
+    border: #FFF solid 2px;
+    color: #2444B5;
+}
+
+.home_service_cards{
+    z-index: 1;
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin: 60px -10px 0 -10px;
+
+}
+
+.home_service_card{
+    z-index: 1;
+    position: relative;
+    height: 250px;
+    margin:    0 30px;
+    padding: 0 30px;
+    word-spacing: 2px;
+    display: grid;
+    grid-template-rows: 65px 1fr 40px;
+    
+    
+}
+
+.home_service_card_content{
+    z-index: 1;
+    position: relative;
+    background-size: auto 100% ;
+    background-repeat: no-repeat;
+    background-position: top right;
+}
+
+.home_service_card_label{
+    z-index: 1;
+    position: relative;
+text-align: center;
+padding: 20px 0;
+}
+
+.filials{
+    height: 760px;
+    display: grid;
+    grid-template-rows: 90px 140px 1fr;
+    padding: 10px;
+    
+
+
+    
+}
+
+.filials_header{
+    padding-top: 20px;
+}
+
+.filials_map{
+    background-size:  auto 100% ;
+    background-repeat: no-repeat;
+    background-position:  center;
+}
+
+.filials_text{
+ font-size: 24px;
+ line-height: 140%;
+}
+
+
+.text_align_center{
+text-align: center;
+}
+
+
+
+.callbacker{
+    margin: 40px -25px 45px -25px;
+    padding-top: 20px;
+   
+    
+   
+   color: white;
+}
+
+.callbacker_wrapper{
+    padding-top: 20px;
+max-width: 1200px;
+margin: auto;
+display: grid;
+grid-template-rows: 100px 80px 120px;
+}
+
+.callbacker_content{
+    display: grid;
+    grid-template-columns: 2fr 2fr 2fr 250px;
+    margin: 20px;
+    height: 50px;
+}
+
+.callbacker_input{
+    margin: 5px;
+    height: 40px;
+}
+
+.callbacker_button_1{
+    margin: 5px;
+    border: #FFF solid 2px;
+    color: #FFF;
+    font-weight: bold;
+    background-color: #E87B1A
+    
+}
+
+.callbacker_button_1:hover{
+    margin: 5px;
+    border: #FFF solid 2px;
+    color: #E87B1A;
+    font-weight: bold;
+    background-color: #FFF;
+    
+}
+
+.callbacker_button_2{
+    margin: 5px;
+    border: #FFF solid 2px;
+    color: #FFF;
+    font-weight: bold;
+    background-color: #2444B5;
+    
+}
+
+.callbacker_button_2:hover{
+    margin: 5px;
+    border: #FFF solid 2px;
+    color: #2444B5;
+    font-weight: bold;
+    background-color: #FFF
+    
+}
+
+
+.about{
+  
+    display: grid;
+    grid-template-columns:  320px 1fr;
+}
+
+.advantage{
+    
+    background-color: #FFF;
+}
+
+.clients{
+    max-width: 1240px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 320px 30px 1fr 30px;
+    
+}
+
+.review{
+    background-color: white;
+    
+}
+
+.auto{
+    background-color: #AAA;
+}
+
+.advantages_cards{
+    max-width: 1200px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin: auto;
+    
+    
+}
+
+.advantages_card{
+    height: 250px;
+    margin: 15px;
+    
+    display: grid;
+    grid-template-rows: 120px 40px 90px;
+
+    
+}
+
+.advantages_card_number{
+    margin-top: 40px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 64px;
+    line-height: 23px;
+    color: #E87B1A
+}
+
+.advantages_card_label{
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.advantages_card_text{
+    font-size: 15px;
+    
+}
+
+.clients_label{
+    padding: 35px;
+    
+}
+
+.clients_label_text{
+    font-size: 18px;
+}
+
+.clients_cards{
+
+    display: grid;
+    grid-template-columns:  1fr 1fr;
+}
+
+.clients_card{
+    height: 130px;
+    margin: 5px;
+    
+    background-repeat: no-repeat;
+    background-position:  center;
+    
+}
+
+.clients_button_navi{
+    margin: auto;
+    height: 20px;
+    
+}
+
+.review_button_navi{
+    margin: auto;
+    height: 20px;
+}
+
+.review_cards{
+    display: grid;
+    grid-template-columns: 40px 1fr 1fr 40px;
+    
+}
+
+.review_card{
+    padding: 20px 40px 20px 10px ;
+   
+    margin: 10px 30px;
+    
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+}
+
+.review_card_photo{
+    background-repeat: no-repeat;
+    background-position:  center;
+    min-height: 160px;
+}
+
+.review_card_content{
+margin-left: 15px;
+}
+
+.about_text{
+    font-size: 18px;
+    word-wrap: "break-word"
+}
+
+.about_left{
+    margin: 10px;
+}
+
+.about_right{
+    margin: 30px ;
+    display: grid;
+    grid-template-rows: 45px 1fr 45px;
+    word-spacing: 150%;
+    line-height: 190%;
+
+}
+
+.about_container{
+    height: 215px;
+    margin-top: 80px;
+    background-color: #E87B1A;
+}
+
+.about_photo{
+    vertical-align: bottom;
+    margin: -80px 0 0 0 ;
+   
+}
+
+.about_sign{
+    font-size: 18px;
+    font-weight: bold;
+    vertical-align: bottom;
+}
+
+.dropdown_rec_city_list{
+    
+    background: #eee;
+    color: #333;
+    margin: 5px;
+    width: 340px;
+}
+
+.dropdown_rec_city_element{
+    position: relative;
+    background: #eee;
+    margin: 0 5px;
+    padding: 10px;
+    border-bottom: solid 1px #888;
+    z-index: 4;
+}
+
+
+
+.dropdown_rec_city_list--absolute {
+    position: absolute;
+    left: 175px;
+    top: 40px;
+    z-index: 50;
+}
+
+.calc_price_container {
+    display: flex;
+    flex-direction: column;
+}
+
+.calc_price_row {
+    display: flex;
+    position: relative;
+    margin: 5px;
+}
+
+.calc_price_row input:disabled {
+    background-color: #fff;
+}
+
+.calc_price_label {
+    width: 140px;
+    height: 28px;
+    margin: 0 15px 0 0;
+    line-height: 28px;
+    font-size: 13px;
+    border: 0;
+    border-bottom: #c0c0c0 solid 1px;
+}
+
+.calc_price_input {
+    height: 28px;
+    width: 340px;
+    padding: 0 5px;
+    border: 0;
+    border-bottom: #c0c0c0 solid 1px;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+}
+
+.calc_price_input--checkbox {
+    max-width: 20px;
+}
+
+.calc_price_dimensions {
+    margin: 0 5px 0 0;
+    padding: 0 5px;
+    height: 28px;
+    width: 110px;
+    border: 0;
+    border-bottom: #c0c0c0 solid 1px;
+    font-size: 13px;
+}
+
+.calc_price_button {
+    margin: 0px 15px 0px 0px;
+    height: 30px;
+    width: 140px;
+    background-color: #e0e1e2;
+    cursor: pointer;
+    border: 0;
+    color: rgba(0,0,0,.6);
+    font-weight: 700;
+    line-height: 1em;
+    font-style: normal;
+    border-radius: 3px;
+}
+
+.calc_price_button:hover {
+    background-color: #cacbcd;
+    background-image: none;
+    box-shadow: 0 0 0 1px transparent inset, 0 0 0 0 rgb(34 36 38 / 15%) inset;
+    color: rgba(0,0,0,.8);
+}
+
+@media (max-width: 1000px) {
+
+    .home_service_selector_content_calc {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        margin: 20px 5px 10px 5px;
+    }
+
+    .home_content input {
+        width: 100%;
+        border: 3px solid #727272;
+        border-radius: 5px;
+    }
+
+    .calc_city_input {
+        margin: 5px 0 5px 0;
+    }
+
+    .dropdown_rec_city_list {
+        position: absolute;
+        z-index: 10;
+        top: 47px;
+        left: 0px;
+        width: 100%;
+        margin: 0;
+        border-bottom-left-radius: 3px;
+        border-bottom-right-radius: 3px;
+    }
+
+    .dropdown_rec_city_list--bottom {
+        top: 103px;
+    }
+
+    .home_service_selector_content_button {
+        font-weight: bold;
+        margin: 5px 0 5px 0;
+        border: 0;
+    }
+    
+    .home_service_selector_content_button:hover {
+        margin: 5px 0 5px 0;
+        background-color: #2444B5;
+        border: none;
+        color: #FFF;
+    }
+
+    .service_info_window_button {
+        margin: 0;
+        width: 100%;
+    }
+    .service_info_window_button:hover {
+        background-color: #2444B5;
+        color: #FFF;
+        border: none;
+    }
+
+    .dropdown_rec_city_element:last-child {
+        border: 0;
+    }
+}
