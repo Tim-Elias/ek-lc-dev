@@ -228,33 +228,36 @@ class Screen extends React.Component {
       .map((el) => {
         return el.Num;
       });
-    geocoder.geocode({ address: Address }, function (results, status) {
-      if (status === "OK") {
-        position = results[0].geometry.location;
+    geocoder.geocode(
+      { address: Address, region: "ru" },
+      function (results, status) {
+        if (status === "OK") {
+          position = results[0].geometry.location;
 
-        const lat_lng_data = {
-          userkey: userkey,
-          dispatch: Num,
-          lat: position.lat(),
-          lng: position.lng(),
-        };
+          const lat_lng_data = {
+            userkey: userkey,
+            dispatch: Num,
+            lat: position.lat(),
+            lng: position.lng(),
+          };
 
-        get_data("setreclatlng", lat_lng_data).then(
-          (result) => {
-            console.log(result);
-            get_map_data(not_modify);
-            reset();
-          },
-          (err) => {
-            console.log(err);
+          get_data("setreclatlng", lat_lng_data).then(
+            (result) => {
+              console.log(result);
+              get_map_data(not_modify);
+              reset();
+            },
+            (err) => {
+              console.log(err);
 
-            this.props.modules.set_modal_show(true);
-            this.props.modules.set_modal_header("Ошибка");
-            this.props.modules.set_modal_text(err);
-          },
-        );
-      }
-    });
+              this.props.modules.set_modal_show(true);
+              this.props.modules.set_modal_header("Ошибка");
+              this.props.modules.set_modal_text(err);
+            },
+          );
+        }
+      },
+    );
   };
 
   geocode_all = async () => {
@@ -282,7 +285,7 @@ class Screen extends React.Component {
       try {
         if (el.RecAddress !== "") {
           await geocoder.geocode(
-            { address: el.RecCity + el.RecAddress },
+            { address: el.RecCity + " " + el.RecAddress, region: "ru" },
             function (results, status) {
               if (status === "OK") {
                 const position = results[0].geometry.location;
@@ -690,18 +693,18 @@ class Screen extends React.Component {
                                     Math.round(disp.Volume * 5) / 1000 +
                                     ")"}
                                 </div>
-                                {/* {(disp.RecLat === "" || disp.RecLng === "") &&
+                                {(disp.RecLat === "" || disp.RecLng === "") &&
                                 disp.RecAddress !== "" ? (
                                   <button
                                     onClick={this.geocode.bind(
                                       this,
                                       disp.Num,
-                                      disp.RecCity + disp.RecAddress,
+                                      disp.RecCity + " " + disp.RecAddress,
                                     )}
                                   >
                                     <i className="red ek-search" />
                                   </button>
-                                ) : null} */}
+                                ) : null}
                               </p>
                             </ul>
                           );
