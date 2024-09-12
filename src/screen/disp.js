@@ -712,6 +712,7 @@ const Disp = () => {
                           {el.Status}
                           {el.Skan !== 0 ? (
                             <Modal
+                              height="auto"
                               trigger={
                                 <button
                                   className="disp_skan_button"
