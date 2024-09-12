@@ -31,17 +31,6 @@ class ComponentToPrint extends React.Component {
               <div key={index.toString() + ff.toString()}>
                 <div className="disp_print">
                   <div className="disp_print_header">
-                    <div className="logo_container">
-                      {/* <img
-                        className="header_logo"
-                        alt="header_logo"
-                        src={logo}
-                      /> */}
-                    </div>
-                    <div className="city_container">{disp.data.RecCity}</div>
-                    <div className="qrcode_container">
-                      <QRCode value={disp.data.Number} />
-                    </div>
                     <div className="barcode_container">
                       <Barcode
                         value={disp.data.Number}
@@ -49,6 +38,10 @@ class ComponentToPrint extends React.Component {
                         width={1}
                         height={30}
                       />
+                    </div>
+                    <div className="city_container">{disp.data.RecCity}</div>
+                    <div className="qrcode_container">
+                      <QRCode value={disp.data.Number} />
                     </div>
                   </div>
                   <div className="disp_print_address_data">
