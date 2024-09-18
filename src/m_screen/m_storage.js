@@ -171,12 +171,12 @@ export const MStorage = () => {
                         />
                       )}
                       {disp.Customer}
-                      {
+                      {/* {
                         <i
                           className="menu-icon ek-notification"
                           style={{ color: "red" }}
                         />
-                      }
+                      } */}
                     </div>
                     <div className="mobile_storage_field">{disp.Date}</div>
                     <div className="mobile_storage_field">
