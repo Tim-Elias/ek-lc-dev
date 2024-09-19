@@ -3,11 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { get_data } from "./../common/common_modules";
 import Select from "react-select";
 import { customStyles } from "./../common/common_style";
+import { type } from "os";
 
 const Screen = () => {
   const dispatch = useDispatch();
   const store = useSelector((state) => state);
 
+  const click_disp_template_list = () => {
+    dispatch({ type: "set_active_window", payload: "disp_template_list" });
+  };
   const handleInputChange = useCallback(
     (type, value) => {
       dispatch({ type, payload: value });
