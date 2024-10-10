@@ -313,6 +313,24 @@ class Screen extends React.Component {
         );
       })
       .filter((el) => {
+        const filter_sender_company =
+          this.props.store.my_disp.sender_company.toUpperCase();
+        const sender_company = el.SendCompany.toUpperCase();
+        return (
+          sender_company.indexOf(filter_sender_company) > -1 ||
+          this.props.store.my_disp.sender_company === ""
+        );
+      })
+      .filter((el) => {
+        const filter_rec_company =
+          this.props.store.my_disp.rec_company.toUpperCase();
+        const rec_company = el.RecCompany.toUpperCase();
+        return (
+          rec_company.indexOf(filter_rec_company) > -1 ||
+          this.props.store.my_disp.rec_company === ""
+        );
+      })
+      .filter((el) => {
         const selectedRecCities =
           this.props.store.my_disp.rec_city_filter.filter((el1) => {
             return el1.check;
@@ -557,7 +575,28 @@ class Screen extends React.Component {
                   </th>
 
                   <th>
-                    <div className="small_table_data">Компания отправителя</div>
+                    <div className="small_table_data">
+                      Компания отправителя
+                      <div className="my_disp_div_filter">
+                        <input
+                          className="my_disp_div_filter_input"
+                          value={this.props.store.my_disp.sender_company}
+                          onChange={(e) =>
+                            this.props.set_my_disp_sender_company(
+                              e.target.value,
+                            )
+                          }
+                        ></input>
+                        <button
+                          className="my_disp_button"
+                          onClick={() => {
+                            this.props.set_my_disp_sender_company("");
+                          }}
+                        >
+                          Сброс
+                        </button>
+                      </div>
+                    </div>
                   </th>
 
                   <th>
@@ -682,7 +721,26 @@ class Screen extends React.Component {
                   </th>
 
                   <th>
-                    <div className="small_table_data">Компания получателя</div>
+                    <div className="small_table_data">
+                      Компания получателя
+                      <div className="my_disp_div_filter">
+                        <input
+                          className="my_disp_div_filter_input"
+                          value={this.props.store.my_disp.rec_company}
+                          onChange={(e) =>
+                            this.props.set_my_disp_rec_company(e.target.value)
+                          }
+                        ></input>
+                        <button
+                          className="my_disp_button"
+                          onClick={() => {
+                            this.props.set_my_disp_rec_company("");
+                          }}
+                        >
+                          Сброс
+                        </button>
+                      </div>
+                    </div>
                   </th>
 
                   <th>
@@ -1073,6 +1131,14 @@ class Screen extends React.Component {
 export default connect(
   (state) => ({ store: state }),
   (dispatch) => ({
+    set_my_disp_sender_company: (param) => {
+      dispatch({ type: "set_my_disp_sender_company", payload: param });
+    },
+
+    set_my_disp_rec_company: (param) => {
+      dispatch({ type: "set_my_disp_rec_company", payload: param });
+    },
+
     set_my_disp_show_skan: (param) => {
       dispatch({ type: "set_my_disp_show_skan", payload: param });
     },

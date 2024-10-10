@@ -952,8 +952,22 @@ export const CreateDisp = ({ modules }) => {
                       .filter(
                         (el) =>
                           create_disp.FilterModalSendTemplate === "" ||
-                          el.label.indexOf(
-                            create_disp.FilterModalSendTemplate,
+                          el.label
+                            .toUpperCase()
+                            .indexOf(
+                              create_disp.FilterModalSendTemplate.toUpperCase(),
+                            ) !== -1 ||
+                          el.Adress.toUpperCase().indexOf(
+                            create_disp.FilterModalSendTemplate.toUpperCase(),
+                          ) !== -1 ||
+                          el.City.toUpperCase().indexOf(
+                            create_disp.FilterModalSendTemplate.toUpperCase(),
+                          ) !== -1 ||
+                          el.Company.toUpperCase().indexOf(
+                            create_disp.FilterModalSendTemplate.toUpperCase(),
+                          ) !== -1 ||
+                          el.Person.toUpperCase().indexOf(
+                            create_disp.FilterModalSendTemplate.toUpperCase(),
                           ) !== -1,
                       )
                       .map((el, index) => (

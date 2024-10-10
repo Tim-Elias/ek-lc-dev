@@ -24,6 +24,8 @@ const initialState = {
   num_filter: "",
   sender_address: "",
   rec_address: "",
+  sender_company: "",
+  rec_company: "",
   active_row: -1,
   date_sort_type: false,
   focus_input_send_city: false,
@@ -172,6 +174,11 @@ export default function dispatch(state = initialState, action) {
       return { ...state, sender_address: action.payload };
     case "set_my_disp_rec_address":
       return { ...state, rec_address: action.payload };
+
+    case "set_my_disp_rec_company":
+      return { ...state, rec_company: action.payload };
+    case "set_my_disp_sender_company":
+      return { ...state, sender_company: action.payload };
 
     //---Строгий выбор из списка
     case "set_my_disp_focus_all_default":
