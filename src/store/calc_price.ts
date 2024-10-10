@@ -34,6 +34,9 @@ interface calc_price_store_interface {
     H: number;
     Q: number;
   }>;
+
+  thermo: boolean;
+  fragile: boolean;
 }
 
 const initialState: calc_price_store_interface = {
@@ -74,6 +77,9 @@ const initialState: calc_price_store_interface = {
       Q: 1,
     },
   ],
+
+  thermo: false,
+  fragile: false,
 };
 
 export default function dispatch(
@@ -221,6 +227,11 @@ export default function dispatch(
     case "set_calc_price_select_rec_terminal":
       return { ...state, calc_price_select_rec_terminal: action.payload };
 
+    case "set_calc_price_toggle_thermo":
+      return { ...state, thermo: !state.thermo };
+    case "set_calc_price_toggle_fragile":
+      return { ...state, fragile: !state.fragile };
+
     case "clean_calc_priсe":
       return {
         error_mesage: "",
@@ -260,6 +271,9 @@ export default function dispatch(
             Q: 1,
           },
         ],
+
+        thermo: false,
+        fragile: false,
       };
 
     default:

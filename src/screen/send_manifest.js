@@ -4,12 +4,13 @@ import "./send_manifest.css";
 import { get_data } from "./../common/common_modules";
 
 const storehouseOptions = [
-  { value: "000000001", label: "Новосибирск, Коммунистическая 7" },
-  { value: "000000006", label: "Красноярск Караульная 4стр1" },
-  { value: "000000002", label: "Кемерово Рукавишникова 26" },
-  { value: "000000009", label: "Барнаул, Молодежная 111" },
-  { value: "000000008", label: "Омск, Потанина 15" },
-  { value: "000000007", label: "Томск, Герцена 13а" },
+  { value: "000000001", label: "Новосибирск" },
+  { value: "000000006", label: "Красноярск" },
+  { value: "000000002", label: "Кемерово" },
+  { value: "000000009", label: "Барнаул" },
+  { value: "000000008", label: "Омск" },
+  { value: "000000007", label: "Томск" },
+  { value: "000000012", label: "Ачинск" },
 ];
 
 const Screen = () => {

@@ -129,6 +129,8 @@ class Screen extends React.Component {
         SendTerminal: this.props.store.calc_price.calc_price_send_terminal,
         RecCity: this.props.store.calc_price.calc_price_rec_city.label,
         RecTerminal: this.props.store.calc_price.calc_price_rec_terminal,
+        Fragile: this.props.store.calc_price.fragile,
+        Thermo: this.props.store.calc_price.thermo,
         Volume: Volume,
         Weight: Weight,
       };
@@ -511,7 +513,7 @@ class Screen extends React.Component {
         </div>
 
         <div className="calc_price_row">
-          <div className="calc_price_label">Общий объемный вес:</div>
+          <div className="calc_price_label">Объемный вес:</div>
 
           {this.props.store.calc_price.calc_price_cargo_info_type.key === 1 ? (
             <div className="calc_price_input">
@@ -524,6 +526,26 @@ class Screen extends React.Component {
           ) : (
             <div className="calc_price_input">{total_volume} кг.</div>
           )}
+        </div>
+
+        <div className="calc_price_row">
+          <div className="calc_price_label">Хрупкий груз:</div>
+          <input
+            type="checkbox"
+            className="calc_price_input calc_price_input--checkbox"
+            checked={this.props.store.calc_price.fragile}
+            onChange={() => this.props.set_calc_price_fragile()}
+          />
+        </div>
+
+        <div className="calc_price_row">
+          <div className="calc_price_label">Терморежим:</div>
+          <input
+            type="checkbox"
+            className="calc_price_input calc_price_input--checkbox"
+            checked={this.props.store.calc_price.thermo}
+            onChange={() => this.props.set_calc_price_thermo()}
+          />
         </div>
 
         <div className="calc_price_row" style={{ marginTop: "10px" }}>
@@ -570,6 +592,14 @@ export default connect(
     store: state,
   }),
   (dispatch) => ({
+    set_calc_price_fragile: () => {
+      dispatch({ type: "set_calc_price_toggle_fragile" });
+    },
+
+    set_calc_price_thermo: () => {
+      dispatch({ type: "set_calc_price_toggle_thermo" });
+    },
+
     set_calc_price_send_city: (param) => {
       dispatch({ type: "set_calc_price_send_city", payload: param });
     },

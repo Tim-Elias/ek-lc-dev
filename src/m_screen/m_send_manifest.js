@@ -73,15 +73,14 @@ class Screen extends React.Component {
                 this.props.set_send_manifest_storehouse(e.target.value)
               }
             >
-              <option value="000000001">Новосибирск, Коммунистическая 7</option>
-              <option value="000000006">Красноярск Караульная 4стр1</option>
-              <option value="000000002">Кемерово Рукавишникова 26</option>
-              <option value="000000009">Барнаул, Молодежная 111</option>
-              <option value="000000008">Омск, Потанина 15</option>
-              <option value="000000007">Томск, Герцена 13а</option>
-              <option value="000000010">
-                Новокузнецк, Циолковского 13, оф 11
-              </option>
+              <option value="000000001">Новосибирск</option>
+              <option value="000000006">Красноярск</option>
+              <option value="000000002">Кемерово</option>
+              <option value="000000009">Барнаул</option>
+              <option value="000000008">Омск</option>
+              <option value="000000007">Томск</option>
+              <option value="000000010">Новокузнецк</option>
+              <option value="000000012">Ачинск</option>
             </select>
 
             {this.props.store.storage.list
