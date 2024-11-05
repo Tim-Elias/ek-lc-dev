@@ -679,8 +679,8 @@ const Disp = () => {
               <i className="ek-printer" /> Печать наклеек
             </button>
           ) : null}
-          <div style={{ display: "none" }}>
-            <StickerToPrint disp={[dispData]} ref={stickerForPrint} />
+          <div ref={stickerForPrint} className="sticker_component">
+            <StickerToPrint disp={[dispData]} />
           </div>
           <Modal
             trigger={<button onClick={openHistory}>История</button>}

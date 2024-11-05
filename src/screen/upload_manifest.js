@@ -736,12 +736,11 @@ export const UploadManifest = () => {
       ) : null}
 
       {complited.length !== 0 && login.print_ticket ? (
-        <div style={{ display: "none" }}>
+        <div ref={all_ticket_print} className="sticker_component">
           <StickerToPrint
             disp={complited.map((el) => {
               return el.print_data;
             })}
-            ref={all_ticket_print}
           />
         </div>
       ) : null}
