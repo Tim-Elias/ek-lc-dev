@@ -1500,19 +1500,23 @@ export const CreateDisp = ({ modules }) => {
               {login.probably_termo
                 ? [
                     <div key={1} className="disp_data_label">
-                      Терморежим:
+                      Терморежим (+2 +25):
                     </div>,
                     <input
                       type="checkbox"
                       className="input-checkbox"
                       key={2}
-                      onChange={() => SetTermo(!create_disp.Termo)}
+                      onChange={() => {
+                        SetTMin(create_disp.Termo ? 0 : 2);
+                        SetTMax(create_disp.Termo ? 0 : 25);
+                        SetTermo(!create_disp.Termo);
+                      }}
                       checked={create_disp.Termo}
                     />,
                   ]
                 : null}
 
-              {create_disp.Termo
+              {/* {create_disp.Termo
                 ? [
                     <div key={1} className="disp_data_label">
                       Терморежим минимум:
@@ -1537,7 +1541,7 @@ export const CreateDisp = ({ modules }) => {
                       />
                     </div>,
                   ]
-                : null}
+                : null} */}
             </div>
 
             <div className="disp_cargo_data">
