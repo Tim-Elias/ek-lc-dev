@@ -26,7 +26,6 @@ class ComponentToPrint extends React.Component {
       <div>
         {this.props.disp.map((disp, index) => {
           let disp_print_data = [];
-          console.log(disp?.data);
           for (let ff = 0; ff < (mvuser ? 2 : 4); ff++) {
             disp_print_data.push(
               <div key={index.toString() + ff.toString()}>
