@@ -161,6 +161,12 @@
     margin: 10px;
     }
 
+    .disp_print_info_footer{
+        display: grid;
+    grid-template-columns:  160px 160px;
+    margin: 10px;
+    }
+
     .center{
         text-align: center;
     }
