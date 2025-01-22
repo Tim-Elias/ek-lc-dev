@@ -1,10 +1,11 @@
 @font-face {
-  font-family: 'ek-icons';
-  src:  url('fonts/ek-icons.eot?y2wip6');
-  src:  url('fonts/ek-icons.eot?y2wip6#iefix') format('embedded-opentype'),
-    url('fonts/ek-icons.ttf?y2wip6') format('truetype'),
-    url('fonts/ek-icons.woff?y2wip6') format('woff'),
-    url('fonts/ek-icons.svg?y2wip6#ek-icons') format('svg');
+  font-family: "ek-icons";
+  src: url("fonts/ek-icons.eot?y2wip6");
+  src:
+    url("fonts/ek-icons.eot?y2wip6#iefix") format("embedded-opentype"),
+    url("fonts/ek-icons.ttf?y2wip6") format("truetype"),
+    url("fonts/ek-icons.woff?y2wip6") format("woff"),
+    url("fonts/ek-icons.svg?y2wip6#ek-icons") format("svg");
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -12,7 +13,7 @@
 
 i {
   /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'ek-icons' !important;
+  font-family: "ek-icons" !important;
   speak: never;
   font-style: normal;
   font-weight: normal;
