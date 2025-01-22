@@ -275,6 +275,14 @@
         width: 60mm;
     }
 
+    .sticker_component{
+        display: none;
+
+        @media print {
+          display: block;
+        }
+    }
+
     .search_input{
         width: 600px;
         margin-right: 10px;
