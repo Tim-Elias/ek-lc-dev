@@ -13,6 +13,7 @@ const get_data = (url, data) => {
       .then((result) => {
         if (result.data.status === "error") {
           console.log(result.data);
+          reject(result.data.data);
         } else if (result.data.status === "ok") {
           resolve(result.data.data);
         } else {

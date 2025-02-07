@@ -24,7 +24,6 @@ export const CreateDisp = ({ modules }) => {
 
   const create_disp = useSelector((state) => state.create_disp);
   const login = useSelector((state) => state.login);
-  console.log(login);
 
   const disp_template_list = useSelector(
     (state) => state.upload_manifest.disp_template_list,
