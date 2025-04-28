@@ -28,10 +28,10 @@ const initialState = {
 
 export default function general(state = initialState, action) {
   switch (action.type) {
-    case "set_active_menu_item":
-      return { ...state, active_menu_item: action.payload };
     case "set_org_type":
       return { ...state, org_type: action.payload };
+    case "set_active_menu_item":
+      return { ...state, active_menu_item: action.payload };
     case "set_oop":
       return { ...state, oop: action.payload };
     case "set_track_number":
