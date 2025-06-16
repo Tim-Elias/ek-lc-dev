@@ -46,7 +46,9 @@ class Screen extends React.Component {
     return (
       <div className="mobile_container">
         <label className="camera_button">
-          <span>Добавить фото</span>
+          <span>
+            Добавить фото {this.props.store.disp.data.ScanRequired && "*"}
+          </span>
           <input
             className="file"
             type="file"

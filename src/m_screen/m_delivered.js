@@ -17,6 +17,22 @@ class Screen extends React.Component {
   };
 
   sendpod = (type) => {
+    if (
+      !this.props.store.disp.foto &&
+      this.props.store.disp.data.ScanRequired
+    ) {
+      alert("Необходимо прикрепить фото накладной");
+      return;
+    }
+
+    if (
+      !this.props.store.disp.FIO_Customer &&
+      this.props.store.disp.data.FIORequired
+    ) {
+      alert("Необходимо указать фамилию получателя");
+      return;
+    }
+
     this.props.set_active_window("wait");
     let barcode = this.props.store.disp.foto.split(",").pop();
     const data = {
@@ -334,7 +350,9 @@ class Screen extends React.Component {
               </div>
 
               <div className="mobile_del_row">
-                <div className="mobile_del_data_label">ФИО получателя</div>
+                <div className="mobile_del_data_label">
+                  ФИО получателя{this.props.store.disp.data.FIORequired && "*"}
+                </div>
                 <input
                   onChange={(e) => this.props.set_disp_FIO(e.target.value)}
                   value={this.props.store.disp.FIO_Customer}
