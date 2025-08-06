@@ -887,7 +887,7 @@ class Screen extends React.Component {
                 </div>
               </div>
               <div className="mobile_heading">Данные о грузах:</div>
-              <div className="mobile_del_row">
+              {/* <div className="mobile_del_row">
                 <div className="mobile_del_data_label">
                   Метод внесения информации:
                 </div>
@@ -901,7 +901,7 @@ class Screen extends React.Component {
                   </option>
                   <option value={true}>Указать итоговые значения</option>
                 </select>
-              </div>
+              </div> */}
 
               {this.props.store.m_create_disp.CargoInfoType === false &&
               this.props.store.m_create_disp.Cargo_list.length > 0 ? (

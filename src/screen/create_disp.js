@@ -201,6 +201,12 @@ export const CreateDisp = ({ modules }) => {
   const SetFragile = (param) => {
     dispatch({ type: "SetFragile", payload: param });
   };
+  const SetOnTime = (param) => {
+    dispatch({ type: "SetOnTime", payload: param });
+  };
+  const SetPersonal = (param) => {
+    dispatch({ type: "SetPersonal", payload: param });
+  };
   const SetTMax = (param) => {
     dispatch({ type: "SetTMax", payload: param });
   };
@@ -492,6 +498,8 @@ export const CreateDisp = ({ modules }) => {
       COD: create_disp.COD,
       CargoInfoType: create_disp.CargoInfoType?.value,
       Fragile: create_disp.Fragile,
+      OnTime: create_disp.OnTime,
+      Personal: create_disp.Personal,
       TMax: create_disp.Termo ? +create_disp.TMax : 0,
       TMin: create_disp.Termo ? +create_disp.TMin : 0,
       Customer: create_disp.PayerSelect?.value,
@@ -712,8 +720,10 @@ export const CreateDisp = ({ modules }) => {
     ) / 1000;
 
   if (
-    create_disp.SelectedSendCity === null ||
-    create_disp.SelectedRecCity === null ||
+    !create_disp.RecPerson ||
+    !create_disp.RecCompany ||
+    !create_disp.SelectedSendCity ||
+    !create_disp.SelectedRecCity ||
     (create_disp.Total === 0 && create_disp.CargoInfoType?.value) ||
     (create_disp.Weight === 0 && create_disp.CargoInfoType?.value) ||
     (total_weight === 0 && !create_disp.CargoInfoType?.value) ||
@@ -1073,7 +1083,10 @@ export const CreateDisp = ({ modules }) => {
           </div>
         </div>
         <div className="disp_address_data_el">
-          <div className="disp_data_label"> Город:</div>
+          <div className="disp_data_label">
+            {" "}
+            Город: <span style={{ color: "red" }}>*</span>
+          </div>
           <div className="disp_data_el">
             <Select
               value={create_disp.SelectedSendCity}
@@ -1187,7 +1200,10 @@ export const CreateDisp = ({ modules }) => {
         </div>
 
         <div className="disp_address_data_el">
-          <div className="disp_data_label"> Город:</div>
+          <div className="disp_data_label">
+            {" "}
+            Город: <span style={{ color: "red" }}>*</span>
+          </div>
           <div className="disp_data_el">
             {create_disp.PayType?.value !== "БезналичнаяОплатаПолучателем" ? (
               <Select
@@ -1298,7 +1314,10 @@ export const CreateDisp = ({ modules }) => {
             </div>
           )}
 
-          <div className="disp_data_label"> Компания:</div>
+          <div className="disp_data_label">
+            {" "}
+            Компания: <span style={{ color: "red" }}>*</span>
+          </div>
           <div className="disp_data_el">
             <input
               className="create_disp_data_input"
@@ -1332,7 +1351,10 @@ export const CreateDisp = ({ modules }) => {
               placeholder="Телефон получателя (формат 8-9xx-xxx-xxxx)"
             />
           </div>
-          <div className="disp_data_label"> Контактное лицо:</div>
+          <div className="disp_data_label">
+            {" "}
+            Контактное лицо: <span style={{ color: "red" }}>*</span>
+          </div>
           <div className="disp_data_el">
             <input
               className="create_disp_data_input"
@@ -1365,7 +1387,7 @@ export const CreateDisp = ({ modules }) => {
 
       <div className="disp_cargo_table">
         <div className="disp_cargo_table_header">Данные о грузах:</div>
-        {login.total_only ? (
+        {/* {login.total_only ? (
           <div className="disp_cargo_info">
             <div className="disp_data_label">Метод внесения информации:</div>
             <div className="disp_data_el ">
@@ -1377,7 +1399,7 @@ export const CreateDisp = ({ modules }) => {
               />
             </div>
           </div>
-        ) : null}
+        ) : null} */}
         {!create_disp.CargoInfoType.value ? (
           <div>
             <div className="disp_cargo_table_data">
@@ -1496,6 +1518,21 @@ export const CreateDisp = ({ modules }) => {
                 onChange={() => SetFragile(!create_disp.Fragile)}
                 checked={create_disp.Fragile}
               />
+              <div className="disp_data_label">Доставка по времени:</div>
+              <input
+                type="checkbox"
+                className="input-checkbox"
+                onChange={() => SetOnTime(!create_disp.OnTime)}
+                checked={create_disp.OnTime}
+              />
+              <div className="disp_data_label">Лично в руки:</div>
+              <input
+                type="checkbox"
+                className="input-checkbox"
+                onChange={() => SetPersonal(!create_disp.Personal)}
+                checked={create_disp.Personal}
+              />
+
               {login.probably_termo
                 ? [
                     <div key={1} className="disp_data_label">
@@ -1514,33 +1551,6 @@ export const CreateDisp = ({ modules }) => {
                     />,
                   ]
                 : null}
-
-              {/* {create_disp.Termo
-                ? [
-                    <div key={1} className="disp_data_label">
-                      Терморежим минимум:
-                    </div>,
-                    <div key={2} className="disp_data_el">
-                      <input
-                        className="create_disp_data_input"
-                        onChange={(e) => SetTMin(e.target.value)}
-                        value={create_disp.TMin}
-                        type="number"
-                      />
-                    </div>,
-                    <div key={3} className="disp_data_label">
-                      Терморежим максимум:
-                    </div>,
-                    <div key={4} className="disp_data_el">
-                      <input
-                        className="create_disp_data_input"
-                        onChange={(e) => SetTMax(e.target.value)}
-                        value={create_disp.TMax}
-                        type="number"
-                      />
-                    </div>,
-                  ]
-                : null} */}
             </div>
 
             <div className="disp_cargo_data">
@@ -1566,6 +1576,20 @@ export const CreateDisp = ({ modules }) => {
                 className="input-checkbox"
                 onChange={() => SetFragile(!create_disp.Fragile)}
                 checked={create_disp.Fragile}
+              />
+              <div className="disp_data_label">Доставка по времени:</div>
+              <input
+                type="checkbox"
+                className="input-checkbox"
+                onChange={() => SetOnTime(!create_disp.OnTime)}
+                checked={create_disp.OnTime}
+              />
+              <div className="disp_data_label">Лично в руки:</div>
+              <input
+                type="checkbox"
+                className="input-checkbox"
+                onChange={() => SetPersonal(!create_disp.Personal)}
+                checked={create_disp.Personal}
               />
               {login.probably_termo
                 ? [
@@ -1699,6 +1723,12 @@ export const CreateDisp = ({ modules }) => {
           <button disabled={disabled} onClick={() => dataChecking()}>
             Сохранить изменения
           </button>
+        )}
+
+        {disabled && (
+          <span style={{ marginLeft: "8px", fontSize: "8pt", color: "red" }}>
+            для сохранения накладной необходимо заполнить все обязательные поля
+          </span>
         )}
       </div>
     </div>

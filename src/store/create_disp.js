@@ -91,6 +91,8 @@ const initialState = {
 
   IRR: false,
   Fragile: false,
+  Personal: false,
+  OnTime: false,
   DelType: "",
   DispDate: "",
 
@@ -404,6 +406,10 @@ export default function dispatch(state = initialState, action) {
       return { ...state, PayType: action.payload };
     case "SetFragile":
       return { ...state, Fragile: action.payload };
+    case "SetOnTime":
+      return { ...state, OnTime: action.payload };
+    case "SetPersonal":
+      return { ...state, Personal: action.payload };
     case "SetDelType":
       return { ...state, DelType: action.payload.value };
 
@@ -449,6 +455,8 @@ export default function dispatch(state = initialState, action) {
 
         RecTerminal: !!action.payload.RecTerminal,
         Fragile: action.payload.Fragile,
+        Personal: action.payload.Personal,
+        OnTime: action.payload.OnTime,
         TMax: action.payload.TMax,
         TMin: action.payload.TMin,
 
