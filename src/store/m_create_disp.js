@@ -180,20 +180,21 @@ export default function dispatch(state = initialState, action) {
       };
 
     case "AddCargoMobile":
-      state.Cargo.push({
-        Weight: action.payload.Weight,
-        L: action.payload.L,
-        W: action.payload.W,
-        H: action.payload.H,
-
-        Q: 1,
-
-        Type: action.payload.Type,
-        // Comment: action.payload.Comment,
-        Template: action.payload.Template,
-      });
-
-      return { ...state, Cargo: state.Cargo };
+      return {
+        ...state,
+        Cargo: [
+          ...state.Cargo,
+          {
+            Weight: action.payload.Weight,
+            L: action.payload.L,
+            W: action.payload.W,
+            H: action.payload.H,
+            Q: 1,
+            Type: action.payload.Type,
+            Template: action.payload.Template,
+          },
+        ],
+      };
 
     case "RemoveCargoMobile":
       return {

@@ -343,6 +343,11 @@ class Screen extends React.Component {
                 <div className="mobile_disp_data_label"> Контактное лицо:</div>
                 <div className="mobile_disp_data_el">
                   {this.props.store.disp.data.RecPerson}
+                  {this.props.store.disp.data.personality && (
+                    <span style={{ marginLeft: "8px", color: "red" }}>
+                      "Лично в руки!"
+                    </span>
+                  )}
                 </div>
                 <div className="mobile_disp_data_label"> Доп. информация:</div>
                 <div className="mobile_disp_data_el">
@@ -351,6 +356,11 @@ class Screen extends React.Component {
                 <div className="mobile_disp_data_label"> Время:</div>
                 <div className="mobile_disp_data_el">
                   {this.props.store.disp.data.Time}
+                  {this.props.store.disp.data.OnTime && (
+                    <span style={{ marginLeft: "8px", color: "red" }}>
+                      "Доставка по времени!"
+                    </span>
+                  )}
                 </div>
               </div>
             </div>

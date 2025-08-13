@@ -195,6 +195,13 @@ export const MStorage = () => {
                       {disp.Status}
                       <br />
                       {disp.Time}
+                      <br />
+                      {disp.OnTime && (
+                        <i
+                          className="menu-icon ek-clock"
+                          style={{ color: "red" }}
+                        />
+                      )}
                     </div>
 
                     <div className="mobile_storage_field">

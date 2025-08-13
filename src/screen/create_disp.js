@@ -721,6 +721,7 @@ export const CreateDisp = ({ modules }) => {
 
   if (
     !create_disp.RecPerson ||
+    !create_disp.RecPhone ||
     !create_disp.RecCompany ||
     !create_disp.SelectedSendCity ||
     !create_disp.SelectedRecCity ||
@@ -1334,7 +1335,10 @@ export const CreateDisp = ({ modules }) => {
               placeholder="Компания получателя"
             />
           </div>
-          <div className="disp_data_label"> Телефон:</div>
+          <div className="disp_data_label">
+            {" "}
+            Телефон: <span style={{ color: "red" }}>*</span>
+          </div>
           <div className="disp_data_el">
             <input
               className="create_disp_data_input"
@@ -1387,19 +1391,7 @@ export const CreateDisp = ({ modules }) => {
 
       <div className="disp_cargo_table">
         <div className="disp_cargo_table_header">Данные о грузах:</div>
-        {/* {login.total_only ? (
-          <div className="disp_cargo_info">
-            <div className="disp_data_label">Метод внесения информации:</div>
-            <div className="disp_data_el ">
-              <Select
-                options={CargoInfoTypeList}
-                styles={customStyles}
-                value={create_disp.CargoInfoType}
-                onChange={(values) => SetCargoInfoType(values)}
-              />
-            </div>
-          </div>
-        ) : null} */}
+
         {!create_disp.CargoInfoType.value ? (
           <div>
             <div className="disp_cargo_table_data">
